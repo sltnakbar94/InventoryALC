@@ -129,6 +129,7 @@ class SalesOrderCrudController extends CrudController
 
         $generate = $month.$day."-".$number."/WHI-SO/".$year;
 
+        return $number;
         return $generate;
     }
 
@@ -193,13 +194,14 @@ class SalesOrderCrudController extends CrudController
             'allows_null' => true,
         ]);
 
+
         $this->crud->addField([
             'name' => 'ref_no',
             'label' => 'Nomor Referensi',
             'type' => 'text',
             'attributes' => [
                 'placeholder' => 'Contoh : Nomor Surat Penawaran Harga',
-              ],
+            ],
         ]);
 
         $this->crud->addField([
@@ -207,6 +209,14 @@ class SalesOrderCrudController extends CrudController
             'label' => 'PPN (10%)',
             'type' => 'boolean',
             'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
+        ]);
+
+        $this->crud->addField([   // Upload
+            'name'      => 'uploadref',
+            'label'     => 'Upload Referensi',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
         ]);
 
         $this->crud->addField([
@@ -324,6 +334,14 @@ class SalesOrderCrudController extends CrudController
             'label' => 'PPN (10%)',
             'type' => 'boolean',
             'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
+        ]);
+
+        $this->crud->addField([   // Upload
+            'name'      => 'uploadref',
+            'label'     => 'Upload Referensi',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
         ]);
 
         $this->crud->addField([

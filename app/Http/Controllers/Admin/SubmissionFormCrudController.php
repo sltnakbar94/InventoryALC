@@ -299,6 +299,7 @@ class SubmissionFormCrudController extends CrudController
         $pdf = PDF::loadview('warehouse.sf.output',['data'=>$data]);
     	return $pdf->stream($data->do_number.'.pdf');
     }
+
     public function store(Request $request)
     {
         $count = SubmissionForm::withTrashed()->whereDate('form_date', date($request->form_date))->count();
