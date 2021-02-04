@@ -14,14 +14,11 @@ class CreateWarehouseInsTable extends Migration
     public function up()
     {
         Schema::create('warehouse_ins', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->primary('id');
-            $table->string('code_transaction');
-            $table->string('name');
-            $table->string('brand');
-            $table->string('unit');
-            $table->integer('price');
-            $table->integer('disc');
+            $table->bigIncrements('id');
+            $table->string('delivery_note');
+            $table->string('supplier_id');
+            $table->date('date_in');
+            $table->text('description');
             $table->string('user_id');
             $table->timestamps();
         });
