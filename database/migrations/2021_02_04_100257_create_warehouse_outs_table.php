@@ -17,8 +17,8 @@ class CreateWarehouseOutsTable extends Migration
             $table->bigIncrements('id');
             $table->string('delivery_note');
             $table->string('customer_id');
-            $table->text('destination');
-            $table->date('date_out');
+            $table->text('destination')->nullable();
+            $table->date('date_out')->nullable();
             $table->text('description')->nullable();
             $table->string('user_id');
             $table->timestamps();

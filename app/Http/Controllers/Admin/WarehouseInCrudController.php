@@ -6,7 +6,7 @@ use App\Http\Requests\WarehouseInRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Supplier;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class WarehouseInCrudController
@@ -61,7 +61,7 @@ class WarehouseInCrudController extends CrudController
         CRUD::setValidation(WarehouseInRequest::class);
 
         $this->crud->addField([
-            'label' => "Surat Jalan",
+            'label' => "Nomor Surat Jalan",
             'name'  => "delivery_note",
             'type'  => 'text',
         ]);
@@ -89,7 +89,7 @@ class WarehouseInCrudController extends CrudController
         $this->crud->addField([
             'name' => 'user_id',
             'type' => 'hidden',
-            'value' => Auth::id()
+            'value' => backpack_auth()->id()
         ]);
 
         /**

@@ -95,7 +95,7 @@ class WarehouseOutCrudController extends CrudController
         $this->crud->addField([
             'name' => 'user_id',
             'type' => 'hidden',
-            'value' => Auth::id()
+            'value' => backpack_auth()->id()
         ]);
 
         /**
