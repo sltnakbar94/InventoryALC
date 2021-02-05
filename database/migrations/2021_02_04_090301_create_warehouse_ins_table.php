@@ -18,7 +18,7 @@ class CreateWarehouseInsTable extends Migration
             $table->string('delivery_note');
             $table->string('supplier_id');
             $table->date('date_in');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('user_id');
             $table->timestamps();
         });

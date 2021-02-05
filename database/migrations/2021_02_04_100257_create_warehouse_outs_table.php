@@ -19,7 +19,7 @@ class CreateWarehouseOutsTable extends Migration
             $table->string('customer_id');
             $table->text('destination');
             $table->date('date_out');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('user_id');
             $table->timestamps();
         });

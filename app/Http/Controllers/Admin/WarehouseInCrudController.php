@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\WarehouseInRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\Supplier;
+use Auth;
 
 /**
  * Class WarehouseInCrudController
@@ -21,7 +23,7 @@ class WarehouseInCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -33,7 +35,7 @@ class WarehouseInCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
@@ -44,13 +46,13 @@ class WarehouseInCrudController extends CrudController
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
     }
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -58,18 +60,48 @@ class WarehouseInCrudController extends CrudController
     {
         CRUD::setValidation(WarehouseInRequest::class);
 
-        CRUD::setFromDb(); // fields
+        $this->crud->addField([
+            'label' => "Surat Jalan",
+            'name'  => "delivery_note",
+            'type'  => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'supplier_id',
+            'label' => 'Supplier',
+            'type' => 'select_from_array',
+            'options' => Supplier::pluck('name', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'date_in',
+            'label' => 'Tanggal Masuk',
+            'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Keterangan',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'user_id',
+            'type' => 'hidden',
+            'value' => Auth::id()
+        ]);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
          */
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
