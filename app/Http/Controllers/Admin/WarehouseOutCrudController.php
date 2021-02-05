@@ -30,7 +30,7 @@ class WarehouseOutCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\WarehouseOut::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/warehouseout');
-        CRUD::setEntityNameStrings('warehouseout', 'warehouse_outs');
+        CRUD::setEntityNameStrings('Barang Keluar', 'Barang Keluar');
     }
 
     /**
