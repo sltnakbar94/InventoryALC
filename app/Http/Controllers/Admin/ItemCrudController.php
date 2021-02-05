@@ -84,7 +84,7 @@ class ItemCrudController extends CrudController
             'name' => 'unit',
             'label' => 'Satuan',
             'type' => 'select_from_array',
-            'options' => ['unit' => 'unit', 'Paket' => 'Paket', 'Lembar' => 'Lembar'],
+            'options' => ['Unit' => 'Unit', 'Paket' => 'Paket', 'Lembar' => 'Lembar'],
             'allows_null' => true,
         ]);
 
