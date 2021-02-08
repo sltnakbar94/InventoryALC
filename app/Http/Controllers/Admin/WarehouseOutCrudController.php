@@ -41,7 +41,47 @@ class WarehouseOutCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->crud->addColumn([
+            'name' => 'delivery_note',
+            'type' => 'text',
+            'label' => 'Nomor Surat Jalan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'customer_id',
+            'type' => 'select',
+            'entity' => 'customer',
+            'attribute' => 'name',
+            'model' => 'App\Models\Customer',
+            'label' => 'Customer'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'destination',
+            'type' => 'text',
+            'label' => 'Tujuan Pengiriman'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'date_out',
+            'type' => 'date',
+            'label' => 'Tanggal Pengiriman'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'description',
+            'type' => 'textarea',
+            'label' => 'Keterangan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'user_id',
+            'type' => 'select',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => 'App\Models\User',
+            'label' => 'Operator'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -61,7 +101,7 @@ class WarehouseOutCrudController extends CrudController
         CRUD::setValidation(WarehouseOutRequest::class);
 
         $this->crud->addField([
-            'label' => "Surat Jalan",
+            'label' => "Nomor Surat Jalan",
             'name'  => "delivery_note",
             'type'  => 'text',
         ]);

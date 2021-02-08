@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Customer;
 
 class WarehouseOut extends Model
 {
@@ -34,6 +36,15 @@ class WarehouseOut extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

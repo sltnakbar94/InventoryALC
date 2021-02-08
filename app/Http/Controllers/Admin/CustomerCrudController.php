@@ -71,22 +71,9 @@ class CustomerCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name'            => 'address',
-            'label'           => "Alamat",
-            'type'            => 'address_algolia',
-        ]);
-
-        $this->crud->addField([
             'name'            => 'contact_number',
             'label'           => "Nomor Telp",
             'type'            => 'text',
-        ]);
-
-        $this->crud->addField([
-            'name'            => 'discount',
-            'label'           => "Potongan Harga (%)",
-            'type'            => 'number',
-            'value'           => '0'
         ]);
 
         /**

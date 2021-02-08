@@ -26,7 +26,7 @@ class WarehouseInRequest extends FormRequest
     public function rules()
     {
         return [
-            'delivery_note' => 'required|unique:warehouse_ins',
+            'delivery_note' => 'required',
             'supplier_id' => 'required'
         ];
     }

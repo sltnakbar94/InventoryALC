@@ -42,7 +42,41 @@ class WarehouseInCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->crud->addColumn([
+            'name' => 'delivery_note',
+            'type' => 'text',
+            'label' => 'Nomor Surat Jalan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'supplier_id',
+            'type' => 'select',
+            'entity' => 'supplier',
+            'attribute' => 'name',
+            'model' => 'App\Models\Supplier',
+            'label' => 'Supplier'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'date_in',
+            'type' => 'date',
+            'label' => 'Tanggal Masuk'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'description',
+            'type' => 'textarea',
+            'label' => 'Keterangan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'user_id',
+            'type' => 'select',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => 'App\Models\User',
+            'label' => 'Operator'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:

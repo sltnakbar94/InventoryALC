@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use App\Uuid;
 
 class Customer extends Model
 {
-    use Uuid, CrudTrait;
+    use CrudTrait;
 
     /*
     |--------------------------------------------------------------------------
