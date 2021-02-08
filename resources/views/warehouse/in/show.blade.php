@@ -111,3 +111,46 @@
 	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/crud.css') }}">
 	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/show.css') }}">
 @endsection
+@section('after_scripts')
+	<script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
+	<script src="{{ asset('packages/backpack/crud/js/show.js') }}"></script>
+
+    <script>
+$(document).ready(function(){
+    $('body').on('submit', '#sales_form_detail_add', function(e){
+        e.preventDefault();
+
+        $('#add-buton-kolam').attr('disabled', true)
+
+        var url = $(this).attr('action');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            data: $(this).serialize(),
+            success:function(response){
+                if(response.success) {
+                    // close modal
+                    // show notification
+                    // reload
+                    $("#sales_form_detail_add").trigger('reset');
+                    $("#addModalSalesFormDetail").modal('hide');
+                    window.open(response.url, '_blank');
+                    window.location.reload();
+                }
+            },
+            error:function(xhr, responseText, throwError){
+                if(xhr.responseJSON.success === false) {
+                    $('#form-modal-alert').show();
+                    $('#form-modal-alert').html(xhr.responseJSON.message);
+                    $('#add-buton-kolam').attr('disabled', false)
+                }
+            },
+        });
+
+        return false;
+    })
+});
+</script>
+@endsection

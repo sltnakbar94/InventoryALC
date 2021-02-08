@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\WInDetailsRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\WInDetails;
+use App\Models\Item;
 
 /**
  * Class WInDetailsCrudController
@@ -84,14 +86,14 @@ class WInDetailsCrudController extends CrudController
         $form_detail = new WInDetails;
         $form_detail->warehouse_in_id = $request->warehouse_in_id;
         $form_detail->item_id = $request->item_id;
-        $form_detail->item_unit = Item::where('id','=',$request->item_id)->get('unit');
+        $form_detail->item_unit = Item::where('id','=',$request->item_id)->select('unit')->first()->unit;
         $form_detail->qty = $request->qty;
         $form_detail->price = $request->price;
         $form_detail->note = $request->note;
-        dd($form_detail);
+
         $form_detail->save();
 
-        \Alert::add('success', 'Berhasil tambah data order ' . $form_detail->pool_number)->flash();
+        \Alert::add('success', 'Berhasil tambah data ' . $form_detail->pool_number)->flash();
         return redirect()->back();
     }
 }
