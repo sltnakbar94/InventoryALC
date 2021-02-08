@@ -16,3 +16,5 @@
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('item') }}'><i class='nav-icon la la-question'></i> Items</a></li>
     </ul>
 </li>
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('windetails') }}'><i class='nav-icon la la-question'></i> WInDetails</a></li>

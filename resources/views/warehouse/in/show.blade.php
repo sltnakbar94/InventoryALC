@@ -51,13 +51,59 @@
 	    @endif
         <div class="card no-padding no-border">
             <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-right">No Surat Jalan: <strong>{{ $crud->entry->delivery_note }}</strong></h6><br>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-right">Tanggal Masuk: <strong>{{ date('d-m-Y', strtotime($crud->entry->date_in)) }}</strong></h6><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table">
+                            <table class="table no-border">
+                                <tr>
+                                    <td>Nama Supplier</td>
+                                    <td><strong>{{ $crud->entry->supplier->name }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td><strong>{{ $crud->entry->supplier->email }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat</td>
+                                    <td><strong>{{ $crud->entry->supplier->address }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>No Telepon</td>
+                                    <td><strong>{{ $crud->entry->supplier->contact_number }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Keterangan</td>
+                                    <td><strong>{{ $crud->entry->description }}</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
+                <div class="row">
+                <div class="col-md-12">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalinDetail">
+                           <i class="fa fa-plus"></i> TAMBAH BARANG
+                        </button>
+                    <br><br>
+                </div>
+            </div>
+            </div>
             </div>
         </div>
 	  </div>
 	</div>
 </div>
+@include('in.add-modal');
 @endsection
 
 
