@@ -6,6 +6,8 @@ use App\Http\Requests\WarehouseOutRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Customer;
+use App\Models\Company;
+use App\Models\WarehouseOut;
 use Auth;
 
 /**
@@ -31,6 +33,7 @@ class WarehouseOutCrudController extends CrudController
         CRUD::setModel(\App\Models\WarehouseOut::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/warehouseout');
         CRUD::setEntityNameStrings('Barang Keluar', 'Barang Keluar');
+        $this->crud->setShowView('warehouse.out.show');
     }
 
     /**
@@ -104,6 +107,7 @@ class WarehouseOutCrudController extends CrudController
             'label' => "Nomor Surat Jalan",
             'name'  => "delivery_note",
             'type'  => 'text',
+            // 'value' => $this->generateNomorDO()
         ]);
 
         $this->crud->addField([
@@ -154,5 +158,18 @@ class WarehouseOutCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function generateNomorDO()
+    {
+        $month = date("m");
+        $date = date("d");
+        $year = date("y");
+        // dd($month, $date, $year, WarehouseOut::pluck('id')->where(date("Y", strtotime('created_at')), '=', $year));
+        $number = count(WarehouseOut::select('id')->where(date("Y", strtotime('created_at'), '=', $year)));
+        $code = Company::select('code');
+
+        $generate = $month.$date."-".$number."/".$code."-DO/".$year;
+        return $generate;
     }
 }

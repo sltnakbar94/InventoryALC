@@ -18,3 +18,8 @@
 </li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('windetails') }}'><i class='nav-icon la la-question'></i> WInDetails</a></li>
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class='nav-icon la la-question'></i> Companies</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('verifwo') }}'><i class='nav-icon la la-question'></i> VerifWOs</a></li>
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('woutdetail') }}'><i class='nav-icon la la-question'></i> WOutDetails</a></li>

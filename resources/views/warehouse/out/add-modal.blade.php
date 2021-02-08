@@ -1,18 +1,18 @@
 <!-- Modal -->
-<div class="modal fade" id="addModalinDetail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addModalinDetailLabel" aria-hidden="true">
+<div class="modal fade" id="addModalOutDetail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addModalOutDetailLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addModalinDetailLabel">Tambah Data</h5>
+          <h5 class="modal-title" id="addModalOutDetailLabel">Tambah Data</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="alert alert-danger" id="form-modal-alert" style="display:none;">Data telah tersimpan</div>
-          <form action="{{ route('windetails.store') }}" method="post" name="form_in_detail_add" id="form_in_detail_add">
+          <form action="{{ route('woutdetail.store') }}" method="post" name="form_out_detail_add" id="form_out_detail_add">
               @csrf
-              <input type="hidden" name="warehouse_in_id" value="{{ $crud->entry->id }}">
+              <input type="hidden" name="warehouse_out_id" value="{{ $crud->entry->id }}">
 
               <div class="form-group">
                   <label class="control-label" for="item_id">Nama Barang</label>
@@ -61,7 +61,7 @@
             </div>
               <div class="form-group text-right">
                   <label for=""></label>
-                  <button type="submit" class="btn btn-primary" id="add-buton-in">SIMPAN</button>
+                  <button type="submit" class="btn btn-primary" id="add-buton-out">SIMPAN</button>
               </div>
 
           </form>
