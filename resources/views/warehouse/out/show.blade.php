@@ -64,20 +64,20 @@
                         <div class="table">
                             <table class="table no-border">
                                 <tr>
-                                    <td>Nama Supplier</td>
-                                    <td><strong>{{ $crud->entry->supplier->name }}</strong></td>
+                                    <td>Nama Customer</td>
+                                    <td><strong>{{ $crud->entry->customer->name }}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Email</td>
-                                    <td><strong>{{ $crud->entry->supplier->email }}</strong></td>
+                                    <td><strong>{{ $crud->entry->customer->email }}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Alamat</td>
-                                    <td><strong>{{ $crud->entry->supplier->address }}</strong></td>
+                                    <td><strong>{{ $crud->entry->customer->address }}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>No Telepon</td>
-                                    <td><strong>{{ $crud->entry->supplier->contact_number }}</strong></td>
+                                    <td><strong>{{ $crud->entry->customer->contact_number }}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Keterangan</td>
@@ -103,54 +103,11 @@
 	  </div>
 	</div>
 </div>
-@include('warehouse.in.add-modal');
+@include('warehouse.out.add-modal');
 @endsection
 
 
 @section('after_styles')
 	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/crud.css') }}">
 	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/show.css') }}">
-@endsection
-@section('after_scripts')
-	<script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
-	<script src="{{ asset('packages/backpack/crud/js/show.js') }}"></script>
-
-    <script>
-$(document).ready(function(){
-    $('body').on('submit', '#sales_form_detail_add', function(e){
-        e.preventDefault();
-
-        $('#add-buton-kolam').attr('disabled', true)
-
-        var url = $(this).attr('action');
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            dataType: 'json',
-            data: $(this).serialize(),
-            success:function(response){
-                if(response.success) {
-                    // close modal
-                    // show notification
-                    // reload
-                    $("#sales_form_detail_add").trigger('reset');
-                    $("#addModalSalesFormDetail").modal('hide');
-                    window.open(response.url, '_blank');
-                    window.location.reload();
-                }
-            },
-            error:function(xhr, responseText, throwError){
-                if(xhr.responseJSON.success === false) {
-                    $('#form-modal-alert').show();
-                    $('#form-modal-alert').html(xhr.responseJSON.message);
-                    $('#add-buton-kolam').attr('disabled', false)
-                }
-            },
-        });
-
-        return false;
-    })
-});
-</script>
 @endsection
