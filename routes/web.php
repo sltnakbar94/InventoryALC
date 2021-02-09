@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\WarehouseInCrudController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['web']], function(){
     Route::redirect('/', '/admin/dashboard');
     Route::redirect('/home', '/admin/dashboard');
+
+    // Route::get('/warehouseout', [WarehouseInCrudController::class => ''])
 });

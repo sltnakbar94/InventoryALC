@@ -5,17 +5,18 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class WarehouseOut extends Model
+class BagItemWarehouseOut extends Model
 {
     use CrudTrait;
 
+    
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'warehouse_outs';
+    protected $table = 'bag_item_warehouse_outs';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,9 +35,9 @@ class WarehouseOut extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function customer()
+    public function Item()
     {
-        return $this->hasOne(Customer::class, 'id', 'customer_id');
+        return $this->hasOne(Item::class, 'id', 'item_id');
     }
 
     /*
@@ -56,4 +57,5 @@ class WarehouseOut extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
 }
