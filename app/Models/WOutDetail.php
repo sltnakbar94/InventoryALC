@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Item;
+use App\Models\WarehouseOut;
 
 class WOutDetail extends Model
 {
@@ -37,6 +39,11 @@ class WOutDetail extends Model
     public function warehouseOut()
     {
         return $this->belongsTo(WarehouseOut::class, 'warehouse_out_id', 'id');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 
     /*

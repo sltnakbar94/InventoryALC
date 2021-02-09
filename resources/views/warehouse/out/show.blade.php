@@ -56,7 +56,7 @@
                         <h6 class="text-right">No Surat Jalan: <strong>{{ $crud->entry->delivery_note }}</strong></h6><br>
                     </div>
                     <div class="col-md-6">
-                        <h6 class="text-right">Tanggal Masuk: <strong>{{ date('d-m-Y', strtotime($crud->entry->date_in)) }}</strong></h6><br>
+                        <h6 class="text-right">Tanggal Masuk: <strong>{{ date('d-m-Y', strtotime($crud->entry->date_out)) }}</strong></h6><br>
                     </div>
                 </div>
                 <div class="row">
@@ -88,20 +88,17 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+        </div>
+        </div>
+        <div class="card no-padding no-border">
+            <div class="card-header">
                 <div class="row">
                     <div class="col-md-12">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalOutDetail">
                             <i class="fa fa-plus"></i> TAMBAH BARANG
                             </button>
-                        <br><br>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="card no-padding no-border">
-            <div class="card-header">
-
             </div>
             <div class="card-body">
                 <div class="row">
@@ -109,56 +106,66 @@
                         <div class="table">
                             <table class="table table-responsive">
                                 <tr>
-                                    <th>Nomor</th>
-                                    <th>Item</th>
-                                    <th>Satuan</th>
-                                    <th>Jumlah</th>
-                                    <th>Harga</th>
-                                    <th>Catatan</th>
-                                    <th>Action</th>
+                                    <th style="width: 10%">Nomor</th>
+                                    <th style="width: 40%">Item</th>
+                                    <th style="width: 10%">Satuan</th>
+                                    <th style="width: 15%">Jumlah</th>
+                                    <th style="width: 15%">Harga</th>
+                                    <th style="width: 15%">Catatan</th>
+                                    <th style="width: 15%">Action</th>
                                 </tr>
-                                @if(isset($crud->entry->warehouseOut))
+                                @if(isset($crud->entry->warehouseOutDetail))
                                     @php
                                     $total = 0;
+                                    $harga = 0;
                                     @endphp
-                                    @foreach($crud->entry->warehouseOut as $od)
+                                    @foreach($crud->entry->warehouseOutDetail as $od)
                                     @php
                                     $total += $od->qty;
+                                    $harga += $od->price;
                                     @endphp
                                     <tr>
-                                        <td>{{ $od->id }}</td>
-                                        <td>{{ $od->name }}</td>
-                                        <td>{{ number_format($od->qty) }}</td>
-                                        <td>{{ $od->created_at->format('d-m-Y') }}</td>
-                                        {{-- <td>{!! $od->status_order == 0 ? '<span class="badge badge-warning">PRE-ORDER</span>' : '<span class="badge badge-success">POD</span>' !!}</td>
-                                        <td>{!! $od->status_terima == 1 ? '<span class="badge badge-success">Delivered</span>' : '<span class="badge badge-primary">On Delivery</span>' !!}</td> --}}
+                                        <td>{{ @$od->nomor_order }}</td>
+                                        <td>{{ $od->item->name }}</td>
+                                        <td>{{ $od->item->unit }}</td>
+                                        <td>{{ $od->qty }}</td>
+                                        <td>{{ $od->price }}</td>
+                                        <td>{{ $od->note }}</td>
                                         <td>
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a target="_blank" href="{{ route('orderdetail.show-qrcode', $od->url) }}" class="btn btn-primary">CETAK QRCODE</a>
-                                                <a id="{{ route('orderdetail.edit', $od->id) }}" href="{{ route('orderdetail.update', $od->id) }}" class="btn btn-warning editModalOrderDetail" data-toggle="modal" data-target="#editModalOrderDetail">EDIT</a>
+                                            <form method="POST" action="{{ route('woutdetail.edit', $od->id) }}" enctype="multipart/form-data">
+                                                @csrf
+                                                <button type="submit" class="btn btn-warning editModalOutDetail" data-toggle="modal" data-target="#editModalOutDetail">EDIT</button>
+                                            </form>
+                                            <form method="POST" action="{{ route('woutdetail.destroy', $od->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger">DELETE</button>
+                                            </form>
+                                            {{-- <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a id="{{ route('outdetail.edit', $od->id) }}" href="{{ route('outdetail.update', $od->id) }}" class="btn btn-warning editModalOutDetail" data-toggle="modal" data-target="#editModalOutDetail">EDIT</a>
                                                 @if($od->status_terima != 1)
-                                                <form method="POST" action="{{ route('orderdetail.destroy', $od->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                                <form method="POST" action="{{ route('outdetail.destroy', $od->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger">DELETE</button>
                                                 </form>
                                                 @endif
-                                            </div>
+                                            </div> --}}
                                         </td>
                                     </tr>
                                     @endforeach
                                     <tr>
                                         <td></td>
+                                        <td></td>
                                         <th>TOTAL</th>
                                         <th>{{ $total }}</th>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $harga }}</td>
                                         <td></td>
                                         <td></td>
                                     </tr>
                                 @else
                                 <tr>
-                                    <td colspan="5" class="text-center">Belum ada data order</td>
+                                    <td colspan="7" class="text-center">Belum ada data order</td>
                                 </tr>
                                 @endif
                             </table>

@@ -103,7 +103,7 @@
 	  </div>
 	</div>
 </div>
-@include('warehouse.in.add-modal');
+@include('in.add-modal');
 @endsection
 
 

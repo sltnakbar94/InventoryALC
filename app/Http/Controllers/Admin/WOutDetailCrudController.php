@@ -84,6 +84,7 @@ class WOutDetailCrudController extends CrudController
     {
 
         $form_detail = new WOutDetail;
+        $form_detail->nomor_order = WOutDetail::where('warehouse_out_id', '=', $request->warehouse_out_id)->count()+1;;
         $form_detail->warehouse_out_id = $request->warehouse_out_id;
         $form_detail->item_id = $request->item_id;
         $form_detail->item_unit = Item::where('id','=',$request->item_id)->select('unit')->first()->unit;
