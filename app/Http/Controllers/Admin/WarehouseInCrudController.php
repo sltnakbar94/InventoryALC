@@ -6,6 +6,7 @@ use App\Http\Requests\WarehouseInRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Supplier;
+use App\Models\WarehouseIn;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -91,6 +92,20 @@ class WarehouseInCrudController extends CrudController
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
+    public function generateNomorPengiriman()
+    {
+        $day = date("d");
+        $month = date("m");
+        $year = date("Y");
+
+        $count = WarehouseIn::withTrashed()->whereDate('created_at', date('Y-m-d'))->count()+1;
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+
+        $generate = $month.$day."-".$number."/WHI-SJ/".$year;
+
+        return $generate;
+    }
+
     protected function setupCreateOperation()
     {
         CRUD::setValidation(WarehouseInRequest::class);
@@ -99,6 +114,7 @@ class WarehouseInCrudController extends CrudController
             'label' => "Nomor Surat Jalan",
             'name'  => "delivery_note",
             'type'  => 'text',
+            'value' => $this->generateNomorPengiriman()
         ]);
 
         $this->crud->addField([

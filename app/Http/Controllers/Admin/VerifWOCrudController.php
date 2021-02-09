@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\VerifWORequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\VerifWO;
 
 /**
  * Class VerifWOCrudController
@@ -21,7 +22,7 @@ class VerifWOCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -33,7 +34,7 @@ class VerifWOCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
@@ -44,16 +45,30 @@ class VerifWOCrudController extends CrudController
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
     }
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
+    public function generateNomorPengiriman()
+    {
+        $day = date("d");
+        $month = date("m");
+        $year = date("Y");
+
+        $count = VerifWO::withTrashed()->whereDate('created_at', date('Y-m-d'))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+
+        $generate = $month.$day."-".$number."/WHI-DO/".$year;
+
+        return $generate;
+    }
+
     protected function setupCreateOperation()
     {
         CRUD::setValidation(VerifWORequest::class);
@@ -63,13 +78,13 @@ class VerifWOCrudController extends CrudController
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
          */
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
