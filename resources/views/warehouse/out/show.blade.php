@@ -83,8 +83,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 	
     
 @endsection
@@ -108,7 +106,6 @@
 		var method = $(this).attr('method')
 		var action = $(this).attr('action')
 
-		var btn_action = '<a href="#" id="btn_modal-edit"><i class="fas fa-pencil-alt"></i></a> <a href="#"><i class="fas fa-trash-alt"></i></a>'
 			$.ajax({
 				url: action,
 				data: data,
@@ -120,6 +117,8 @@
 					$('#btn-submit').prop('disabled', false);
 					//If New Record
 					if (response.code == 200) {
+						var id = response.data.ItemOnBag.id
+						var btn_action = '<a href="#" onclick="edit('+id+')"><i class="fas fa-pencil-alt"></i></a> <a href="#" onclick="hapus('+id+')"><i class="fas fa-trash-alt"></i></a>'
 						console.log(response)
 						t.row.add([
 							response.data.ItemOnBag.id,
@@ -128,7 +127,6 @@
 							btn_action
 						]).draw(false)
 					}else{
-
 						//If Update Record
 						location.reload();
 					}
@@ -136,5 +134,62 @@
 				}
 			})
 	})
+
+//Edit Item On Bag by ID
+	function edit(id) {
+		var url = "{{ backpack_url('item_on-bag') }}"
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: {
+				bag_item_warehouse_out_id: id
+			},
+			dataType: "json",
+			success: function (response) {
+				console.log(response)
+				$('input#qty').val(response.qty);
+				$('#item_id').val(response.item_id).trigger('change');
+				// $('#item_id').select2('data', {id: response.item_id, a_key: response.item.name});
+			}
+		});
+	}
+
+//Delete Item On Bag by ID
+	function hapus(id) {
+		swal({
+			title: "Yakin Hapus?",
+			text: "Data yang sudah Anda Hapus dapat di isi kembali!",
+			icon: "warning",
+			buttons: [
+				'Batal!',
+				'Ya!'
+			],
+			dangerMode: true,
+		}).then(function(isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					type: "post",
+					url: "{{ backpack_url('delete-item_on-bag') }}",
+					data: {
+						bag_item_warehouse_out_id: id
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.code == 200) {
+							swal({
+								title: 'Berhasil Hapus!',
+								text: response.message,
+								icon: response.status
+							}).then(function () { 
+								location.reload();
+							})
+						}
+					}
+				});
+			} else {
+				swal("Batal", "Data Aman :)", "success").then(function () { location.reload() });
+			}
+    	})
+	}
 </script>
 @endsection

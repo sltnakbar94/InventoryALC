@@ -19,8 +19,8 @@
                     <td>{{ $item->Item->name }}</td>
                     <td id="qty{{ $item->id }}">{{ $item->qty }}</td>
                     <td>
-                        <a href="#" id="btn_modal-edit"><i class="fas fa-pencil-alt"></i></a>
-                        <a href="#"><i class="fas fa-trash-alt"></i></a>
+                        <a href="#" onclick="edit('{{ $item->id }}')" id="btn_modal-edit"><i class="fas fa-pencil-alt"></i></a>
+                        <a href="#" onclick="hapus('{{ $item->id }}')"><i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 @endforeach

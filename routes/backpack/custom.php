@@ -22,4 +22,7 @@ Route::group([
     Route::crud('item', 'ItemCrudController');
     Route::post('item_to-bag', 'ApiController@itemToBag');
 
+    Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
+    Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
+
 }); // this should be the absolute last line of this file

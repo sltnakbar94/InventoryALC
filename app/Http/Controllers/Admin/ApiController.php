@@ -73,6 +73,37 @@ class ApiController extends Controller
         return $check; 
     }
 
+    public function checkItemOnBagById(Request $request)
+    {
+        $data = $this->bagItemWarehouseOut::find($request->bag_item_warehouse_out_id);
+        $data['item'] = $data->Item;
+        return $data;
+    }
+
+    public function deleteItemOnBag(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = $this->checkItemOnBagById($request);
+            $item = $this->items::find($data->item_id);
+            $data->delete();
+            DB::commit();
+            $result =  array(
+                'code' => 200,
+                'status' => 'success', 
+                'message' => $item->name. ' Berhasil Dihapus dari Bag', 
+            );
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $result =  array(
+                'code' => 400,
+                'status' => 'error', 
+                'message' => 'Something Went Wrong! bcs '.$th->getMessage(), 
+            );
+        }
+        return $result;
+    }
+
     public function items()
     {
         return $this->items::all();
