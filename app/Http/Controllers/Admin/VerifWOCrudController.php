@@ -29,7 +29,7 @@ class VerifWOCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\VerifWO::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/verifwo');
-        CRUD::setEntityNameStrings('verifwo', 'verif_w_os');
+        CRUD::setEntityNameStrings('Surat Jalan', 'Generate Surat Jalan');
     }
 
     /**
