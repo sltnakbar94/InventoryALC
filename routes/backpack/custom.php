@@ -20,8 +20,11 @@ Route::group([
     Route::crud('supplier', 'SupplierCrudController');
     Route::crud('customer', 'CustomerCrudController');
     Route::crud('item', 'ItemCrudController');
-    Route::crud('windetails', 'WInDetailsCrudController');
     Route::crud('company', 'CompanyCrudController');
     Route::crud('verifwo', 'VerifWOCrudController');
-    Route::crud('woutdetail', 'WOutDetailCrudController');
+    Route::post('item_to-bag', 'ApiController@itemToBag');
+
+    Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
+    Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
+
 }); // this should be the absolute last line of this file

@@ -4,21 +4,19 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
-use App\Models\Customer;
 
-class WarehouseOut extends Model
+class BagItemWarehouseOut extends Model
 {
-    use CrudTrait, SoftDeletes;
+    use CrudTrait;
 
+    
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'warehouse_outs';
+    protected $table = 'bag_item_warehouse_outs';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -37,19 +35,9 @@ class WarehouseOut extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function user()
+    public function Item()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function warehouseOutDetail()
-    {
-        return $this->hasMany(WOutDetail::class, 'warehouse_out_id', 'id')->orderby('created_at', 'desc');
-    }
-
-    public function customer()
-    {
-        return $this->hasOne(Customer::class, 'id', 'customer_id');
+        return $this->hasOne(Item::class, 'id', 'item_id');
     }
 
     /*
@@ -69,4 +57,5 @@ class WarehouseOut extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
 }

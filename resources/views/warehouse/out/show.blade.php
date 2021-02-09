@@ -27,9 +27,9 @@
 @section('content')
 
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-4">
 
-	<!-- Default box -->
+		<!-- Default box -->
 	  <div class="">
 	  	@if ($crud->model->translationEnabled())
 	    <div class="row">
@@ -51,180 +51,145 @@
 	    @endif
         <div class="card no-padding no-border">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6 class="text-right">No Surat Jalan: <strong>{{ $crud->entry->delivery_note }}</strong></h6><br>
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="text-right">Tanggal Masuk: <strong>{{ date('d-m-Y', strtotime($crud->entry->date_out)) }}</strong></h6><br>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table">
-                            <table class="table no-border">
-                                <tr>
-                                    <td>Nama Customer</td>
-                                    <td><strong>{{ $crud->entry->customer->name }}</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td><strong>{{ $crud->entry->customer->email }}</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>Alamat</td>
-                                    <td><strong>{{ $crud->entry->customer->address }}</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>No Telepon</td>
-                                    <td><strong>{{ $crud->entry->customer->contact_number }}</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>Keterangan</td>
-                                    <td><textarea readonly style="font-weight: bold; border: none">{{ $crud->entry->description }}</textarea></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="card no-padding no-border">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-md-12">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalOutDetail">
-                            <i class="fa fa-plus"></i> TAMBAH BARANG
-                            </button>
-                    </div>
-                </div>
+				asd
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table">
-                            <table class="table table-responsive">
-                                <tr>
-                                    <th style="width: 10%">Nomor</th>
-                                    <th style="width: 40%">Item</th>
-                                    <th style="width: 10%">Satuan</th>
-                                    <th style="width: 15%">Jumlah</th>
-                                    <th style="width: 15%">Harga</th>
-                                    <th style="width: 15%">Catatan</th>
-                                    <th style="width: 15%">Action</th>
-                                </tr>
-                                @if(isset($crud->entry->warehouseOutDetail))
-                                    @php
-                                    $total = 0;
-                                    $harga = 0;
-                                    @endphp
-                                    @foreach($crud->entry->warehouseOutDetail as $od)
-                                    @php
-                                    $total += $od->qty;
-                                    $harga += $od->price;
-                                    @endphp
-                                    <tr>
-                                        <td>{{ @$od->nomor_order }}</td>
-                                        <td>{{ $od->item->name }}</td>
-                                        <td>{{ $od->item->unit }}</td>
-                                        <td>{{ $od->qty }}</td>
-                                        <td>{{ $od->price }}</td>
-                                        <td>{{ $od->note }}</td>
-                                        <td>
-                                            <form method="POST" action="{{ route('woutdetail.edit', $od->id) }}" enctype="multipart/form-data">
-                                                @csrf
-                                                <button type="submit" class="btn btn-warning editModalOutDetail" data-toggle="modal" data-target="#editModalOutDetail">EDIT</button>
-                                            </form>
-                                            <form method="POST" action="{{ route('woutdetail.destroy', $od->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger">DELETE</button>
-                                            </form>
-                                            {{-- <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a id="{{ route('outdetail.edit', $od->id) }}" href="{{ route('outdetail.update', $od->id) }}" class="btn btn-warning editModalOutDetail" data-toggle="modal" data-target="#editModalOutDetail">EDIT</a>
-                                                @if($od->status_terima != 1)
-                                                <form method="POST" action="{{ route('outdetail.destroy', $od->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger">DELETE</button>
-                                                </form>
-                                                @endif
-                                            </div> --}}
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <th>TOTAL</th>
-                                        <th>{{ $total }}</th>
-                                        <td>{{ $harga }}</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                @else
-                                <tr>
-                                    <td colspan="7" class="text-center">Belum ada data order</td>
-                                </tr>
-                                @endif
-                            </table>
-                        </div>
-                    </div>
-                </div>
+				@if(view()->exists('warehouse.out.form_content'))
+					@include('warehouse.out.form_content', [ 'fields' => $crud->fields(), 'action' => 'create' ])
+				@else
+					@include('crud::form_content', [ 'fields' => $crud->fields(), 'action' => 'create' ])
+				@endif
             </div>
         </div>
 	  </div>
 	</div>
+	<div class="col-md-8">
+		<div class="card-body">
+			@if(view()->exists('warehouse.out.list_content'))
+				@include('warehouse.out.item-to_bag')
+				@include('warehouse.out.list_content', [ 'fields' => $crud->fields(), 'action' => 'create' ])
+			@else
+				@include('crud::form_content', [ 'fields' => $crud->fields(), 'action' => 'create' ])
+			@endif
+		</div>
+	</div>
 </div>
-@include('warehouse.out.add-modal')
 @endsection
 
 
 @section('after_styles')
 	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/crud.css') }}">
 	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/show.css') }}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+
 @endsection
+
 @section('after_scripts')
-	<script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
-	<script src="{{ asset('packages/backpack/crud/js/show.js') }}"></script>
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script>
-$(document).ready(function(){
-    $('body').on('submit', '#out_detail_add', function(e){
-        e.preventDefault();
+    $(document).ready(function() {
+        $('#example').DataTable();
+		$('.select2').select2({})
+    } );
+	$('#item_to-bag').submit(function(e) {
+		e.preventDefault()
 
-        $('#add-buton-out').attr('disabled', true)
+		var t = $('table#example').DataTable();
 
-        var url = $(this).attr('action');
 
-        $.ajax({
-            url: url,
-            type: 'POST',
-            dataType: 'json',
-            data: $(this).serialize(),
-            success:function(response){
-                if(response.success) {
-                    // close modal
-                    // show notification
-                    // reload
-                    $("#out_detail_add").trigger('reset');
-                    $("#addModalOutDetail").modal('hide');
-                    window.open(response.url, '_blank');
-                    window.location.reload();
-                }
-            },
-            error:function(xhr, responseText, throwError){
-                if(xhr.responseJSON.success === false) {
-                    $('#form-modal-alert').show();
-                    $('#form-modal-alert').html(xhr.responseJSON.message);
-                    $('#add-buton-kolam').attr('disabled', false)
-                }
-            },
-        });
+		var data = $(this).serialize()
+		var method = $(this).attr('method')
+		var action = $(this).attr('action')
 
-        return false;
-    })
-});
+			$.ajax({
+				url: action,
+				data: data,
+				method: method,
+				beforeSend: function() {
+					$('#btn-submit').prop('disabled', true);
+				},
+				success: function(response) {
+					$('#btn-submit').prop('disabled', false);
+					//If New Record
+					if (response.code == 200) {
+						var id = response.data.ItemOnBag.id
+						var btn_action = '<a href="#" onclick="edit('+id+')"><i class="fas fa-pencil-alt"></i></a> <a href="#" onclick="hapus('+id+')"><i class="fas fa-trash-alt"></i></a>'
+						console.log(response)
+						t.row.add([
+							response.data.ItemOnBag.id,
+							response.data.Item.name,
+							response.data.ItemOnBag.qty,
+							btn_action
+						]).draw(false)
+					}else{
+						//If Update Record
+						location.reload();
+					}
+					swal(response.status, response.message, response.status);
+				}
+			})
+	})
+
+//Edit Item On Bag by ID
+	function edit(id) {
+		var url = "{{ backpack_url('item_on-bag') }}"
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: {
+				bag_item_warehouse_out_id: id
+			},
+			dataType: "json",
+			success: function (response) {
+				console.log(response)
+				$('input#qty').val(response.qty);
+				$('#item_id').val(response.item_id).trigger('change');
+				// $('#item_id').select2('data', {id: response.item_id, a_key: response.item.name});
+			}
+		});
+	}
+
+//Delete Item On Bag by ID
+	function hapus(id) {
+		swal({
+			title: "Yakin Hapus?",
+			text: "Data yang sudah Anda Hapus dapat di isi kembali!",
+			icon: "warning",
+			buttons: [
+				'Batal!',
+				'Ya!'
+			],
+			dangerMode: true,
+		}).then(function(isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					type: "post",
+					url: "{{ backpack_url('delete-item_on-bag') }}",
+					data: {
+						bag_item_warehouse_out_id: id
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.code == 200) {
+							swal({
+								title: 'Berhasil Hapus!',
+								text: response.message,
+								icon: response.status
+							}).then(function () {
+								location.reload();
+							})
+						}
+					}
+				});
+			} else {
+				swal("Batal", "Data Aman :)", "success").then(function () { location.reload() });
+			}
+    	})
+	}
 </script>
 @endsection

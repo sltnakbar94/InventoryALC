@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Auth;
+use App\Models\Item;
+use App\Models\Customer;
+use App\Models\WarehouseOut;
+use Illuminate\Support\Facades\DB;
+use App\Models\BagItemWarehouseOut;
+use Illuminate\Support\Facades\Request;
 use App\Http\Requests\WarehouseOutRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -21,7 +28,7 @@ class WarehouseOutCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation { show as traitShow; }
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -33,7 +40,6 @@ class WarehouseOutCrudController extends CrudController
         CRUD::setModel(\App\Models\WarehouseOut::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/warehouseout');
         CRUD::setEntityNameStrings('Barang Keluar', 'Barang Keluar');
-        $this->crud->setShowView('warehouse.out.show');
     }
 
     /**
@@ -85,6 +91,7 @@ class WarehouseOutCrudController extends CrudController
             'model' => 'App\Models\User',
             'label' => 'Operator'
         ]);
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -172,4 +179,31 @@ class WarehouseOutCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->setShowView('warehouse.out.show');
+    }
+
+    public function show($id)
+    {
+        $content = $this->traitShow($id);
+        $content['data'] = WarehouseOut::findOrFail($id)->with('customer')->first();
+        $this->crud->addField([
+            'name' => 'warehouse_out',
+            'data' => $content['data']
+        ]);
+
+        $this->crud->addField([
+            'name' => 'items',
+            'data' => Item::all(),
+        ]);
+
+        $this->crud->addField([
+            'name' => 'items_on-bag',
+            'data' => BagItemWarehouseOut::all(),
+        ]);
+        return $content;
+    }
+
 }
