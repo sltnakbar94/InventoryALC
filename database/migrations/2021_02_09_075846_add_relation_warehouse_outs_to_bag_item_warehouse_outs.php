@@ -29,8 +29,8 @@ class AddRelationWarehouseOutsToBagItemWarehouseOuts extends Migration
     public function down()
     {
         Schema::table('bag_item_warehouse_outs', function (Blueprint $table) {
-            $table->dropForeign('bag_item_warehouse_outs_to_warehouse_outs_foreign');
-            $table->dropForeign('bag_item_warehouse_outs_to_items_foreign');
+            $table->dropForeign('bag_item_warehouse_outs_warehouse_outs_id_foreign');
+            $table->dropForeign('bag_item_warehouse_outs_item_id_foreign');
         });
     }
 }
