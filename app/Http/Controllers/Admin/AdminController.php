@@ -70,11 +70,10 @@ class AdminController extends Controller
     public function deliveryOrder()
     {
         $items = BagItemWarehouseOut::get();
-        dd($items, $items->sum('qty'));
 
         $this->data['delivery_order'] = [
             'Item' => [
-                'count' => $count,
+                'count' => $items,
             ],
         ];
     }
