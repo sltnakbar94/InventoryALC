@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use App\Services\CrudServices;
 use App\Services\ItemServices;
 use App\Models\BagItemWarehouseIn;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +17,14 @@ class ApiController extends Controller
         Item $items, 
         BagItemWarehouseOut $bagItemWarehouseOut, 
         BagItemWarehouseIn $bagItemWarehouseIn, 
-        ItemServices $itemServices) {
+        ItemServices $itemServices,
+        CrudServices $crudServices) {
+
+        // Services
         $this->itemServices = $itemServices;
+        $this->crudService = $crudServices;
+
+        // Model
         $this->items = $items;
         $this->bagItemWarehouseOut = $bagItemWarehouseOut;
         $this->bagItemWarehouseIn = $bagItemWarehouseIn;
@@ -220,6 +227,22 @@ class ApiController extends Controller
             );
         }
         return $result;
+    }
+
+    // Approval Deliver Order 
+    public function accept(Request $request)
+    {
+        return $this->updateService([
+            'model' => $this->bagItemWarehouseOut,
+            'data' => array(
+                'flag' => 'accepted',
+                'user_id' => backpack_auth()->id()
+            ),
+            'where' => array(
+                'id' => $request->id,
+            ),
+            'message' => 'Barang Diterma & akan Diteruskan ke Delivery'
+        ]);
     }
     
 }

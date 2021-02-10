@@ -27,9 +27,12 @@ Route::group([
     Route::post('item_to-bag', 'ApiController@itemToBag');
     Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
     Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
+    Route::post('accept', 'ApiController@accept');
 
     // In
     Route::post('item_to-bag_in', 'ApiController@itemToBagIn');
     Route::get('item_on-bag_in', 'ApiController@checkItemOnBagInById');
     Route::post('delete-item_on-bag_in', 'ApiController@deleteItemOnBagIn');
+
+
 }); // this should be the absolute last line of this file
