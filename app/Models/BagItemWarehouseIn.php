@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class BagItemWarehouseOut extends Model
+class BagItemWarehouseIn extends Model
 {
     use CrudTrait;
 
@@ -15,7 +16,7 @@ class BagItemWarehouseOut extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'bag_item_warehouse_outs';
+    protected $table = 'bag_item_warehouse_ins';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

@@ -14,20 +14,26 @@ Route::group([
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
+    //dashboard
     Route::get('dashboard', 'AdminController@dashboard')->name('backpack.dashboard');
+    Route::get('charts/purchase-order', 'Charts\PurchaseOrderChartController@response')->name('charts.purchase-order.index');
 
-    Route::crud('warehousein', 'WarehouseInCrudController');
+    // Out
     Route::crud('warehouseout', 'WarehouseOutCrudController');
+    Route::post('item_to-bag', 'ApiController@itemToBag');
+    Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
+    Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
+
+    // In
+    Route::crud('warehousein', 'WarehouseInCrudController');
+    Route::post('item_to-bag_in', 'ApiController@itemToBagIn');
+    Route::get('item_on-bag_in', 'ApiController@checkItemOnBagInById');
+    Route::post('delete-item_on-bag_in', 'ApiController@deleteItemOnBagIn');
+
     Route::crud('user', 'UserCrudController');
     Route::crud('supplier', 'SupplierCrudController');
     Route::crud('customer', 'CustomerCrudController');
     Route::crud('item', 'ItemCrudController');
     Route::crud('company', 'CompanyCrudController');
     Route::crud('verifwo', 'VerifWOCrudController');
-    Route::post('item_to-bag', 'ApiController@itemToBag');
-
-    Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
-    Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
-
-    Route::get('charts/purchase-order', 'Charts\PurchaseOrderChartController@response')->name('charts.purchase-order.index');
 }); // this should be the absolute last line of this file

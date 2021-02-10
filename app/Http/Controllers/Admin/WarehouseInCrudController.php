@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\WarehouseInRequest;
-use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\Item;
 use App\Models\Supplier;
 use App\Models\WarehouseIn;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\WarehouseInRequest;
+use App\Models\BagItemWarehouseIn;
+use Backpack\CRUD\app\Http\Controllers\CrudController;
+use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
  * Class WarehouseInCrudController
@@ -20,7 +22,7 @@ class WarehouseInCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation { show as traitShow; }
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -163,5 +165,26 @@ class WarehouseInCrudController extends CrudController
     protected function setupShowOperation()
     {
         $this->crud->setShowView('warehouse.in.show');
+    }
+
+    public function show($id)
+    {
+        $content = $this->traitShow($id);
+        $content['data'] = WarehouseIn::findOrFail($id)->with('supplier')->first();
+        $this->crud->addField([
+            'name' => 'warehouse_in',
+            'data' => $content['data']
+        ]);
+
+        $this->crud->addField([
+            'name' => 'items',
+            'data' => Item::all(),
+        ]);
+
+        $this->crud->addField([
+            'name' => 'items_on-bag',
+            'data' => BagItemWarehouseIn::all(),
+        ]);
+        return $content;
     }
 }
