@@ -3,9 +3,9 @@
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-cog"></i> Warehouse</a>
 	<ul class="nav-dropdown-items">
-        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehousein') }}'><i class='nav-icon la la-question'></i> In</a></li>
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehousein') }}'><i class='nav-icon la la-question'></i> Purchase Order</a></li>
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehouseout') }}'><i class='nav-icon la la-question'></i> Delivery Order</a></li>
-        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('verifwo') }}'><i class='nav-icon la la-question'></i> Surat Jalan</a></li>
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('verifwo') }}'><i class='nav-icon la la-question'></i> Delivery Note</a></li>
     </ul>
 </li>
 <li class="nav-item nav-dropdown">
@@ -18,5 +18,3 @@
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class='nav-icon la la-question'></i> Companies</a></li>
     </ul>
 </li>
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehousoutdetail') }}'><i class='nav-icon la la-question'></i> WarehousOutDetails</a></li>

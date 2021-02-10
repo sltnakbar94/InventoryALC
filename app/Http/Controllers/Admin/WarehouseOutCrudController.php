@@ -12,10 +12,7 @@ use Illuminate\Support\Facades\Request;
 use App\Http\Requests\WarehouseOutRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use App\Models\Customer;
 use App\Models\Company;
-use App\Models\WarehouseOut;
-use Auth;
 
 /**
  * Class WarehouseOutCrudController

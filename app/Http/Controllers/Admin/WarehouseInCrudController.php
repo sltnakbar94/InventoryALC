@@ -32,7 +32,6 @@ class WarehouseInCrudController extends CrudController
         CRUD::setModel(\App\Models\WarehouseIn::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/warehousein');
         CRUD::setEntityNameStrings('Barang Masuk', 'Barang Masuk');
-        $this->crud->setShowView('warehouse.in.show');
     }
 
     /**
@@ -101,7 +100,7 @@ class WarehouseInCrudController extends CrudController
         $count = WarehouseIn::withTrashed()->whereDate('created_at', date('Y-m-d'))->count()+1;
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
 
-        $generate = $month.$day."-".$number."/WHI-SJ/".$year;
+        $generate = $month.$day."-".$number."/WHI-PO/".$year;
 
         return $generate;
     }
@@ -159,5 +158,10 @@ class WarehouseInCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->setShowView('warehouse.in.show');
     }
 }
