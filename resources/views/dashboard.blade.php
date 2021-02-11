@@ -3,5 +3,6 @@
 @section('content')
 
 @include('dashboard.counter')
+@include('dashboard.pie-chart')
 
 @endsection

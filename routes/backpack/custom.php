@@ -17,6 +17,7 @@ Route::group([
     //dashboard
     Route::get('dashboard', 'AdminController@dashboard')->name('backpack.dashboard');
     Route::get('charts/purchase-order', 'Charts\PurchaseOrderChartController@response')->name('charts.purchase-order.index');
+    Route::get('charts/counter', 'Charts\CounterChartController@response')->name('charts.counter.index');
 
     // Out
     Route::crud('warehouseout', 'WarehouseOutCrudController');

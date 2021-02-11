@@ -12,7 +12,7 @@ use Carbon;
 
 class AdminController extends Controller
 {
-    protected $data = []; // the information we send to the view
+    public $data = []; // the information we send to the view
 
     /**
      * Create a new controller instance.
