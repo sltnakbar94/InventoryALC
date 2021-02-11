@@ -39,13 +39,14 @@ class ApiController extends Controller
             $item = $this->items::find($request->item_id);
             $checkItemOnBag = $this->checkItemOnBag($request);
             $itemOnBag = $this->bagItemWarehouseOut::where('warehouse_outs_id', $request->warehouse_outs_id)->get();
-
             // Check If Empty Item On Bag
             if (empty($checkItemOnBag)) {
-                $data = $this->bagItemWarehouseOut::create([
+                $itemOnBag = $this->bagItemWarehouseOut::create([
                     'warehouse_outs_id' => $request->warehouse_outs_id,
                     'item_id' => $request->item_id,
-                    'qty' => $request->qty
+                    'qty' => $request->qty,
+                    'user_id' => backpack_auth()->id(),
+                    'flag' => 'submit'
                 ]);
                 
                 //Result Success Create
@@ -53,7 +54,7 @@ class ApiController extends Controller
                     'code' => 200,
                     'status' => 'success', 
                     'message' => 'Item '.$item->name. ' Berhasil Masuk Bag', 
-                    'data' => array('ItemOnBag' => $data, 'Item' => $data->Item));
+                    'data' => array('ItemOnBag' => $itemOnBag, 'Item' => $itemOnBag->Item));
             }else{
                 $updateQty = $checkItemOnBag->qty + $request->qty;
 

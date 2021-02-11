@@ -106,6 +106,7 @@
 		var method = $(this).attr('method')
 		var action = $(this).attr('action')
 
+		console.log(action)
 			$.ajax({
 				url: action,
 				data: data,
@@ -117,28 +118,24 @@
 					$('#btn-submit').prop('disabled', false);
 					//If New Record
 					if (response.code == 200) {
+						console.log(response.data.ItemOnBag.flag !== 'accepted')
 						var id = response.data.ItemOnBag.id
-						var btn_action = '<a href="#" onclick="edit('+id+')"><i class="fas fa-pencil-alt"></i></a>'
-										+'<a href="#" onclick="hapus('+id+')"><i class="fas fa-trash-alt"></i></a>'
-										+'<div class="btn-group" role="group">'
-											+'<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">'
-												+'Dropdown'
-											+'</button>'
-											+'<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">'
-												+'<li><a class="dropdown-item" href="#">Dropdown link</a></li>'
-												+'<li><a class="dropdown-item" href="#">Dropdown link</a></li>'
-											+'</ul>'
+						var btn_action = '<div class="btn-group">'
+											+'<button onclick="edit('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>'
+											+'<button onclick="hapus('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-trash-alt"></i></button>'
+											+'<button onclick="accept('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-check"></i></button>'
 										+'</div>'
-						console.log(response)
 						t.row.add([
 							response.data.ItemOnBag.id,
 							response.data.Item.name,
 							response.data.ItemOnBag.qty,
+							response.data.ItemOnBag.flag,
 							btn_action
 						]).draw(false)
 					}else{
 						//If Update Record
-						location.reload();
+						// location.reload();
+						console.log(response)
 					}
 					swal(response.status, response.message, response.status);
 				}
