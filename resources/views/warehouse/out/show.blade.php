@@ -118,7 +118,17 @@
 					//If New Record
 					if (response.code == 200) {
 						var id = response.data.ItemOnBag.id
-						var btn_action = '<a href="#" onclick="edit('+id+')"><i class="fas fa-pencil-alt"></i></a> <a href="#" onclick="hapus('+id+')"><i class="fas fa-trash-alt"></i></a>'
+						var btn_action = '<a href="#" onclick="edit('+id+')"><i class="fas fa-pencil-alt"></i></a>'
+										+'<a href="#" onclick="hapus('+id+')"><i class="fas fa-trash-alt"></i></a>'
+										+'<div class="btn-group" role="group">'
+											+'<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">'
+												+'Dropdown'
+											+'</button>'
+											+'<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">'
+												+'<li><a class="dropdown-item" href="#">Dropdown link</a></li>'
+												+'<li><a class="dropdown-item" href="#">Dropdown link</a></li>'
+											+'</ul>'
+										+'</div>'
 						console.log(response)
 						t.row.add([
 							response.data.ItemOnBag.id,
@@ -135,7 +145,7 @@
 			})
 	})
 
-//Edit Item On Bag by ID
+	//Edit Item On Bag by ID
 	function edit(id) {
 		var url = "{{ backpack_url('item_on-bag') }}"
 		$.ajax({
@@ -154,7 +164,7 @@
 		});
 	}
 
-//Delete Item On Bag by ID
+	//Delete Item On Bag by ID
 	function hapus(id) {
 		swal({
 			title: "Yakin Hapus?",
@@ -191,5 +201,44 @@
 			}
     	})
 	}
+
+	//Update Status from Submited to Accepted
+	function accept(id) {
+		swal({
+			title: "Terima Barang",
+			text: "Data yang sudah Anda Terima tidak dapat di edit kembali!",
+			icon: "warning",
+			buttons: [
+				'Batal!',
+				'Ya!'
+			],
+			dangerMode: true,
+		}).then(function(isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					type: "post",
+					url: "{{ backpack_url('accept') }}",
+					data: {
+						id: id 
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.code == 200) {
+							swal({
+								title: 'Berhasil Hapus!',
+								text: response.message,
+								icon: response.status
+							}).then(function () {
+								location.reload();
+							})
+						}
+					}
+				});
+			} else {
+				swal("Batal", "Data Aman :)", "success").then(function () { location.reload() });
+			}
+    	})
+	}
+
 </script>
 @endsection

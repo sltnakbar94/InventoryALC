@@ -24,6 +24,7 @@ Route::group([
     Route::post('item_to-bag', 'ApiController@itemToBag');
     Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
     Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
+    Route::post('accept', 'ApiController@accept');
 
     // In
     Route::crud('warehousein', 'WarehouseInCrudController');
