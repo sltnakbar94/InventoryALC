@@ -188,8 +188,6 @@ class ApiController extends Controller
                     'data' => array('itemOnBag' => $itemOnBag, 'qty' => $updateQty));
             }
             // End Check If Empty Item On Bag
-
-
             DB::commit();
             return $result;
         } catch (\Throwable $th) {

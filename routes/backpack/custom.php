@@ -35,4 +35,5 @@ Route::group([
     Route::post('delete-item_on-bag_in', 'ApiController@deleteItemOnBagIn');
 
 
+    Route::crud('role', 'RoleCrudController');
 }); // this should be the absolute last line of this file
