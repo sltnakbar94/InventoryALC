@@ -154,7 +154,12 @@
 			dataType: "json",
 			success: function (response) {
 				console.log(response)
-				$('input#qty').val(response.qty);
+				if (response.qty_confirm !== 0) {
+					var qty = response.qty_confirm
+				}else{
+					var qty = response.qty
+				}
+				$('input#qty').val(qty);
 				$('#item_id').val(response.item_id).trigger('change');
 				// $('#item_id').select2('data', {id: response.item_id, a_key: response.item.name});
 			}

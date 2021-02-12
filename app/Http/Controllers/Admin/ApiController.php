@@ -57,7 +57,7 @@ class ApiController extends Controller
                     'data' => array('ItemOnBag' => $itemOnBag, 'Item' => $itemOnBag->Item));
             }else{
                 $updateQty = $checkItemOnBag->qty + $request->qty;
-
+                
                 //Check If QTY less then 0 (Zero)
                 if ($updateQty < 0) {
                     $this->bagItemWarehouseOut::where(
@@ -67,13 +67,11 @@ class ApiController extends Controller
                     )->delete();
                     $message = 'Menghapus Item Karena QTY Kurang Dari 0';
                 } else {
-                    $this->bagItemWarehouseOut::where(
-                        array(
-                            'warehouse_outs_id' => $request->warehouse_outs_id, 
-                            'item_id' => $request->item_id)
-                    )->update([
-                        'qty' => $updateQty
-                    ]);
+                    if (backpack_user()->hasRole('operator-gudang')) {
+                        $this->gudangUpdate($request);
+                    }else{
+                        $this->operatorUpdate($request, $updateQty);
+                    }
                     $message = 'Item '.$item->name. ' Berhasil Menambah Quantity';
                 }
 
@@ -91,6 +89,30 @@ class ApiController extends Controller
             DB::rollback();
             return $th->getMessage();
         }
+    }
+
+    public function gudangUpdate($request)
+    {
+        return $this->bagItemWarehouseOut::where(
+            array(
+                'warehouse_outs_id' => $request->warehouse_outs_id, 
+                'item_id' => $request->item_id)
+        )->update([
+            'qty_confirm' => $request->qty,
+            'flag'      => 'updated',
+            'user_id' => backpack_auth()->id()
+        ]);
+    }
+
+    public function operatorUpdate($request, $updateQty)
+    {
+        return $this->bagItemWarehouseOut::where(
+            array(
+                'warehouse_outs_id' => $request->warehouse_outs_id, 
+                'item_id' => $request->item_id)
+        )->update([
+            'qty' => $updateQty
+        ]);
     }
 
     public function checkItemOnBag($request)
