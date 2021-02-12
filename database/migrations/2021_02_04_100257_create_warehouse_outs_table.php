@@ -21,6 +21,7 @@ class CreateWarehouseOutsTable extends Migration
             $table->date('date_out')->nullable();
             $table->text('description')->nullable();
             $table->string('user_id');
+            $table->integer('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

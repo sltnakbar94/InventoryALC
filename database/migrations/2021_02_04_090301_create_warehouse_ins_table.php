@@ -20,6 +20,7 @@ class CreateWarehouseInsTable extends Migration
             $table->date('date_in')->nullable();
             $table->text('description')->nullable();
             $table->string('user_id');
+            $table->integer('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
