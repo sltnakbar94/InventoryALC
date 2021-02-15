@@ -24,7 +24,7 @@ class ApiController extends Controller
         CrudServices $crudServices) {
 
         // Services
-        $this->itemServices = $itemServices;
+        $this->itemService = $itemServices;
         $this->crudService = $crudServices;
         $this->warehouseServices = $warehouseServices;
 
@@ -163,13 +163,25 @@ class ApiController extends Controller
         return $this->items::all();
     }
 
+    // Approval Deliver Order 
+    public function accept(Request $request)
+    {
+        return $this->warehouseServices->ApprovalDO(array('item_id' => $request->id, 'user_id' => backpack_auth()->id()));
+    }
+    
+    // Approval Deliver Order 
+    public function decline(Request $request)
+    {
+        return $this->warehouseServices->DeclineDO(array('item_id' => $request->id, 'user_id' => backpack_auth()->id()));
+    }
+
     //Purchase Order
     public function itemToBagIn(Request $request)
     {
         try {
             DB::beginTransaction();
             $item = $this->items::find($request->item_id);
-            $checkItemOnBag = $this->itemServices->checkItemOnBagIN($request->warehouse_ins_id, $request->item_id);
+            $checkItemOnBag = $this->itemService->checkItemOnBagIN($request->warehouse_ins_id, $request->item_id);
             $itemOnBag = $this->bagItemWarehouseIn::where('warehouse_ins_id', $request->warehouse_ins_id)->get();
 
             // Check If Empty Item On Bag
@@ -177,7 +189,8 @@ class ApiController extends Controller
                 $data = $this->bagItemWarehouseIn::create([
                     'warehouse_ins_id' => $request->warehouse_ins_id,
                     'item_id' => $request->item_id,
-                    'qty' => $request->qty
+                    'qty' => $request->qty,
+                    'flag' => 'submit'
                 ]);
                 
                 //Result Success Create
@@ -219,7 +232,10 @@ class ApiController extends Controller
             return $result;
         } catch (\Throwable $th) {
             DB::rollback();
-            return $th->getMessage();
+            return array(
+                'code' => 400,
+                'status' => 'error', 
+                'message' => $th->getMessage);
         }
     }
 
@@ -254,16 +270,27 @@ class ApiController extends Controller
         return $result;
     }
 
-    // Approval Deliver Order 
-    public function accept(Request $request)
+    // Approval Purchase Order 
+    public function acceptPO(Request $request)
     {
-        return $this->warehouseServices->ApprovalDO(array('item_id' => $request->id, 'user_id' => backpack_auth()->id()));
+        //Check if Success Update Flag, then Add Qty on Item
+        $approve = $this->warehouseServices->ApprovalPO(array(
+            'item_id' => $request->id, 
+            'user_id' => backpack_auth()->id(), 
+            'qty' => $request->qty
+        ));
+        return $approve;
+
     }
     
-    // Approval Deliver Order 
-    public function decline(Request $request)
+    // Approval Purchase Order 
+    public function declinePO(Request $request)
     {
-        return $this->warehouseServices->DeclineDO(array('item_id' => $request->id, 'user_id' => backpack_auth()->id()));
+        $decline = $this->warehouseServices->DeclinePO(array(
+            'item_id' => $request->id, 
+            'user_id' => backpack_auth()->id(),
+            'qty' => $request->qty
+        ));
+        return $decline;
     }
-    
 }

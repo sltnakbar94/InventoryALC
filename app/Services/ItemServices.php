@@ -9,10 +9,13 @@ class ItemServices {
 
     public function __construct(
         Item $itemModel, 
+        CRUDServices $crudServices,
         BagItemWarehouseOut $bagItemWarehouseOut,
         BagItemWarehouseIn $bagItemWarehouseIn
         ) {
         $this->itemModel = $itemModel;
+        $this->crudService = $crudServices;
+
         $this->bagItemWarehouseOut = $bagItemWarehouseOut;
         $this->bagItemWarehouseIn = $bagItemWarehouseIn;
     }
@@ -78,4 +81,50 @@ class ItemServices {
             'item_id' => $item_id))->first();
         return $check; 
     }
+
+    /**
+     * Add QTY From PO
+     *
+     * @param int $item_id
+     * @param int $qty
+     * @return Collection
+     */
+    public function AddQTYItemFromPO($item_id, $qty)
+    {
+        $item = $this->cekItemById($item_id);
+        $sum_qty = $item->qty + $qty;
+        return $this->crudService->handleUpdate([
+            'model' => $this->itemModel,
+            'data' => array(
+                'qty' => $sum_qty,
+            ),
+            'where' => array(
+                'id' => $item_id,
+            ),
+            'message' => 'Barang Berhasil Diterima'
+        ]);
+    }
+
+    /**
+     * Remove Item From DO
+     *
+     * @param int $item_id
+     * @param int $qty
+     * @return Collection
+     */
+    public function RemoveQTYItemFromPO($item_id, $qty)
+    {
+        $item = $this->cekItemById($item_id);
+        $sum_qty = $item->qty - $qty;
+        return $this->crudService->handleUpdate([
+            'model' => $this->itemModel,
+            'data' => array(
+                'qty' => $sum_qty,
+            ),
+            'where' => array(
+                'id' => $item_id,
+            ),
+            'message' => 'Barang Berhasil Diterima'
+        ]);
+    }   
 }

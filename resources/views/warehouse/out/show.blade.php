@@ -117,7 +117,6 @@
 					$('#btn-submit').prop('disabled', false);
 					//If New Record
 					if (response.code == 200) {
-						console.log(response.data.ItemOnBag.flag !== 'accepted')
 						var id = response.data.ItemOnBag.id
 						var btn_action = '<div class="btn-group">'
 											+'<button onclick="edit('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>'
@@ -245,7 +244,7 @@
 	//Update Status from Submited to Decline
 	function decline(id) {
 		swal({
-			title: "Terima Barang",
+			title: "Tolak Barang",
 			text: "Data yang sudah Anda Tolak tidak dapat di edit kembali!",
 			icon: "warning",
 			buttons: [

@@ -32,6 +32,8 @@ Route::group([
     Route::post('item_to-bag_in', 'ApiController@itemToBagIn');
     Route::get('item_on-bag_in', 'ApiController@checkItemOnBagInById');
     Route::post('delete-item_on-bag_in', 'ApiController@deleteItemOnBagIn');
+    Route::post('accept-po', 'ApiController@acceptPO');
+    Route::post('decline-po', 'ApiController@declinePO');
 
 
     Route::crud('customer', 'CustomerCrudController');
