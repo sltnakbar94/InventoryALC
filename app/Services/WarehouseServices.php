@@ -30,7 +30,8 @@ class WarehouseServices  {
      * @return Boolean
      */
     public function ApprovalDO($params) {
-       $data = $this->crudService->handleUpdate([
+        $item = $this->GetItemByWarehouseID($params['item_id'], $this->bagItemWarehouseOut);
+        $approve = $this->crudService->handleUpdate([
             'model' => $this->bagItemWarehouseOut,
             'data' => array(
                 'flag' => 'accepted',
@@ -41,6 +42,8 @@ class WarehouseServices  {
             ),
             'message' => 'Barang Diterma & akan Diteruskan ke Delivery'
         ]);
+
+        if ($approve['code'] == 200) return $this->itemService->RemoveQTYItemFromPO($item->item_id, $item->qty);
     }
 
     /**
