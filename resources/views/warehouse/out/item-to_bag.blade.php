@@ -18,7 +18,11 @@
         <label for="">Kuantitas</label>
         {!! Form::number('qty', null, ['class' => 'form-control', 'required', 'id' => 'qty']) !!}
       </div>
-      {!! Form::submit('Tambah Item', ['class' => 'btn btn-success', 'id' => 'btn-submit']) !!}
+      @if (backpack_user()->hasRole('operator-gudang'))
+        {!! Form::submit('Update Item', ['class' => 'btn btn-success', 'id' => 'btn-submit']) !!}    
+      @else
+        {!! Form::submit('Tambah Item', ['class' => 'btn btn-success', 'id' => 'btn-submit']) !!}
+      @endif
      </form>
   </div>
 </div>
