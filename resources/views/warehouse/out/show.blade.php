@@ -106,7 +106,6 @@
 		var method = $(this).attr('method')
 		var action = $(this).attr('action')
 
-		console.log(action)
 			$.ajax({
 				url: action,
 				data: data,
@@ -129,6 +128,7 @@
 							response.data.ItemOnBag.id,
 							response.data.Item.name,
 							response.data.ItemOnBag.qty,
+							0,
 							response.data.ItemOnBag.flag,
 							btn_action
 						]).draw(false)
@@ -227,7 +227,7 @@
 					success: function (response) {
 						if (response.code == 200) {
 							swal({
-								title: 'Berhasil Hapus!',
+								title: 'Berhasil Disetujui!',
 								text: response.message,
 								icon: response.status
 							}).then(function () {
