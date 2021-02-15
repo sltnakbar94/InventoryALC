@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
+
 
 class RoleSeeder extends Seeder
 {
@@ -14,8 +15,16 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'admin', 'guard_name' => 'admin']);
-        Role::create(['name' => 'warehouse', 'guard_name' => 'warehouse']);
-        Role::create(['name' => 'officer', 'guard_name' => 'officer']);
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // Operator Gudang
+        $OWarehouse = Role::create([
+            'name' => 'operator-gudang',
+        ]);
+
+        // Operator Office
+        $OOffice = Role::create([
+            'name' => 'operator-office',
+        ]);
     }
 }
