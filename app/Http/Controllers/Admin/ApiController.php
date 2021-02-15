@@ -10,6 +10,7 @@ use App\Models\BagItemWarehouseIn;
 use Illuminate\Support\Facades\DB;
 use App\Models\BagItemWarehouseOut;
 use App\Http\Controllers\Controller;
+use App\Services\WarehouseServices;
 
 class ApiController extends Controller
 {
@@ -17,12 +18,15 @@ class ApiController extends Controller
         Item $items, 
         BagItemWarehouseOut $bagItemWarehouseOut, 
         BagItemWarehouseIn $bagItemWarehouseIn, 
+
+        WarehouseServices $warehouseServices,
         ItemServices $itemServices,
         CrudServices $crudServices) {
 
         // Services
         $this->itemServices = $itemServices;
         $this->crudService = $crudServices;
+        $this->warehouseServices = $warehouseServices;
 
         // Model
         $this->items = $items;
@@ -253,17 +257,13 @@ class ApiController extends Controller
     // Approval Deliver Order 
     public function accept(Request $request)
     {
-        return $this->updateService([
-            'model' => $this->bagItemWarehouseOut,
-            'data' => array(
-                'flag' => 'accepted',
-                'user_id' => backpack_auth()->id()
-            ),
-            'where' => array(
-                'id' => $request->id,
-            ),
-            'message' => 'Barang Diterma & akan Diteruskan ke Delivery'
-        ]);
+        return $this->warehouseServices->ApprovalDO(array('item_id' => $request->id, 'user_id' => backpack_auth()->id()));
+    }
+    
+    // Approval Deliver Order 
+    public function decline(Request $request)
+    {
+        return $this->warehouseServices->DeclineDO(array('item_id' => $request->id, 'user_id' => backpack_auth()->id()));
     }
     
 }

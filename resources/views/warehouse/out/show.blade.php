@@ -242,5 +242,42 @@
     	})
 	}
 
+	//Update Status from Submited to Decline
+	function decline(id) {
+		swal({
+			title: "Terima Barang",
+			text: "Data yang sudah Anda Tolak tidak dapat di edit kembali!",
+			icon: "warning",
+			buttons: [
+				'Batal!',
+				'Ya!'
+			],
+			dangerMode: true,
+		}).then(function(isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					type: "post",
+					url: "{{ backpack_url('decline') }}",
+					data: {
+						id: id
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.code == 200) {
+							swal({
+								title: 'Berhasil Ditolak!',
+								text: response.message,
+								icon: response.status
+							}).then(function () {
+								location.reload();
+							})
+						}
+					}
+				});
+			} else {
+				swal("Batal", "Data Aman :)", "success").then(function () { location.reload() });
+			}
+    	})
+	}
 </script>
 @endsection

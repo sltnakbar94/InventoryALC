@@ -14,7 +14,7 @@ class AddFlagToBagItemWarehouseIns extends Migration
     public function up()
     {
         Schema::table('bag_item_warehouse_outs', function (Blueprint $table) {
-            $table->set('flag', ['submit', 'matched', 'updated', 'accepted'])->default('submit');
+            $table->set('flag', ['submit', 'decline', 'updated', 'accepted'])->default('submit');
 
             // know who changed the status from Warehouse
             $table->string('user_id')->default('192a6ff2-7f7f-48d9-a5bb-7229b3863fbf');
