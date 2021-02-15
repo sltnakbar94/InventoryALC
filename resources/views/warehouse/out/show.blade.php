@@ -51,7 +51,7 @@
 	    @endif
         <div class="card no-padding no-border">
             <div class="card-header">
-				asd
+				{{$crud->entry->delivery_note}}
             </div>
             <div class="card-body">
 				@if(view()->exists('warehouse.out.form_content'))
@@ -221,7 +221,7 @@
 					type: "post",
 					url: "{{ backpack_url('accept') }}",
 					data: {
-						id: id 
+						id: id
 					},
 					dataType: "json",
 					success: function (response) {

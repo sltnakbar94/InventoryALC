@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class UsersTableSeeder extends Seeder
 {
@@ -23,6 +24,12 @@ class UsersTableSeeder extends Seeder
         $user2 = User::create([
             'name' => 'Operator 2',
             'email' => 'operator2@example.com',
+            'password' => bcrypt('password')
+        ]);
+
+        $user2 = User::create([
+            'name' => 'Operator 3',
+            'email' => 'operator3@example.com',
             'password' => bcrypt('password')
         ]);
     }
