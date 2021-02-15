@@ -44,7 +44,7 @@ class CounterChartController extends ChartController
         $this->chart->displayAxes(false);
         $this->chart->displayLegend(true);
 
-        $this->chart->labels(['Purchase Order', 'Delivery Order', 'Delivery Note']);
+        $this->chart->labels(['Purchase Order', 'Delivery Order', 'Accepted']);
     }
 
     /**

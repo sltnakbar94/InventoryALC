@@ -41,7 +41,7 @@
             <div class="card-body">
                 <div class="text-value">{{ number_format($counter['delivery_note']['count']) }}</div>
 
-                <div>Delivery Note</div>
+                <div>Accepted</div>
 
                 <div class="progress progress-white progress-xs my-2">
                     <div class="progress-bar" role="progressbar" style="width: %"
