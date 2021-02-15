@@ -51,7 +51,7 @@
 	    @endif
         <div class="card no-padding no-border">
             <div class="card-header">
-				asd
+				{{$crud->entry->delivery_note}}
             </div>
             <div class="card-body">
 				@if(view()->exists('warehouse.in.form_content'))
@@ -131,7 +131,7 @@
 						location.reload();
 					}
 					swal(response.status, response.message, response.status);
-				}, 
+				},
 			})
 	})
 
