@@ -35,10 +35,15 @@ Route::group([
     Route::post('accept-po', 'ApiController@acceptPO');
     Route::post('decline-po', 'ApiController@declinePO');
 
+    //Delivery Note
+    Route::crud('deliverynote', 'DeliveryNoteCrudController');
+    Route::get('deliverynote/{warehouse_out_id}', 'DeliveryNoteCrudController@generateDeliveryNote');
 
     Route::crud('customer', 'CustomerCrudController');
     Route::crud('item', 'ItemCrudController');
     Route::crud('company', 'CompanyCrudController');
     Route::crud('supplier', 'SupplierCrudController');
     Route::crud('role', 'RoleCrudController');
+
+    
 }); // this should be the absolute last line of this file

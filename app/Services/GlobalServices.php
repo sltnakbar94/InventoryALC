@@ -23,5 +23,19 @@ class GlobalServices
         // return in_array($flag, $list);
     }
 
+    public function generateCode($code, $model, $params = array())
+    {
+        $day = date("d");
+        $month = date("m");
+        $year = date("Y");
+
+        $count = $model::withTrashed()->whereDate('created_at', date('Y-m-d'))->count()+1;
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+
+        $generate = $month.$day."-".$number."/WHO-".$code."/".$year;
+
+        return $generate;
+    }
+
 
 }

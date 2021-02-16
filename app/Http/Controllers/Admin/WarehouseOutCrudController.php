@@ -215,4 +215,9 @@ class WarehouseOutCrudController extends CrudController
         return $content;
     }
 
+    public function generateDeliveryNotes($warehouse_out_id)
+    {
+        return redirect()->route('generate_delivery-note', [$warehouse_out_id]);
+    }
+
 }
