@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($crud->fields()['items_on-bag']['data']->where('warehouse_outs_id', '=', $crud->entry->id) as $item)
+                @foreach ($crud->fields()['items_on-bag']['data']->where('warehouse_ins_id', '=', $crud->entry->id) as $item)
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->Item->name }}</td>

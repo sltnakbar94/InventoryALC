@@ -15,7 +15,7 @@ class CreateWarehouseInsTable extends Migration
     {
         Schema::create('warehouse_ins', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('delivery_note');
+            $table->string('delivery_note')->nullable();
             $table->string('supplier_id');
             $table->date('date_in')->nullable();
             $table->text('description')->nullable();

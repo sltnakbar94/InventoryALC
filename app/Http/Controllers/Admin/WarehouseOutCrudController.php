@@ -48,9 +48,9 @@ class WarehouseOutCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->addColumn([
-            'name' => 'delivery_note',
+            'name' => 'do_number',
             'type' => 'text',
-            'label' => 'Nomor Surat Jalan'
+            'label' => 'Nomor DO'
         ]);
 
         $this->crud->addColumn([
@@ -121,8 +121,8 @@ class WarehouseOutCrudController extends CrudController
         CRUD::setValidation(WarehouseOutRequest::class);
 
         $this->crud->addField([
-            'label' => "Nomor Surat Jalan",
-            'name'  => "delivery_note",
+            'label' => "Nomor DO",
+            'name'  => "do_number",
             'type'  => 'text',
             'value' => $this->generateNomorPengiriman()
         ]);

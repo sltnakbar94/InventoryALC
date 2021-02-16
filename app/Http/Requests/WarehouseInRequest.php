@@ -26,7 +26,7 @@ class WarehouseInRequest extends FormRequest
     public function rules()
     {
         return [
-            'delivery_note' => 'required',
+            'po_number' => 'required',
             'supplier_id' => 'required'
         ];
     }
