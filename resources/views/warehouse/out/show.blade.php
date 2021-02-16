@@ -117,7 +117,6 @@
 					$('#btn-submit').prop('disabled', false);
 					//If New Record
 					if (response.code == 200) {
-						console.log(response.data.ItemOnBag.flag !== 'accepted')
 						var id = response.data.ItemOnBag.id
 						var btn_action = '<div class="btn-group">'
 											+'<button onclick="edit('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>'
@@ -242,5 +241,42 @@
     	})
 	}
 
+	//Update Status from Submited to Decline
+	function decline(id) {
+		swal({
+			title: "Tolak Barang",
+			text: "Data yang sudah Anda Tolak tidak dapat di edit kembali!",
+			icon: "warning",
+			buttons: [
+				'Batal!',
+				'Ya!'
+			],
+			dangerMode: true,
+		}).then(function(isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					type: "post",
+					url: "{{ backpack_url('decline') }}",
+					data: {
+						id: id
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.code == 200) {
+							swal({
+								title: 'Berhasil Ditolak!',
+								text: response.message,
+								icon: response.status
+							}).then(function () {
+								location.reload();
+							})
+						}
+					}
+				});
+			} else {
+				swal("Batal", "Data Aman :)", "success").then(function () { location.reload() });
+			}
+    	})
+	}
 </script>
 @endsection

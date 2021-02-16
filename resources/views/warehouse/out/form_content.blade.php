@@ -14,3 +14,7 @@
 <div class="form-group required" element="div"><label>Description <span class="text-danger">*<span></label>
     {!! Form::textarea('description', $fields['warehouse_out']['data']->description, ['class' => 'form-control', 'readonly']) !!}
 </div>
+
+@if ($fields['flag_approval']['data'])
+    <a href="{{ backpack_url('') }}"></a>
+@endif

@@ -126,19 +126,26 @@
 				success: function(response) {
 					$('#btn-submit').prop('disabled', false);
 					//If New Record
+					console.log(response)
 					if (response.code == 200) {
 						var id = response.data.ItemOnBag.id
-						var btn_action = '<a href="#" onclick="edit('+id+')"><i class="fas fa-pencil-alt"></i></a> <a href="#" onclick="hapus('+id+')"><i class="fas fa-trash-alt"></i></a>'
-						console.log(response)
+						var btn_action = '<div class="btn-group">'
+											+'<button onclick="edit('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>'
+											+'<button onclick="hapus('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-trash-alt"></i></button>'
+											+'<button onclick="accept('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-check"></i></button>'
+										+'</div>'
 						t.row.add([
 							response.data.ItemOnBag.id,
 							response.data.Item.name,
 							response.data.ItemOnBag.qty,
+							0,
+							response.data.ItemOnBag.flag,
 							btn_action
 						]).draw(false)
 					}else{
 						//If Update Record
-						location.reload();
+						console
+						// location.reload();
 					}
 					swal(response.status, response.message, response.status);
 				},
@@ -188,6 +195,82 @@
 						if (response.code == 200) {
 							swal({
 								title: 'Berhasil Hapus!',
+								text: response.message,
+								icon: response.status
+							}).then(function () {
+								location.reload();
+							})
+						}
+					}
+				});
+			} else {
+				swal("Batal", "Data Aman :)", "success").then(function () { location.reload() });
+			}
+    	})
+	}
+
+//Update Status from Submited to Accepted
+	function accept(id) {
+		swal({
+			title: "Terima Barang",
+			text: "Data yang sudah Anda Terima tidak dapat di edit kembali!",
+			icon: "warning",
+			buttons: [
+				'Batal!',
+				'Ya!'
+			],
+			dangerMode: true,
+		}).then(function(isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					type: "post",
+					url: "{{ backpack_url('accept-po') }}",
+					data: {
+						id: id
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.code == 200) {
+							swal({
+								title: 'Berhasil Disetujui!',
+								text: response.message,
+								icon: response.status
+							}).then(function () {
+								location.reload();
+							})
+						}
+					}
+				});
+			} else {
+				swal("Batal", "Data Aman :)", "success").then(function () { location.reload() });
+			}
+    	})
+	}
+
+//Update Status from Submited to Decline
+	function decline(id) {
+		swal({
+			title: "Tolak Barang",
+			text: "Data yang sudah Anda Tolak tidak dapat di edit kembali!",
+			icon: "warning",
+			buttons: [
+				'Batal!',
+				'Ya!'
+			],
+			dangerMode: true,
+		}).then(function(isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					type: "post",
+					url: "{{ backpack_url('decline-po') }}",
+					data: {
+						id: id
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.code == 200) {
+							swal({
+								title: 'Berhasil Ditolak!',
 								text: response.message,
 								icon: response.status
 							}).then(function () {

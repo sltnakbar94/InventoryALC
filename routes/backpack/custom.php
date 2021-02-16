@@ -25,12 +25,16 @@ Route::group([
     Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
     Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
     Route::post('accept', 'ApiController@accept');
+    Route::post('decline', 'ApiController@decline');
+    Route::
 
     // In
     Route::crud('warehousein', 'WarehouseInCrudController');
     Route::post('item_to-bag_in', 'ApiController@itemToBagIn');
     Route::get('item_on-bag_in', 'ApiController@checkItemOnBagInById');
     Route::post('delete-item_on-bag_in', 'ApiController@deleteItemOnBagIn');
+    Route::post('accept-po', 'ApiController@acceptPO');
+    Route::post('decline-po', 'ApiController@declinePO');
 
 
     Route::crud('customer', 'CustomerCrudController');
