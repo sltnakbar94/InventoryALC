@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($crud->fields()['items_on-bag']['data'] as $item)
+                @foreach ($crud->fields()['items_on-bag']['data']->where('warehouse_ins_id', '=', $crud->entry->id) as $item)
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->Item->name }}</td>
@@ -36,7 +36,7 @@
                                     <a class="dropdown-item" onclick="decline('{{ $item->id }}')" href="#">Tolak</a>
                                 </div>
                               </div>
-                            
+
                             @endif
                         </div>
                     </td>

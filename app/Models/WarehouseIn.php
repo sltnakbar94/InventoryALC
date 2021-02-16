@@ -47,6 +47,11 @@ class WarehouseIn extends Model
         return $this->belongsTo(Supplier::class);
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

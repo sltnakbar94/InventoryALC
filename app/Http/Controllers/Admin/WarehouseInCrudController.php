@@ -8,6 +8,7 @@ use App\Models\WarehouseIn;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\WarehouseInRequest;
 use App\Models\BagItemWarehouseIn;
+use App\Models\Customer;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -45,9 +46,9 @@ class WarehouseInCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->addColumn([
-            'name' => 'delivery_note',
+            'name' => 'po_number',
             'type' => 'text',
-            'label' => 'Nomor Surat Jalan'
+            'label' => 'Nomor PO'
         ]);
 
         $this->crud->addColumn([
@@ -99,7 +100,7 @@ class WarehouseInCrudController extends CrudController
         $month = date("m");
         $year = date("Y");
 
-        $count = WarehouseIn::withTrashed()->whereDate('created_at', date('Y-m-d'))->count()+1;
+        $count = WarehouseIn::withTrashed()->whereDate('created_at', date('Y-m-d'))->count();
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
 
         $generate = $month.$day."-".$number."/WHI-PO/".$year;
@@ -110,10 +111,11 @@ class WarehouseInCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(WarehouseInRequest::class);
+        $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
 
         $this->crud->addField([
-            'label' => "Nomor Surat Jalan",
-            'name'  => "delivery_note",
+            'label' => "Nomor PO",
+            'name'  => "po_number",
             'type'  => 'text',
             'value' => $this->generateNomorPengiriman()
         ]);
@@ -128,14 +130,52 @@ class WarehouseInCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'date_in',
-            'label' => 'Tanggal Masuk',
+            'label' => 'Tanggal PO',
             'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'discount',
+            'label' => 'Diskon (%)',
+            'type' => 'number',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'ppn',
+            'label' => 'PPN (%)',
+            'type' => 'number',
+            'value' => 10,
         ]);
 
         $this->crud->addField([
             'name' => 'description',
             'label' => 'Keterangan',
             'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'tab' => 'Direct Customer (Opsional)',
+            'name' => 'customer_id',
+            'label' => 'Customer',
+            'type' => 'select_from_array',
+            'options' => Customer::pluck('name', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'tab' => 'Direct Customer (Opsional)',
+            'name' => 'destination',
+            'label' => 'Alamat Tujuan',
+            'type' => 'address_algolia',
+        ]);
+
+        $this->crud->addField([
+            'tab' => 'Direct Customer (Opsional)',
+            'name' => 'customer_id',
+            'label' => 'customer',
+            'type' => 'select_from_array',
+            'options' => Customer::pluck('name', 'id'),
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([

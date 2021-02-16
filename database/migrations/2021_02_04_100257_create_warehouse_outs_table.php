@@ -15,7 +15,7 @@ class CreateWarehouseOutsTable extends Migration
     {
         Schema::create('warehouse_outs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('delivery_note');
+            $table->string('delivery_note')->nullable();
             $table->string('customer_id');
             $table->text('destination')->nullable();
             $table->date('date_out')->nullable();

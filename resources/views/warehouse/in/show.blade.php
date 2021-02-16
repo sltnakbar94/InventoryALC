@@ -51,7 +51,7 @@
 	    @endif
         <div class="card no-padding no-border">
             <div class="card-header">
-				{{$crud->entry->delivery_note}}
+				Nomor PO : {{@$crud->entry->delivery_note}}
             </div>
             <div class="card-body">
 				@if(view()->exists('warehouse.in.form_content'))
@@ -61,6 +61,16 @@
 				@endif
             </div>
         </div>
+        @if (!empty($crud->entry->customer_id))
+            <div class="card no-padding no-border">
+                <div class="card-header">
+                    Nomor DN : {{@$crud->entry->delivery_note}}
+                </div>
+                <div class="card-body">
+                    @include('warehouse.in.extend_content', [ 'fields' => $crud->fields(), 'action' => 'create' ])
+                </div>
+            </div>
+        @endif
 	  </div>
 	</div>
 	<div class="col-md-8">
