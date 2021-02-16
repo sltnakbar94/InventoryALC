@@ -34,8 +34,7 @@ class ApiController extends Controller
         $this->bagItemWarehouseIn = $bagItemWarehouseIn;
     }
 
-
-    // Delivery Order
+    /** ============================== Delivery Order ============================== */
     public function itemToBag(Request $request)
     {
         try {
@@ -175,7 +174,8 @@ class ApiController extends Controller
         return $this->warehouseServices->DeclineDO(array('item_id' => $request->id, 'user_id' => backpack_auth()->id()));
     }
 
-    //Purchase Order
+
+    /** ============================== Purchase Order ============================== */
     public function itemToBagIn(Request $request)
     {
         try {

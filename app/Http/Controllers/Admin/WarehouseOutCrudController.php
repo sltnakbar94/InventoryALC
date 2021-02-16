@@ -13,6 +13,7 @@ use App\Http\Requests\WarehouseOutRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Company;
+use App\Services\GlobalServices;
 
 /**
  * Class WarehouseOutCrudController
@@ -184,8 +185,14 @@ class WarehouseOutCrudController extends CrudController
 
     public function show($id)
     {
+        $globalService = new GlobalServices;
         $content = $this->traitShow($id);
         $content['data'] = WarehouseOut::findOrFail($id)->with('customer')->first();
+
+        //Check if Flag There's No Submit
+        $bagItemOnWarehouseOut = BagItemWarehouseOut::where('warehouse_outs_id', $id)->get();
+        $checkApprovalByWarehouseID = $globalService->CheckingOnArray($bagItemOnWarehouseOut, 'submit');
+
         $this->crud->addField([
             'name' => 'warehouse_out',
             'data' => $content['data']
@@ -199,6 +206,11 @@ class WarehouseOutCrudController extends CrudController
         $this->crud->addField([
             'name' => 'items_on-bag',
             'data' => BagItemWarehouseOut::all(),
+        ]);
+
+        $this->crud->addField([
+            'name' => 'flag_approval',
+            'data' => $checkApprovalByWarehouseID
         ]);
         return $content;
     }
