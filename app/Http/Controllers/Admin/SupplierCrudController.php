@@ -73,7 +73,7 @@ class SupplierCrudController extends CrudController
         $this->crud->addField([
             'name'            => 'address',
             'label'           => 'Alamat',
-            'type'            => 'texxtarea',
+            'type'            => 'textarea',
         ]);
 
         $this->crud->addField([
