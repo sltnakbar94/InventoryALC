@@ -8,6 +8,9 @@
 <div class="form-group required" element="div"><label>Date In <span class="text-danger">*<span></label>
     {!! Form::date('date_in', $fields['warehouse_in']['data']->date_in, ['class' => 'form-control', 'readonly']) !!}
 </div>
+<div class="form-group required" element="div"><label>Nomor Referensi<span class="text-danger">*<span></label>
+    {!! Form::text('ref_no', $fields['warehouse_in']['data']->ref_no, ['class' => 'form-control', 'readonly']) !!}
+</div>
 <div class="form-group required" element="div"><label>Description <span class="text-danger">*<span></label>
     {!! Form::textarea('description', $fields['warehouse_in']['data']->description, ['class' => 'form-control', 'readonly']) !!}
 </div>

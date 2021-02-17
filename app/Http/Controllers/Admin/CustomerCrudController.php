@@ -71,9 +71,22 @@ class CustomerCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name'            => 'address',
+            'label'           => "Alamat",
+            'type'            => 'textarea',
+        ]);
+
+        $this->crud->addField([
             'name'            => 'contact_number',
             'label'           => "Nomor Telp",
             'type'            => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name'            => 'company',
+            'label'           => "Perusahaan",
+            'type'            => 'text',
+            'hint'            => 'PT.XxX',
         ]);
 
         /**

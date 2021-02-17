@@ -15,7 +15,7 @@
 
 </head>
 
-<body>
+<body>{{dd($data)}}
 <table cellspacing="0" border="0">
 	<colgroup width="43"></colgroup>
 	<colgroup width="124"></colgroup>

@@ -65,6 +65,12 @@ class ItemCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => "Nomor Serial",
+            'name'  => "serial",
+            'type'  => 'text',
+        ]);
+
+        $this->crud->addField([
             'name' => 'category',
             'label' => 'Kategori',
             'type' => 'select_from_array',

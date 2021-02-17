@@ -119,7 +119,10 @@ class WarehouseInCrudController extends CrudController
             'label' => "Nomor PO",
             'name'  => "po_number",
             'type'  => 'text',
-            'value' => $this->generateNomorPengiriman()
+            'value' => $this->generateNomorPengiriman(),
+            'attributes' => [
+                'readonly'    => 'readonly',
+            ]
         ]);
 
         $this->crud->addField([
@@ -134,6 +137,13 @@ class WarehouseInCrudController extends CrudController
             'name' => 'date_in',
             'label' => 'Tanggal PO',
             'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'ref_no',
+            'label' => 'Nomor Referensi',
+            'type' => 'text',
+            'hint' => 'Optional'
         ]);
 
         $this->crud->addField([

@@ -60,26 +60,33 @@ class SupplierCrudController extends CrudController
 
         $this->crud->addField([
             'name'            => 'name',
-            'label'           => "Nama",
+            'label'           => 'Nama',
             'type'            => 'text',
         ]);
 
         $this->crud->addField([
             'name'            => 'email',
-            'label'           => "E-Mail",
+            'label'           => 'E-Mail',
             'type'            => 'email',
         ]);
 
         $this->crud->addField([
             'name'            => 'address',
-            'label'           => "Alamat",
-            'type'            => 'address_algolia',
+            'label'           => 'Alamat',
+            'type'            => 'texxtarea',
         ]);
 
         $this->crud->addField([
             'name'            => 'contact_number',
-            'label'           => "Nomor Telp",
+            'label'           => 'Nomor Telp',
             'type'            => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name'            => 'company',
+            'label'           => 'Perusahaan',
+            'type'            => 'text',
+            'hint'            => 'PT.XxX',
         ]);
 
         /**
