@@ -125,7 +125,7 @@ class WarehouseInCrudController extends CrudController
         $this->crud->addField([
             'name' => 'supplier_id',
             'label' => 'Supplier',
-            'type' => 'select_from_array',
+            'type' => 'select2_from_array',
             'options' => Supplier::pluck('name', 'id'),
             'allows_null' => true,
         ]);
@@ -159,7 +159,7 @@ class WarehouseInCrudController extends CrudController
             'tab' => 'Direct Customer (Opsional)',
             'name' => 'customer_id',
             'label' => 'Customer',
-            'type' => 'select_from_array',
+            'type' => 'select2_from_array',
             'options' => Customer::pluck('name', 'id'),
             'allows_null' => true,
         ]);

@@ -7,7 +7,7 @@
 	<title>{{@$data->po_number}}</title>
 
 	<style type="text/css">
-		body,div,table,thead,tbody,tfoot,tr,th,td,p { font-family:"Calibri"; font-size:small }
+		body,div,table,thead,tbody,tfoot,tr,th,td,p,textarea { font-family:"Calibri"; font-size:small }
 		a.comment-indicator:hover + comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em;  }
 		a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:0.5em; height:0.5em;  }
 		comment { display:none;  }
@@ -159,11 +159,15 @@
     <tr>
 		<td colspan="3" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom>
             <font color="#000000">
-                {{@$data->description}}<br>
+                <textarea style="border: none; width:auto; height:auto">{{@$data->description}}</textarea><br>
                 @if (!empty(@$data->supplier_id))
                 **Delivery To:<br>
-                {{@$data->supplier->company}}<br>
-                {{@$data->supplier->address}}<br>
+                @if (!empty(@$data->supplier->company))
+                    {{@$data->supplier->company}}<br>
+                @endif
+                @if (!empty(@$data->supplier->address))
+                    {{@$data->supplier->address}}<br>
+                @endif
                 Att : {{@$data->supplier->name}}<br>
                 @endif
             </font>

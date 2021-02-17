@@ -132,7 +132,7 @@ class WarehouseOutCrudController extends CrudController
         $this->crud->addField([
             'name' => 'customer_id',
             'label' => 'Customer',
-            'type' => 'select_from_array',
+            'type' => 'select2_from_array',
             'options' => Customer::pluck('name', 'id'),
             'allows_null' => true,
         ]);
