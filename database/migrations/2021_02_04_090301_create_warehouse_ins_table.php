@@ -19,6 +19,7 @@ class CreateWarehouseInsTable extends Migration
             $table->string('supplier_id');
             $table->date('date_in')->nullable();
             $table->text('description')->nullable();
+            $table->string('ref_no')->nullable();
             $table->string('user_id');
             $table->integer('status')->default(0);
             $table->softDeletes();

@@ -17,7 +17,10 @@ class CreateCustomersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->nullable();
+            $table->text('address')->nullable();
+            $table->string('city')->nullable();
             $table->string('contact_number')->nullable();
+            $table->string('company')->nullable();
             $table->timestamps();
         });
     }

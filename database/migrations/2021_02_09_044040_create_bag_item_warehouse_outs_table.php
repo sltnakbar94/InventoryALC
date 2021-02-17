@@ -18,6 +18,7 @@ class CreateBagItemWarehouseOutsTable extends Migration
             $table->bigInteger('warehouse_outs_id')->unsigned();
             $table->bigInteger('item_id')->unsigned();
             $table->integer('qty');
+            $table->bigInteger('price')->nullable();
             $table->timestamps();
         });
     }
