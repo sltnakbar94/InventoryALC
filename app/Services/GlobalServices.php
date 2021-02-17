@@ -15,10 +15,14 @@ class GlobalServices
         foreach ($listApproval as $item) {
             $list[] = $item->flag;
         }
-        if (in_array($flag, $list)) {
-            return false;
+        if (!empty($list)) {
+            if (in_array($flag, $list)) {
+                return false;
+            }else{
+                return true;
+            }
         }else{
-            return true;
+            return false;
         }
         // return in_array($flag, $list);
     }
