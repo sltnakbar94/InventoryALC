@@ -18,6 +18,10 @@
         <label for="">Kuantitas</label>
         {!! Form::number('qty', null, ['class' => 'form-control', 'required', 'id' => 'qty']) !!}
       </div>
+      <div class="form-group">
+        <label for="">Harga Satuan (Rp)</label>
+        {!! Form::number('price', null, ['class' => 'form-control', 'required', 'id' => 'price']) !!}
+      </div>
       {!! Form::submit('Tambah Item', ['class' => 'btn btn-success', 'id' => 'btn-submit']) !!}
      </form>
   </div>

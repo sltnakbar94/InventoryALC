@@ -10,6 +10,7 @@
                     <th width="30%">Item Name</th>
                     <th width="10%">QTY</th>
                     <th width="20%">QTY Confirm</th>
+                    <th width="20%">Harga</th>
                     <th width="10%">Status</th>
                     <th width="15%">Action</th>
                 </tr>
@@ -21,6 +22,7 @@
                     <td>{{ $item->Item->name }}</td>
                     <td id="qty{{ $item->id }}">{{ $item->qty }}</td>
                     <td id="qty{{ $item->id }}">{{ $item->qty_confirm }}</td>
+                    <td>{{ $item->price }}</td>
                     <td>{{ $item->flag }}</td>
                     <td>
                         <div class="btn-group">
