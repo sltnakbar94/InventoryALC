@@ -11,6 +11,8 @@ use App\Models\BagItemWarehouseIn;
 use App\Models\Customer;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use PDF;
+use Illuminate\Http\Request;
 
 /**
  * Class WarehouseInCrudController
@@ -226,5 +228,13 @@ class WarehouseInCrudController extends CrudController
             'data' => BagItemWarehouseIn::all(),
         ]);
         return $content;
+    }
+
+    public function pdf(Request $request)
+    {
+        $data = WarehouseIn::where('id', '=', $request->id)->first();
+
+        $pdf = PDF::loadview('warehouse.in.output',['data'=>$data]);
+    	return $pdf->stream($data->po_number.'.pdf');
     }
 }

@@ -52,6 +52,11 @@ class WarehouseIn extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function bagInDetail()
+    {
+        return $this->hasMany(BagItemWarehouseIn::class, 'warehouse_ins_id', 'id')->orderby('created_at', 'asc');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
