@@ -33,14 +33,19 @@ class CRUDServices
             DB::beginTransaction();
             $data = $request['model']::create($request['data']);
             DB::commit();
-            if ($data->name != null) {
-                return redirect()->back()->with(['success' => $request['pageTitle'].': <strong>' . $data->name . '</strong> Ditambahkan']);
-            }else{
-                return redirect()->back()->with(['success' => $request['pageTitle'].': <strong>' . $request['message'] . '</strong> Ditambahkan']);
-            }
+            return array(
+                'code' => 200,
+                'status' => 'success',
+                'message' => $request['message'],
+                'data'  => $data
+            );
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->back()->with(['error' => $th->getMessage()]);
+            return array(
+                'code' => 200,
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            );
         }
     }
 

@@ -16,5 +16,5 @@
 </div>
 
 @if ($fields['flag_approval']['data'])
-    <a href="{{ backpack_url('') }}"></a>
+    <a href="{{ backpack_url('deliverynote', ['id' => $fields['warehouse_out']['data']]) }}">Generate Delivery Note</a>
 @endif

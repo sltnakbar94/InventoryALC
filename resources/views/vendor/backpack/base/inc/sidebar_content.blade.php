@@ -26,3 +26,5 @@
 </li>
 
 {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('operatorgudang') }}'><i class='nav-icon la la-question'></i> OperatorGudangs</a></li> --}}
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class='nav-icon la la-question'></i> DeliveryNotes</a></li>
