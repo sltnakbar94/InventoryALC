@@ -7,7 +7,7 @@
 	<title>{{@$data->do_number}}</title>
 
 	<style type="text/css">
-		body,div,table,thead,tbody,tfoot,tr,th,td,p { font-family:"Calibri"; font-size:small }
+		body,div,table,thead,tbody,tfoot,tr,th,td,p,textarea { font-family:"Calibri"; font-size:small }
 		a.comment-indicator:hover + comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em;  }
 		a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:0.5em; height:0.5em;  }
 		comment { display:none;  }
@@ -142,21 +142,34 @@
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
     <tr>
-		<td colspan="3" height="21" align="left" valign=bottom><font color="#000000">Terbilang:</font></td>
+		<td colspan="3" height="21" align="left" valign=bottom><font color="#000000"></font></td>
 		<td colspan="3" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
 		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
-        <td colspan="2" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="left" valign=bottom><font color="#000000">Catatan :</font></td>
+        <td colspan="2" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="left" valign=bottom><font color="#000000">Keterangan :</font></td>
 		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td colspan="2" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
-		<td colspan="2" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom><font color="#000000">{{@$data->description}}</font></td>
-		<td style="border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
-		<td colspan="2" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td colspan="3" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom>
+            <font color="#000000">
+                <textarea style="border: none; width:auto; height:auto">{{@$data->description}}</textarea>
+                @if (!empty(@$data->supplier_id))
+                **Delivery To:<br>
+                @if (!empty(@$data->supplier->company))
+                    {{@$data->supplier->company}}<br>
+                @endif
+                @if (!empty(@$data->supplier->address))
+                    {{@$data->supplier->address}}<br>
+                @endif
+                Att : {{@$data->supplier->name}}<br>
+                @endif
+            </font>
+        </td>
+		<td colspan="2" style="border-left: 1px solid #000000;" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
 		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>

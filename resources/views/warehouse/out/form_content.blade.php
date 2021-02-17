@@ -8,6 +8,9 @@
 <div class="form-group required" element="div"><label>Destination <span class="text-danger">*<span></label>
     {!! Form::text('delivery_note', $fields['warehouse_out']['data']->destination, ['class' => 'form-control', 'readonly']) !!}
 </div>
+<div class="form-group required" element="div"><label>Nomor Referensi <span class="text-danger">*<span></label>
+    {!! Form::text('ref_no', $fields['warehouse_out']['data']->ref_no, ['class' => 'form-control', 'readonly']) !!}
+</div>
 <div class="form-group required" element="div"><label>Date Out <span class="text-danger">*<span></label>
     {!! Form::date('date_out', $fields['warehouse_out']['data']->date_out, ['class' => 'form-control', 'readonly']) !!}
 </div>

@@ -121,12 +121,16 @@ class WarehouseOutCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(WarehouseOutRequest::class);
+        $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
 
         $this->crud->addField([
-            'label' => "Nomor DO",
-            'name'  => "do_number",
+            'label' => 'Nomor DO',
+            'name'  => 'do_number',
             'type'  => 'text',
-            'value' => $this->generateNomorPengiriman()
+            'value' => $this->generateNomorPengiriman(),
+            'attributes' => [
+                'readonly'    => 'readonly',
+            ]
         ]);
 
         $this->crud->addField([
@@ -140,13 +144,20 @@ class WarehouseOutCrudController extends CrudController
         $this->crud->addField([
             'name' => 'destination',
             'label' => 'Tujuan',
-            'type' => 'address_algolia',
+            'type' => 'textarea',
+            'hint' => 'Isi apabila tujuan berbeda dengan alamat pelanggan'
         ]);
 
         $this->crud->addField([
             'name' => 'date_out',
             'label' => 'Tanggal Keluar',
             'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Nomor Referensi',
+            'name'  => 'ref_no',
+            'type'  => 'text',
         ]);
 
         $this->crud->addField([
