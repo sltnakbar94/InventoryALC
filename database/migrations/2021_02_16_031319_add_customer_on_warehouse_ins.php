@@ -15,6 +15,8 @@ class AddCustomerOnWarehouseIns extends Migration
     {
         Schema::table('warehouse_ins', function (Blueprint $table) {
             $table->string('po_number')->nullable();
+            $table->string('ppn')->nullable();
+            $table->string('discount')->nullable();
             $table->string('customer_id')->nullable();
             $table->string('destination')->nullable();
         });
@@ -30,6 +32,8 @@ class AddCustomerOnWarehouseIns extends Migration
         Schema::table('warehouse_ins', function (Blueprint $table) {
             $table->dropColumn([
                 'po_number',
+                'ppn',
+                'discount',
                 'customer_id',
                 'destination',
             ]);
