@@ -68,6 +68,7 @@
 			@if(view()->exists('warehouse.out.list_content'))
 				@include('warehouse.out.item-to_bag')
 				@include('warehouse.out.list_content', [ 'fields' => $crud->fields(), 'action' => 'create' ])
+                @include('warehouse.out.call-output')
 			@else
 				@include('crud::form_content', [ 'fields' => $crud->fields(), 'action' => 'create' ])
 			@endif

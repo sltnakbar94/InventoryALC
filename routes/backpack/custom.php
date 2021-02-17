@@ -21,6 +21,7 @@ Route::group([
 
     // Out
     Route::crud('warehouseout', 'WarehouseOutCrudController');
+    Route::post('generate-out-pdf', 'WarehouseOutCrudController@pdf');
     Route::post('item_to-bag', 'ApiController@itemToBag');
     Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
     Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
@@ -46,5 +47,5 @@ Route::group([
     Route::crud('supplier', 'SupplierCrudController');
     Route::crud('role', 'RoleCrudController');
 
-    
+
 }); // this should be the absolute last line of this file

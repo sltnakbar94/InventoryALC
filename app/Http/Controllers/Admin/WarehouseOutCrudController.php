@@ -8,12 +8,13 @@ use App\Models\Customer;
 use App\Models\WarehouseOut;
 use Illuminate\Support\Facades\DB;
 use App\Models\BagItemWarehouseOut;
-use Illuminate\Support\Facades\Request;
 use App\Http\Requests\WarehouseOutRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Company;
 use App\Services\GlobalServices;
+use PDF;
+use Illuminate\Http\Request;
 
 /**
  * Class WarehouseOutCrudController
@@ -218,6 +219,14 @@ class WarehouseOutCrudController extends CrudController
     public function generateDeliveryNotes($warehouse_out_id)
     {
         return redirect()->route('generate_delivery-note', [$warehouse_out_id]);
+    }
+
+    public function pdf(Request $request)
+    {
+        $data = WarehouseOut::where('id', '=', $request->id)->first();
+
+        $pdf = PDF::loadview('warehouse.out.output',['data'=>$data]);
+    	return $pdf->stream($data->do_number.'.pdf');
     }
 
 }
