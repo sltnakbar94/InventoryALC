@@ -65,7 +65,7 @@
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
 	<tr>
-		<td height="10" align="left" valign=bottom><font color="#000000">Date</font></td>
+		<td width="40" align="left" valign=bottom><font color="#000000">Date</font></td>
 		<td width="100" align="left" valign=bottom><font color="#000000">: {{@$data->date_in}}</font></td>
 		<td width="150" align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td width="50" align="left" valign=bottom><font color="#000000"><br></font></td>
@@ -123,16 +123,60 @@
         </tr>
     @endforeach
     <tr>
-		<td colspan="4" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" height="20" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Sub Total </font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Remark</font></b></td>
+		<td colspan="4" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Sub Total</font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
+        <td style="border-left: 1px solid #000000;"></td>
+	</tr>
+    <tr>
+		<td colspan="4" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">PPN {{@$data->ppn}}%</font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
     <tr>
 		<td colspan="4" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" height="20" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">PPN {{@$data->ppn}}% </font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Remark</font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Grand Total</font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
+	</tr>
+    <tr>
+		<td colspan="3" height="21" align="left" valign=bottom><font color="#000000">Terbilang:</font></td>
+		<td colspan="3" align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+    <tr>
+		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+    <tr>
+        <td colspan="2" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="left" valign=bottom><font color="#000000">Catatan :</font></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td colspan="2" align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+    <tr>
+		<td colspan="2" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom><font color="#000000">{{@$data->description}}</font></td>
+		<td style="border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td colspan="2" align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+    <tr>
+		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+</table>
+<table cellspacing="0" border="0">
+    <tr>
+        <td width="128" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Issued By</font></td>
+		<td width="65" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="128" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Approve By</font></td>
+		<td width="65" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="128" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Received By</font></td>
+		<td width="65" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+    <tr heigh>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Issued By</font></td>
+		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Approve By</font></td>
+		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Received By</font></td>
+		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
 </table>
 <!-- ************************************************************************** -->
