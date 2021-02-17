@@ -13,7 +13,7 @@ class UpdateWarehouseOutsTable extends Migration
      */
     public function up()
     {
-        Schema::table('warehouse_ins', function (Blueprint $table) {
+        Schema::table('warehouse_outs', function (Blueprint $table) {
             $table->string('do_number')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class UpdateWarehouseOutsTable extends Migration
      */
     public function down()
     {
-        Schema::table('warehouse_ins', function (Blueprint $table) {
+        Schema::table('warehouse_outs', function (Blueprint $table) {
             $table->dropColumn([
                 'do_number',
             ]);
