@@ -28,7 +28,6 @@ class CustomerRequest extends FormRequest
         return [
             'name' => 'required',
             'address' => 'required',
-            'city' => 'required'
         ];
     }
 
