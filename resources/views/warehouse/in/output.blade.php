@@ -152,14 +152,14 @@
 		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
-        <td colspan="2" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="left" valign=bottom><font color="#000000">Catatan :</font></td>
+        <td colspan="2" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="left" valign=bottom><font color="#000000">Keterangan :</font></td>
 		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td colspan="2" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
 		<td colspan="3" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom>
             <font color="#000000">
-                <textarea style="border: none; width:auto; height:auto">{{@$data->description}}</textarea><br>
+                <textarea style="border: none; width:auto; height:auto">{{@$data->description}}</textarea>
                 @if (!empty(@$data->supplier_id))
                 **Delivery To:<br>
                 @if (!empty(@$data->supplier->company))
