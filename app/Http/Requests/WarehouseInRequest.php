@@ -27,6 +27,7 @@ class WarehouseInRequest extends FormRequest
     {
         return [
             'po_number' => 'required',
+            'date_in' => 'required',
             'supplier_id' => 'required'
         ];
     }

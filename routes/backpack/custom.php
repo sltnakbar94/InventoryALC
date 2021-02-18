@@ -40,6 +40,7 @@ Route::group([
     //Delivery Note
     Route::crud('deliverynote', 'DeliveryNoteCrudController');
     Route::get('deliverynote/{warehouse_out_id}', 'DeliveryNoteCrudController@generateDeliveryNote');
+    Route::get('deliverynote/{id}/pdf', 'DeliveryNoteCrudController@pdf');
 
     Route::crud('customer', 'CustomerCrudController');
     Route::crud('item', 'ItemCrudController');
