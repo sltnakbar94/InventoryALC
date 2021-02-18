@@ -27,7 +27,7 @@
                             <button onclick="edit('{{ $item->id }}')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>
                             <button onclick="hapus('{{ $item->id }}')" type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                             @if (backpack_user()->hasRole('operator-gudang'))
-                                @if ($item->flag == 'submit')
+                                @if ($item->flag == 'submit' || $item->flag == 'updated' )
                                 <div class="btn-group" role="group">
                                     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Status

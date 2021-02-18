@@ -152,13 +152,23 @@
 			dataType: "json",
 			success: function (response) {
 				console.log(response)
-				if (response.qty_confirm !== 0) {
-					var qty = response.qty_confirm
+				if (response.code == 200) {
+					if (response.qty_confirm !== 0) {
+						var qty = response.qty_confirm
+					}else{
+						var qty = response.qty
+					}
+					$('input#qty').val(qty);
+					$('#item_id').val(response.item_id).trigger('change');
 				}else{
-					var qty = response.qty
+					swal({
+						title: 'Gagal Terima!',
+						text: response.message,
+						icon: response.status
+					}).then(function () {
+						location.reload();
+					})
 				}
-				$('input#qty').val(qty);
-				$('#item_id').val(response.item_id).trigger('change');
 				// $('#item_id').select2('data', {id: response.item_id, a_key: response.item.name});
 			}
 		});
@@ -219,13 +229,22 @@
 					type: "post",
 					url: "{{ backpack_url('accept') }}",
 					data: {
-						id: id
+						id: id,
+						wo_id: {{ request()->segment(3) }}
 					},
 					dataType: "json",
 					success: function (response) {
 						if (response.code == 200) {
 							swal({
 								title: 'Berhasil Disetujui!',
+								text: response.message,
+								icon: response.status
+							}).then(function () {
+								location.reload();
+							})
+						}else{
+							swal({
+								title: 'Gagal Disetujui!',
 								text: response.message,
 								icon: response.status
 							}).then(function () {

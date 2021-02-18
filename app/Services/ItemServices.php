@@ -115,6 +115,9 @@ class ItemServices {
     public function RemoveQTYItemFromPO($item_id, $qty)
     {
         $item = $this->cekItemById($item_id);
+        if ($item->qty < $qty) {
+            return false;
+        }
         $sum_qty = $item->qty - $qty;
         return $this->crudService->handleUpdate([
             'model' => $this->itemModel,

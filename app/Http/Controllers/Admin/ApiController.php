@@ -43,17 +43,17 @@ class ApiController extends Controller
             $checkItemOnBag = $this->checkItemOnBag($request);
             $itemOnBag = $this->bagItemWarehouseOut::where('warehouse_outs_id', $request->warehouse_outs_id)->get();
 
-            //Check If Role operator-gudang
-            if (backpack_user()->hasRole('operator-gudang')) {
-                return array(
-                    'code' => 400,
-                    'status' => 'error',
-                    'message' => 'Anda Tidak Berhak Menambah Item',
-                );
-            }
-
             // Check If Empty Item On Bag
             if (empty($checkItemOnBag)) {
+                //Check If Role operator-gudang
+                if (backpack_user()->hasRole('operator-gudang')) {
+                    return array(
+                        'code' => 400,
+                        'status' => 'error',
+                        'message' => 'Anda Tidak Berhak Menambah Item',
+                    );
+                }
+
                 $itemOnBag = $this->bagItemWarehouseOut::create([
                     'warehouse_outs_id' => $request->warehouse_outs_id,
                     'item_id' => $request->item_id,
@@ -144,6 +144,13 @@ class ApiController extends Controller
     public function checkItemOnBagById(Request $request)
     {
         $data = $this->bagItemWarehouseOut::find($request->bag_item_warehouse_out_id);
+        if ($data->flag != 'submit') {
+            return array(
+                'code' => 400,
+                'status' => 'error',
+                'message' => 'Item Sudah Di Terima Tidak Dapat Di Edit',
+            );
+        }
         $data['item'] = $data->Item;
         return $data;
     }
@@ -180,6 +187,14 @@ class ApiController extends Controller
     // Approval Deliver Order
     public function accept(Request $request)
     {
+        $stockItem = $this->warehouseServices->CheckStockItem($request->id, $request->wo_id);
+        if ($stockItem) {
+            return array(
+                'code' => 400,
+                'status' => 'error',
+                'message' => 'Melebihi Stok Gudang',
+            );
+        }
         return $this->warehouseServices->ApprovalDO(array('item_id' => $request->id, 'user_id' => backpack_auth()->id()));
     }
 

@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\BagItemWarehouseIn;
 use App\Models\BagItemWarehouseOut;
 use App\Models\Item;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * Handle All Trx on Warehouse i/o
@@ -123,6 +124,22 @@ class WarehouseServices  {
     public function GetItemByWarehouseID($item_id, $model)
     {
         return $model::find($item_id);
+    }
+
+    public function CheckStockItem($item_id, $wo_id)
+    {
+        $qty_on_wo = $this->bagItemWarehouseOut::where(array('warehouse_outs_id' => $wo_id, 'item_id' => $item_id))->first();
+        if ($qty_on_wo->qty_confirm == 0) {
+            $qty = $qty_on_wo->qty;
+        }else{
+            $qty = $qty_on_wo->qty;
+        }
+
+        if ($qty < $this->itemService->cekQtyItem($item_id)) {
+            return false;
+        }else{
+            return true;
+        }
     }
 
 }
