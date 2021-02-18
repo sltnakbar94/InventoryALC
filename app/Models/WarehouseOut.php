@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
 use App\Models\BagItemWarehouseOut;
-use App\Models\Customer;
+use App\Models\Stackholder;
 
 class WarehouseOut extends Model
 {
@@ -53,9 +53,14 @@ class WarehouseOut extends Model
         return $this->hasMany(BagItemWarehouseOut::class, 'warehouse_outs_id', 'id')->orderby('created_at', 'desc');
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Stackholder::class, 'supplier_id', 'id');
+    }
+
     public function customer()
     {
-        return $this->hasOne(Customer::class, 'id', 'customer_id');
+        return $this->belongsTo(Stackholder::class, 'customer_id', 'id');
     }
 
     /*

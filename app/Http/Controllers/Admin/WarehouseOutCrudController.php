@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Auth;
 use App\Models\Item;
-use App\Models\Customer;
+use App\Models\Stackholder;
 use App\Models\WarehouseOut;
 use Illuminate\Support\Facades\DB;
 use App\Models\BagItemWarehouseOut;
@@ -60,7 +60,7 @@ class WarehouseOutCrudController extends CrudController
             'type' => 'select',
             'entity' => 'customer',
             'attribute' => 'name',
-            'model' => 'App\Models\Customer',
+            'model' => 'App\Models\Stackholder',
             'label' => 'Customer'
         ]);
 
@@ -137,7 +137,9 @@ class WarehouseOutCrudController extends CrudController
             'name' => 'customer_id',
             'label' => 'Customer',
             'type' => 'select2_from_array',
-            'options' => Customer::pluck('name', 'id'),
+            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
+                return $query->where('name', '=', 'customer');
+            })->pluck('company', 'id'),
             'allows_null' => true,
         ]);
 

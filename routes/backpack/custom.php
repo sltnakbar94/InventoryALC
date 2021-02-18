@@ -42,14 +42,12 @@ Route::group([
     Route::get('deliverynote/{warehouse_out_id}', 'DeliveryNoteCrudController@generateDeliveryNote');
     Route::get('deliverynote/{id}/pdf', 'DeliveryNoteCrudController@pdf');
 
-    Route::crud('customer', 'CustomerCrudController');
+    //Data Master
     Route::crud('item', 'ItemCrudController');
     Route::crud('company', 'CompanyCrudController');
-    Route::crud('supplier', 'SupplierCrudController');
     Route::crud('role', 'RoleCrudController');
-
-
     Route::crud('category', 'CategoryCrudController');
     Route::crud('brand', 'BrandCrudController');
     Route::crud('unit', 'UnitCrudController');
+    Route::crud('stackholder', 'StackholderCrudController');
 }); // this should be the absolute last line of this file

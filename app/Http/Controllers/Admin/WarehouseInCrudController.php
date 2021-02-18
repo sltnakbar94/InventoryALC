@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Item;
-use App\Models\Supplier;
 use App\Models\WarehouseIn;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\WarehouseInRequest;
 use App\Models\BagItemWarehouseIn;
-use App\Models\Customer;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use PDF;
+use App\Models\Stackholder;
 use Illuminate\Http\Request;
 
 /**
@@ -57,8 +56,8 @@ class WarehouseInCrudController extends CrudController
             'name' => 'supplier_id',
             'type' => 'select',
             'entity' => 'supplier',
-            'attribute' => 'name',
-            'model' => 'App\Models\Supplier',
+            'attribute' => 'company',
+            'model' => 'App\Models\Stackholder',
             'label' => 'Supplier'
         ]);
 
@@ -135,7 +134,9 @@ class WarehouseInCrudController extends CrudController
             'name' => 'supplier_id',
             'label' => 'Supplier',
             'type' => 'select2_from_array',
-            'options' => Supplier::pluck('name', 'id'),
+            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
+                return $query->where('name', '=', 'supplier');
+            })->pluck('company', 'id'),
             'allows_null' => true,
         ]);
 
@@ -172,23 +173,9 @@ class WarehouseInCrudController extends CrudController
             'name' => 'customer_id',
             'label' => 'Customer',
             'type' => 'select2_from_array',
-            'options' => Customer::pluck('name', 'id'),
-            'allows_null' => true,
-        ]);
-
-        $this->crud->addField([
-            'tab' => 'Direct Customer (Opsional)',
-            'name' => 'destination',
-            'label' => 'Alamat Tujuan',
-            'type' => 'address_algolia',
-        ]);
-
-        $this->crud->addField([
-            'tab' => 'Direct Customer (Opsional)',
-            'name' => 'customer_id',
-            'label' => 'customer',
-            'type' => 'select_from_array',
-            'options' => Customer::pluck('name', 'id'),
+            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
+                return $query->where('name', '=', 'customer');
+            })->pluck('company', 'id'),
             'allows_null' => true,
         ]);
 

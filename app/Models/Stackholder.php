@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\StackholderRole;
+use App\Models\RelationStackholderRole;
 
-class Customer extends Model
+class Stackholder extends Model
 {
     use CrudTrait;
 
@@ -15,7 +17,7 @@ class Customer extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'customers';
+    protected $table = 'stackholders';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,6 +36,15 @@ class Customer extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function stackholderRole()
+    {
+        return $this->belongsToMany(stackholderRole::class, 'relation_stackholder_role', 'stackholder_id', 'stackholder_role_id');
+    }
+
+    public function stackholder_role()
+    {
+        return $this->hasMany(RelationStackholderRole::class, 'stackholder_id', 'id')->orderby('created_at', 'asc');
+    }
 
     /*
     |--------------------------------------------------------------------------

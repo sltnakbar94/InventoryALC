@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Stackholder;
 
-class Supplier extends Model
+class StackholderRole extends Model
 {
-    use CrudTrait;
+    use CrudTrait, HasFactory;
 
     /*
     |--------------------------------------------------------------------------
@@ -15,7 +17,7 @@ class Supplier extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'suppliers';
+    protected $table = 'stackholder_roles';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

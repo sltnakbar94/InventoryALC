@@ -8,6 +8,7 @@ use App\Models\BagItemWarehouseOut;
 use App\Models\WarehouseIn;
 use App\Models\WarehouseOut;
 use App\Models\Item;
+use App\Models\Stackholder;
 use Carbon;
 
 class AdminController extends Controller
@@ -39,6 +40,7 @@ class AdminController extends Controller
         $this->deliveryOrder();
         $this->deliveryNote();
         $this->tableItem();
+        $this->stackholder();
 
         $this->counter();
 
@@ -109,5 +111,12 @@ class AdminController extends Controller
         $items = Item::all();
 
         $this->data['items'] = $items;
+    }
+
+    public function stackholder()
+    {
+        $stackholders = Stackholder::get();
+
+        $this->data['stackholders'] = $stackholders;
     }
 }
