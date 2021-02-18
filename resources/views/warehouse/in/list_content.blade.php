@@ -51,6 +51,7 @@
                     <th>Item Name</th>
                     <th>QTY</th>
                     <th>QTY Confirm</th>
+                    <th>Harga</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>

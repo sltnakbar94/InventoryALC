@@ -111,10 +111,6 @@
         </tr>
     @endforeach
     <tr>
-		<td colspan="3" height="21" align="left" valign=bottom><font color="#000000"></font></td>
-		<td colspan="3" align="left" valign=bottom><font color="#000000"><br></font></td>
-	</tr>
-    <tr>
 		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
