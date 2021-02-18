@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\BagItemWarehouseOut;
 use App\Models\WarehouseIn;
 use App\Models\WarehouseOut;
-use App\Models\VerifWO;
+use App\Models\Item;
 use Carbon;
 
 class AdminController extends Controller
@@ -38,6 +38,7 @@ class AdminController extends Controller
         $this->purchaseOrder();
         $this->deliveryOrder();
         $this->deliveryNote();
+        $this->tableItem();
 
         $this->counter();
 
@@ -101,5 +102,12 @@ class AdminController extends Controller
                 'count' => $delivery_note,
             ],
         ];
+    }
+
+    public function tableItem()
+    {
+        $items = Item::all();
+
+        $this->data['items'] = $items;
     }
 }

@@ -4,7 +4,7 @@
 <head>
 
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
-	<title>{{@$data->do_number}}</title>
+	<title>{{@$data->WarehouseOut->do_number}}</title>
 
 	<style type="text/css">
 		body,div,table,thead,tbody,tfoot,tr,th,td,p,textarea { font-family:"Calibri"; font-size:small }
@@ -27,9 +27,9 @@
                     <tr>
                         <td>
                             <font color="#000000">
-                                {{@$data->customer->company}}<br>
-                                {{@$data->customer->address}}<br>
-                                Att : {{@$data->customer->name}}<br>
+                                {{@$data->WarehouseOut->customer->company}}<br>
+                                {{@$data->WarehouseOut->customer->address}}<br>
+                                Att : {{@$data->WarehouseOut->customer->name}}<br>
                             </font>
                         </td>
                     </tr>
@@ -37,7 +37,7 @@
             </td>
         </tr>
         <tr>
-            <td><font face="Arial Black" size=5 color="#000000"><b>DELIVERY ORDER</b></font></td>
+            <td><font face="Arial Black" size=5 color="#000000"><b>SURAT JALAN</b></font></td>
         </tr>
         <tr>
             <td>
@@ -50,7 +50,7 @@
                         </td>
                         <td>
                             <font font color="#000000">
-                                : {{date('d-m-Y', strtotime(@$data->date_out))}}
+                                : {{date('d-m-Y', strtotime(@$data->WarehouseOut->date_out))}}
                             </font>
                         </td>
                     </tr>
@@ -62,7 +62,7 @@
                         </td>
                         <td>
                             <font font color="#000000">
-                                : {{@$data->do_number}}
+                                : {{@$data->WarehouseOut->do_number}}
                             </font>
                         </td>
                     </tr>
@@ -74,7 +74,7 @@
                         </td>
                         <td>
                             <font font color="#000000">
-                                : {{@$data->ref_no}}
+                                : {{@$data->WarehouseOut->ref_no}}
                             </font>
                         </td>
                     </tr>
@@ -99,7 +99,7 @@
 		<td width="95" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Remark</font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
-    @foreach ($data->bagOutDetail as $detil)
+    @foreach (@$data->WarehouseOut->bagOutDetail as $detil)
         <tr>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$detil->id}}</font></td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->item->serial}}</font></td>
@@ -121,7 +121,7 @@
     <tr>
 		<td colspan="3" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom>
             <font color="#000000">
-                <textarea style="border: none; width:auto; height:auto">{{@$data->description}}</textarea>
+                <textarea style="border: none; width:auto; height:auto">{{@$data->WarehouseOut->description}}</textarea>
             </font>
         </td>
 		<td colspan="2" style="border-left: 1px solid #000000;" align="left" valign=bottom><font color="#000000"><br></font></td>

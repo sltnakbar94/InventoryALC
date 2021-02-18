@@ -48,13 +48,13 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th width="10%">No</th>
-                    <th width="30%">Item Name</th>
-                    <th width="10%">QTY</th>
-                    <th width="20%">QTY Confirm</th>
-                    <th width="20%">Harga</th>
-                    <th width="10%">Status</th>
-                    <th width="15%">Action</th>
+                    <th>No</th>
+                    <th>Item Name</th>
+                    <th>QTY</th>
+                    <th>QTY Confirm</th>
+                    <th>Harga</th>
+                    <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
         </table>

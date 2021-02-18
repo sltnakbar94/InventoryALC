@@ -93,7 +93,7 @@
                     </td>
                     <td>
                         <font font color="#000000">
-                            : {{@$data->date_in}}
+                            : {{date('d-m-Y', strtotime(@$data->date_in))}}
                         </font>
                     </td>
                 </tr>
