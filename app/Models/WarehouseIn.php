@@ -6,7 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
-use App\Models\Supplier;
+use App\Models\Stackholder;
 
 class WarehouseIn extends Model
 {
@@ -47,6 +47,15 @@ class WarehouseIn extends Model
         return $this->hasMany(BagItemWarehouseIn::class, 'warehouse_ins_id', 'id')->orderby('created_at', 'asc');
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Stackholder::class, 'supplier_id', 'id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Stackholder::class, 'customer_id', 'id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

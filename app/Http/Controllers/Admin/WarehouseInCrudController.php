@@ -56,8 +56,8 @@ class WarehouseInCrudController extends CrudController
             'name' => 'supplier_id',
             'type' => 'select',
             'entity' => 'supplier',
-            'attribute' => 'name',
-            'model' => 'App\Models\Supplier',
+            'attribute' => 'company',
+            'model' => 'App\Models\Stackholder',
             'label' => 'Supplier'
         ]);
 
@@ -177,13 +177,6 @@ class WarehouseInCrudController extends CrudController
                 return $query->where('name', '=', 'customer');
             })->pluck('company', 'id'),
             'allows_null' => true,
-        ]);
-
-        $this->crud->addField([
-            'tab' => 'Direct Customer (Opsional)',
-            'name' => 'destination',
-            'label' => 'Alamat Tujuan',
-            'type' => 'address_algolia',
         ]);
 
         $this->crud->addField([
