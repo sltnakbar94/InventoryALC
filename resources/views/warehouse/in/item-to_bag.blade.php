@@ -22,7 +22,9 @@
         <label for="">Harga Satuan (Rp)</label>
         {!! Form::number('price', null, ['class' => 'form-control', 'required', 'id' => 'price']) !!}
       </div>
-      {!! Form::submit('Tambah Item', ['class' => 'btn btn-success', 'id' => 'btn-submit']) !!}
+      @if (backpack_user()->hasRole('operator-office'))
+        {!! Form::submit('Tambah Item', ['class' => 'btn btn-success', 'id' => 'btn-submit']) !!}
+      @endif
      </form>
   </div>
 </div>

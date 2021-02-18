@@ -129,24 +129,25 @@
 					//If New Record
 					console.log(response)
 					if (response.code == 200) {
+						// Action Button Approval
 						var id = response.data.ItemOnBag.id
 						var btn_action = '<div class="btn-group">'
 											+'<button onclick="edit('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>'
-											+'<button onclick="hapus('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-trash-alt"></i></button>'
-											+'<button onclick="accept('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-check"></i></button>'
+											+'<button onclick="hapus('+response.data.ItemOnBag.id+')" type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>'
 										+'</div>'
 						t.row.add([
 							response.data.ItemOnBag.id,
 							response.data.Item.name,
 							response.data.ItemOnBag.qty,
 							0,
+							response.data.ItemOnBag.price,
 							response.data.ItemOnBag.flag,
 							btn_action
 						]).draw(false)
 					}else{
 						//If Update Record
-						console
-						// location.reload();
+						// console
+						location.reload();
 					}
 					swal(response.status, response.message, response.status);
 				},

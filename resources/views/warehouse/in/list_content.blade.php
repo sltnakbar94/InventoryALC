@@ -28,17 +28,18 @@
                         <div class="btn-group">
                             <button onclick="edit('{{ $item->id }}')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>
                             <button onclick="hapus('{{ $item->id }}')" type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                            @if ($item->flag == 'submit')
-                            <div class="btn-group" role="group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Status
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <a class="dropdown-item" onclick="accept('{{ $item->id }}')" href="#">Setujui</a>
-                                    <a class="dropdown-item" onclick="decline('{{ $item->id }}')" href="#">Tolak</a>
+                            @if (backpack_user()->hasRole('operator-gudang'))
+                                @if ($item->flag == 'submit')
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Status
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item" onclick="accept('{{ $item->id }}')" href="#">Setujui</a>
+                                        <a class="dropdown-item" onclick="decline('{{ $item->id }}')" href="#">Tolak</a>
+                                    </div>
                                 </div>
-                              </div>
-
+                                @endif
                             @endif
                         </div>
                     </td>
@@ -47,12 +48,13 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>No</th>
-                    <th>Item Name</th>
-                    <th>QTY</th>
-                    <th>QTY Confirm</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th width="10%">No</th>
+                    <th width="30%">Item Name</th>
+                    <th width="10%">QTY</th>
+                    <th width="20%">QTY Confirm</th>
+                    <th width="20%">Harga</th>
+                    <th width="10%">Status</th>
+                    <th width="15%">Action</th>
                 </tr>
             </tfoot>
         </table>
