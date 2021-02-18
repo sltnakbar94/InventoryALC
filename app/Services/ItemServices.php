@@ -112,12 +112,9 @@ class ItemServices {
      * @param int $qty
      * @return Collection
      */
-    public function RemoveQTYItemFromPO($item_id, $qty)
+    public function RemoveQTYItemFromDO($item_id, $qty)
     {
         $item = $this->cekItemById($item_id);
-        if ($item->qty < $qty) {
-            return false;
-        }
         $sum_qty = $item->qty - $qty;
         return $this->crudService->handleUpdate([
             'model' => $this->itemModel,

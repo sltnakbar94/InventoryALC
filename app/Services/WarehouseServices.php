@@ -32,19 +32,28 @@ class WarehouseServices  {
      */
     public function ApprovalDO($params) {
         $item = $this->GetItemByWarehouseID($params['item_id'], $this->bagItemWarehouseOut);
-        $approve = $this->crudService->handleUpdate([
-            'model' => $this->bagItemWarehouseOut,
-            'data' => array(
-                'flag' => 'accepted',
-                'user_id' => $params['user_id']
-            ),
-            'where' => array(
-                'id' => $params['item_id'],
-            ),
-            'message' => 'Barang Diterma & akan Diteruskan ke Delivery'
-        ]);
-
-        if ($approve['code'] == 200) return $this->itemService->RemoveQTYItemFromPO($item->item_id, $item->qty);
+        $qty = ($item->qty_confirm == 0 ? $item->qty : $item->qty_confirm);
+        $checkQtyOnBag = $this->CheckStockItem($qty, $params['item_id']);
+        if ($checkQtyOnBag) {
+            $approve = $this->crudService->handleUpdate([
+                'model' => $this->bagItemWarehouseOut,
+                'data' => array(
+                    'flag' => 'accepted',
+                    'user_id' => $params['user_id']
+                ),
+                'where' => array(
+                    'id' => $params['item_id'],
+                ),
+                'message' => 'Diterima dan tidak bisa di Edit'
+            ]);
+            return $this->itemService->RemoveQTYItemFromDO($item->item_id, $item->qty);
+        }else{
+            return array(
+                'code' => 400,
+                'status' => 'error',
+                'message' => 'Kuantiti Melebihi Item Stock',
+            );
+        }
     }
 
     /**
@@ -126,16 +135,17 @@ class WarehouseServices  {
         return $model::find($item_id);
     }
 
-    public function CheckStockItem($item_id, $wo_id)
+    /**
+     * Check Stock Item on Bag by Item_ID, Warehouse_Out_ID
+     *
+     * @param int $qtyBag
+     * @param inte $qtyITem
+     * @return boolean
+     */
+    public function CheckStockItem($qtyBag, $item_id)
     {
-        $qty_on_wo = $this->bagItemWarehouseOut::where(array('warehouse_outs_id' => $wo_id, 'item_id' => $item_id))->first();
-        if ($qty_on_wo->qty_confirm == 0) {
-            $qty = $qty_on_wo->qty;
-        }else{
-            $qty = $qty_on_wo->qty;
-        }
-
-        if ($qty < $this->itemService->cekQtyItem($item_id)) {
+        $item = $this->itemService->cekQtyItem($item_id);
+        if ($qtyBag > $item) {
             return false;
         }else{
             return true;

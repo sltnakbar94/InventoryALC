@@ -144,15 +144,17 @@ class ApiController extends Controller
     public function checkItemOnBagById(Request $request)
     {
         $data = $this->bagItemWarehouseOut::find($request->bag_item_warehouse_out_id);
-        if ($data->flag != 'submit') {
+        // Jika Flag Submit
+        if ($data->flag == 'submit' || $data->flag == 'updated') {
+            $data['item'] = $data->Item;
+            return array('code' => 200, 'data' => $data, 'message' => 'Item Sudah Di Terima Tidak Dapat Di Edit',);
+        }else{
             return array(
                 'code' => 400,
                 'status' => 'error',
                 'message' => 'Item Sudah Di Terima Tidak Dapat Di Edit',
             );
         }
-        $data['item'] = $data->Item;
-        return $data;
     }
 
     public function deleteItemOnBag(Request $request)
@@ -160,14 +162,22 @@ class ApiController extends Controller
         try {
             DB::beginTransaction();
             $data = $this->checkItemOnBagById($request);
-            $item = $this->items::find($data->item_id);
-            $data->delete();
-            DB::commit();
-            $result =  array(
-                'code' => 200,
-                'status' => 'success',
-                'message' => $item->name. ' Berhasil Dihapus dari Bag',
-            );
+            if ($data['code'] == 400) {
+                return array(
+                    'code' => 400,
+                    'status' => 'error',
+                    'message' => 'Item Sudah Di Terima Tidak Dapat Di Edit & di Hapus',
+                );
+            }else{
+                $item = $this->items::find($data->item_id);
+                $data->delete();
+                DB::commit();
+                $result =  array(
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => $item->name. ' Berhasil Dihapus dari Bag',
+                );
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
             $result =  array(
@@ -187,15 +197,7 @@ class ApiController extends Controller
     // Approval Deliver Order
     public function accept(Request $request)
     {
-        $stockItem = $this->warehouseServices->CheckStockItem($request->id, $request->wo_id);
-        if ($stockItem) {
-            return array(
-                'code' => 400,
-                'status' => 'error',
-                'message' => 'Melebihi Stok Gudang',
-            );
-        }
-        return $this->warehouseServices->ApprovalDO(array('item_id' => $request->id, 'user_id' => backpack_auth()->id()));
+        return $this->warehouseServices->ApprovalDO(array('item_id' => $request->id, 'wo_id' => $request->wo_id, 'user_id' => backpack_auth()->id()));
     }
 
     // Approval Deliver Order

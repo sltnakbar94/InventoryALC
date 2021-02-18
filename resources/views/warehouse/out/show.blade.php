@@ -151,18 +151,18 @@
 			},
 			dataType: "json",
 			success: function (response) {
-				console.log(response)
+				console.log(response.code)
 				if (response.code == 200) {
-					if (response.qty_confirm !== 0) {
-						var qty = response.qty_confirm
+					if (response.data.qty_confirm !== 0) {
+						var qty = response.data.qty_confirm
 					}else{
-						var qty = response.qty
+						var qty = response.data.qty
 					}
 					$('input#qty').val(qty);
-					$('#item_id').val(response.item_id).trigger('change');
+					$('#item_id').val(response.data.item_id).trigger('change');
 				}else{
 					swal({
-						title: 'Gagal Terima!',
+						title: 'Gagal!',
 						text: response.message,
 						icon: response.status
 					}).then(function () {
@@ -198,6 +198,14 @@
 						if (response.code == 200) {
 							swal({
 								title: 'Berhasil Hapus!',
+								text: response.message,
+								icon: response.status
+							}).then(function () {
+								location.reload();
+							})
+						}else{
+							swal({
+								title: 'Gagal Hapus!',
 								text: response.message,
 								icon: response.status
 							}).then(function () {
