@@ -1,7 +1,36 @@
 @php
-    $sub_total = $sum->subtotal;
-    $ppn = $sum->subtotal/100*10;
-    $grand_total = $sub_total+$ppn;
+    //sub total
+    $sub_total = (int)$sum->subtotal;
+
+    //discount
+    if (!empty($data->discount)) {
+        $discount = ($data->discount/100)*$sub_total;
+    }
+
+    //ppn
+    if ($data->ppn == 1) {
+        if (!empty($discount)) {
+            $ppn = (10/100)*($sub_total-$discount);
+        }else {
+            $ppn = (10/100)*($sub_total);
+        }
+    }
+
+    //grand total
+    if (!empty($discount)) {
+        if (!empty($ppn)) {
+            $grand_total = ($sub_total-$discount)+$ppn;
+        } else {
+            $grand_total = $sub_total-$discount;
+        }
+    }else {
+        if (!empty($ppn)) {
+            $grand_total = $sub_total+$ppn;
+        }
+        $grand_total = $sub_total;
+    }
+
+    //pennyebut
     function penyebut($nilai) {
         $nilai = abs($nilai);
         $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
@@ -150,29 +179,37 @@
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle>{{@$detil->item->name}}</td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000">{{@$detil->qty}}</font></td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->item->unit}}</font></td>
-            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle><font color="#000000">{{number_format(@$detil->price)}} </font></td>
-            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle><font color="#000000">{{number_format(@$detil->price*@$detil->qty)}} </font></td>
+            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle><font color="#000000">Rp. {{number_format(@$detil->price)}} </font></td>
+            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle><font color="#000000">Rp. {{number_format(@$detil->price*@$detil->qty)}} </font></td>
             <td style="border-left: 1px solid #000000;"></td>
         </tr>
     @endforeach
     <tr>
 		<td colspan="5" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Sub Total</font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">{{number_format(@$sub_total)}} </font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Sub Total</font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Rp. {{number_format(@$sub_total)}} </font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
-    @if (@$data->ppn == '1')
+    @if (!empty($discount))
         <tr>
             <td colspan="5" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
-            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">PPN 10%</font></b></td>
-            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">{{number_format(@$ppn)}} </font></b></td>
+            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Discount {{$data->discount}}%</font></b></td>
+            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">- Rp. {{number_format(@$discount)}} </font></b></td>
+            <td style="border-left: 1px solid #000000;"></td>
+        </tr>
+    @endif
+    @if (!empty($ppn))
+        <tr>
+            <td colspan="5" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
+            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">PPN 10%</font></b></td>
+            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Rp. {{number_format(@$ppn)}} </font></b></td>
             <td style="border-left: 1px solid #000000;"></td>
         </tr>
     @endif
     <tr>
 		<td colspan="5" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" height="20" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000"><br></font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Grand Total</font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">{{number_format(@$grand_total)}} </font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Grand Total</font></b></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="right" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Rp. {{number_format(@$grand_total)}} </font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
     <tr>
