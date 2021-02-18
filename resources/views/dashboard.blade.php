@@ -4,5 +4,6 @@
 
 @include('dashboard.counter')
 @include('dashboard.pie-chart')
+@include('dashboard.table-items')
 
 @endsection
