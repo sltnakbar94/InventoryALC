@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\WarehouseOut;
 
 class DeliveryNote extends Model
 {
@@ -34,7 +35,10 @@ class DeliveryNote extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function WarehouseOut()
+    {
+        return $this->hasOne(WarehouseOut::class, 'id', 'warehouse_out_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

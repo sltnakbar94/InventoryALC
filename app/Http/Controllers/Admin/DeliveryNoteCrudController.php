@@ -85,7 +85,17 @@ class DeliveryNoteCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        $this->crud->addField([
+            'name' => 'kd_delivery_notes',
+            'type' => 'text',
+            'label' => 'Nomor DN'
+        ]);
+
+        $this->crud->addField([
+            'name' => 'warehouse_out_id',
+            'type' => 'text',
+            'label' => 'Nomor WOs'
+        ]);
     }
 
     public function generateDeliveryNote($id)
@@ -105,9 +115,9 @@ class DeliveryNoteCrudController extends CrudController
 
     public function pdf($id)
     {
-        $data = WarehouseOut::where('id', '=', $id)->first();
+        $data = DeliveryNote::where('id', '=', $id)->first();
 
-        $pdf = PDF::loadview('warehouse.out.output',['data'=>$data]);
+        $pdf = PDF::loadview('warehouse.dn.output',['data'=>$data]);
     	return $pdf->stream($data->do_number.'.pdf');
     }
 }
