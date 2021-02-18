@@ -102,44 +102,42 @@
 
 		var t = $('table#example').DataTable();
 
-
 		var data = $(this).serialize()
 		var method = $(this).attr('method')
 		var action = $(this).attr('action')
 
-			$.ajax({
-				url: action,
-				data: data,
-				method: method,
-				beforeSend: function() {
-					$('#btn-submit').prop('disabled', true);
-				},
-				success: function(response) {
-					$('#btn-submit').prop('disabled', false);
-					//If New Record
-					if (response.code == 200) {
-						var id = response.data.ItemOnBag.id
-						var btn_action = '<div class="btn-group">'
-											+'<button onclick="edit('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>'
-											+'<button onclick="hapus('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-trash-alt"></i></button>'
-											+'<button onclick="accept('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-check"></i></button>'
-										+'</div>'
-						t.row.add([
-							response.data.ItemOnBag.id,
-							response.data.Item.name,
-							response.data.ItemOnBag.qty,
-							0,
-							response.data.ItemOnBag.flag,
-							btn_action
-						]).draw(false)
-					}else{
-						//If Update Record
-						// location.reload();
-						console.log(response)
-					}
-					swal(response.status, response.message, response.status);
+		$.ajax({
+			url: action,
+			data: data,
+			method: method,
+			beforeSend: function() {
+				$('#btn-submit').prop('disabled', true);
+			},
+			success: function(response) {
+				$('#btn-submit').prop('disabled', false);
+				//If New Record
+				if (response.code == 200) {
+					var id = response.data.ItemOnBag.id
+					var btn_action = '<div class="btn-group">'
+										+'<button onclick="edit('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>'
+										+'<button onclick="hapus('+response.data.ItemOnBag.id+')" type="button" class="btn btn-primary"><i class="fas fa-trash-alt"></i></button>'
+									+'</div>'
+					t.row.add([
+						response.data.ItemOnBag.id,
+						response.data.Item.name,
+						response.data.ItemOnBag.qty,
+						0,
+						response.data.ItemOnBag.flag,
+						btn_action
+					]).draw(false)
+				}else{
+					//If Update Record
+					// location.reload();
+					console.log(response)
 				}
-			})
+				swal(response.status, response.message, response.status);
+			}
+		})
 	})
 
 	//Edit Item On Bag by ID
