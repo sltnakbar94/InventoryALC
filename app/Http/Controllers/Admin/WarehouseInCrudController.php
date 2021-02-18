@@ -36,7 +36,7 @@ class WarehouseInCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\WarehouseIn::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/warehousein');
-        CRUD::setEntityNameStrings('Barang Masuk', 'Barang Masuk');
+        CRUD::setEntityNameStrings('Purchase Order', 'Purchase Order');
     }
 
     /**
@@ -126,6 +126,12 @@ class WarehouseInCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name' => 'date_in',
+            'label' => 'Tanggal PO',
+            'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
             'name' => 'supplier_id',
             'label' => 'Supplier',
             'type' => 'select2_from_array',
@@ -134,16 +140,12 @@ class WarehouseInCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'date_in',
-            'label' => 'Tanggal PO',
-            'type' => 'date_picker',
-        ]);
-
-        $this->crud->addField([
             'name' => 'ref_no',
             'label' => 'Nomor Referensi',
             'type' => 'text',
-            'hint' => 'Optional'
+            'attributes' => [
+                'placeholder' => 'Contoh : Nomor Surat Penawaran Harga',
+              ],
         ]);
 
         $this->crud->addField([
@@ -154,9 +156,9 @@ class WarehouseInCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'ppn',
-            'label' => 'PPN (%)',
-            'type' => 'number',
-            'value' => 10,
+            'label' => 'PPN (10%)',
+            'type' => 'boolean',
+            'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
         ]);
 
         $this->crud->addField([
