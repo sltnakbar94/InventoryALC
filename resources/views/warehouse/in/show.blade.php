@@ -51,7 +51,7 @@
 	    @endif
         <div class="card no-padding no-border">
             <div class="card-header">
-				Nomor PO : {{@$crud->entry->delivery_note}}
+				Nomor PO : {{@$crud->entry->po_number}}
             </div>
             <div class="card-body">
 				@if(view()->exists('warehouse.in.form_content'))

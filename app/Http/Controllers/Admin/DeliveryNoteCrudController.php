@@ -9,6 +9,7 @@ use App\Models\DeliveryNote;
 use App\Services\DeliveryNoteServices;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use PDF;
 
 /**
  * Class DeliveryNoteCrudController
@@ -25,7 +26,7 @@ class DeliveryNoteCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -37,24 +38,29 @@ class DeliveryNoteCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // columns
+        $this->crud->removeButton('create');
+        $this->crud->removeButton('show');
+        $this->crud->removeButton('delete');
+        $this->crud->removeColumn('meta');
+        $this->crud->addButtonFromView('line', 'pdf', 'pdf', 'beginning');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
     }
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -67,13 +73,13 @@ class DeliveryNoteCrudController extends CrudController
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
          */
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
@@ -94,6 +100,14 @@ class DeliveryNoteCrudController extends CrudController
             \Alert::success('Delivery Order dengan Nomor. '.$data['data']->warehouse_out_id.' Berhasil membuat DN')->flash();
         }
         return \Redirect::to($this->crud->route);
-        
+
+    }
+
+    public function pdf($id)
+    {
+        $data = WarehouseOut::where('id', '=', $id)->first();
+
+        $pdf = PDF::loadview('warehouse.out.output',['data'=>$data]);
+    	return $pdf->stream($data->do_number.'.pdf');
     }
 }
