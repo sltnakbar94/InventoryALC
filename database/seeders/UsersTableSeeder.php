@@ -21,16 +21,30 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
 
+        $user1->assignRole('admin');
+
         $user2 = User::create([
             'name' => 'Operator 2',
             'email' => 'operator2@example.com',
             'password' => bcrypt('password')
         ]);
 
-        $user2 = User::create([
+        $user2->assignRole('operator-office');
+
+        $user3 = User::create([
             'name' => 'Operator 3',
             'email' => 'operator3@example.com',
             'password' => bcrypt('password')
         ]);
+
+        $user3->assignRole('operator-gudang');
+
+        $user4 = User::create([
+            'name' => 'Superadmin',
+            'email' => 'superadmin@example.com',
+            'password' => bcrypt('password')
+        ]);
+
+        $user4->assignRole('superadmin');
     }
 }

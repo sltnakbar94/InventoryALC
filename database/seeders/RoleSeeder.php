@@ -18,6 +18,16 @@ class RoleSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Operator Gudang
+        $superadmin = Role::create([
+            'name' => 'superadmin',
+        ]);
+
+        // Operator Gudang
+        $admin = Role::create([
+            'name' => 'admin',
+        ]);
+
+        // Operator Gudang
         $OWarehouse = Role::create([
             'name' => 'operator-gudang',
         ]);
