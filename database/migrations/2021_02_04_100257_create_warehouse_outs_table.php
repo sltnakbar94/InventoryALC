@@ -15,14 +15,19 @@ class CreateWarehouseOutsTable extends Migration
     {
         Schema::create('warehouse_outs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('delivery_note')->nullable();
-            $table->string('customer_id');
-            $table->text('destination')->nullable();
-            $table->date('date_out')->nullable();
+            //General Data
+            $table->string('do_number');
+            $table->string('warehouse_in_id')->nullable();
+            $table->date('date_out');
             $table->string('ref_no')->nullable();
+            $table->string('customer_id')->nullable();
+            $table->string('pic')->nullable();
+            $table->text('destination')->nullable();
             $table->text('description')->nullable();
+            //Add-on Data
             $table->string('user_id');
-            $table->integer('status')->default(0);
+            $table->bigInteger('company_id');
+            $table->boolean('status')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

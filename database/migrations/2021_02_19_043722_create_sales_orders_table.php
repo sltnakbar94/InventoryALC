@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWarehouseInsTable extends Migration
+class CreateSalesOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateWarehouseInsTable extends Migration
      */
     public function up()
     {
-        Schema::create('warehouse_ins', function (Blueprint $table) { //Purchase Order
+        Schema::create('sales_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             //General Data
-            $table->string('po_number')->nullable();
-            $table->date('po_date');
-            $table->string('supplier_id');
+            $table->string('so_number')->nullable();
+            $table->date('so_date');
+            $table->string('customer_id');
             $table->string('ref_no')->nullable();
             $table->string('discount')->nullable();
             $table->boolean('ppn')->default(false);
@@ -46,6 +46,6 @@ class CreateWarehouseInsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warehouse_ins');
+        Schema::dropIfExists('sales_orders');
     }
 }

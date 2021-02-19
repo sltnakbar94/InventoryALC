@@ -1,12 +1,19 @@
 <!-- This file is used to store sidebar items, starting with Backpack\Base 0.9.0 -->
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
 <li class="nav-item nav-dropdown">
-    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-cog"></i> Warehouse</a>
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-cog"></i> In Bound</a>
 	<ul class="nav-dropdown-items">
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('salesorder') }}'><i class='nav-icon la la-question'></i> SalesOrders</a></li>
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehousein') }}'><i class='nav-icon la la-question'></i> Purchase Order</a></li>
+    </ul>
+</li>
+<li class="nav-item nav-dropdown">
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-cog"></i> Out Bound</a>
+	<ul class="nav-dropdown-items">
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehouseout') }}'><i class='nav-icon la la-question'></i> Delivery Order</a></li>
     </ul>
 </li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class='nav-icon la la-question'></i> DeliveryNotes</a></li>
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-cog"></i> Config</a>
 	<ul class="nav-dropdown-items">
@@ -26,7 +33,3 @@
         </li>
     </ul>
 </li>
-
-{{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('operatorgudang') }}'><i class='nav-icon la la-question'></i> OperatorGudangs</a></li> --}}
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class='nav-icon la la-question'></i> DeliveryNotes</a></li>
