@@ -1,6 +1,6 @@
 
 <div class="form-group required" element="div"><label>Customer <span class="text-danger">*<span></label>
-    {!! Form::text('customer_id', $fields['warehouse_in']['data']->supplier->name, ['class' => 'form-control', 'readonly']) !!}
+    {!! Form::text('customer_id', $fields['warehouse_in']['data']->supplier->company, ['class' => 'form-control', 'readonly']) !!}
 </div>
 <div class="form-group required" element="div"><label>Date In <span class="text-danger">*<span></label>
     {!! Form::date('date_in', $fields['warehouse_in']['data']->date_in, ['class' => 'form-control', 'readonly']) !!}
