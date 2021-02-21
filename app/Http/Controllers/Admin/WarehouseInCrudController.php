@@ -125,7 +125,7 @@ class WarehouseInCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'date_in',
+            'name' => 'po_date',
             'label' => 'Tanggal PO',
             'type' => 'date_picker',
         ]);

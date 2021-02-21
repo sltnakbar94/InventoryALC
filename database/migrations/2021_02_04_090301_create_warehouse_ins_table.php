@@ -32,7 +32,7 @@ class CreateWarehouseInsTable extends Migration
             $table->date('end_date')->nullable();
             //Add-on Data
             $table->string('user_id');
-            $table->bigInteger('company_id');
+            $table->bigInteger('company_id')->nullable();
             $table->integer('status')->default(0);
             $table->softDeletes();
             $table->timestamps();

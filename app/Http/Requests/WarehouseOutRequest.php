@@ -26,7 +26,7 @@ class WarehouseOutRequest extends FormRequest
     public function rules()
     {
         return [
-            'do_number' => 'required',
+            'do_number' => 'required|unique:warehouse_outs,do_number',
             'customer_id' => 'required'
         ];
     }

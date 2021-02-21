@@ -26,7 +26,7 @@ class CreateWarehouseOutsTable extends Migration
             $table->text('description')->nullable();
             //Add-on Data
             $table->string('user_id');
-            $table->bigInteger('company_id');
+            $table->bigInteger('company_id')->nullable();
             $table->boolean('status')->default(true);
             $table->softDeletes();
             $table->timestamps();

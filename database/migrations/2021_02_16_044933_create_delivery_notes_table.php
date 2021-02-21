@@ -15,10 +15,20 @@ class CreateDeliveryNotesTable extends Migration
     {
         Schema::create('delivery_notes', function (Blueprint $table) {
             $table->id();
-            $table->string('kd_delivery_notes');
-            $table->integer('warehouse_out_id');
-            $table->string('user_id')->default('192a6ff2-7f7f-48d9-a5bb-7229b3863fbf');
-            $table->string('meta')->nullable();
+            $table->string('dn_number');
+            $table->string('reference')->nullable();
+            $table->date('dn_date')->nullable();
+            $table->string('expedition')->nullable();
+            $table->string('consignee')->nullable();//penerima barang
+            $table->dateTime('etd')->nullable();
+            $table->dateTime('eta')->nullable();
+            $table->bigInteger('total_weight')->nullable();
+            $table->string('driver')->nullable();
+            $table->string('driver_phone')->nullable();
+            $table->string('module')->nullable();
+            $table->integer('status')->default(0);
+            $table->string('user_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

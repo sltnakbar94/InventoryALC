@@ -5,13 +5,11 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
-use App\Models\Stackholder;
-use App\Models\SalesOrderDetail;
+use App\Models\SalesOrder;
 
-class SalesOrder extends Model
+class SalesOrderDetail extends Model
 {
-    use CrudTrait, SoftDeletes;
+    use CrudTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -19,7 +17,7 @@ class SalesOrder extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'sales_orders';
+    protected $table = 'sales_order_details';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -38,24 +36,14 @@ class SalesOrder extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function user()
+    public function salesOrder()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(SalesOrder::class, 'sales_order_id', 'id');
     }
 
-    public function details()
+    public function item()
     {
-        return $this->hasMany(SalesOrderDetail::class, 'sales_order_id', 'id')->orderby('created_at', 'asc');
-    }
-
-    public function supplier()
-    {
-        return $this->belongsTo(Stackholder::class, 'supplier_id', 'id');
-    }
-
-    public function customer()
-    {
-        return $this->belongsTo(Stackholder::class, 'customer_id', 'id');
+        return $this->hasOne(Item::class, 'id', 'item_id');
     }
 
     /*

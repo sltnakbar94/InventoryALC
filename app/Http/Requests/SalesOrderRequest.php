@@ -26,7 +26,11 @@ class SalesOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'so_number' => 'required|unique:sales_orders,so_number',
+            'so_date' => 'required',
+            'supplier_id' => 'required',
+            'customer_id' => 'required',
+            'start_date' => 'required',
         ];
     }
 

@@ -7,6 +7,9 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Stackholder;
 use App\Models\SalesOrder;
+use App\Models\SalesOrderDetail;
+use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class SalesOrderCrudController
@@ -31,6 +34,7 @@ class SalesOrderCrudController extends CrudController
         CRUD::setModel(\App\Models\SalesOrder::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/salesorder');
         CRUD::setEntityNameStrings('Sales Order', 'Sales Orders');
+        $this->crud->setShowView('warehouse.so.show');
     }
 
     /**
@@ -41,7 +45,50 @@ class SalesOrderCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->crud->addColumn([
+            'name' => 'so_number',
+            'type' => 'text',
+            'label' => 'Nomor SO'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'supplier_id',
+            'type' => 'select',
+            'entity' => 'supplier',
+            'attribute' => 'company',
+            'model' => 'App\Models\Stackholder',
+            'label' => 'Supplier'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'customer_id',
+            'type' => 'select',
+            'entity' => 'customer',
+            'attribute' => 'company',
+            'model' => 'App\Models\Stackholder',
+            'label' => 'Customer'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'so_date',
+            'type' => 'date',
+            'label' => 'Tanggal Masuk'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'description',
+            'type' => 'textarea',
+            'label' => 'Keterangan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'user_id',
+            'type' => 'select',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => 'App\Models\User',
+            'label' => 'Operator'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -87,7 +134,7 @@ class SalesOrderCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'so_date',
-            'label' => 'Tanggal PO',
+            'label' => 'Tanggal SO',
             'type' => 'date_picker',
         ]);
 
@@ -124,6 +171,7 @@ class SalesOrderCrudController extends CrudController
             'name' => 'discount',
             'label' => 'Diskon (%)',
             'type' => 'number',
+            'hint' => 'Discount keseluruhan',
         ]);
 
         $this->crud->addField([
@@ -131,6 +179,12 @@ class SalesOrderCrudController extends CrudController
             'label' => 'PPN (10%)',
             'type' => 'boolean',
             'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'term_of_paymnet',
+            'label' => 'Term of Payment',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -151,6 +205,12 @@ class SalesOrderCrudController extends CrudController
             'value' => backpack_auth()->id()
         ]);
 
+        $this->crud->addField([
+            'name' => 'company_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->user()->company_id
+        ]);
+
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
@@ -167,5 +227,36 @@ class SalesOrderCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function storePic(Request $request)
+    {
+        if ($request->type == "customer") {
+            $data = SalesOrder::findOrFail($request->id);
+            $data->pic_customer = $request->pic;
+        }
+        if ($request->type == "supplier") {
+            $data = SalesOrder::findOrFail($request->id);
+            $data->pic_supplier = $request->pic;
+        }
+        $data->update();
+
+        \Alert::add('success', 'Berhasil tambah pic ' . $request->pic)->flash();
+       return redirect()->back();
+    }
+
+    public function pdf(Request $request)
+    {
+        $sum = SalesOrderDetail::sum('sub_total');
+        $data = SalesOrder::findOrFail($request->id);
+
+        $pdf = PDF::loadview('warehouse.so.output',['data'=>$data, 'sum'=>$sum]);
+    	return $pdf->stream($data->so_number.'.pdf');
+    }
+
+    public function dn(Request $request)
+    {
+        return redirect()->route('generate_delivery-note', [$request->id]);
+
     }
 }

@@ -33,3 +33,7 @@
         </li>
     </ul>
 </li>
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('salesorderdetail') }}'><i class='nav-icon la la-question'></i> SalesOrderDetails</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('salesdn') }}'><i class='nav-icon la la-question'></i> SalesDns</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynotedetail') }}'><i class='nav-icon la la-question'></i> DeliveryNoteDetails</a></li>
