@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class WarehouseInRequest extends FormRequest
+class SalesDnRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,13 @@ class WarehouseInRequest extends FormRequest
     public function rules()
     {
         return [
-            'po_number' => 'required|unique:warehouse_ins,po_number',
-            'po_date' => 'required',
-            'supplier_id' => 'required'
+            'dn_number' => 'required|unique:delivery_notes,dn_number',
+            'reference' => 'required',
+            'dn_date' => 'required',
+            'expedition' => 'required',
+            'consignee' => 'required',
+            'driver' => 'required',
+            'driver_phone' => 'required',
         ];
     }
 

@@ -47,7 +47,7 @@ class StackholderCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'address',
-            'type' => 'textarea',
+            'type' => 'text',
             'label' => 'Alamat Perusahaan'
         ]);
 

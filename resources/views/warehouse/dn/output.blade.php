@@ -27,9 +27,9 @@
                     <tr>
                         <td>
                             <font color="#000000">
-                                {{@$data->WarehouseOut->customer->company}}<br>
-                                {{@$data->WarehouseOut->customer->address}}<br>
-                                Att : {{@$data->WarehouseOut->customer->name}}<br>
+                                {{@$data->salesOrder->customer->company}}<br>
+                                {{@$data->salesOrder->customer->address}}<br>
+                                Att : {{@$data->salesOrder->pic_customer}}<br>
                             </font>
                         </td>
                     </tr>
@@ -50,7 +50,7 @@
                         </td>
                         <td>
                             <font font color="#000000">
-                                : {{date('d-m-Y', strtotime(@$data->WarehouseOut->date_out))}}
+                                : {{date('d-m-Y', strtotime(@$data->dn_date))}}
                             </font>
                         </td>
                     </tr>
@@ -62,7 +62,7 @@
                         </td>
                         <td>
                             <font font color="#000000">
-                                : {{@$data->WarehouseOut->do_number}}
+                                : {{@$data->dn_number}}
                             </font>
                         </td>
                     </tr>
@@ -74,7 +74,7 @@
                         </td>
                         <td>
                             <font font color="#000000">
-                                : {{@$data->WarehouseOut->ref_no}}
+                                : {{@$data->salesOrder->so_number}}
                             </font>
                         </td>
                     </tr>
@@ -92,16 +92,16 @@
 	</tr>
 	<tr>
 		<td width="43" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" height="20" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">No.</font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">No Item</font></b></td>
-		<td width="150" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Nama Item</font></b></td>
+		<td width="100" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">No Item</font></b></td>
+		<td width="155" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Nama Item</font></b></td>
 		<td width="50" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Jumlah</font></b></td>
 		<td width="70" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Unit Satuan</font></b></td>
 		<td width="95" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Remark</font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
-    @foreach (@$data->WarehouseOut->bagOutDetail as $detil)
+    @foreach (@$data->salesOrder->details as $key=>$detil)
         <tr>
-            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$detil->id}}</font></td>
+            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$key+1}}</font></td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->item->serial}}</font></td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle>{{@$detil->item->name}}</td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000">{{@$detil->qty}}</font></td>
@@ -121,7 +121,7 @@
     <tr>
 		<td colspan="3" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom>
             <font color="#000000">
-                <textarea style="border: none; width:auto; height:auto">{{@$data->WarehouseOut->description}}</textarea>
+                <textarea style="border: none; width:auto; height:auto">{{@$data->salesOrder->description}}</textarea>
             </font>
         </td>
 		<td colspan="2" style="border-left: 1px solid #000000;" align="left" valign=bottom><font color="#000000"><br></font></td>

@@ -63,6 +63,9 @@
         </div>
         @if (!empty($crud->entry->customer_id))
             <div class="card no-padding no-border">
+                <div class="card-header">
+                    Nomor DN : {{@$crud->entry->delivery_note}}
+                </div>
                 <div class="card-body">
                     @include('warehouse.in.extend_content', [ 'fields' => $crud->fields(), 'action' => 'create' ])
                 </div>
@@ -101,9 +104,7 @@
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#example').DataTable({
-			responsive: true
-		});
+        $('#example').DataTable();
 		$('.select2').select2({})
     } );
 	$('#item_to-bag').submit(function(e) {

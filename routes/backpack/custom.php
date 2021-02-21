@@ -50,4 +50,12 @@ Route::group([
     Route::crud('brand', 'BrandCrudController');
     Route::crud('unit', 'UnitCrudController');
     Route::crud('stackholder', 'StackholderCrudController');
+    Route::crud('salesorder', 'SalesOrderCrudController');
+    Route::post('salesorder-pic', 'SalesOrderCrudController@storePic');
+    Route::post('generate-so-pdf', 'SalesOrderCrudController@pdf');
+    Route::post('generate-so-dn', 'SalesOrderCrudController@dn');
+    Route::crud('salesorderdetail', 'SalesOrderDetailCrudController');
+    Route::crud('salesdn', 'SalesDnCrudController');
+    Route::post('generate-dn-pdf', 'SalesDnCrudController@pdf');
+    Route::crud('deliverynotedetail', 'DeliveryNoteDetailCrudController');
 }); // this should be the absolute last line of this file

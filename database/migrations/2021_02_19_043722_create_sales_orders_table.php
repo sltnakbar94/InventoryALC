@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWarehouseInsTable extends Migration
+class CreateSalesOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateWarehouseInsTable extends Migration
      */
     public function up()
     {
-        Schema::create('warehouse_ins', function (Blueprint $table) { //Purchase Order
+        Schema::create('sales_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             //General Data
-            $table->string('po_number')->nullable();
-            $table->date('po_date');
+            $table->string('so_number')->nullable();
+            $table->date('so_date');
             $table->string('supplier_id');
+            $table->string('customer_id');
             $table->string('ref_no')->nullable();
             $table->string('discount')->nullable();
             $table->boolean('ppn')->default(false);
-            $table->string('grand_total')->nullable();
+            $table->bigInteger('grand_total')->nullable()->default(0);
             $table->string('term_of_paymnet')->nullable();
             $table->string('issued_by')->nullable();
             $table->string('approve_by')->nullable();
@@ -31,6 +32,8 @@ class CreateWarehouseInsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             //Add-on Data
+            $table->string('pic_supplier')->nullable();
+            $table->string('pic_customer')->nullable();
             $table->string('user_id');
             $table->bigInteger('company_id')->nullable();
             $table->integer('status')->default(0);
@@ -46,6 +49,6 @@ class CreateWarehouseInsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warehouse_ins');
+        Schema::dropIfExists('sales_orders');
     }
 }
