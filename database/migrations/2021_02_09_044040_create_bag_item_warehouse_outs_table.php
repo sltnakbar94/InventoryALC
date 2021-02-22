@@ -14,11 +14,17 @@ class CreateBagItemWarehouseOutsTable extends Migration
     public function up()
     {
         Schema::create('bag_item_warehouse_outs', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('warehouse_outs_id')->unsigned();
-            $table->bigInteger('item_id')->unsigned();
-            $table->integer('qty');
-            $table->bigInteger('price')->nullable();
+            $table->id();
+            $table->bigInteger('warehouse_out_id');
+            $table->string('item_id');
+            $table->string('serial')->nullable();
+            $table->bigInteger('qty');
+            $table->bigInteger('qty_confirm')->nullable();
+            $table->string('uom')->nullable();
+            $table->integer('status')->default(0);
+            $table->string('user_id')->nullable();
+            $table->string('confirm_user_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

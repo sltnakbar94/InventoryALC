@@ -62,7 +62,7 @@ class ItemServices {
     public function checkItemOnBagWO($warehouse_out_id, $item_id)
     {
         $check = $this->bagItemWarehouseOut::where(array(
-            'warehouse_outs_id' => $warehouse_out_id,
+            'warehouse_out_id' => $warehouse_out_id,
             'item_id' => $item_id))->first();
         return $check;
     }

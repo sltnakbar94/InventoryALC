@@ -23,12 +23,13 @@ Route::group([
 
     // Out
     Route::crud('warehouseout', 'WarehouseOutCrudController');
-    Route::post('generate-out-pdf', 'WarehouseOutCrudController@pdf');
+    Route::post('generate-do-pdf', 'WarehouseOutCrudController@pdf');
     Route::post('item_to-bag', 'ApiController@itemToBag');
     Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
     Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
     Route::post('accept', 'ApiController@accept');
     Route::post('decline', 'ApiController@decline');
+    Route::post('warehouseout-pic', 'WarehouseOutCrudController@storePic');
 
     // In
     Route::crud('warehousein', 'WarehouseInCrudController');
@@ -72,4 +73,5 @@ Route::group([
 
 
     Route::crud('bagitemwarehousein', 'BagItemWarehouseInCrudController');
+    Route::crud('bagitemwarehouseout', 'BagItemWarehouseOutCrudController');
 }); // this should be the absolute last line of this file

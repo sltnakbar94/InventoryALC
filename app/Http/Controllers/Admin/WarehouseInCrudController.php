@@ -177,7 +177,7 @@ class WarehouseInCrudController extends CrudController
 
         $this->crud->addField([   // date_range
             'name'  => ['start_date', 'end_date'], // db columns for start_date & end_date
-            'label' => 'Estimasi Tanggal Mulai dan Akhir SO',
+            'label' => 'Estimasi Tanggal Mulai dan Akhir PO',
             'type'  => 'date_range',
         ]);
 

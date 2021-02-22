@@ -111,7 +111,7 @@ class WarehouseOutCrudController extends CrudController
         $month = date("m");
         $year = date("Y");
 
-        $count = WarehouseOut::withTrashed()->whereDate('created_at', date('Y-m-d'))->count()+1;
+        $count = WarehouseOut::withTrashed()->whereDate('created_at', date('Y-m-d'))->count();
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
 
         $generate = $month.$day."-".$number."/WHO-DO/".$year;
@@ -144,15 +144,8 @@ class WarehouseOutCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'destination',
-            'label' => 'Tujuan',
-            'type' => 'textarea',
-            'hint' => 'Isi apabila tujuan berbeda dengan alamat pelanggan'
-        ]);
-
-        $this->crud->addField([
-            'name' => 'date_out',
-            'label' => 'Tanggal Keluar',
+            'name' => 'do_date',
+            'label' => 'Tanggal DO',
             'type' => 'date_picker',
         ]);
 
@@ -160,6 +153,21 @@ class WarehouseOutCrudController extends CrudController
             'label' => 'Nomor Referensi',
             'name'  => 'ref_no',
             'type'  => 'text',
+            'attributes' => [
+                'placeholder' => 'Contoh : Nomor Bill',
+              ],
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Ekspedisi',
+            'name'  => 'expediion',
+            'type'  => 'text',
+        ]);
+
+        $this->crud->addField([   // date_range
+            'name'  => ['start_date', 'end_date'], // db columns for start_date & end_date
+            'label' => 'Estimasi Tanggal Mulai dan Akhir DO',
+            'type'  => 'date_range',
         ]);
 
         $this->crud->addField([
@@ -204,7 +212,7 @@ class WarehouseOutCrudController extends CrudController
         $content['data'] = WarehouseOut::findOrFail($id)->with('customer')->first();
 
         //Check if Flag There's No Submit
-        $bagItemOnWarehouseOut = BagItemWarehouseOut::where('warehouse_outs_id', $id)->get();
+        $bagItemOnWarehouseOut = BagItemWarehouseOut::where('warehouse_out_id', $id)->get();
         $checkApprovalByWarehouseID = $globalService->CheckingOnArray($bagItemOnWarehouseOut, 'submit');
 
         $this->crud->addField([
@@ -240,6 +248,16 @@ class WarehouseOutCrudController extends CrudController
 
         $pdf = PDF::loadview('warehouse.out.output',['data'=>$data]);
     	return $pdf->stream($data->do_number.'.pdf');
+    }
+
+    public function storePic(Request $request)
+    {
+        $data = WarehouseOut::findOrFail($request->id);
+        $data->pic_customer = $request->pic;
+        $data->update();
+
+        \Alert::add('success', 'Berhasil tambah pic ' . $request->pic)->flash();
+       return redirect()->back();
     }
 
 }

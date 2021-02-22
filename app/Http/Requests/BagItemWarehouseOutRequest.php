@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class WarehouseOutRequest extends FormRequest
+class BagItemWarehouseOutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,7 @@ class WarehouseOutRequest extends FormRequest
     public function rules()
     {
         return [
-            'do_number' => 'required|unique:warehouse_outs,do_number',
-            'customer_id' => 'required',
-            'do_date' => 'required'
+            // 'name' => 'required|min:5|max:255'
         ];
     }
 
