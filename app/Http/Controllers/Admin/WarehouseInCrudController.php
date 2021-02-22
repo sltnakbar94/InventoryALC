@@ -62,7 +62,7 @@ class WarehouseInCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
-            'name' => 'date_in',
+            'name' => 'po_date',
             'type' => 'date',
             'label' => 'Tanggal Masuk'
         ]);
