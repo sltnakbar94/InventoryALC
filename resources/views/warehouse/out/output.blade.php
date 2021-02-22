@@ -29,7 +29,7 @@
                             <font color="#000000">
                                 {{@$data->customer->company}}<br>
                                 {{@$data->customer->address}}<br>
-                                Att : {{@$data->customer->name}}<br>
+                                Att : {{@$data->pic_customer}}<br>
                             </font>
                         </td>
                     </tr>

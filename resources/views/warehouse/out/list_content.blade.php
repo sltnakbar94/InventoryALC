@@ -2,15 +2,15 @@
     <div class="col-md-12">
         <div class="table">
             <table class="table table-responsive" style="width:100%">
-                <tr class="bg-primary">
+                <tr class="bg-primary" align="center">
                     <th>No.</th>
                     <th>nama Item</th>
                     <th>SKU</th>
                     <th>UoM</th>
                     <th>Jumlah</th>
                     <th>QC Pass</th>
-                    <th>Status</th>
                     <th>Remarks</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 @if (count($crud->entry->details) != 0)
