@@ -226,7 +226,87 @@ class SalesDnCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
+
+        $this->crud->addField([
+            'label' => "Nomor Surat jalan",
+            'name'  => "dn_number",
+            'type'  => 'text',
+            'attributes' => [
+                'readonly'    => 'readonly',
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'reference',
+            'label' => 'Nomor SO',
+            'type' => 'select2_from_array',
+            'options' => SalesOrder::pluck('so_number', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'dn_date',
+            'label' => 'Tanggal Surat Jalan',
+            'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'expedition',
+            'label' => 'Expedisi',
+            'type' => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'etd',
+            'label' => 'Estimasi Keberangkatan',
+            'type' => 'datetime_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'eta',
+            'label' => 'Estimasi Sampai',
+            'type' => 'datetime_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'total_weight',
+            'label' => 'Berat Total Barang',
+            'type' => 'text',
+            'attributes' => [
+                'placeholder' => 'Contoh : 80 KG',
+              ],
+        ]);
+
+        $this->crud->addField([
+            'name' => 'driver',
+            'label' => 'Nama Pengemudi',
+            'type' => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'driver_phone',
+            'label' => 'No Kontak Pengemudi',
+            'type' => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'module',
+            'value' => 'sales_order',
+            'type' => 'hidden',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'user_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->id()
+        ]);
+
+        $this->crud->addField([
+            'name' => 'company_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->user()->company_id
+        ]);
     }
 
     public function pdf(Request $request)
