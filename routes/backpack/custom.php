@@ -6,6 +6,8 @@
 // This route file is loaded automatically by Backpack\Base.
 // Routes you generate using Backpack\Generators will be placed here.
 
+use App\Http\Controllers\Admin\Api\SalesOrderController;
+
 Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
     'middleware' => array_merge(
@@ -58,4 +60,14 @@ Route::group([
     Route::crud('salesdn', 'SalesDnCrudController');
     Route::post('generate-dn-pdf', 'SalesDnCrudController@pdf');
     Route::crud('deliverynotedetail', 'DeliveryNoteDetailCrudController');
+
+
+
+
+
+    // API
+    Route::post('Api/SalesOrderDetail', [SalesOrderController::class, 'getSalesOrderDetailById']);
+    Route::post('Api/SalesOrderDetail_update/{sales_order_detail_id}', [SalesOrderController::class, 'UpdateSalesOrder']);
+
+
 }); // this should be the absolute last line of this file

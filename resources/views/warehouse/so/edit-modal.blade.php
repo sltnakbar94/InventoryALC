@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" id="form-modal-alert" style="display:none;">Data telah tersimpan</div>
-                    <form action="#" method="post" name="form_add_so_detail" id="form_add_so_detail">
+                    <form action="{{ backpack_url('Api/SalesOrderDetail_update/'.$crud->entry->id) }}" method="post" id="form-edit-so-detail">
                         @csrf
                         <input type="hidden" name="sales_order_id" value="{{ $crud->entry->id }}">
 
@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="price">Harga Satuan</label>
-                            <input type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ old('price') }}" required>
+                            <input type="number" id="price" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ old('price') }}" required>
                             @if ($errors->has('price'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('price') }}</strong>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group text-right">
                             <label for=""></label>
-                            <button type="submit" class="btn btn-primary" id="add-buton-out">SIMPAN</button>
+                            <button type="submit" class="btn btn-primary" id="edit-buton-so-detail">SIMPAN</button>
                         </div>
                     </form>
                 </div>

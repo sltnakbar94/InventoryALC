@@ -246,6 +246,11 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 
+        /**
+         * Self
+         */
+        'Flag' => App\Flag::class,
+
 
     ],
 

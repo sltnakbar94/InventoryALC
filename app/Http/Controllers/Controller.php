@@ -65,4 +65,29 @@ class Controller extends BaseController
         $services = new CrudServices;
         return $services->handleUpdate($request);
     }
+
+    public function returnSuccess($data, $message)
+    {
+        return array(
+            'code' => 200,
+            'success' => true,
+            'data' => $data,
+            'message' => $message
+        );
+    }
+
+    /**
+     * Return Error
+     *
+     * @param String $message
+     * @return array with Message
+     */
+    public function returnError($message)
+    {
+        return  array (
+            'code' => 400,
+            'error' => true,
+            'message' => 'Data Tidak Ditemukan',
+        );
+    }
 }

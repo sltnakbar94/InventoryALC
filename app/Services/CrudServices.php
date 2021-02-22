@@ -65,15 +65,13 @@ class CRUDServices
             $data->update($request['data']);
             DB::commit();
             return array(
-                'code' => 200,
-                'status' => 'success',
-                'message' => 'Berhasil '.$request['message'].' Update',
+                'success' => true,
+                'message' => $request['message'].' Update',
             );
         } catch (\Throwable $th) {
             DB::rollback();
             return array(
-                'code' => 400,
-                'status' => 'fail',
+                'fail' => true,
                 'message' => 'Gagal Update bcs '.$th->getMessage().' ',
             );
         }
