@@ -15,10 +15,19 @@ class CreateBagItemWarehouseInsTable extends Migration
     {
         Schema::create('bag_item_warehouse_ins', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('warehouse_ins_id')->unsigned();
-            $table->bigInteger('item_id')->unsigned();
-            $table->integer('qty');
-            $table->biginteger('price')->nullable();
+            $table->bigInteger('warehouse_in_id');
+            $table->string('item_id');
+            $table->string('serial')->nullable();
+            $table->bigInteger('price')->nullable();
+            $table->bigInteger('qty');
+            $table->bigInteger('qty_confirm')->nullable();
+            $table->string('uom')->nullable();
+            $table->integer('discount')->nullable();
+            $table->bigInteger('sub_total')->nullable();
+            $table->integer('status')->default(0);
+            $table->string('user_id')->nullable();
+            $table->string('confirm_user_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

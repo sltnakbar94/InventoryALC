@@ -51,7 +51,7 @@
             <div class="col-md-4">
                 <div class="card no-padding no-border">
                     <div class="card-header">
-                        Nomor SO : {{@$crud->entry->so_number}}
+                        Nomor PO : {{@$crud->entry->po_number}}
                     </div>
                     <div class="card-body">
                         @include('warehouse.in.form_content')
@@ -61,7 +61,7 @@
             <div class="col-md-7">
                 <div class="card no-padding no-border">
                     <div class="card-header">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalSalesOrderDetail">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalWarehouseInDetail">
                             <i class="fa fa-plus"></i> TAMBAH ITEM
                         </button>
                     </div>
@@ -82,7 +82,7 @@
 </div>
 @endsection
 @include('warehouse.in.add-modal')
-@include('warehouse.in.edit-modal')
+{{-- @include('warehouse.in.edit-modal') --}}
 
 
 @section('after_styles')

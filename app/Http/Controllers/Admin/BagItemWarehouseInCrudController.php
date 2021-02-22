@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SalesOrderDetailRequest;
-use App\Models\Item;
-use App\Models\SalesOrder;
-use App\Models\SalesOrderDetail;
+use App\Http\Requests\BagItemWarehouseInRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
-use PDF;
+use App\Models\BagItemWarehouseIn;
+use App\Models\Item;
+use App\Models\WarehouseIn;
 
 /**
- * Class SalesOrderDetailCrudController
+ * Class BagItemWarehouseInCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class SalesOrderDetailCrudController extends CrudController
+class BagItemWarehouseInCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -31,9 +30,9 @@ class SalesOrderDetailCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\SalesOrderDetail::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/salesorderdetail');
-        CRUD::setEntityNameStrings('salesorderdetail', 'sales_order_details');
+        CRUD::setModel(\App\Models\BagItemWarehouseIn::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/bagitemwarehousein');
+        CRUD::setEntityNameStrings('bagitemwarehousein', 'bag_item_warehouse_ins');
     }
 
     /**
@@ -44,7 +43,16 @@ class SalesOrderDetailCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        CRUD::column('id');
+        CRUD::column('warehouse_in_id');
+        CRUD::column('item_id');
+        CRUD::column('qty');
+        CRUD::column('price');
+        CRUD::column('created_at');
+        CRUD::column('updated_at');
+        CRUD::column('flag');
+        CRUD::column('qty_confirm');
+        CRUD::column('user_id');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -61,9 +69,18 @@ class SalesOrderDetailCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(SalesOrderDetailRequest::class);
+        CRUD::setValidation(BagItemWarehouseInRequest::class);
 
-        CRUD::setFromDb(); // fields
+        CRUD::field('id');
+        CRUD::field('warehouse_in_id');
+        CRUD::field('item_id');
+        CRUD::field('qty');
+        CRUD::field('price');
+        CRUD::field('created_at');
+        CRUD::field('updated_at');
+        CRUD::field('flag');
+        CRUD::field('qty_confirm');
+        CRUD::field('user_id');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -85,15 +102,15 @@ class SalesOrderDetailCrudController extends CrudController
 
     public function store(Request $request)
     {
-        $find = SalesOrderDetail::where('sales_order_id', '=', $request->sales_order_id)->where('item_id', '=', $request->item_id)->first();
+        $find = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->warehouse_in_id)->where('item_id', '=', $request->item_id)->first();
         if (!empty($find)) {
-            $data = SalesOrderDetail::findOrFail($request->item_id);
+            $data = BagItemWarehouseIn::findOrFail($request->item_id);
             $data->qty = $data->qty + $request->qty;
             $data->update();
         } else {
             $item = Item::findOrFail($request->item_id);
-            $data = new SalesOrderDetail;
-            $data->sales_order_id = $request->sales_order_id;
+            $data = new BagItemWarehouseIn;
+            $data->warehouse_in_id = $request->warehouse_in_id;
             $data->item_id = $request->item_id;
             $data->serial = $item->serial;
             $data->price = $request->price;
@@ -109,23 +126,11 @@ class SalesOrderDetailCrudController extends CrudController
             }
             $data->save();
         }
-        $grand_total = SalesOrder::findOrFail($request->sales_order_id);
+        $grand_total = WarehouseIn::findOrFail($request->warehouse_in_id);
         $grand_total->grand_total = $grand_total->grand_total + $sub_total;
         $grand_total->update();
 
         \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
-        return redirect()->back();
-    }
-
-    public function destroy($id)
-    {
-        $order_detail = SalesOrderDetail::findOrFail($id);
-        $grand_total = SalesOrder::findOrFail($order_detail->sales_order_id);
-        $grand_total->grand_total = $grand_total->grand_total - $order_detail->sub_total;
-        $grand_total->update();
-        $order_detail->delete();
-
-        \Alert::add('success', 'Berhasil hapus data Item')->flash();
         return redirect()->back();
     }
 }

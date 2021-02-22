@@ -239,10 +239,20 @@ class WarehouseInCrudController extends CrudController
 
     public function pdf(Request $request)
     {
-        $sum = BagItemWarehouseIn::selectRaw("SUM(qty*price) as subtotal")->where('warehouse_ins_id', '=', $request->id)->first();
+        $sum = BagItemWarehouseIn::sum('sub_total');
         $data = WarehouseIn::where('id', '=', $request->id)->first();
 
         $pdf = PDF::loadview('warehouse.in.output',['data'=>$data, 'sum'=>$sum]);
     	return $pdf->stream($data->po_number.'.pdf');
+    }
+
+    public function storePic(Request $request)
+    {
+        $data = WarehouseIn::findOrFail($request->id);
+        $data->pic_supplier = $request->pic;
+        $data->update();
+
+        \Alert::add('success', 'Berhasil tambah pic ' . $request->pic)->flash();
+       return redirect()->back();
     }
 }

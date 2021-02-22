@@ -42,9 +42,9 @@ class WarehouseIn extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function bagInDetail()
+    public function details()
     {
-        return $this->hasMany(BagItemWarehouseIn::class, 'warehouse_ins_id', 'id')->orderby('created_at', 'asc');
+        return $this->hasMany(BagItemWarehouseIn::class, 'warehouse_in_id', 'id')->orderby('created_at', 'asc');
     }
 
     public function supplier()
