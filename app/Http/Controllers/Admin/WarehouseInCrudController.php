@@ -153,6 +153,7 @@ class WarehouseInCrudController extends CrudController
             'name' => 'discount',
             'label' => 'Diskon (%)',
             'type' => 'number',
+            'hint' => 'Discount keseluruhan',
         ]);
 
         $this->crud->addField([
@@ -163,26 +164,33 @@ class WarehouseInCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name' => 'term_of_paymnet',
+            'label' => 'Term of Payment',
+            'type' => 'text',
+        ]);
+
+        $this->crud->addField([
             'name' => 'description',
             'label' => 'Keterangan',
             'type' => 'textarea',
         ]);
 
-        $this->crud->addField([
-            'tab' => 'Direct Customer (Opsional)',
-            'name' => 'customer_id',
-            'label' => 'Customer',
-            'type' => 'select2_from_array',
-            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
-                return $query->where('name', '=', 'customer');
-            })->pluck('company', 'id'),
-            'allows_null' => true,
+        $this->crud->addField([   // date_range
+            'name'  => ['start_date', 'end_date'], // db columns for start_date & end_date
+            'label' => 'Estimasi Tanggal Mulai dan Akhir SO',
+            'type'  => 'date_range',
         ]);
 
         $this->crud->addField([
             'name' => 'user_id',
             'type' => 'hidden',
             'value' => backpack_auth()->id()
+        ]);
+
+        $this->crud->addField([
+            'name' => 'company_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->user()->company_id
         ]);
 
         /**
