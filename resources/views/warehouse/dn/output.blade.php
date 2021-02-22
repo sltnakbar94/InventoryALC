@@ -1,3 +1,10 @@
+@php
+    if ($data->module == 'sales_order') {
+        $relation = $data->salesOrder;
+    }else {
+        $relation = $data->warehouseOut;
+    }
+@endphp
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html>
@@ -27,9 +34,9 @@
                     <tr>
                         <td>
                             <font color="#000000">
-                                {{@$data->salesOrder->customer->company}}<br>
-                                {{@$data->salesOrder->customer->address}}<br>
-                                Att : {{@$data->salesOrder->pic_customer}}<br>
+                                {{@$relation->customer->company}}<br>
+                                {{@$relation->customer->address}}<br>
+                                Att : {{@$relation->pic_customer}}<br>
                             </font>
                         </td>
                     </tr>
@@ -72,11 +79,19 @@
                                 REF no
                             </font>
                         </td>
-                        <td>
-                            <font font color="#000000">
-                                : {{@$data->salesOrder->so_number}}
-                            </font>
-                        </td>
+                        @if ($data->module == 'sales_order')
+                            <td>
+                                <font font color="#000000">
+                                    : {{@$relation->so_number}}
+                                </font>
+                            </td>
+                        @else
+                            <td>
+                                <font font color="#000000">
+                                    : {{@$relation->do_number}}
+                                </font>
+                            </td>
+                        @endif
                     </tr>
                 </table>
             </td>
@@ -99,7 +114,7 @@
 		<td width="95" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Remark</font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
-    @foreach (@$data->salesOrder->details as $key=>$detil)
+    @foreach (@$relation->details as $key=>$detil)
         <tr>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$key+1}}</font></td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->item->serial}}</font></td>
@@ -121,7 +136,7 @@
     <tr>
 		<td colspan="3" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom>
             <font color="#000000">
-                <textarea style="border: none; width:auto; height:auto">{{@$data->salesOrder->description}}</textarea>
+                <textarea style="border: none; width:auto; height:auto">{{@$relation->description}}</textarea>
             </font>
         </td>
 		<td colspan="2" style="border-left: 1px solid #000000;" align="left" valign=bottom><font color="#000000"><br></font></td>

@@ -60,7 +60,7 @@ Route::group([
     Route::post('generate-so-dn', 'SalesOrderCrudController@dn');
     Route::crud('salesorderdetail', 'SalesOrderDetailCrudController');
     Route::crud('salesdn', 'SalesDnCrudController');
-    Route::post('generate-dn-pdf', 'SalesDnCrudController@pdf');
+    Route::post('generate-dn-pdf', 'DeliveryNoteCrudController@pdf');
     Route::crud('deliverynotedetail', 'DeliveryNoteDetailCrudController');
 
 

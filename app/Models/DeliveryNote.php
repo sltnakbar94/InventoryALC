@@ -5,10 +5,11 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\WarehouseOut;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DeliveryNote extends Model
 {
-    use CrudTrait;
+    use CrudTrait, SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -37,7 +38,17 @@ class DeliveryNote extends Model
     */
     public function WarehouseOut()
     {
-        return $this->hasOne(WarehouseOut::class, 'id', 'warehouse_out_id');
+        return $this->belongsTo(WarehouseOut::class, 'reference', 'id');
+    }
+
+    public function details()
+    {
+        return $this->hasMany(DeliveryNoteDetail::class, 'delivery_note_id', 'id')->orderby('created_at', 'asc');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
     /*
     |--------------------------------------------------------------------------

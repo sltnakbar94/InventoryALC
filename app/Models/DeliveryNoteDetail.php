@@ -34,6 +34,10 @@ class DeliveryNoteDetail extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function Item()
+    {
+        return $this->hasOne(Item::class, 'id', 'item_id');
+    }
 
     /*
     |--------------------------------------------------------------------------

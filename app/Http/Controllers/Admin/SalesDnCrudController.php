@@ -149,16 +149,6 @@ class SalesDnCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => "Nomor Surat jalan",
-            'name'  => "dn_number",
-            'type'  => 'text',
-            'value' => $this->generateNomorPengiriman(),
-            'attributes' => [
-                'readonly'    => 'readonly',
-            ]
-        ]);
-
-        $this->crud->addField([
             'name' => 'dn_date',
             'label' => 'Tanggal Surat Jalan',
             'type' => 'date_picker',

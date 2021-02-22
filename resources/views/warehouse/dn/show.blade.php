@@ -60,11 +60,11 @@
             </div>
             <div class="col-md-7">
                 <div class="card no-padding no-border">
-                    {{-- <div class="card-header">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalSalesOrderDetail">
+                    <div class="card-header">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalDeliveryNoteDetail">
                             <i class="fa fa-plus"></i> TAMBAH ITEM
                         </button>
-                    </div> --}}
+                    </div>
                     <div class="card-body">
                         @include('warehouse.dn.list_content')
                     </div>
@@ -81,7 +81,7 @@
 	</div>
 </div>
 @endsection
-{{-- @include('warehouse.dn.add-modal') --}}
+@include('warehouse.dn.add-modal')
 {{-- @include('warehouse.dn.edit-modal') --}}
 
 

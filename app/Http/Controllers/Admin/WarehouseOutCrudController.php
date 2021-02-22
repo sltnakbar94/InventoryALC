@@ -59,21 +59,15 @@ class WarehouseOutCrudController extends CrudController
             'name' => 'customer_id',
             'type' => 'select',
             'entity' => 'customer',
-            'attribute' => 'name',
+            'attribute' => 'company',
             'model' => 'App\Models\Stackholder',
             'label' => 'Customer'
         ]);
 
         $this->crud->addColumn([
-            'name' => 'destination',
-            'type' => 'text',
-            'label' => 'Tujuan Pengiriman'
-        ]);
-
-        $this->crud->addColumn([
-            'name' => 'date_out',
+            'name' => 'do_date',
             'type' => 'date',
-            'label' => 'Tanggal Pengiriman'
+            'label' => 'Tanggal DO'
         ]);
 
         $this->crud->addColumn([
@@ -197,7 +191,65 @@ class WarehouseOutCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
+
+        $this->crud->addField([
+            'label' => 'Nomor DO',
+            'name'  => 'do_number',
+            'type'  => 'text',
+            'attributes' => [
+                'readonly'    => 'readonly',
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'customer_id',
+            'label' => 'Customer',
+            'type' => 'select2_from_array',
+            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
+                return $query->where('name', '=', 'customer');
+            })->pluck('company', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'do_date',
+            'label' => 'Tanggal DO',
+            'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Nomor Referensi',
+            'name'  => 'ref_no',
+            'type'  => 'text',
+            'attributes' => [
+                'placeholder' => 'Contoh : Nomor Bill',
+              ],
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Ekspedisi',
+            'name'  => 'expediion',
+            'type'  => 'text',
+        ]);
+
+        $this->crud->addField([   // date_range
+            'name'  => ['start_date', 'end_date'], // db columns for start_date & end_date
+            'label' => 'Estimasi Tanggal Mulai dan Akhir DO',
+            'type'  => 'date_range',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Keterangan',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'user_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->id()
+        ]);
     }
 
     protected function setupShowOperation()
