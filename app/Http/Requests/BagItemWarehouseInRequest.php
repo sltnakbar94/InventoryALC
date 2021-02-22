@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SalesDnRequest extends FormRequest
+class BagItemWarehouseInRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +26,7 @@ class SalesDnRequest extends FormRequest
     public function rules()
     {
         return [
-            'dn_number' => 'required|unique:delivery_notes,dn_number',
-            'reference' => 'required',
-            'dn_date' => 'required',
-            'expedition' => 'required',
-            'driver' => 'required',
-            'driver_phone' => 'required',
+            // 'name' => 'required|min:5|max:255'
         ];
     }
 

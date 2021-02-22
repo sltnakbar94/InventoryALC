@@ -44,7 +44,59 @@ class SalesDnCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->crud->addColumn([
+            'name' => 'dn_number',
+            'type' => 'text',
+            'label' => 'Nomor Surat Jalan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'reference',
+            'type' => 'select',
+            'entity' => 'salesOrder',
+            'attribute' => 'so_number',
+            'model' => 'App\Models\SalesOrder',
+            'label' => 'Nomor SO'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'dn_date',
+            'type' => 'date',
+            'label' => 'Tanggal Delivery Note'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'expedition',
+            'type' => 'text',
+            'label' => 'Ekspedisi'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'etd',
+            'type' => 'date',
+            'label' => 'Estimasi Keberangkatan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'eta',
+            'type' => 'date',
+            'label' => 'Estimasi Sampai'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'description',
+            'type' => 'text',
+            'label' => 'Catatan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'user_id',
+            'type' => 'select',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => 'App\Models\User',
+            'label' => 'Operator'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -115,12 +167,6 @@ class SalesDnCrudController extends CrudController
         $this->crud->addField([
             'name' => 'expedition',
             'label' => 'Expedisi',
-            'type' => 'text',
-        ]);
-
-        $this->crud->addField([
-            'name' => 'consignee',
-            'label' => 'Penerima',
             'type' => 'text',
         ]);
 

@@ -8,7 +8,7 @@ use App\Models\BagItemWarehouseOut;
 class ItemServices {
 
     public function __construct(
-        Item $itemModel, 
+        Item $itemModel,
         CRUDServices $crudServices,
         BagItemWarehouseOut $bagItemWarehouseOut,
         BagItemWarehouseIn $bagItemWarehouseIn
@@ -62,11 +62,11 @@ class ItemServices {
     public function checkItemOnBagWO($warehouse_out_id, $item_id)
     {
         $check = $this->bagItemWarehouseOut::where(array(
-            'warehouse_outs_id' => $warehouse_out_id, 
+            'warehouse_outs_id' => $warehouse_out_id,
             'item_id' => $item_id))->first();
-        return $check; 
+        return $check;
     }
-    
+
     /**
      * Check Item On Bag Warehouse In
      *
@@ -77,9 +77,9 @@ class ItemServices {
     public function checkItemOnBagIN($warehouse_in_id, $item_id)
     {
         $check = $this->bagItemWarehouseIn::where(array(
-            'warehouse_ins_id' => $warehouse_in_id, 
+            'warehouse_in_id' => $warehouse_in_id,
             'item_id' => $item_id))->first();
-        return $check; 
+        return $check;
     }
 
     /**
@@ -126,5 +126,5 @@ class ItemServices {
             ),
             'message' => 'Barang Berhasil Diterima'
         ]);
-    }   
+    }
 }
