@@ -35,7 +35,7 @@ class CRUDServices
             DB::commit();
             return array(
                 'code' => 200,
-                'status' => 'success',
+                'success' => true,
                 'message' => $request['message'],
                 'data'  => $data
             );

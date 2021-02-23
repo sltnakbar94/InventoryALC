@@ -41,15 +41,90 @@ class SalesOrderServices  {
     /**
      * Get Detail by Sales Order ID
      *
-     * @param array $params
+     * @param array $sales_order_id
      * @return Collection
      */
-    public function GetDetailBySalesOrderID($params)
+    public function GetDetailBySalesOrderID($sales_order_id)
     {
-        $data = $this->salesOrderDetail::where($params)->get();
+        $data = $this->salesOrderDetail::find($sales_order_id)->get();
         if (!empty($data)) {
             return $data;
         } return null;
+    }
+
+    /**
+     * Check Item on Sales Order Detail by Sales Order ID & Item ID
+     *
+     * @param array $params 
+     * @return Boolean
+     */
+    public function CheckItemOnSODetail($params)
+    {
+       return $this->salesOrderDetail::where($params)->first() == null ? true : false; 
+    }
+
+    /**
+     * Get Item On Sales Order Detail by Sales Order ID & Item ID
+     *
+     * @param array $params
+     * @return Boolean
+     */
+    public function ItemOnSODetail($params)
+    {
+        return $this->salesOrderDetail::where($params)->first() == null ? true : $this->salesOrderDetail::where($params)->first(); 
+    }
+
+    /**
+     * Get Item Price on Sales Order Detail by Sales Order ID, Item ID & Status !== (2,3)
+     *
+     * @param array $params
+     * @return array ('price')
+     */
+    public function ItemPriceOnSODetail($params)
+    {
+        return $this->salesOrderDetail::where($params)->get() == null ? false : $this->salesOrderDetail::where($params)->pluck(); 
+    }
+
+    /**
+     * Increase Price Item per Item on Sales Order Detail
+     *
+     * @param array $sales_order_id
+     * @return Integer $price_update
+     */
+    public function SumItemPriceBySalesOrderID($sales_order_id)
+    {
+        $price = $this->salesOrderDetail::where('sales_order_id', $sales_order_id)->pluck('sub_total')->toArray(); 
+        $sum_price = array_sum($price);
+        return $sum_price;
+    }
+
+    /**
+     * Multiplied Price Item and Discount on Sales Order Detail
+     *
+     * @param Collection $request
+     * @return Integer $sub_total
+     */
+    public function SumItemDiscountToSubTotal($request)
+    {
+        if (empty($request['discount'])) {
+            $sub_total = $request['price']*$request['qty'];
+        } else {
+            $sub_total = ($request['price'] - ($request['discount']/100*$request['price']))*$request['qty'];
+        }
+        return $sub_total;
+    }
+    
+    /**
+     * Handle Update Quality Controll Pass By Sales Order Detail ID
+     *
+     * @param int $sales_order_detail_id
+     * @param int $qty_confirm
+     * @return boolean
+     */
+    public function UpdateQCPass($sales_order_detail_id)
+    {
+        $QC_pass_update_qty = $this->salesOrderDetail::where('sales_order_id', $sales_order_detail_id)->pluck('qty_confirm')->toArray(); 
+        return $QC_pass_update_qty;
     }
 
     /**
@@ -74,15 +149,8 @@ class SalesOrderServices  {
         return $this->GetDetailByID($sales_order_detail_id)->qty_confirm;
     }
     
-    /**
-     * Handle Update Quality Controll Pass By Sales Order Detail ID
-     *
-     * @param int $sales_order_detail_id
-     * @param int $qty_confirm
-     * @return boolean
-     */
-    public function UpdateQCPass($sales_order_detail_id, $qty_confirm)
+    public function createSODetail($request)
     {
-        
+        dd($request);
     }
 }

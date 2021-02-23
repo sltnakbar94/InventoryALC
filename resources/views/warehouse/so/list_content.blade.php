@@ -86,7 +86,6 @@
                 if (response.success) {
                     var dsc = 0;
                     $('#editModalSalesOrderDetail').modal('show');
-                    console.log(response.data) 
                     $('#price').val(response.data.price)
                     $('input[name=qty]').val(response.data.qty)
                     response.data.discount === null ? dsc = 0 : dsc = response.data.discount
@@ -114,7 +113,7 @@
 			data: data,
 			method: method,
 			beforeSend: function() {
-				$('#edit-buton-so-detail').prop('disabled', true);
+				// $('#edit-buton-so-detail').prop('disabled', true);
 			},
             success: function (response) {
                 console.log(response);
@@ -127,20 +126,20 @@
         });
     });
 
-    function swalError(params) {
+    function swalError(message) {
         return swal({
                     title: 'Gagal!',
-                    text: params.message,
+                    text: message,
                     icon: 'error'
                 }).then(function () {
                     location.reload();
                 })
     }
 
-    function swalSuccess(params) {
+    function swalSuccess(message) {
         return swal({
                     title: 'Sukses!',
-                    text: params.message,
+                    text: message,
                     icon: 'success'
                 }).then(function () {
                     location.reload();

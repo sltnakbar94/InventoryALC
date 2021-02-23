@@ -30,16 +30,6 @@ class SalesOrderDetail extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    /**
-     * Get Detail by ItemID & Sales Order Detail ID
-     *
-     * @param array $params
-     * @return Collection
-     */
-    public function getDetailByItemID($params)
-    {
-        return $this->where($params)->first();
-    }
 
     /*
     |--------------------------------------------------------------------------

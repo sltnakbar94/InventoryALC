@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalSalesOrderDetailLabel">Tambah Data</h5>
+                <h5 class="modal-title" id="editModalSalesOrderDetailLabel">Edit Data</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -16,7 +16,7 @@
 
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label>
-                            <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}" required>
+                            <select readonly name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}" required>
                             <option value="">--PILIH BARANG--</option>
                                 @foreach(\App\Models\Item::select('id','name')->get() as $value => $text)
                                         <option value="{{ $text->id }}">{{ $text->name }}</option>

@@ -32,6 +32,16 @@ class SalesOrder extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    /**
+     * Get Sales Order by ID
+     *
+     * @param int $id
+     * @return Collection
+     */
+    public function GetGrandTotalbyID($id)
+    {
+        return $this->findOrFail($id)->grand_total;
+    }
 
     /*
     |--------------------------------------------------------------------------

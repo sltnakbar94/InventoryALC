@@ -87,7 +87,7 @@ class Controller extends BaseController
         return  array (
             'code' => 400,
             'error' => true,
-            'message' => 'Data Tidak Ditemukan',
+            'message' => $message,
         );
     }
 }
