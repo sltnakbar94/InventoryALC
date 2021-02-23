@@ -15,8 +15,8 @@
                         <input type="hidden" name="delivery_note_id" value="{{ $crud->entry->id }}">
 
                         <div class="form-group">
-                            <label class="control-label" for="item_id">Nama Barang</label>
-                            <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}" required>
+                            <label class="control-label" for="item_id">Nama Barang</label><br>
+                            <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" required>
                             <option value="">--PILIH BARANG--</option>
                                 @foreach(\App\Models\Item::select('id','name')->get() as $value => $text)
                                         <option value="{{ $text->id }}">{{ $text->name }}</option>
