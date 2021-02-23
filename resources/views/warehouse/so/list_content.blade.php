@@ -37,9 +37,9 @@
                             <div class="btn-group">
                                 {{-- <button href="{{ route('salesorderdetail.edit', $detail->id) }}" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button> --}}
                                 <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning"><i class="las la-pencil-alt"></i></button>
-                                <button id="delete" type="button" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
+                                <button id="delete" onclick="return confirmation({{ $detail->id }});" type="button" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
 
-                                <form method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                <form method="POST" id="delete-form{{ $detail->id }}" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
                                     @method('DELETE')
                                     @csrf
                                     {{-- <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button> --}}
@@ -73,6 +73,16 @@
 
 @section('after_scripts')
 <script>
+
+    function confirmation(detailID) {
+        if (confirm('Yakin hapus?')) {
+            document.getElementById('delete-form'+detailID).submit();
+        }else{
+            return false;
+        }
+    }
+
+
     function edit(sales_order_id) {
         $.ajax({
             type: "post",
@@ -100,6 +110,11 @@
             }
         });
     }
+
+    $('#delete').click(function (e) { 
+        e.preventDefault();
+        
+    });
 
     $('#form-edit-so-detail').submit(function(e) {
         e.preventDefault()
