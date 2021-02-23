@@ -23,16 +23,18 @@ Route::group([
 
     // Out
     Route::crud('warehouseout', 'WarehouseOutCrudController');
-    Route::post('generate-out-pdf', 'WarehouseOutCrudController@pdf');
+    Route::post('generate-do-pdf', 'WarehouseOutCrudController@pdf');
     Route::post('item_to-bag', 'ApiController@itemToBag');
     Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
     Route::post('delete-item_on-bag', 'ApiController@deleteItemOnBag');
     Route::post('accept', 'ApiController@accept');
     Route::post('decline', 'ApiController@decline');
+    Route::post('warehouseout-pic', 'WarehouseOutCrudController@storePic');
 
     // In
     Route::crud('warehousein', 'WarehouseInCrudController');
-    Route::post('generate-in-pdf', 'WarehouseInCrudController@pdf');
+    Route::post('warehousein-pic', 'WarehouseInCrudController@storePic');
+    Route::post('generate-po-pdf', 'WarehouseInCrudController@pdf');
     Route::post('item_to-bag_in', 'ApiController@itemToBagIn');
     Route::get('item_on-bag_in', 'ApiController@checkItemOnBagInById');
     Route::post('delete-item_on-bag_in', 'ApiController@deleteItemOnBagIn');
@@ -58,7 +60,7 @@ Route::group([
     Route::post('generate-so-dn', 'SalesOrderCrudController@dn');
     Route::crud('salesorderdetail', 'SalesOrderDetailCrudController');
     Route::crud('salesdn', 'SalesDnCrudController');
-    Route::post('generate-dn-pdf', 'SalesDnCrudController@pdf');
+    Route::post('generate-dn-pdf', 'DeliveryNoteCrudController@pdf');
     Route::crud('deliverynotedetail', 'DeliveryNoteDetailCrudController');
 
 
@@ -70,4 +72,6 @@ Route::group([
     Route::post('Api/SalesOrderDetail_update/{sales_order_detail_id}', [SalesOrderController::class, 'UpdateSalesOrder']);
 
 
+    Route::crud('bagitemwarehousein', 'BagItemWarehouseInCrudController');
+    Route::crud('bagitemwarehouseout', 'BagItemWarehouseOutCrudController');
 }); // this should be the absolute last line of this file

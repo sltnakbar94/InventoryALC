@@ -31,6 +31,7 @@ class CreateWarehouseInsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             //Add-on Data
+            $table->string('pic_supplier')->nullable();
             $table->string('user_id');
             $table->bigInteger('company_id')->nullable();
             $table->integer('status')->default(0);

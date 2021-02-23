@@ -26,7 +26,11 @@ class DeliveryNoteRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'dn_number' => 'required|unique:delivery_notes,dn_number',
+            'reference' => 'required',
+            'dn_date' => 'required',
+            'driver' => 'required',
+            'driver_phone' => 'required',
         ];
     }
 

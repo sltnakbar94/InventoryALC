@@ -44,7 +44,60 @@ class SalesDnCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->crud->addClause('where', 'module', '=', 'sales_order');
+        $this->crud->addColumn([
+            'name' => 'dn_number',
+            'type' => 'text',
+            'label' => 'Nomor Surat Jalan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'reference',
+            'type' => 'select',
+            'entity' => 'salesOrder',
+            'attribute' => 'so_number',
+            'model' => 'App\Models\SalesOrder',
+            'label' => 'Nomor SO'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'dn_date',
+            'type' => 'date',
+            'label' => 'Tanggal Delivery Note'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'expedition',
+            'type' => 'text',
+            'label' => 'Ekspedisi'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'etd',
+            'type' => 'date',
+            'label' => 'Estimasi Keberangkatan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'eta',
+            'type' => 'date',
+            'label' => 'Estimasi Sampai'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'description',
+            'type' => 'text',
+            'label' => 'Catatan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'user_id',
+            'type' => 'select',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => 'App\Models\User',
+            'label' => 'Operator'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -97,16 +150,6 @@ class SalesDnCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => "Nomor Surat jalan",
-            'name'  => "dn_number",
-            'type'  => 'text',
-            'value' => $this->generateNomorPengiriman(),
-            'attributes' => [
-                'readonly'    => 'readonly',
-            ]
-        ]);
-
-        $this->crud->addField([
             'name' => 'dn_date',
             'label' => 'Tanggal Surat Jalan',
             'type' => 'date_picker',
@@ -115,12 +158,6 @@ class SalesDnCrudController extends CrudController
         $this->crud->addField([
             'name' => 'expedition',
             'label' => 'Expedisi',
-            'type' => 'text',
-        ]);
-
-        $this->crud->addField([
-            'name' => 'consignee',
-            'label' => 'Penerima',
             'type' => 'text',
         ]);
 
@@ -190,7 +227,87 @@ class SalesDnCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
+
+        $this->crud->addField([
+            'label' => "Nomor Surat jalan",
+            'name'  => "dn_number",
+            'type'  => 'text',
+            'attributes' => [
+                'readonly'    => 'readonly',
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'reference',
+            'label' => 'Nomor SO',
+            'type' => 'select2_from_array',
+            'options' => SalesOrder::pluck('so_number', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'dn_date',
+            'label' => 'Tanggal Surat Jalan',
+            'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'expedition',
+            'label' => 'Expedisi',
+            'type' => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'etd',
+            'label' => 'Estimasi Keberangkatan',
+            'type' => 'datetime_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'eta',
+            'label' => 'Estimasi Sampai',
+            'type' => 'datetime_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'total_weight',
+            'label' => 'Berat Total Barang',
+            'type' => 'text',
+            'attributes' => [
+                'placeholder' => 'Contoh : 80 KG',
+              ],
+        ]);
+
+        $this->crud->addField([
+            'name' => 'driver',
+            'label' => 'Nama Pengemudi',
+            'type' => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'driver_phone',
+            'label' => 'No Kontak Pengemudi',
+            'type' => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'module',
+            'value' => 'sales_order',
+            'type' => 'hidden',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'user_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->id()
+        ]);
+
+        $this->crud->addField([
+            'name' => 'company_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->user()->company_id
+        ]);
     }
 
     public function pdf(Request $request)

@@ -45,6 +45,11 @@ class SalesDn extends Model
         return $this->hasMany(DeliveryNoteDetail::class, 'delivery_note_id', 'id')->orderby('created_at', 'asc');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -41,7 +41,7 @@ class ApiController extends Controller
             DB::beginTransaction();
             $item = $this->items::find($request->item_id);
             $checkItemOnBag = $this->checkItemOnBag($request);
-            $itemOnBag = $this->bagItemWarehouseOut::where('warehouse_outs_id', $request->warehouse_outs_id)->get();
+            $itemOnBag = $this->bagItemWarehouseOut::where('warehouse_out_id', $request->warehouse_out_id)->get();
 
             // Check If Empty Item On Bag
             if (empty($checkItemOnBag)) {
@@ -55,7 +55,7 @@ class ApiController extends Controller
                 }
 
                 $itemOnBag = $this->bagItemWarehouseOut::create([
-                    'warehouse_outs_id' => $request->warehouse_outs_id,
+                    'warehouse_out_id' => $request->warehouse_out_id,
                     'item_id' => $request->item_id,
                     'qty' => $request->qty,
                     'user_id' => backpack_auth()->id(),
@@ -75,7 +75,7 @@ class ApiController extends Controller
                 if ($updateQty < 0) {
                     $this->bagItemWarehouseOut::where(
                         array(
-                            'warehouse_outs_id' => $request->warehouse_outs_id,
+                            'warehouse_out_id' => $request->warehouse_out_id,
                             'item_id' => $request->item_id)
                     )->delete();
                     $message = 'Menghapus Item Karena QTY Kurang Dari 0';
@@ -113,7 +113,7 @@ class ApiController extends Controller
     {
         return $this->bagItemWarehouseOut::where(
             array(
-                'warehouse_outs_id' => $request->warehouse_outs_id,
+                'warehouse_out_id' => $request->warehouse_out_id,
                 'item_id' => $request->item_id)
         )->update([
             'qty_confirm' => $request->qty,
@@ -126,7 +126,7 @@ class ApiController extends Controller
     {
         return $this->bagItemWarehouseOut::where(
             array(
-                'warehouse_outs_id' => $request->warehouse_outs_id,
+                'warehouse_out_id' => $request->warehouse_out_id,
                 'item_id' => $request->item_id)
         )->update([
             'qty' => $updateQty
@@ -136,7 +136,7 @@ class ApiController extends Controller
     public function checkItemOnBag($request)
     {
         $check = $this->bagItemWarehouseOut::where(array(
-            'warehouse_outs_id' => $request->warehouse_outs_id,
+            'warehouse_out_id' => $request->warehouse_out_id,
             'item_id' => $request->item_id))->first();
         return $check;
     }
@@ -213,12 +213,12 @@ class ApiController extends Controller
         try {
             DB::beginTransaction();
             $item = $this->items::find($request->item_id);
-            $checkItemOnBag = $this->itemService->checkItemOnBagIN($request->warehouse_ins_id, $request->item_id);
-            $itemOnBag = $this->bagItemWarehouseIn::where('warehouse_ins_id', $request->warehouse_ins_id)->get();
+            $checkItemOnBag = $this->itemService->checkItemOnBagIN($request->warehouse_in_id, $request->item_id);
+            $itemOnBag = $this->bagItemWarehouseIn::where('warehouse_in_id', $request->warehouse_in_id)->get();
             // Check If Empty Item On Bag
             if (empty($checkItemOnBag)) {
                 $data = $this->bagItemWarehouseIn::create([
-                    'warehouse_ins_id' => $request->warehouse_ins_id,
+                    'warehouse_in_id' => $request->warehouse_in_id,
                     'item_id' => $request->item_id,
                     'qty' => $request->qty,
                     'price' => $request->price,
@@ -237,7 +237,7 @@ class ApiController extends Controller
                 if ($updateQty < 0) {
                     $this->bagItemWarehouseIn::where(
                         array(
-                            'warehouse_ins_id' => $request->warehouse_ins_id,
+                            'warehouse_in_id' => $request->warehouse_in_id,
                             'item_id' => $request->item_id)
                     )->delete();
                     $message = 'Menghapus Item Karena QTY Kurang Dari 0';
@@ -245,7 +245,7 @@ class ApiController extends Controller
                 }else{
                     $this->bagItemWarehouseIn::where(
                         array(
-                            'warehouse_ins_id' => $request->warehouse_ins_id,
+                            'warehouse_in_id' => $request->warehouse_in_id,
                             'item_id' => $request->item_id)
                     )->update([
                         'qty' => $updateQty,

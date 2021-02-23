@@ -22,7 +22,7 @@ class CreateDeliveryNotesTable extends Migration
             $table->string('consignee')->nullable();//penerima barang
             $table->dateTime('etd')->nullable();
             $table->dateTime('eta')->nullable();
-            $table->bigInteger('total_weight')->nullable();
+            $table->string('total_weight')->nullable();
             $table->string('driver')->nullable();
             $table->string('driver_phone')->nullable();
             $table->string('module')->nullable();

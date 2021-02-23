@@ -7,7 +7,11 @@
         </tr>
         <tr>
             <td>Ekspedisi</td>
-            <td><strong>{{ $crud->entry->expedition }}</strong></td>
+            @if ($crud->entry->module == 'sales_order')
+                <td><strong>{{ $crud->entry->expedition }}</strong></td>
+            @else
+                <td><strong>{{ $crud->entry->warehouseOut->expedition }}</strong></td>
+            @endif
         </tr>
         <tr>
             <td>Nama Driver</td>

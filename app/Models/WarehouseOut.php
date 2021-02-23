@@ -48,9 +48,9 @@ class WarehouseOut extends Model
         return $this->hasMany(WOutDetail::class, 'warehouse_out_id', 'id')->orderby('created_at', 'desc');
     }
 
-    public function bagOutDetail()
+    public function details()
     {
-        return $this->hasMany(BagItemWarehouseOut::class, 'warehouse_outs_id', 'id')->orderby('created_at', 'desc');
+        return $this->hasMany(BagItemWarehouseOut::class, 'warehouse_out_id', 'id')->orderby('created_at', 'desc');
     }
 
     public function supplier()

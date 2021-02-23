@@ -17,7 +17,7 @@
                 @if (count($crud->entry->details) != 0)
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
-                        $status = array('Plant', 'Process', 'Complete');
+                        $status = array('Plan', 'Process', 'Complete');
                     @endphp
                     <tr>
                         <td>{{$key+1}}</td>
@@ -63,7 +63,7 @@
                     @endforeach
                 @else
                     <tr style="border-bottom: 1px solid black;">
-                        <td colspan="9" align="center">Belum ada data</td>
+                        <td colspan="10" align="center">Belum ada data</td>
                     </tr>
                 @endif
             </table>
@@ -86,6 +86,10 @@
                 if (response.success) {
                     var dsc = 0;
                     $('#editModalSalesOrderDetail').modal('show');
+<<<<<<< HEAD
+=======
+                    console.log(response.data)
+>>>>>>> 2ca286644a9c54402678cbdc559d787374124885
                     $('#price').val(response.data.price)
                     $('input[name=qty]').val(response.data.qty)
                     response.data.discount === null ? dsc = 0 : dsc = response.data.discount
@@ -100,10 +104,10 @@
             }
         });
     }
-    
+
     $('#form-edit-so-detail').submit(function(e) {
         e.preventDefault()
-        
+
         var data = $(this).serialize()
 		var method = $(this).attr('method')
 		var action = $(this).attr('action')

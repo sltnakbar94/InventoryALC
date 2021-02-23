@@ -11,8 +11,8 @@
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
-                @if (count($crud->entry->SalesOrder->Details) != 0)
-                    @foreach ($crud->entry->SalesOrder->Details as $key=>$detail)
+                @if (count($crud->entry->details) != 0)
+                    @foreach ($crud->entry->details as $key=>$detail)
                     @php
                         $status = array('Plant', 'Process', 'Complete');
                     @endphp

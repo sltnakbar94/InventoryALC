@@ -30,7 +30,6 @@ class SalesDnRequest extends FormRequest
             'reference' => 'required',
             'dn_date' => 'required',
             'expedition' => 'required',
-            'consignee' => 'required',
             'driver' => 'required',
             'driver_phone' => 'required',
         ];

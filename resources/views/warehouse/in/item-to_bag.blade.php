@@ -4,7 +4,7 @@
   </div>
   <div class="card-body">
     <form action="{{ backpack_url('item_to-bag_in') }}" id="item_to-bag" method="post">
-      {!! Form::hidden('warehouse_ins_id', $crud->entry->id, [null]) !!}
+      {!! Form::hidden('warehouse_in_id', $crud->entry->id, [null]) !!}
       <div class="form-group">
         <label>Pilih Item</label>
         <select name="item_id" class="form-control select2" required id="item_id">

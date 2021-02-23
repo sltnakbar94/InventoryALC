@@ -226,7 +226,95 @@ class SalesOrderCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
+
+        $this->crud->addField([
+            'label' => "Nomor SO",
+            'name'  => "so_number",
+            'type'  => 'text',
+            'attributes' => [
+                'readonly'    => 'readonly',
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'so_date',
+            'label' => 'Tanggal SO',
+            'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'supplier_id',
+            'label' => 'Supplier',
+            'type' => 'select2_from_array',
+            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
+                return $query->where('name', '=', 'supplier');
+            })->pluck('company', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'customer_id',
+            'label' => 'Customer',
+            'type' => 'select2_from_array',
+            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
+                return $query->where('name', '=', 'customer');
+            })->pluck('company', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'ref_no',
+            'label' => 'Nomor Referensi',
+            'type' => 'text',
+            'attributes' => [
+                'placeholder' => 'Contoh : Nomor Surat Penawaran Harga',
+              ],
+        ]);
+
+        $this->crud->addField([
+            'name' => 'discount',
+            'label' => 'Diskon (%)',
+            'type' => 'number',
+            'hint' => 'Discount keseluruhan',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'ppn',
+            'label' => 'PPN (10%)',
+            'type' => 'boolean',
+            'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'term_of_paymnet',
+            'label' => 'Term of Payment',
+            'type' => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Keterangan',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([   // date_range
+            'name'  => ['start_date', 'end_date'], // db columns for start_date & end_date
+            'label' => 'Estimasi Tanggal Mulai dan Akhir SO',
+            'type'  => 'date_range',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'user_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->id()
+        ]);
+
+        $this->crud->addField([
+            'name' => 'company_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->user()->company_id
+        ]);
     }
 
     public function storePic(Request $request)

@@ -16,7 +16,10 @@ class CreateDeliveryNoteDetailsTable extends Migration
         Schema::create('delivery_note_details', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('delivery_note_id');
+            $table->bigInteger('item_id');
+            $table->string('serial')->nullable();
             $table->bigInteger('qty')->nullable();
+            $table->string('uom')->nullable();
             $table->integer('status')->default(0);
             $table->softDeletes();
             $table->timestamps();

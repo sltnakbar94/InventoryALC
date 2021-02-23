@@ -4,7 +4,7 @@
   </div>
   <div class="card-body">
     <form action="{{ backpack_url('item_to-bag') }}" id="item_to-bag" method="post">
-      {!! Form::hidden('warehouse_outs_id', $crud->entry->id, [null]) !!}
+      {!! Form::hidden('warehouse_out_id', $crud->entry->id, [null]) !!}
       <div class="form-group">
         <label>Pilih Item</label>
         <select name="item_id" class="form-control select2" required id="item_id">
@@ -19,7 +19,7 @@
         {!! Form::number('qty', null, ['class' => 'form-control', 'required', 'id' => 'qty']) !!}
       </div>
       @if (backpack_user()->hasRole('operator-gudang'))
-        {!! Form::submit('Update Item', ['class' => 'btn btn-success', 'id' => 'btn-submit']) !!}    
+        {!! Form::submit('Update Item', ['class' => 'btn btn-success', 'id' => 'btn-submit']) !!}
       @else
         {!! Form::submit('Tambah Item', ['class' => 'btn btn-success', 'id' => 'btn-submit']) !!}
       @endif

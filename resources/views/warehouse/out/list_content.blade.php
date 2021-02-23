@@ -1,59 +1,68 @@
-<div class="card no-padding no-border">
-    <div class="card-header">
-        List Barang Keluar
-    </div>
-    <div class="card-body">
-        <table id="example" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th width="10%">No</th>
-                    <th width="30%">Item Name</th>
-                    <th width="10%">QTY</th>
-                    <th width="20%">QTY Confirm</th>
-                    <th width="10%">Status</th>
-                    <th width="15%">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($crud->fields()['items_on-bag']['data']->where('warehouse_outs_id', '=', $crud->entry->id) as $item)
-                <tr>
-                    <td>{{ $item->id }}</td>
-                    <td>{{ $item->Item->name }}</td>
-                    <td id="qty{{ $item->id }}">{{ $item->qty }}</td>
-                    <td id="qty{{ $item->id }}">{{ $item->qty_confirm }}</td>
-                    <td>{{ $item->flag }}</td>
-                    <td>
-                        <div class="btn-group">
-                            <button onclick="edit('{{ $item->id }}')" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button>
-                            <button onclick="hapus('{{ $item->id }}')" type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                            @if (backpack_user()->hasRole('operator-gudang'))
-                                @if ($item->flag == 'submit' || $item->flag == 'updated' )
-                                <div class="btn-group" role="group">
-                                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Status
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                        <a class="dropdown-item" onclick="accept('{{ $item->id }}')" href="#">Setujui</a>
-                                        <a class="dropdown-item" onclick="decline('{{ $item->id }}')" href="#">Tolak</a>
-                                    </div>
-                                </div>
-                                @endif
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>No</th>
-                    <th>Item Name</th>
-                    <th>QTY</th>
-                    <th>QTY Confirm</th>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table">
+            <table class="table table-responsive" style="width:100%">
+                <tr class="bg-primary" align="center">
+                    <th>No.</th>
+                    <th>nama Item</th>
+                    <th>SKU</th>
+                    <th>UoM</th>
+                    <th>Jumlah</th>
+                    <th>QC Pass</th>
+                    <th>Remarks</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th>Actions</th>
                 </tr>
-            </tfoot>
-        </table>
+                @if (count($crud->entry->details) != 0)
+                    @foreach ($crud->entry->details as $key=>$detail)
+                    @php
+                        $status = array('Plant', 'Process', 'Complete');
+                        $qty_onhands = \App\Models\Item::select('id','name', 'qty')->where('id', '=', $detail->item->id)->first();
+                    @endphp
+                    <tr>
+                        <td>{{$key+1}}</td>
+                        <td>{{$detail->item->name}}</td>
+                        <td>{{$detail->item->serial}}</td>
+                        <td>{{$detail->item->unit}}</td>
+                        <td align="right">{{number_format($detail->qty)}}</td>
+                        <td align="right">{{number_format($detail->qty_confirm)}}</td>
+                        @if ($qty_onhands->qty >= $detail->qty)
+                            <td> - </td>
+                        @else
+                            <td><strong class="bg-danger">Stock Tidak Mencukupi</strong></td>
+                        @endif
+                        <td>{{$status[$detail->status]}}</td>
+                        <td>
+                            <div class="btn-group">
+                                {{-- <button href="{{ route('salesorderdetail.edit', $detail->id) }}" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button> --}}
+                                <form method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
+                                </form>
+                                {{-- @if (backpack_user()->hasRole('operator-gudang'))
+                                    @if ($detail->status == 0)
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Status
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-detail" onclick="accept('{{ $detail->id }}')" href="#">Setujui</a>
+                                            <a class="dropdown-detail" onclick="decline('{{ $detail->id }}')" href="#">Tolak</a>
+                                        </div>
+                                    </div>
+                                    @endif
+                                @endif --}}
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                @else
+                    <tr style="border-bottom: 1px solid black;">
+                        <td colspan="10" align="center">Belum ada data</td>
+                    </tr>
+                @endif
+            </table>
+        </div>
     </div>
 </div>

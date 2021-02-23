@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\DeliveryNoteDetailRequest;
-use App\Models\DeliveryNoteDetail;
-use App\Models\Item;
+use App\Http\Requests\BagItemWarehouseOutRequest;
+use App\Models\BagItemWarehouseOut;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
+use App\Models\Item;
+use App\Models\WarehouseOut;
 
 /**
- * Class DeliveryNoteDetailCrudController
+ * Class BagItemWarehouseOutCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class DeliveryNoteDetailCrudController extends CrudController
+class BagItemWarehouseOutCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -29,9 +30,9 @@ class DeliveryNoteDetailCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\DeliveryNoteDetail::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/deliverynotedetail');
-        CRUD::setEntityNameStrings('deliverynotedetail', 'delivery_note_details');
+        CRUD::setModel(\App\Models\BagItemWarehouseOut::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/bagitemwarehouseout');
+        CRUD::setEntityNameStrings('bagitemwarehouseout', 'bag_item_warehouse_outs');
     }
 
     /**
@@ -42,7 +43,14 @@ class DeliveryNoteDetailCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        CRUD::column('id');
+        CRUD::column('warehouse_out_id');
+        CRUD::column('item_id');
+        CRUD::column('qty');
+        CRUD::column('price');
+        CRUD::column('created_at');
+        CRUD::column('updated_at');
+        CRUD::column('qty_confirm');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -59,9 +67,16 @@ class DeliveryNoteDetailCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(DeliveryNoteDetailRequest::class);
+        CRUD::setValidation(BagItemWarehouseOutRequest::class);
 
-        CRUD::setFromDb(); // fields
+        CRUD::field('id');
+        CRUD::field('warehouse_out_id');
+        CRUD::field('item_id');
+        CRUD::field('qty');
+        CRUD::field('price');
+        CRUD::field('created_at');
+        CRUD::field('updated_at');
+        CRUD::field('qty_confirm');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -83,15 +98,15 @@ class DeliveryNoteDetailCrudController extends CrudController
 
     public function store(Request $request)
     {
-        $find = DeliveryNoteDetail::where('delivery_note_id', '=', $request->delivery_note_id)->where('item_id', '=', $request->item_id)->first();
+        $find = BagItemWarehouseOut::where('warehouse_out_id', '=', $request->warehouse_out_id)->where('item_id', '=', $request->item_id)->first();
         if (!empty($find)) {
-            $data = DeliveryNoteDetail::findOrFail($request->item_id);
+            $data = BagItemWarehouseOut::findOrFail($request->item_id);
             $data->qty = $data->qty + $request->qty;
             $data->update();
         } else {
             $item = Item::findOrFail($request->item_id);
-            $data = new DeliveryNoteDetail;
-            $data->delivery_note_id = $request->delivery_note_id;
+            $data = new BagItemWarehouseOut;
+            $data->warehouse_out_id = $request->warehouse_out_id;
             $data->item_id = $request->item_id;
             $data->serial = $item->serial;
             $data->qty = $request->qty;
