@@ -86,10 +86,6 @@
                 if (response.success) {
                     var dsc = 0;
                     $('#editModalSalesOrderDetail').modal('show');
-<<<<<<< HEAD
-=======
-                    console.log(response.data)
->>>>>>> 2ca286644a9c54402678cbdc559d787374124885
                     $('#price').val(response.data.price)
                     $('input[name=qty]').val(response.data.qty)
                     response.data.discount === null ? dsc = 0 : dsc = response.data.discount
