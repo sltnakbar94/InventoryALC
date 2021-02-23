@@ -44,6 +44,7 @@ class SalesDnCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->addClause('where', 'module', '=', 'sales_order');
         $this->crud->addColumn([
             'name' => 'dn_number',
             'type' => 'text',
