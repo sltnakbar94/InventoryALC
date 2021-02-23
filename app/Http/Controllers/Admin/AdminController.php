@@ -90,7 +90,7 @@ class AdminController extends Controller
     {
         $purchase_order = WarehouseIn::count('id');
         $delivery_order = WarehouseOut::count('id');
-        $delivery_note = BagItemWarehouseOut::where('flag', '=', 'accepted')->distinct('warehouse_out_id')->count('warehouse_out_id');
+        $delivery_note = BagItemWarehouseOut::where('status', '=', 'complete')->distinct('warehouse_out_id')->count('warehouse_out_id');
 
         // redis check here
         $this->data['counter'] = [
