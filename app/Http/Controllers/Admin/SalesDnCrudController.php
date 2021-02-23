@@ -175,11 +175,8 @@ class SalesDnCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'total_weight',
-            'label' => 'Berat Total Barang',
-            'type' => 'text',
-            'attributes' => [
-                'placeholder' => 'Contoh : 80 KG',
-              ],
+            'label' => 'Berat Total Barang (KG)',
+            'type' => 'number',
         ]);
 
         $this->crud->addField([
