@@ -135,7 +135,6 @@ class SalesOrderDetailCrudController extends CrudController
             return redirect()->back();
         }
 
-<<<<<<< HEAD
         /**  $find = SalesOrderDetail::where('sales_order_id', '=', $request->sales_order_id)->where('item_id', '=', $request->item_id)->first();
             * // if (!empty($find)) {
                 
@@ -168,10 +167,8 @@ class SalesOrderDetailCrudController extends CrudController
             * // \Alert::add('success', 'Berhasil tambah item ' . $request->pic)->flash();
             * // return redirect()->back();
         */
-=======
         \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
         return redirect()->back();
->>>>>>> 2ca286644a9c54402678cbdc559d787374124885
     }
 
     public function destroy($id)
