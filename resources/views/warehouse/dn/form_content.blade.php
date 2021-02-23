@@ -7,7 +7,7 @@
         </tr>
         <tr>
             <td>Ekspedisi</td>
-            @if ($crud->entry->type == 'sales_order')
+            @if ($crud->entry->module == 'sales_order')
                 <td><strong>{{ $crud->entry->expedition }}</strong></td>
             @else
                 <td><strong>{{ $crud->entry->warehouseOut->expedition }}</strong></td>
