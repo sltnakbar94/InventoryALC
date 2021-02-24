@@ -41,8 +41,9 @@ Route::group([
     Route::post('item_to-bag_in', 'ApiController@itemToBagIn');
     Route::get('item_on-bag_in', 'ApiController@checkItemOnBagInById');
     Route::post('delete-item_on-bag_in', 'ApiController@deleteItemOnBagIn');
-    Route::post('accept-po', 'ApiController@acceptPO');
-    Route::post('decline-po', 'ApiController@declinePO');
+    Route::get('purchase-order/{id}/accept', 'WarehouseInCrudController@accept');
+    Route::get('purchase-order/{id}/denied', 'WarehouseInCrudController@denied');
+
 
     //Delivery Note
     Route::crud('deliverynote', 'DeliveryNoteCrudController');
@@ -64,7 +65,10 @@ Route::group([
     Route::crud('salesorderdetail', 'SalesOrderDetailCrudController');
     Route::crud('salesdn', 'SalesDnCrudController');
     Route::post('generate-dn-pdf', 'DeliveryNoteCrudController@pdf');
+    Route::post('generate-sdn-pdf', 'SalesDnCrudController@pdf');
     Route::crud('deliverynotedetail', 'DeliveryNoteDetailCrudController');
+    Route::get('salesorderdetail/{id}/accept', 'SalesOrderDetailCrudController@accept');
+    Route::get('salesorderdetail/{id}/denied', 'SalesOrderDetailCrudController@denied');
 
 
 

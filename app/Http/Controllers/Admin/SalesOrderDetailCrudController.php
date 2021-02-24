@@ -28,7 +28,7 @@ class SalesOrderDetailCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    
+
     public function __construct(SalesOrderServices $salesOrderService, SalesOrder $salesOrder) {
         $this->salesOrderService = $salesOrderService;
 
@@ -134,39 +134,6 @@ class SalesOrderDetailCrudController extends CrudController
             \Alert::add('error', 'Gagal tambah item ' . $th->getMessage().' on Line '. $th->getLine())->flash();
             return redirect()->back();
         }
-
-        /**  $find = SalesOrderDetail::where('sales_order_id', '=', $request->sales_order_id)->where('item_id', '=', $request->item_id)->first();
-            * // if (!empty($find)) {
-                
-            * //     $data = SalesOrderDetail::findOrFail($request->item_id);
-            * //     $data->qty = $data->qty + $request->qty;
-            * //     $data->update();
-            * // } else {
-            * //     $item = Item::findOrFail($request->item_id);
-            * //     $data = new SalesOrderDetail;
-            * //     $data->sales_order_id = $request->sales_order_id;
-            * //     $data->item_id = $request->item_id;
-            * //     $data->serial = $item->serial;
-            * //     $data->price = $request->price;
-            * //     $data->qty = $request->qty;
-            * //     $data->uom = $item->unit;
-            * //     $data->discount = $request->discount;
-            * //     if (!empty($request->discount)) {
-            * //         $sub_total = ($request->price - ($request->discount/100*$request->price))*$request->qty;
-            * //         $data->sub_total = $sub_total;
-            * //     } else {
-            * //         $sub_total = $request->price*$request->qty;
-            * //         $data->sub_total = $sub_total;
-            * //     }
-            * //     $data->save();
-            * // }
-            * // $grand_total = SalesOrder::findOrFail($request->sales_order_id);
-            * // $grand_total->grand_total = $grand_total->grand_total + $sub_total;
-            * // $grand_total->update();
-
-            * // \Alert::add('success', 'Berhasil tambah item ' . $request->pic)->flash();
-            * // return redirect()->back();
-        */
         \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
         return redirect()->back();
     }
@@ -180,6 +147,36 @@ class SalesOrderDetailCrudController extends CrudController
         $order_detail->delete();
 
         \Alert::add('success', 'Berhasil hapus data Item')->flash();
+        return redirect()->back();
+    }
+
+    public function accept($id)
+    {
+        $data = SalesOrderDetail::findOrFail($id);
+        $data->status = 1;
+        $data->update();
+        if (empty(SalesOrderDetail::where('sales_order_id', '=', $data->sales_order_id)->where('status', '=', 0)->first())) {
+            $header = SalesOrder::findOrFail($data->sales_order_id);
+            $header->status = 1;
+            $header->update();
+        }
+
+        \Alert::add('success', 'Berhasil konfirmasi data Item')->flash();
+        return redirect()->back();
+    }
+
+    public function denied($id)
+    {
+        $data = SalesOrderDetail::findOrFail($id);
+        $data->status = 2;
+        $data->update();
+        if (empty(SalesOrderDetail::where('sales_order_id', '=', $data->sales_order_id)->where('status', '=', 0)->first())) {
+            $header = SalesOrder::findOrFail($id);
+            $header->status = 1;
+            $header->update();
+        }
+
+        \Alert::add('success', 'Berhasil konfirmasi data Item')->flash();
         return redirect()->back();
     }
 }

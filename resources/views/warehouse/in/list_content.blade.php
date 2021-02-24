@@ -44,17 +44,18 @@
                                     @csrf
                                     {{-- <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button> --}}
                                 </form>
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Status
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-detail" href="{{backpack_url('purchase-order/'.$detail->id.'/accept')}}">Setujui</a>
+                                        <a class="dropdown-detail" href="{{backpack_url('purchase-order/'.$detail->id.'/denied')}}">Tolak</a>
+                                    </div>
+                                </div>
                                 {{-- @if (backpack_user()->hasRole('operator-gudang'))
                                     @if ($detail->status == 0)
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Status
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-detail" onclick="accept('{{ $detail->id }}')" href="#">Setujui</a>
-                                            <a class="dropdown-detail" onclick="decline('{{ $detail->id }}')" href="#">Tolak</a>
-                                        </div>
-                                    </div>
+                                    
                                     @endif
                                 @endif --}}
                             </div>
