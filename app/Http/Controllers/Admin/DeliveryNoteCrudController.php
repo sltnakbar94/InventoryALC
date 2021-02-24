@@ -324,7 +324,7 @@ class DeliveryNoteCrudController extends CrudController
     {
         $data = DeliveryNote::where('id', '=', $request->id)->first();
 
-        $pdf = PDF::loadview('warehouse.dn.output',['data'=>$data]);
+        $pdf = PDF::loadview('warehouse.dn.output_do',['data'=>$data]);
     	return $pdf->stream($data->do_number.'.pdf');
     }
 }

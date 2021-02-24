@@ -156,7 +156,7 @@ class SalesOrderDetailCrudController extends CrudController
         $data->status = 1;
         $data->update();
         if (empty(SalesOrderDetail::where('sales_order_id', '=', $data->sales_order_id)->where('status', '=', 0)->first())) {
-            $header = SalesOrder::findOrFail($id);
+            $header = SalesOrder::findOrFail($data->sales_order_id);
             $header->status = 1;
             $header->update();
         }

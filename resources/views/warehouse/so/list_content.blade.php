@@ -37,10 +37,14 @@
                             <div class="btn-group">
                                 @if ($detail->status == 0)
                                     <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning"><i class="las la-pencil-alt"></i></button>
-                                    <button id="delete" onclick="return confirmation({{ $detail->id }});" type="button" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
+                                    <form method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
+                                    </form>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Status
+                                        Status
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                             <a class="dropdown-detail" href="{{backpack_url('salesorderdetail/'.$detail->id.'/accept')}}">Setujui</a>
@@ -64,16 +68,6 @@
 
 @section('after_scripts')
 <script>
-
-    function confirmation(detailID) {
-        if (confirm('Yakin hapus?')) {
-            document.getElementById('delete-form'+detailID).submit();
-        }else{
-            return false;
-        }
-    }
-
-
     function edit(sales_order_id) {
         $.ajax({
             type: "post",
@@ -87,6 +81,7 @@
                 if (response.success) {
                     var dsc = 0;
                     $('#editModalSalesOrderDetail').modal('show');
+                    console.log(response.data)
                     $('#price').val(response.data.price)
                     $('input[name=qty]').val(response.data.qty)
                     response.data.discount === null ? dsc = 0 : dsc = response.data.discount
@@ -102,11 +97,6 @@
         });
     }
 
-    $('#delete').click(function (e) {
-        e.preventDefault();
-
-    });
-
     $('#form-edit-so-detail').submit(function(e) {
         e.preventDefault()
 
@@ -119,7 +109,7 @@
 			data: data,
 			method: method,
 			beforeSend: function() {
-				// $('#edit-buton-so-detail').prop('disabled', true);
+				$('#edit-buton-so-detail').prop('disabled', true);
 			},
             success: function (response) {
                 console.log(response);
@@ -132,21 +122,21 @@
         });
     });
 
-    function swalError(message) {
+    function swalError(params) {
         return swal({
                     title: 'Gagal!',
-                    text: message,
+                    text: params.message,
                     icon: 'error'
                 }).then(function () {
                     location.reload();
                 })
     }
 
-    function swalSuccess(message) {
+    function swalSuccess(params) {
         return swal({
                     title: 'Sukses!',
-                    text: message,
-                    icon: 'success'
+                    text: params.message,
+
                 }).then(function () {
                     location.reload();
                 })

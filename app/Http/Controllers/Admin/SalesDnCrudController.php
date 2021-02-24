@@ -311,7 +311,7 @@ class SalesDnCrudController extends CrudController
     {
         $data = SalesDn::findOrFail($request->id);
 
-        $pdf = PDF::loadview('warehouse.dn.output',['data'=>$data]);
+        $pdf = PDF::loadview('warehouse.dn.output_so',['data'=>$data]);
     	return $pdf->stream($data->do_number.'.pdf');
     }
 }
