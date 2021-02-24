@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\WarehouseInRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use \App\Services\PurchaseOrderServices;
+
 
 /**
  * Class WarehouseInCrudController
@@ -38,6 +40,7 @@ class WarehouseInCrudController extends CrudController
         CRUD::setModel(\App\Models\WarehouseIn::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/warehousein');
         CRUD::setEntityNameStrings('Purchase Order', 'Purchase Order');
+
     }
 
     /**
@@ -336,18 +339,24 @@ class WarehouseInCrudController extends CrudController
        return redirect()->back();
     }
 
-    public function accept($id)
+    public function accept($id, PurchaseOrderServices $purchaseOrderService)
     {
         try {
             DB::beginTransaction();
             $data = BagItemWarehouseIn::findOrFail($id);
             $data->status = Flag::PLAN;
             $data->update();
-            if (!empty(BagItemWarehouseIn::where('warehouse_in_id', '=', $data->warehouse_in_id)->where('status', '=', Flag::PLAN)->first())) {
-                $header = WarehouseIn::findOrFail($data->warehouse_in_id);
-                $header->status = Flag::PROCESS;
-                $header->update();
-            } throw new \Exception("Data Tidak Ditemukan");
+            $item_on_bag = BagItemWarehouseIn::where('warehouse_in_id', '=', $data->warehouse_in_id)->where('status', '=', Flag::PLAN)->first();
+            if (empty($item_on_bag)) {
+                throw new \Exception("Data Tidak Ditemukan");  
+            } 
+            $header = WarehouseIn::findOrFail($data->warehouse_in_id);
+            $header->status = Flag::PROCESS;
+            $header->update();
+
+            // Increase Qty Item After Approve
+            $purchaseOrderService->IncreaseItemQTY($id);
+
             DB::commit();
             $return = array('status' => 'success', 'message' => 'Berhasil Konfirmasi Data Item');
         } catch (\Throwable $th) {
