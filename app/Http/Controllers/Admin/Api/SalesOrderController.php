@@ -72,7 +72,6 @@ class SalesOrderController extends Controller
                 'price'         => $request->price,
                 'discount'      => $request->discount,
                 'sub_total'     => $sub_total,
-                'status'        => '1'
             ]);
 
             // New Grand Total on Sales Order

@@ -64,7 +64,10 @@ Route::group([
     Route::crud('salesorderdetail', 'SalesOrderDetailCrudController');
     Route::crud('salesdn', 'SalesDnCrudController');
     Route::post('generate-dn-pdf', 'DeliveryNoteCrudController@pdf');
+    Route::post('generate-sdn-pdf', 'SalesDnCrudController@pdf');
     Route::crud('deliverynotedetail', 'DeliveryNoteDetailCrudController');
+    Route::get('salesorderdetail/{id}/accept', 'SalesOrderDetailCrudController@accept');
+    Route::get('salesorderdetail/{id}/denied', 'SalesOrderDetailCrudController@denied');
 
 
 
