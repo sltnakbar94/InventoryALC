@@ -36,10 +36,13 @@
                         <td>
                             <div class="btn-group">
                                 {{-- <button href="{{ route('salesorderdetail.edit', $detail->id) }}" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button> --}}
-                                <form method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning"><i class="las la-pencil-alt"></i></button>
+                                <button id="delete" onclick="return confirmation({{ $detail->id }});" type="button" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
+
+                                <form id="delete-form{{ $detail->id }}" method="POST" action="{{ route('bagitemwarehousein.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
+                                    {{-- <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button> --}}
                                 </form>
                                 {{-- @if (backpack_user()->hasRole('operator-gudang'))
                                     @if ($detail->status == 0)
@@ -67,3 +70,96 @@
         </div>
     </div>
 </div>
+
+@section('after_scripts')
+<script>
+
+    function confirmation(detailID) {
+        if (confirm('Yakin hapus?')) {
+            document.getElementById('delete-form'+detailID).submit();
+        }else{
+            return false;
+        }
+    }
+
+
+    function edit(purchase_order_id) {
+        $.ajax({
+            type: "post",
+            url: "{{ backpack_url('Api/PurchaseOrderDetail') }}",
+            data: {
+                purchase_order_id: purchase_order_id,
+                _token: '{{ csrf_token() }}'
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    var dsc = 0;
+                    $('#editModalPurchaseOrderDetail').modal('show');
+                    $('#price').val(response.data.price)
+                    $('input[name=qty]').val(response.data.qty)
+                    response.data.discount === null ? dsc = 0 : dsc = response.data.discount
+                    $('input[name=discount]').val(dsc)
+                    $('select[name=item_id]').val(response.data.item_id).trigger('change');
+                }else{
+                    swalError({
+                        message: response.data.message,
+                        response: response.data.error,
+                    })
+                }
+            }
+        });
+    }
+
+    $('#delete').click(function (e) { 
+        e.preventDefault();
+        
+    });
+
+    $('#form-edit-so-detail').submit(function(e) {
+        e.preventDefault()
+
+        var data = $(this).serialize()
+		var method = $(this).attr('method')
+		var action = $(this).attr('action')
+
+        $.ajax({
+            url: action,
+			data: data,
+			method: method,
+			beforeSend: function() {
+				// $('#edit-buton-so-detail').prop('disabled', true);
+			},
+            success: function (response) {
+                console.log(response);
+                if (response.success) {
+                    swalSuccess(response.message)
+                }else{
+                    swalError(response.message)
+                }
+            }
+        });
+    });
+
+    function swalError(message) {
+        return swal({
+                    title: 'Gagal!',
+                    text: message,
+                    icon: 'error'
+                }).then(function () {
+                    // location.reload();
+                })
+    }
+
+    function swalSuccess(message) {
+        return swal({
+                    title: 'Sukses!',
+                    text: message,
+                    icon: 'success'
+                }).then(function () {
+                    // location.reload();
+                })
+    }
+</script>
+
+@endsection

@@ -25,7 +25,7 @@
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
-                                {{-- <button href="{{ route('salesorderdetail.edit', $detail->id) }}" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button> --}}
+                                <button onclick="edit({{ $detail->id }})" href="{{ route('salesorderdetail.edit', $detail->id) }}" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button>
                                 <form method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
                                     @method('DELETE')
                                     @csrf
@@ -57,3 +57,21 @@
         </div>
     </div>
 </div>
+
+@section('after_scripts')
+    <script>
+        function edit(params) {
+            $.ajax({
+                type: "post",
+                url: "{{ backpack_url('Api/DeliverySODetail') }}",
+                data: {
+                    
+                },
+                dataType: "dataType",
+                success: function (response) {
+                    
+                }
+            });
+        }
+    </script>
+@endsection
