@@ -165,7 +165,7 @@ class SalesOrderDetailCrudController extends CrudController
         return redirect()->back();
     }
 
-    public function decline($id)
+    public function denied($id)
     {
         $data = SalesOrderDetail::findOrFail($id);
         $data->status = 2;
