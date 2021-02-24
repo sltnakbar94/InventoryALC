@@ -6,6 +6,9 @@
 // This route file is loaded automatically by Backpack\Base.
 // Routes you generate using Backpack\Generators will be placed here.
 
+use App\Http\Controllers\Admin\Api\DeliverySalesOrderController;
+use App\Http\Controllers\Admin\Api\PurchaseOrderController;
+use App\Http\Controllers\Admin\Api\SalesDeliveryNoteController;
 use App\Http\Controllers\Admin\Api\SalesOrderController;
 
 Route::group([
@@ -68,8 +71,19 @@ Route::group([
 
 
     // API
+
+    // Sales Order
     Route::post('Api/SalesOrderDetail', [SalesOrderController::class, 'getSalesOrderDetailById']);
     Route::post('Api/SalesOrderDetail_update/{sales_order_detail_id}', [SalesOrderController::class, 'UpdateSalesOrder']);
+
+    // Purchase Order
+    Route::post('Api/PurchaseOrderDetail', [PurchaseOrderController::class, 'getPurchaseOrderDetailById']);
+    Route::post('Api/PurchaseOrderDetail_update/{purchase_order_detail_id}', [PurchaseOrderController::class, 'UpdatePurchaseOrder']);
+
+    Route::post('Api/DeliverySODetail', [DeliverySalesOrderController::class, 'getDeliverySalesOrderById']);
+    
+
+
 
 
     Route::crud('bagitemwarehousein', 'BagItemWarehouseInCrudController');

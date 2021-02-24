@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\BagItemWarehouseInRequest;
-use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Illuminate\Http\Request;
-use App\Models\BagItemWarehouseIn;
 use App\Models\Item;
 use App\Models\WarehouseIn;
+use Illuminate\Http\Request;
+use App\Models\BagItemWarehouseIn;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\BagItemWarehouseInRequest;
+use App\Services\PurchaseOrderServices;
+use Backpack\CRUD\app\Http\Controllers\CrudController;
+use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
  * Class BagItemWarehouseInCrudController
@@ -22,6 +24,12 @@ class BagItemWarehouseInCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+
+    public function __construct(PurchaseOrderServices $purchaseOrderService, BagItemWarehouseIn $purchaseOrder) {
+        $this->purchaseOrderService = $purchaseOrderService;
+
+        $this->purchaseOrder = $purchaseOrder;
+    }
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -102,35 +110,86 @@ class BagItemWarehouseInCrudController extends CrudController
 
     public function store(Request $request)
     {
-        $find = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->warehouse_in_id)->where('item_id', '=', $request->item_id)->first();
-        if (!empty($find)) {
-            $data = BagItemWarehouseIn::findOrFail($request->item_id);
-            $data->qty = $data->qty + $request->qty;
-            $data->update();
-        } else {
-            $item = Item::findOrFail($request->item_id);
-            $data = new BagItemWarehouseIn;
-            $data->warehouse_in_id = $request->warehouse_in_id;
-            $data->item_id = $request->item_id;
-            $data->serial = $item->serial;
-            $data->price = $request->price;
-            $data->qty = $request->qty;
-            $data->uom = $item->unit;
-            $data->discount = $request->discount;
-            if (!empty($request->discount)) {
-                $sub_total = ($request->price - ($request->discount/100*$request->price))*$request->qty;
-                $data->sub_total = $sub_total;
-            } else {
-                $sub_total = $request->price*$request->qty;
-                $data->sub_total = $sub_total;
-            }
-            $data->save();
-        }
-        $grand_total = WarehouseIn::findOrFail($request->warehouse_in_id);
-        $grand_total->grand_total = $grand_total->grand_total + $sub_total;
-        $grand_total->update();
+        $sub_total = $this->purchaseOrderService->SumItemDiscountToSubTotal($request);
+        try {
+            DB::beginTransaction();
+            $PO_Detail['status'] = $this->purchaseOrderService->CheckItemOnPODetail(array('warehouse_in_id' => $request->warehouse_in_id, 'item_id' => $request->item_id));
+            $PO_Detail['item'] = $this->purchaseOrderService->ItemOnPODetail(array('warehouse_in_id' => $request->warehouse_in_id, 'item_id' => $request->item_id));
 
-        \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
+            if ($PO_Detail['status']) {
+                BagItemWarehouseIn::create([
+                    'warehouse_in_id' => $request->warehouse_in_id,
+                    'item_id'        => $request->item_id,
+                    'qty'            => $request->qty,
+                    'price'          => $request->price,
+                    'discount'       => $request->discount,
+                    'sub_total'      => $sub_total,
+                    'status'         => 0
+                ]);
+            }else{
+                BagItemWarehouseIn::find($PO_Detail['item']->id)->update([
+                    'qty'           => $request->qty,
+                    'price'         => $request->price,
+                    'discount'      => $request->discount,
+                    'sub_total'     => $sub_total,
+                    'status'        => '1'
+                ]);
+            }
+
+            $SO_GT_update = $this->purchaseOrderService->SumItemPriceByPurchaseOrderID($request->warehouse_in_id);
+            WarehouseIn::find($request->warehouse_in_id)->update([
+                'grand_total' => $SO_GT_update
+            ]);
+            DB::commit();
+            \Alert::add('success', 'Berhasil tambah item ')->flash();
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            DB::rollback();
+            \Alert::add('error', 'Gagal tambah item ' . $th->getMessage().' on Line '. $th->getLine())->flash();
+            return redirect()->back();
+        }
+
+        // $find = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->warehouse_in_id)->where('item_id', '=', $request->item_id)->first();
+        // if (!empty($find)) {
+        //     $data = BagItemWarehouseIn::findOrFail($request->item_id);
+        //     $data->qty = $data->qty + $request->qty;
+        //     $data->update();
+        // } else {
+        //     $item = Item::findOrFail($request->item_id);
+        //     $data = new BagItemWarehouseIn;
+        //     $data->warehouse_in_id = $request->warehouse_in_id;
+        //     $data->item_id = $request->item_id;
+        //     $data->serial = $item->serial;
+        //     $data->price = $request->price;
+        //     $data->qty = $request->qty;
+        //     $data->uom = $item->unit;
+        //     $data->discount = $request->discount;
+        //     if (!empty($request->discount)) {
+        //         $sub_total = ($request->price - ($request->discount/100*$request->price))*$request->qty;
+        //         $data->sub_total = $sub_total;
+        //     } else {
+        //         $sub_total = $request->price*$request->qty;
+        //         $data->sub_total = $sub_total;
+        //     }
+        //     $data->save();
+        // }
+        // $grand_total = WarehouseIn::findOrFail($request->warehouse_in_id);
+        // $grand_total->grand_total = $grand_total->grand_total + $sub_total;
+        // $grand_total->update();
+
+        // \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
+        // return redirect()->back();
+    }
+
+    public function destroy($id)
+    {
+        $data = BagItemWarehouseIn::findOrFail($id);
+        $grand_total = WarehouseIn::findOrFail($data->warehouse_in_id);
+        $grand_total->grand_total = $grand_total->grand_total - $data->sub_total;
+        $grand_total->update();
+        $data->delete();
+
+        \Alert::add('success', 'Berhasil hapus data Item')->flash();
         return redirect()->back();
     }
 }
