@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Flag;
 use App\Models\Item;
 use App\Models\WarehouseIn;
 use Illuminate\Http\Request;
@@ -124,7 +125,7 @@ class BagItemWarehouseInCrudController extends CrudController
                     'price'          => $request->price,
                     'discount'       => $request->discount,
                     'sub_total'      => $sub_total,
-                    'status'         => 0
+                    'status'         => Flag::PLAN
                 ]);
             }else{
                 BagItemWarehouseIn::find($PO_Detail['item']->id)->update([
@@ -132,7 +133,7 @@ class BagItemWarehouseInCrudController extends CrudController
                     'price'         => $request->price,
                     'discount'      => $request->discount,
                     'sub_total'     => $sub_total,
-                    'status'        => '1'
+                    'status'        => Flag::PROCESS
                 ]);
             }
 
