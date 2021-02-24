@@ -1,8 +1,10 @@
 <?php
 namespace App\Services;
 
-use App\Models\BagItemWarehouseIn;
+use App\Models\Item;
 use App\Models\WarehouseIn;
+use App\Models\BagItemWarehouseIn;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Handle All Trx on Warehouse i/o
@@ -12,12 +14,14 @@ class PurchaseOrderServices  {
     public function __construct(
         WarehouseIn $warehouseIn,
         BagItemWarehouseIn $bagItemWarehouseIn, 
+        Item $item,
 
         CRUDServices $crudService,
         ItemServices $itemService
     ) {
         $this->purchaseOrder = $warehouseIn;
         $this->purchaseOrderDetail = $bagItemWarehouseIn;
+        $this->item = $item;
 
         $this->crudService = $crudService;
         $this->itemService = $itemService;
@@ -143,5 +147,36 @@ class PurchaseOrderServices  {
     public function GetQTYPassbyID($purchase_order_detail_id)
     {
         return $this->GetDetailByID($purchase_order_detail_id)->qty_confirm;
+    }
+
+    /**
+     * Increase QTY on Item
+     *
+     * @param int $PO_Detail_id
+     * @return array
+     */
+    public function IncreaseItemQTY($PO_Detail_id)
+    {
+        $PO_Detail = $this->GetDetailByID($PO_Detail_id);
+        $qty_confirm = $PO_Detail->qty_confirm == null ? $PO_Detail->qty : $PO_Detail->qty_confirm;
+        $item = $this->item::find($PO_Detail->item_id);
+        if ($item == null) {
+            throw new \Exception("Item Tidak Ditemukan");  
+        }
+        $qty_update = $item->qty + $qty_confirm;
+        $item->update(['qty' => $qty_update]);
+        return array('success' => true, 'message' => 'QTY '.$item->name.' Berhasil bertambah');
+    }
+
+    public function DecreaseItemQTY($PO_Detail_id)
+    {
+        $PO_Detail = $this->GetDetailByID($PO_Detail_id);
+        $item = $this->item::find($PO_Detail->item_id);
+        if ($item == null) {
+            throw new \Exception("Item Tidak Ditemukan");  
+        }
+        $qty_update = $item->qty - $PO_Detail->qty_confirm;
+        $item->update(['qty' => $qty_update]);
+        return array('success' => true, 'message' => 'QTY '.$item->name.' Berhasil bertambah');
     }
 }
