@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="card no-padding no-border">
                     <div class="card-header">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalSalesOrderDetail">

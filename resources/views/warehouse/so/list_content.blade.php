@@ -17,7 +17,7 @@
                 @if (count($crud->entry->details) != 0)
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
-                        $status = array('Plan', 'Process', 'Complete');
+                        $status = array('Plan', 'Process', 'Denied', 'Complete');
                     @endphp
                     <tr>
                         <td>{{$key+1}}</td>
@@ -35,28 +35,19 @@
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
-                                {{-- <button href="{{ route('salesorderdetail.edit', $detail->id) }}" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button> --}}
-                                <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning"><i class="las la-pencil-alt"></i></button>
-                                <button id="delete" onclick="return confirmation({{ $detail->id }});" type="button" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
-
-                                <form method="POST" id="delete-form{{ $detail->id }}" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
-                                    @method('DELETE')
-                                    @csrf
-                                    {{-- <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button> --}}
-                                </form>
-                                {{-- @if (backpack_user()->hasRole('operator-gudang'))
-                                    @if ($detail->status == 0)
+                                @if ($detail->status == 0)
+                                    <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning"><i class="las la-pencil-alt"></i></button>
+                                    <button id="delete" onclick="return confirmation({{ $detail->id }});" type="button" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Status
+                                            Status
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-detail" onclick="accept('{{ $detail->id }}')" href="#">Setujui</a>
-                                            <a class="dropdown-detail" onclick="decline('{{ $detail->id }}')" href="#">Tolak</a>
+                                            <a class="dropdown-detail" href="{{backpack_url('salesorderdetail/'.$detail->id.'/accept')}}">Setujui</a>
+                                            <a class="dropdown-detail" href="{{backpack_url('salesorderdetail/'.$detail->id.'/denied')}}">Tolak</a>
                                         </div>
                                     </div>
-                                    @endif
-                                @endif --}}
+                                @endif
                             </div>
                         </td>
                     </tr>
@@ -111,9 +102,9 @@
         });
     }
 
-    $('#delete').click(function (e) { 
+    $('#delete').click(function (e) {
         e.preventDefault();
-        
+
     });
 
     $('#form-edit-so-detail').submit(function(e) {

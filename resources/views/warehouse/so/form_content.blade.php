@@ -85,7 +85,7 @@
         @endif
         <tr>
             <td>Grand Total</td>
-            <td><strong>{{ $crud->entry->grand_total }}</strong></td>
+            <td><strong>Rp.{{ number_format($crud->entry->grand_total) }}</strong></td>
         </tr>
         <tr>
             <td>Keterangan</td>
