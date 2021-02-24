@@ -150,7 +150,7 @@ class SalesOrderDetailCrudController extends CrudController
         return redirect()->back();
     }
 
-    public function accpet($id)
+    public function accept($id)
     {
         $data = SalesOrderDetail::findOrFail($id);
         $data->status = 1;
