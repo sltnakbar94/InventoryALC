@@ -117,7 +117,10 @@ class BagItemWarehouseInCrudController extends CrudController
             $PO_Detail['status'] = $this->purchaseOrderService->CheckItemOnPODetail(array('warehouse_in_id' => $request->warehouse_in_id, 'item_id' => $request->item_id));
             $PO_Detail['item'] = $this->purchaseOrderService->ItemOnPODetail(array('warehouse_in_id' => $request->warehouse_in_id, 'item_id' => $request->item_id));
 
+            // Check if Item on Purchase Order Detail
             if ($PO_Detail['status']) {
+
+                // Create new Item on Purchase Order Detail
                 BagItemWarehouseIn::create([
                     'warehouse_in_id' => $request->warehouse_in_id,
                     'item_id'        => $request->item_id,
@@ -128,6 +131,8 @@ class BagItemWarehouseInCrudController extends CrudController
                     'status'         => Flag::PLAN
                 ]);
             }else{
+
+                // Update the Exists Item on Purchase Order Detail
                 BagItemWarehouseIn::find($PO_Detail['item']->id)->update([
                     'qty'           => $request->qty,
                     'price'         => $request->price,
@@ -137,6 +142,7 @@ class BagItemWarehouseInCrudController extends CrudController
                 ]);
             }
 
+            // Update Grand Total on Purchase Order
             $SO_GT_update = $this->purchaseOrderService->SumItemPriceByPurchaseOrderID($request->warehouse_in_id);
             WarehouseIn::find($request->warehouse_in_id)->update([
                 'grand_total' => $SO_GT_update
