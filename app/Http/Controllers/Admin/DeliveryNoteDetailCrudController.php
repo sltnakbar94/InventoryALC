@@ -89,7 +89,6 @@ class DeliveryNoteDetailCrudController extends CrudController
             $data->qty = $data->qty + $request->qty;
             $data->update();
         } else {
-            $item = Item::findOrFail($request->item_id);
             $data = new DeliveryNoteDetail;
             $data->delivery_note_id = $request->delivery_note_id;
             $data->item_id = $request->item_id;
@@ -98,6 +97,7 @@ class DeliveryNoteDetailCrudController extends CrudController
             $data->uom = $item->unit;
             $data->save();
         }
+        $item = Item::findOrFail($request->item_id);
 
         \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
         return redirect()->back();

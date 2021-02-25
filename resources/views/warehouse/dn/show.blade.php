@@ -93,7 +93,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 @endsection
 
-@section('after_scripts')
+{{-- @section('after_scripts')
 	<script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
 	<script src="{{ asset('packages/backpack/crud/js/show.js') }}"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -103,4 +103,4 @@
 		$('.select2').select2({})
     } );
     </script>
-@endsection
+@endsection --}}
