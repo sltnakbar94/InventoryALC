@@ -167,16 +167,4 @@ class PurchaseOrderServices  {
         $item->update(['qty' => $qty_update]);
         return array('success' => true, 'message' => 'QTY '.$item->name.' Berhasil bertambah');
     }
-
-    public function DecreaseItemQTY($PO_Detail_id)
-    {
-        $PO_Detail = $this->GetDetailByID($PO_Detail_id);
-        $item = $this->item::find($PO_Detail->item_id);
-        if ($item == null) {
-            throw new \Exception("Item Tidak Ditemukan");  
-        }
-        $qty_update = $item->qty - $PO_Detail->qty_confirm;
-        $item->update(['qty' => $qty_update]);
-        return array('success' => true, 'message' => 'QTY '.$item->name.' Berhasil bertambah');
-    }
 }
