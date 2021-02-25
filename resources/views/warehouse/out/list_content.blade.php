@@ -8,7 +8,7 @@
                     <th>SKU</th>
                     <th>UoM</th>
                     <th>Jumlah</th>
-                    <th>QC Pass</th>
+                    {{-- <th>QC Pass</th> --}}
                     <th>Remarks</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -16,7 +16,7 @@
                 @if (count($crud->entry->details) != 0)
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
-                        $status = array('Plant', 'Process', 'Complete');
+                        $status = array('Plan', 'Process', 'Denied', 'Complete');
                         $qty_onhands = \App\Models\Item::select('id','name', 'qty')->where('id', '=', $detail->item->id)->first();
                     @endphp
                     <tr>
@@ -25,7 +25,7 @@
                         <td>{{$detail->item->serial}}</td>
                         <td>{{$detail->item->unit}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
-                        <td align="right">{{number_format($detail->qty_confirm)}}</td>
+                        {{-- <td align="right">{{number_format($detail->qty_confirm)}}</td> --}}
                         @if ($qty_onhands->qty >= $detail->qty)
                             <td> - </td>
                         @else
@@ -54,7 +54,7 @@
                                 </div>
                                 {{-- @if (backpack_user()->hasRole('operator-gudang'))
                                     @if ($detail->status == 0)
-                                    
+
                                     @endif
                                 @endif --}}
                             </div>
@@ -111,9 +111,9 @@
         });
     }
 
-    $('#delete').click(function (e) { 
+    $('#delete').click(function (e) {
         e.preventDefault();
-        
+
     });
 
     $('#form-edit-so-detail').submit(function(e) {

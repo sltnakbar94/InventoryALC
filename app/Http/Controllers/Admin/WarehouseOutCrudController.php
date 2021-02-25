@@ -40,7 +40,7 @@ class WarehouseOutCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\WarehouseOut::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/warehouseout');
-        CRUD::setEntityNameStrings('Barang Keluar', 'Barang Keluar');
+        CRUD::setEntityNameStrings('Delivery Order', 'Delivery Order');
     }
 
     /**
@@ -156,7 +156,7 @@ class WarehouseOutCrudController extends CrudController
 
         $this->crud->addField([
             'label' => 'Ekspedisi',
-            'name'  => 'expediion',
+            'name'  => 'expedition',
             'type'  => 'text',
         ]);
 
@@ -231,7 +231,7 @@ class WarehouseOutCrudController extends CrudController
 
         $this->crud->addField([
             'label' => 'Ekspedisi',
-            'name'  => 'expediion',
+            'name'  => 'expedition',
             'type'  => 'text',
         ]);
 
@@ -319,12 +319,12 @@ class WarehouseOutCrudController extends CrudController
         try {
             DB::beginTransaction();
             $data = BagItemWarehouseOut::findOrFail($id);
-            $data->status = Flag::PLAN;
+            $data->status = Flag::PROCESS;
             $data->update();
             $item_on_bag = BagItemWarehouseOut::where('warehouse_out_id', '=', $data->warehouse_out_id)->where('status', '=', Flag::PLAN)->first();
             if (empty($item_on_bag)) {
-                throw new \Exception("Data Tidak Ditemukan");  
-            } 
+                throw new \Exception("Data Tidak Ditemukan");
+            }
             $header = WarehouseOut::findOrFail($data->warehouse_out_id);
             $header->status = Flag::PROCESS;
             $header->update();

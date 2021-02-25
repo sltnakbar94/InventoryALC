@@ -16,7 +16,7 @@ class DeliveryOrderController extends Controller
         BagItemWarehouseOut $deliveryOrderDetail,
 
         CRUDServices $crudService,
-        
+
         DeliveryOrderServices $deliveryOrderServices
         ) {
         $this->deliveryOrderDetail = $deliveryOrderDetail;
@@ -25,7 +25,7 @@ class DeliveryOrderController extends Controller
         $this->deliveryOrderServices = $deliveryOrderServices;
     }
 
-    
+
     /**
      * Get Delivery Order Detail by ID
      *
@@ -68,18 +68,14 @@ class DeliveryOrderController extends Controller
 
             // Update Delivery Order Detail by Delivery Order Detail ID
             BagItemWarehouseOut::find($DO_Detail->id)->update([
-                'price'         => $request->price,
-                'discount'      => $request->discount,
-                'sub_total'     => $sub_total,
-                'qty_confirm'   => $request->qty,
-                'status'        => '1'
+                'qty'   => $request->qty,
             ]);
 
             // New Grand Total on Delivery Order
-            $DO_GT_update = $this->deliveryOrderServices->SumItemPriceByDeliveryOrderID($request->warehouse_out_id);
-            WarehouseOut::find($request->warehouse_out_id)->update([
-                'grand_total' => $DO_GT_update
-            ]);
+            // $DO_GT_update = $this->deliveryOrderServices->SumItemPriceByDeliveryOrderID($request->warehouse_out_id);
+            // WarehouseOut::find($request->warehouse_out_id)->update([
+            //     'grand_total' => $DO_GT_update
+            // ]);
 
             DB::commit();
             return $this->returnSuccess($DO_Detail, 'Delivery Order dengan ID '.$DO_Detail->warehouse_out_id.' Berhasil di Update');

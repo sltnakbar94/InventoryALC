@@ -31,24 +31,6 @@
                                 </span>
                             @endif
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="price">Harga Satuan</label>
-                            <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ old('price') }}" required>
-                            @if ($errors->has('price'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('price') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="discount">Diskon (%)</label>
-                            <input type="number" class="form-control{{ $errors->has('discount') ? ' is-invalid' : '' }}" name="discount" value="{{ old('discount') }}">
-                            @if ($errors->has('discount'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('discount') }}</strong>
-                                </span>
-                            @endif
-                        </div>
                         <div class="form-group text-right">
                             <label for=""></label>
                             <button type="submit" class="btn btn-primary" id="add-buton-out">SIMPAN</button>

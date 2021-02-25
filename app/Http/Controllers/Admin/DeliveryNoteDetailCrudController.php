@@ -84,6 +84,7 @@ class DeliveryNoteDetailCrudController extends CrudController
     public function store(Request $request)
     {
         $find = DeliveryNoteDetail::where('delivery_note_id', '=', $request->delivery_note_id)->where('item_id', '=', $request->item_id)->first();
+        $item = Item::findOrFail($request->item_id);
         if (!empty($find)) {
             $data = DeliveryNoteDetail::findOrFail($request->item_id);
             $data->qty = $data->qty + $request->qty;
