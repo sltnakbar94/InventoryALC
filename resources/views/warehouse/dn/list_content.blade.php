@@ -8,6 +8,7 @@
                     <th>SKU</th>
                     <th>UoM</th>
                     <th>Jumlah</th>
+                    <th>Remarks</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -15,6 +16,14 @@
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
                         $status = array('Plant', 'Process', 'Complete');
+                        if ($crud->entry->module == 'sales_order') {
+                            $item_header = $crud->entry->salesOrder;
+                        }elseif ($crud->entry->module == 'delivery_order') {
+                            $item_header = $crud->entry->WarehouseOut;
+                        }else {
+                            $item_header = NULL;
+                        }
+                        $comparison = $item_header->details->where('item_id', '=', $detail->item_id)->sum('qty');
                     @endphp
                     <tr>
                         <td>{{$key+1}}</td>
@@ -22,6 +31,11 @@
                         <td>{{$detail->item->serial}}</td>
                         <td>{{$detail->item->unit}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
+                        @if ($detail->qty > $comparison)
+                            <td><strong style="background-color: red; color:white">Jumlah Melebihi Stock</strong></td>
+                        @else
+                            <td align="center"> - </td>
+                        @endif
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
@@ -59,19 +73,28 @@
 </div>
 
 @section('after_scripts')
+    <script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
+	<script src="{{ asset('packages/backpack/crud/js/show.js') }}"></script>
     <script>
         function edit(params) {
             $.ajax({
                 type: "post",
                 url: "{{ backpack_url('Api/DeliverySODetail') }}",
                 data: {
-                    
+
                 },
                 dataType: "dataType",
                 success: function (response) {
-                    
+
                 }
             });
         }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+		$('.select2').select2({})
+    } );
     </script>
 @endsection

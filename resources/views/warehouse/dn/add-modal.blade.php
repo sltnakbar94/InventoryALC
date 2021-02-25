@@ -13,13 +13,21 @@
                     <form action="{{ route('deliverynotedetail.store') }}" method="post" name="form_add_dn_detail" id="form_add_dn_detail">
                         @csrf
                         <input type="hidden" name="delivery_note_id" value="{{ $crud->entry->id }}">
-
+                        @php
+                            if ($crud->entry->module == 'sales_order') {
+                                $relasi = $crud->entry->salesOrder;
+                            }elseif ($crud->entry->module == 'delivery_order') {
+                                $relasi = $crud->entry->WarehouseOut;
+                            }else {
+                                $relasi = NULL;
+                            }
+                        @endphp
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label><br>
                             <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" required>
                             <option value="">--PILIH BARANG--</option>
-                                @foreach(\App\Models\Item::select('id','name')->get() as $value => $text)
-                                        <option value="{{ $text->id }}">{{ $text->name }}</option>
+                                @foreach($relasi->details as $value => $text)
+                                        <option value="{{ $text->item->id }}">{{ $text->item->name }} - {{ $text->qty }} {{ $text->item->unit }}</option>
                                 @endforeach
                             </select>
                         </div>
