@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use PDF;
 use Auth;
+use App\Flag;
 use App\Models\Item;
+use App\Models\Company;
 use App\Models\Stackholder;
 use App\Models\WarehouseOut;
+use Illuminate\Http\Request;
+use App\Services\GlobalServices;
 use Illuminate\Support\Facades\DB;
 use App\Models\BagItemWarehouseOut;
+use App\Services\DeliveryOrderServices;
 use App\Http\Requests\WarehouseOutRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use App\Models\Company;
-use App\Services\GlobalServices;
-use PDF;
-use Illuminate\Http\Request;
 
 /**
  * Class WarehouseOutCrudController
@@ -310,6 +312,57 @@ class WarehouseOutCrudController extends CrudController
 
         \Alert::add('success', 'Berhasil tambah pic ' . $request->pic)->flash();
        return redirect()->back();
+    }
+
+    public function accept($id, DeliveryOrderServices $deliveryOrderService)
+    {
+        try {
+            DB::beginTransaction();
+            $data = BagItemWarehouseOut::findOrFail($id);
+            $data->status = Flag::PLAN;
+            $data->update();
+            $item_on_bag = BagItemWarehouseOut::where('warehouse_out_id', '=', $data->warehouse_out_id)->where('status', '=', Flag::PLAN)->first();
+            if (empty($item_on_bag)) {
+                throw new \Exception("Data Tidak Ditemukan");  
+            } 
+            $header = WarehouseOut::findOrFail($data->warehouse_out_id);
+            $header->status = Flag::PROCESS;
+            $header->update();
+
+            // Increase Qty Item After Approve
+            $deliveryOrderService->DecreaseItemQTY($id);
+
+            DB::commit();
+            $return = array('status' => 'success', 'message' => 'Berhasil Konfirmasi Data Item');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $return = array('status' => 'danger', 'message' => $th->getMessage());
+        }
+        \Alert::add($return['status'], $return['message'])->flash();
+        return redirect()->back();
+    }
+
+    public function denied($id)
+    {
+        try {
+            DB::beginTransaction();
+            $data = BagItemWarehouseOut::findOrFail($id);
+            $data->status = FLag::DENIED;
+            $data->update();
+            if (empty(BagItemWarehouseOut::where('warehouse_out_id', '=', $data->warehouse_out_id)->where('status', '=', Flag::PLAN)->first())) {
+                throw new \Exception("Data Tidak Ditemukan");
+            }
+            $header = WarehouseOut::findOrFail($id);
+            $header->status = Flag::PROCESS;
+            $header->update();
+            DB::commit();
+            $return = array('status' => 'success', 'message' => 'Berhasil Konfirmasi Data Item');
+        } catch (\Exception $th) {
+            DB::rollBack();
+            $return = array('status' => 'danger', 'message' => $th->getMessage());
+        }
+        \Alert::add($return['status'], $return['message'])->flash();
+        return redirect()->back();
     }
 
 }

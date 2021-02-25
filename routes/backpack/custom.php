@@ -6,10 +6,11 @@
 // This route file is loaded automatically by Backpack\Base.
 // Routes you generate using Backpack\Generators will be placed here.
 
-use App\Http\Controllers\Admin\Api\DeliverySalesOrderController;
+use App\Http\Controllers\Admin\Api\SalesOrderController;
+use App\Http\Controllers\Admin\Api\DeliveryOrderController;
 use App\Http\Controllers\Admin\Api\PurchaseOrderController;
 use App\Http\Controllers\Admin\Api\SalesDeliveryNoteController;
-use App\Http\Controllers\Admin\Api\SalesOrderController;
+use App\Http\Controllers\Admin\Api\DeliverySalesOrderController;
 
 Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
@@ -33,6 +34,9 @@ Route::group([
     Route::post('accept', 'ApiController@accept');
     Route::post('decline', 'ApiController@decline');
     Route::post('warehouseout-pic', 'WarehouseOutCrudController@storePic');
+    Route::get('delivery-order/{id}/accept', 'WarehouseOutCrudController@accept');
+    Route::get('delivery-order/{id}/denied', 'WarehouseOutCrudController@denied');
+
 
     // In
     Route::crud('warehousein', 'WarehouseInCrudController');
@@ -83,6 +87,11 @@ Route::group([
     // Purchase Order
     Route::post('Api/PurchaseOrderDetail', [PurchaseOrderController::class, 'getPurchaseOrderDetailById']);
     Route::post('Api/PurchaseOrderDetail_update/{purchase_order_detail_id}', [PurchaseOrderController::class, 'UpdatePurchaseOrder']);
+
+    // Delivery Order
+    Route::post('Api/DeliveryOrderDetail', [DeliveryOrderController::class, 'getDeliveryOrderDetailById']);
+    Route::post('Api/DeliveryOrderDetail_update/{delivery_order_detail_id}', [DeliveryOrderController::class, 'UpdateDeliveryOrder']);
+
 
     Route::post('Api/DeliverySODetail', [DeliverySalesOrderController::class, 'getDeliverySalesOrderById']);
     

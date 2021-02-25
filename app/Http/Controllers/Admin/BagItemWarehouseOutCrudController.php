@@ -117,4 +117,16 @@ class BagItemWarehouseOutCrudController extends CrudController
         \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
         return redirect()->back();
     }
+
+    public function destroy($id)
+    {
+        $data = BagItemWarehouseOut::findOrFail($id);
+        $grand_total = WarehouseOut::findOrFail($data->warehouse_out_id);
+        $grand_total->grand_total = $grand_total->grand_total - $data->sub_total;
+        $grand_total->update();
+        $data->delete();
+
+        \Alert::add('success', 'Berhasil hapus data Item')->flash();
+        return redirect()->back();
+    }
 }
