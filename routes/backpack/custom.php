@@ -101,4 +101,5 @@ Route::group([
 
     Route::crud('bagitemwarehousein', 'BagItemWarehouseInCrudController');
     Route::crud('bagitemwarehouseout', 'BagItemWarehouseOutCrudController');
+    Route::crud('submissionform', 'SubmissionFormCrudController');
 }); // this should be the absolute last line of this file
