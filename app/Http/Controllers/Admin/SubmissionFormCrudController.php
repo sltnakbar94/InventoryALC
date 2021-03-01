@@ -10,6 +10,7 @@ use App\Models\SubmissionFormDetail;
 use Illuminate\Http\Request;
 use App\Flag;
 use App\Models\Item;
+use PDF;
 
 /**
  * Class SubmissionFormCrudController
@@ -155,5 +156,13 @@ class SubmissionFormCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function pdf(Request $request)
+    {
+        $data = SubmissionForm::findOrFail($request->id);
+
+        $pdf = PDF::loadview('warehouse.sf.output',['data'=>$data]);
+    	return $pdf->stream($data->do_number.'.pdf');
     }
 }

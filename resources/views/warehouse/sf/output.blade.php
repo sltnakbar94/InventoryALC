@@ -1,10 +1,3 @@
-@php
-    if ($data->module == 'sales_order') {
-        $relation = $data->salesOrder;
-    }else {
-        $relation = $data->warehouseOut;
-    }
-@endphp
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html>
@@ -27,24 +20,10 @@
         <tr>
             <td width="260"><img src="{{ public_path('pdf\do\result_htm_312545a060562a73.png')}}" width=144 height=83 hspace=12 vspace=6></td>
             <td width="260" rowspan="3" valign="top">
-                <table cellspacing="0" border="1" style="border-style:solid; margin-top: 50px">
-                    <tr>
-                        <td width="260"><font color="#000000">DELIVERY TO :</font></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <font color="#000000">
-                                {{@$relation->customer->company}}<br>
-                                {{@$relation->customer->address}}<br>
-                                Att : {{@$relation->pic_customer}}<br>
-                            </font>
-                        </td>
-                    </tr>
-                </table>
             </td>
         </tr>
         <tr>
-            <td><font face="Arial Black" size=5 color="#000000"><b>SURAT JALAN</b></font></td>
+            <td><font face="Arial Black" size=5 color="#000000"><b>FORM PENGAJUAN BARANG</b></font></td>
         </tr>
         <tr>
             <td>
@@ -57,7 +36,7 @@
                         </td>
                         <td>
                             <font font color="#000000">
-                                : {{date('d-m-Y', strtotime(@$data->dn_date))}}
+                                : {{date('d-m-Y', strtotime(@$data->form_date))}}
                             </font>
                         </td>
                     </tr>
@@ -69,7 +48,7 @@
                         </td>
                         <td>
                             <font font color="#000000">
-                                : {{@$data->dn_number}}
+                                : {{@$data->form_number}}
                             </font>
                         </td>
                     </tr>
@@ -79,19 +58,11 @@
                                 REF no
                             </font>
                         </td>
-                        @if ($data->module == 'sales_order')
-                            <td>
-                                <font font color="#000000">
-                                    : {{@$relation->so_number}}
-                                </font>
-                            </td>
-                        @else
-                            <td>
-                                <font font color="#000000">
-                                    : {{@$relation->do_number}}
-                                </font>
-                            </td>
-                        @endif
+                        <td>
+                            <font font color="#000000">
+                                : {{@$data->no_ref}}
+                            </font>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -114,7 +85,7 @@
 		<td width="95" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Remark</font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
-    @foreach (@$relation->details as $key=>$detil)
+    @foreach (@$data->details as $key=>$detil)
         <tr>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$key+1}}</font></td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->item->serial}}</font></td>

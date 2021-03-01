@@ -108,6 +108,7 @@ Route::group([
     Route::crud('bagitemwarehousein', 'BagItemWarehouseInCrudController');
     Route::crud('bagitemwarehouseout', 'BagItemWarehouseOutCrudController');
     Route::crud('submissionform', 'SubmissionFormCrudController');
+    Route::post('generate-sf-pdf', 'SubmissionFormCrudController@pdf');
     Route::crud('submissionformdetail', 'SubmissionFormDetailCrudController');
     Route::get('submissionformdetail/{id}/accept', 'SubmissionFormDetailCrudController@accept');
     Route::get('submissionformdetail/{id}/denied', 'SubmissionFormDetailCrudController@denied');
