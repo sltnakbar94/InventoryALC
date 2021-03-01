@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ItemRequest;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Unit;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -74,7 +77,7 @@ class ItemCrudController extends CrudController
             'name' => 'category',
             'label' => 'Kategori',
             'type' => 'select_from_array',
-            'options' => ['Lampu' => 'Lampu', 'Air Conditioner' => 'Air Conditioner', 'Kulkas' => 'Kulkas'],
+            'options' => Category::pluck('name' , 'id'),
             'allows_null' => true,
         ]);
 
@@ -82,7 +85,7 @@ class ItemCrudController extends CrudController
             'name' => 'brand',
             'label' => 'Brand',
             'type' => 'select_from_array',
-            'options' => ['Philips' => 'Philips'],
+            'options' => Brand::pluck('name' , 'id'),
             // 'allows_null' => true,
         ]);
 
@@ -90,7 +93,7 @@ class ItemCrudController extends CrudController
             'name' => 'unit',
             'label' => 'Satuan',
             'type' => 'select_from_array',
-            'options' => ['Unit' => 'Unit', 'Paket' => 'Paket', 'Lembar' => 'Lembar'],
+            'options' => Unit::pluck('name' , 'id'),
             'allows_null' => true,
         ]);
 

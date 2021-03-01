@@ -155,13 +155,6 @@ class WarehouseInCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'discount',
-            'label' => 'Diskon (%)',
-            'type' => 'number',
-            'hint' => 'Discount keseluruhan',
-        ]);
-
-        $this->crud->addField([
             'name' => 'ppn',
             'label' => 'PPN (10%)',
             'type' => 'boolean',
@@ -171,7 +164,7 @@ class WarehouseInCrudController extends CrudController
         $this->crud->addField([
             'name' => 'term_of_paymnet',
             'label' => 'Term of Payment',
-            'type' => 'text',
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([
@@ -348,8 +341,8 @@ class WarehouseInCrudController extends CrudController
             $data->update();
             $item_on_bag = BagItemWarehouseIn::where('warehouse_in_id', '=', $data->warehouse_in_id)->where('status', '=', Flag::PLAN)->first();
             if (empty($item_on_bag)) {
-                throw new \Exception("Data Tidak Ditemukan");  
-            } 
+                throw new \Exception("Data Tidak Ditemukan");
+            }
             $header = WarehouseIn::findOrFail($data->warehouse_in_id);
             $header->status = Flag::PROCESS;
             $header->update();
