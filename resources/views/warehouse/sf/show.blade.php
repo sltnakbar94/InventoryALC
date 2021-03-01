@@ -82,7 +82,7 @@
 </div>
 @endsection
 @include('warehouse.sf.add-modal')
-{{-- @include('warehouse.sf.edit-modal') --}}
+@include('warehouse.sf.edit-modal')
 
 
 @section('after_styles')

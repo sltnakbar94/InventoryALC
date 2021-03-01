@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\Api\DeliveryOrderController;
 use App\Http\Controllers\Admin\Api\PurchaseOrderController;
 use App\Http\Controllers\Admin\Api\SalesDeliveryNoteController;
 use App\Http\Controllers\Admin\Api\DeliverySalesOrderController;
+use App\Http\Controllers\Admin\Api\SubmissionFormController;
+use App\Models\SubmissionForm;
 
 Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
@@ -95,8 +97,8 @@ Route::group([
     Route::post('Api/DeliveryOrderDetail_update/{delivery_order_detail_id}', [DeliveryOrderController::class, 'UpdateDeliveryOrder']);
 
     // Submission Form
-    Route::post('Api/SubmissionFormDetail', [DeliveryOrderController::class, 'getSubmissionFormDetailById']);
-    Route::post('Api/SubmissionFormDetail_update/{delivery_order_detail_id}', [DeliveryOrderController::class, 'UpdateDeliveryOrder']);
+    Route::post('Api/SubmissionFormDetail', [SubmissionFormController::class, 'getSubmissionFormDetailById']);
+    Route::post('Api/SubmissionFormDetail_update/{submission_form_detail_id}', [SubmissionFormController::class, 'UpdateDeliveryOrder']);
 
 
     Route::post('Api/DeliverySODetail', [DeliverySalesOrderController::class, 'getDeliverySalesOrderById']);
