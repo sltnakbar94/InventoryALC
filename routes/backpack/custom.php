@@ -73,6 +73,8 @@ Route::group([
     Route::crud('deliverynotedetail', 'DeliveryNoteDetailCrudController');
     Route::get('salesorderdetail/{id}/accept', 'SalesOrderDetailCrudController@accept');
     Route::get('salesorderdetail/{id}/denied', 'SalesOrderDetailCrudController@denied');
+    Route::get('deliverynotedetail/{id}/accept', 'DeliveryNoteDetailCrudController@accept');
+    Route::get('deliverynotedetail/{id}/denied', 'DeliveryNoteDetailCrudController@denied');
 
 
 
@@ -94,7 +96,7 @@ Route::group([
 
 
     Route::post('Api/DeliverySODetail', [DeliverySalesOrderController::class, 'getDeliverySalesOrderById']);
-    
+
 
 
 

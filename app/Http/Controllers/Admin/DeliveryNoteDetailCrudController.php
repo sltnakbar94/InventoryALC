@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Flag;
 use App\Http\Requests\DeliveryNoteDetailRequest;
+use App\Models\DeliveryNote;
 use App\Models\DeliveryNoteDetail;
 use App\Models\Item;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -101,6 +103,36 @@ class DeliveryNoteDetailCrudController extends CrudController
         $item = Item::findOrFail($request->item_id);
 
         \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
+        return redirect()->back();
+    }
+
+    public function accept($id)
+    {
+        $data = DeliveryNoteDetail::findOrFail($id);
+        $data->status = Flag::COMPLETE;
+        $data->update();
+        if (empty(DeliveryNoteDetail::where('delivery_note_id', '=', $data->delivery_note_id)->where('status', '=', 0)->first())) {
+            $header = DeliveryNote::findOrFail($data->delivery_note_id);
+            $header->status = Flag::COMPLETE;
+            $header->update();
+        }
+
+        \Alert::add('success', 'Berhasil konfirmasi data Item')->flash();
+        return redirect()->back();
+    }
+
+    public function denied($id)
+    {
+        $data = DeliveryNoteDetail::findOrFail($id);
+        $data->status = Flag::DENIED;
+        $data->update();
+        if (empty(DeliveryNoteDetail::where('delivery_note_id', '=', $data->delivery_note_id)->where('status', '=', 0)->first())) {
+            $header = DeliveryNote::findOrFail($id);
+            $header->status = Flag::COMPLETE;
+            $header->update();
+        }
+
+        \Alert::add('success', 'Berhasil konfirmasi data Item')->flash();
         return redirect()->back();
     }
 }
