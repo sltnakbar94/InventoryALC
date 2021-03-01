@@ -8,7 +8,6 @@
                     <th>SKU</th>
                     <th>UoM</th>
                     <th>Jumlah</th>
-                    <th>Remarks</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -16,14 +15,6 @@
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
                         $status = array('Plan', 'Process', 'Denied', 'Complete');
-                        if ($crud->entry->module == 'sales_order') {
-                            $item_header = $crud->entry->salesOrder;
-                        }elseif ($crud->entry->module == 'delivery_order') {
-                            $item_header = $crud->entry->WarehouseOut;
-                        }else {
-                            $item_header = NULL;
-                        }
-                        $comparison = $item_header->details->where('item_id', '=', $detail->item_id)->sum('qty');
                     @endphp
                     <tr>
                         <td>{{$key+1}}</td>
@@ -31,28 +22,23 @@
                         <td>{{$detail->item->serial}}</td>
                         <td>{{$detail->item->unit}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
-                        @if ($detail->qty > $comparison)
-                            <td><strong style="background-color: red; color:white">Jumlah Melebihi Stock</strong></td>
-                        @else
-                            <td align="center"> - </td>
-                        @endif
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
                                 @if ($detail->status == 0)
-                                    <button onclick="edit({{ $detail->id }})" href="{{ route('salesorderdetail.edit', $detail->id) }}" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button>
-                                    <form method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
-                                    </form>
+                                <button onclick="edit({{ $detail->id }})" href="{{ route('submissionformdetail.edit', $detail->id) }}" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button>
+                                <form method="POST" action="{{ route('submissionformdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
+                                </form>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Status
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-detail" href="{{backpack_url('deliverynotedetail/'.$detail->id.'/accept')}}">Setujui</a>
-                                            <a class="dropdown-detail" href="{{backpack_url('deliverynotedetail/'.$detail->id.'/denied')}}">Tolak</a>
+                                            <a class="dropdown-detail" href="{{backpack_url('submissionformdetail/'.$detail->id.'/accept')}}">Setujui</a>
+                                            <a class="dropdown-detail" href="{{backpack_url('submissionformdetail/'.$detail->id.'/denied')}}">Tolak</a>
                                         </div>
                                     </div>
                                 @endif

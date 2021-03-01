@@ -6,6 +6,10 @@ use App\Http\Requests\SubmissionFormRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\SubmissionForm;
+use App\Models\SubmissionFormDetail;
+use Illuminate\Http\Request;
+use App\Flag;
+use App\Models\Item;
 
 /**
  * Class SubmissionFormCrudController
@@ -30,6 +34,7 @@ class SubmissionFormCrudController extends CrudController
         CRUD::setModel(\App\Models\SubmissionForm::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/submissionform');
         CRUD::setEntityNameStrings('Form Pengajuan', 'Form Pengajuan');
+        $this->crud->setShowView('warehouse.sf.show');
     }
 
     /**
@@ -65,7 +70,7 @@ class SubmissionFormCrudController extends CrudController
         $count = SubmissionForm::withTrashed()->whereDate('created_at', date('Y-m-d'))->count();
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
 
-        $generate = $month.$day."-".$number."/WHI-PO/".$year;
+        $generate = $month.$day."-".$number."/WHI-SF/".$year;
 
         return $generate;
     }

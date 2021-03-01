@@ -4,13 +4,10 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
-use App\Models\SubmissionFormDetail;
 
-class SubmissionForm extends Model
+class SubmissionFormDetail extends Model
 {
-    use CrudTrait, SoftDeletes;
+    use CrudTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -18,7 +15,7 @@ class SubmissionForm extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'submission_forms';
+    protected $table = 'submission_form_details';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -37,15 +34,9 @@ class SubmissionForm extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
-    public function details()
+    public function Item()
     {
-        return $this->hasMany(SubmissionFormDetail::class, 'submission_form_id', 'id')->orderby('created_at', 'asc');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(Item::class, 'id', 'item_id');
     }
 
     /*

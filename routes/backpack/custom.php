@@ -94,6 +94,10 @@ Route::group([
     Route::post('Api/DeliveryOrderDetail', [DeliveryOrderController::class, 'getDeliveryOrderDetailById']);
     Route::post('Api/DeliveryOrderDetail_update/{delivery_order_detail_id}', [DeliveryOrderController::class, 'UpdateDeliveryOrder']);
 
+    // Submission Form
+    Route::post('Api/SubmissionFormDetail', [DeliveryOrderController::class, 'getSubmissionFormDetailById']);
+    Route::post('Api/SubmissionFormDetail_update/{delivery_order_detail_id}', [DeliveryOrderController::class, 'UpdateDeliveryOrder']);
+
 
     Route::post('Api/DeliverySODetail', [DeliverySalesOrderController::class, 'getDeliverySalesOrderById']);
 
@@ -104,4 +108,7 @@ Route::group([
     Route::crud('bagitemwarehousein', 'BagItemWarehouseInCrudController');
     Route::crud('bagitemwarehouseout', 'BagItemWarehouseOutCrudController');
     Route::crud('submissionform', 'SubmissionFormCrudController');
+    Route::crud('submissionformdetail', 'SubmissionFormDetailCrudController');
+    Route::get('submissionformdetail/{id}/accept', 'SubmissionFormDetailCrudController@accept');
+    Route::get('submissionformdetail/{id}/denied', 'SubmissionFormDetailCrudController@denied');
 }); // this should be the absolute last line of this file

@@ -17,7 +17,7 @@ class CreateSubmissionFormsTable extends Migration
             $table->bigIncrements('id');
             //General Data
             $table->string('form_number');
-            $table->date('form_fate');
+            $table->date('form_date');
             $table->string('project_id');
             $table->string('project_name')->nullable();
             $table->string('ref_no')->nullable();

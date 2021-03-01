@@ -17,7 +17,7 @@
                 @if (count($crud->entry->details) != 0)
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
-                        $status = array('Plant', 'Process', 'Complete');
+                        $status = array('Plan', 'Process', 'Denied', 'Complete');
                     @endphp
                     <tr>
                         <td>{{$key+1}}</td>
@@ -55,7 +55,7 @@
                                 </div>
                                 {{-- @if (backpack_user()->hasRole('operator-gudang'))
                                     @if ($detail->status == 0)
-                                    
+
                                     @endif
                                 @endif --}}
                             </div>
@@ -112,9 +112,9 @@
         });
     }
 
-    $('#delete').click(function (e) { 
+    $('#delete').click(function (e) {
         e.preventDefault();
-        
+
     });
 
     $('#form-edit-so-detail').submit(function(e) {
