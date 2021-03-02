@@ -118,11 +118,11 @@ class SubmissionFormDetailCrudController extends CrudController
     public function accept($id)
     {
         $data = SubmissionFormDetail::findOrFail($id);
-        $data->status = Flag::COMPLETE;
+        $data->status = Flag::PROCESS;
         $data->update();
         if (empty(SubmissionFormDetail::where('submission_form_id', '=', $data->submission_form_id)->where('status', '=', 0)->first())) {
             $header = SubmissionForm::findOrFail($data->submission_form_id);
-            $header->status = Flag::COMPLETE;
+            $header->status = Flag::PROCESS;
             $header->update();
         }
 
