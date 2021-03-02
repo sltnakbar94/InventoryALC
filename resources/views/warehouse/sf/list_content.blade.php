@@ -26,13 +26,13 @@
                         <td>
                             <div class="btn-group">
                                 @if ($detail->status == 0)
-                                <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning"><i class="las la-pencil-alt"></i></button>
-                                <form method="POST" action="{{ route('submissionformdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
-                                </form>
-                                    <div class="btn-group" role="group">
+                                    <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning"><i class="las la-pencil-alt"></i></button>
+                                    <form method="POST" action="{{ route('submissionformdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
+                                    </form>
+                                    {{-- <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Status
                                         </button>
@@ -40,7 +40,7 @@
                                             <a class="dropdown-detail" href="{{backpack_url('submissionformdetail/'.$detail->id.'/accept')}}">Setujui</a>
                                             <a class="dropdown-detail" href="{{backpack_url('submissionformdetail/'.$detail->id.'/denied')}}">Tolak</a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 @endif
                             </div>
                         </td>
