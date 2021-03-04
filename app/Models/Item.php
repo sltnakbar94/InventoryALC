@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Stock;
 
 class Item extends Model
 {
@@ -34,6 +35,11 @@ class Item extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function stock()
+    {
+        return $this->hasMany(Stock::class, 'item_id', 'id');
+    }
 
     /*
     |--------------------------------------------------------------------------

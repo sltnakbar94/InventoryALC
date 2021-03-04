@@ -114,4 +114,5 @@ Route::group([
     Route::crud('submissionformdetail', 'SubmissionFormDetailCrudController');
     Route::get('submissionformdetail/{id}/accept', 'SubmissionFormDetailCrudController@accept');
     Route::get('submissionformdetail/{id}/denied', 'SubmissionFormDetailCrudController@denied');
+    Route::crud('warehouse', 'WarehouseCrudController');
 }); // this should be the absolute last line of this file

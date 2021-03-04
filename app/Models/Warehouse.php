@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Stock;
 
-class SubmissionFormDetail extends Model
+class Warehouse extends Model
 {
-    use CrudTrait, SoftDeletes;
+    use CrudTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -16,7 +16,7 @@ class SubmissionFormDetail extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'submission_form_details';
+    protected $table = 'warehouses';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -35,9 +35,10 @@ class SubmissionFormDetail extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function Item()
+
+    public function stock()
     {
-        return $this->hasOne(Item::class, 'id', 'item_id');
+        return $this->belongsTo(Stock::class, 'warehouse_id', 'id');
     }
 
     /*

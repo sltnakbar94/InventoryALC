@@ -155,7 +155,60 @@ class SubmissionFormCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(SubmissionFormRequest::class);
+
+        $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
+
+        $this->crud->addField([
+            'label' => "Nomor Form Pengajuan",
+            'name'  => "form_number",
+            'type'  => 'text',
+            'attributes' => [
+                'readonly'    => 'readonly',
+            ]
+        ]);
+
+        $this->crud->addField([
+            'label' => "Tanggal Form Pengajuan",
+            'name'  => "form_date",
+            'type'  => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'project_id',
+            'label' => 'Peruntukan',
+            'type' => 'select2_from_array',
+            'options' => ['1' => 'Stok', '2' => 'Proyek'],
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'project_name',
+            'label' => 'Nama Project',
+            'type' => 'text',
+            'hint' => 'Abaikan apabila tidak untuk Proyek',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'ref_no',
+            'label' => 'Nomor Referensi',
+            'type' => 'text',
+            'attributes' => [
+                'placeholder' => 'Contoh : Nomor Surat Penawaran Harga',
+              ],
+        ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Keterangan',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'user_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->id()
+        ]);
     }
 
     public function pdf(Request $request)

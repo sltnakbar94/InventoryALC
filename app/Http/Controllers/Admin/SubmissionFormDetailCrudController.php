@@ -85,7 +85,7 @@ class SubmissionFormDetailCrudController extends CrudController
 
     public function store(Request $request)
     {
-        $find = SubmissionFormDetail::where('submission_form_id', '=', $request->submission_form_id)->where('item_id', '=', $request->item_id)->first();
+        $find = SubmissionFormDetail::where('submission_form_id', '=', $request->submission_form_id)->where('item_id', '=', $request->item_id)->where('deleted_at', '=', NULL)->first();
         $item = Item::findOrFail($request->item_id);
         if (!empty($find)) {
             $data = SubmissionFormDetail::findOrFail($request->item_id);

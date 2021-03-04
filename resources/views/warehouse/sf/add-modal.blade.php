@@ -15,10 +15,17 @@
                         <input type="hidden" name="submission_form_id" value="{{ $crud->entry->id }}">
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label><br>
-                            <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" required>
-                            <option value="">--PILIH BARANG--</option>
+                            <select name="item_id" id="mySelect2" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
+                                <option value="">--PILIH BARANG--</option>
                                 @foreach(\App\Models\Item::get() as $value => $text)
-                                    <option value="{{ $text->id }}">{{ $text->name }} - {{ $text->qty }} {{ $text->unit }}</option>
+                                    @if (!empty($text->stock->where('warehouse_id', '=', $crud->entry->warehouse_id)->first()))
+                                        @php
+                                            $stock = $text->stock->where('warehouse_id', '=', $crud->entry->warehouse_id)->first();
+                                        @endphp
+                                        <option value="{{ $text->id }}">{{ $text->name }} - Stock on Hand {{ @$stock->stock_on_hand }} - Stock on Location {{ @$stock->stock_on_location }} - Stock Indent {{ @$stock->stock_indent }}</option>
+                                    @else
+                                        <option value="{{ $text->id }}">{{ $text->name }} - Stock Kosong</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -41,3 +48,4 @@
         </div>
     </div>
 </div>
+

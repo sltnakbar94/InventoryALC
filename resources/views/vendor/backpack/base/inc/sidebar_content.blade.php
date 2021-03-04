@@ -10,7 +10,7 @@
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-industry"></i> Warehouse</a>
 	<ul class="nav-dropdown-items">
-        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('submissionform') }}'><i class='nav-icon la la-question'></i> Form Pengajuan</a></li>
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('submissionform') }}'><i class='lar la-file-alt'></i> Purchase Requisition</a></li>
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehousein') }}'><i class="lar la-file-alt"></i> Purchase Order</a></li>
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehouseout') }}'><i class="lar la-file"></i> Delivery Order</a></li>
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class="lar la-file"></i> Delivery Note</a></li>
@@ -26,6 +26,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('unit') }}'><i class="las la-list-ol"></i> Units</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class="las la-list-ol"></i> Companies</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('stackholder') }}'><i class="las la-list-ol"></i> Stackholders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehouse') }}'><i class='nav-icon la la-question'></i> Warehouses</a></li>
         </ul>
     </li>
 @endif

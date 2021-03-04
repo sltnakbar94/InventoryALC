@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Item;
+use App\Models\Warehouse;
 
-class OperatorGudang extends Model
+class Stock extends Model
 {
     use CrudTrait;
 
@@ -15,7 +17,7 @@ class OperatorGudang extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'operator_gudangs';
+    protected $table = 'stocks';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,6 +36,16 @@ class OperatorGudang extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'id', 'item_id');
+    }
+
+    public function gudang()
+    {
+        return $this->belongsTo(Warehouse::class, 'id', 'warehouse_id');
+    }
 
     /*
     |--------------------------------------------------------------------------

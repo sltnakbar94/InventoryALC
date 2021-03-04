@@ -27,7 +27,7 @@
                     <tr>
                         <td>
                             <font color="#000000">
-                                {{@$data->warehouseOut->customer->company}}<br>
+                                <b>{{@$data->warehouseOut->customer->company}}</b><br>
                                 {{@$data->warehouseOut->customer->address}}<br>
                                 Att : {{@$data->warehouseOut->pic_customer}}<br>
                             </font>
@@ -92,10 +92,7 @@
     </table>
     <table cellspacing="0" border="0">
 	<tr>
-		<td colspan="2" height="21" align="left" valign=bottom><font color="#000000">Daftar Item Barang:</font></td>
-		<td align="left" valign=bottom><font color="#000000"><br></font></td>
-		<td align="left" valign=bottom><font color="#000000"><br></font></td>
-		<td align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td colspan="5" height="21" align="left" valign=bottom><font color="#000000">Bersama ini kami kirim kan dengan kendaraan no.pol : {plat} , pengemudi : {{$data->driver}}, Keterangan :</font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
 	<tr>
@@ -122,17 +119,17 @@
 		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
-        <td colspan="2" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="left" valign=bottom><font color="#000000">Keterangan :</font></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
+        <td colspan="2" style="" align="left" valign=bottom><font color="#000000">Keterangan : <br></font></td>
+		<td style="" align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td colspan="2" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
-		<td colspan="3" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom>
+		<td colspan="3" style="" colspan=2 align="left" valign=bottom>
             <font color="#000000">
                 <textarea style="border: none; width:auto; height:auto">{{@$data->warehouseOut->description}}</textarea>
             </font>
         </td>
-		<td colspan="2" style="border-left: 1px solid #000000;" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td colspan="2" style="" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
 		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
@@ -140,12 +137,12 @@
 </table>
 <table cellspacing="0" border="0">
     <tr>
-        <td width="128" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Delivery By</font></td>
-		<td width="65" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="128" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Sender By</font></td>
-		<td width="65" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="128" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Received By</font></td>
-		<td width="65" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Delivery By</font></td>
+		<td width="20" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Sender By</font></td>
+		<td width="20" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Received By</font></td>
+		<td width="20" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
         <td height="50" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>

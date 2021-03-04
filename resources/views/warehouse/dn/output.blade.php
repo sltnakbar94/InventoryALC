@@ -34,7 +34,7 @@
                     <tr>
                         <td>
                             <font color="#000000">
-                                {{@$relation->customer->company}}<br>
+                                <b>{{@$relation->customer->company}}</b><br>
                                 {{@$relation->customer->address}}<br>
                                 Att : {{@$relation->pic_customer}}<br>
                             </font>

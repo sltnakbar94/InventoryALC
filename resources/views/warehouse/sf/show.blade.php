@@ -71,13 +71,13 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md 12">
                 <div class="card no-padding no-border">
                     @include('warehouse.sf.call-output')
                 </div>
             </div>
-        </div>
+        </div> --}}
 	</div>
 </div>
 @endsection
@@ -93,14 +93,46 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 @endsection
 
-{{-- @section('after_scripts')
-	<script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
+@section('after_scripts')
+    <script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
 	<script src="{{ asset('packages/backpack/crud/js/show.js') }}"></script>
+    <script>
+        function edit(submission_form_detail_id) {
+        $.ajax({
+            type: "post",
+            url: "{{ backpack_url('Api/SubmissionFormDetail') }}",
+            data: {
+                submission_form_detail_id: submission_form_detail_id,
+                _token: '{{ csrf_token() }}'
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    console.log(response.data.id)
+                    var dsc = 0;
+                    $('#editModalSubmissionFormDetail').modal('show');
+                    $('#submission_form_detail_id').val(response.data.id)
+                    $('input[name=qty]').val(response.data.qty)
+                    response.data.discount === null ? dsc = 0 : dsc = response.data.discount
+                    $('select[name=item_id]').val(response.data.item_id).trigger('change');
+                }else{
+                    swalError({
+                        message: response.data.message,
+                        response: response.data.error,
+                    })
+                }
+            }
+        });
+    }
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
 		$('.select2').select2({})
     } );
+    $('#mySelect2').select2({
+        dropdownParent: $('#myModal')
+    });
     </script>
-@endsection --}}
+@endsection

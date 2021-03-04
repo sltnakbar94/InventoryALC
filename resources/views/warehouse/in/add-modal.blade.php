@@ -1,4 +1,19 @@
 <!-- Modal -->
+{{-- @php
+    // $query = \App\Models\SubmissionForm::selectRaw('')
+    $relations = $crud->entry->purchaseRequisition;
+    $subset = $relations->map(function ($relation) {
+    return collect($relation->toArray())
+        ->only(['id'])
+        ->all();
+    });
+    $array = $subset->toArray();
+    $item = \App\Models\SubmissionFormDetail::whereIn('submission_form_id', '=', [$array])->get();
+    foreach ($relations as $key => $relasi) {
+        $detail_relasi = $relasi->details;
+        dd($array, $subset, $item, $relasi, $detail_relasi);
+    }
+@endphp --}}
 <div class="modal fade" id="addModalWarehouseInDetail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addModalWarehouseInDetailLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -66,6 +66,11 @@ class WarehouseIn extends Model
     {
         return $this->belongsTo(Stackholder::class, 'customer_id', 'id');
     }
+
+    public function purchaseRequisition()
+    {
+        return $this->belongsToMany(SubmissionForm::class, 'pr_po_relations', 'warehouse_in_id', 'submission_form_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

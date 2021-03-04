@@ -135,6 +135,19 @@ class WarehouseInCrudController extends CrudController
             'type' => 'date_picker',
         ]);
 
+        $this->crud->addField([   // SelectMultiple = n-n relationship (with pivot table)
+            'label'     => "Pilih Purchase Requisition",
+            'type'      => 'select2_multiple',
+            'name'      => 'purchaseRequisition', // the method that defines the relationship in your Model
+            'pivot'     => true,
+            'entity'    => 'purchaseRequisition',
+            'attribute' => 'form_number',
+            'model'     => 'App\Models\SubmissionForm',
+            'options'   => (function ($query) {
+                return $query->where('project_id', '=', 1)->where('status', '=', 0)->get();
+            }),
+        ]);
+
         $this->crud->addField([
             'name' => 'supplier_id',
             'label' => 'Supplier',
@@ -221,6 +234,16 @@ class WarehouseInCrudController extends CrudController
             'name' => 'po_date',
             'label' => 'Tanggal PO',
             'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([   // SelectMultiple = n-n relationship (with pivot table)
+            'label'     => "Pilih Purchase Requisition",
+            'type'      => 'select2_multiple',
+            'name'      => 'purchaseRequisition', // the method that defines the relationship in your Model
+            'pivot'     => true,
+            'entity'    => 'purchaseRequisition',
+            'attribute' => 'form_number',
+            'model'     => 'App\Models\SubmissionForm',
         ]);
 
         $this->crud->addField([
@@ -341,8 +364,8 @@ class WarehouseInCrudController extends CrudController
             $data->update();
             $item_on_bag = BagItemWarehouseIn::where('warehouse_in_id', '=', $data->warehouse_in_id)->where('status', '=', Flag::PLAN)->first();
             if (empty($item_on_bag)) {
-                throw new \Exception("Data Tidak Ditemukan");  
-            } 
+                throw new \Exception("Data Tidak Ditemukan");
+            }
             $header = WarehouseIn::findOrFail($data->warehouse_in_id);
             $header->status = Flag::PROCESS;
             $header->update();

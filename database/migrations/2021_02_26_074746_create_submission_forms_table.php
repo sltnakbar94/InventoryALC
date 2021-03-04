@@ -18,14 +18,15 @@ class CreateSubmissionFormsTable extends Migration
             //General Data
             $table->string('form_number');
             $table->date('form_date');
-            $table->string('project_id');
-            $table->string('project_name')->nullable();
             $table->string('ref_no')->nullable();
             $table->string('issued_by')->nullable();
             $table->string('approve_by')->nullable();
             $table->string('confirm_by')->nullable();
             $table->text('description')->nullable();
+            $table->string('project_id');
             //Add-on Data
+            $table->string('warehouse_id')->nullable();
+            $table->string('project_name')->nullable();
             $table->string('user_id');
             $table->bigInteger('company_id')->nullable();
             $table->integer('status')->default(0);
