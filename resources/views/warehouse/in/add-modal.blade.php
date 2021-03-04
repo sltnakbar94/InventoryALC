@@ -1,19 +1,21 @@
 <!-- Modal -->
-{{-- @php
+@php
     // $query = \App\Models\SubmissionForm::selectRaw('')
     $relations = $crud->entry->purchaseRequisition;
     $subset = $relations->map(function ($relation) {
     return collect($relation->toArray())
         ->only(['id'])
         ->all();
-    });
-    $array = $subset->toArray();
-    $item = \App\Models\SubmissionFormDetail::whereIn('submission_form_id', '=', [$array])->get();
-    foreach ($relations as $key => $relasi) {
-        $detail_relasi = $relasi->details;
-        dd($array, $subset, $item, $relasi, $detail_relasi);
-    }
-@endphp --}}
+    })->toArray();
+    $relasi_detail = \App\Models\SubmissionFormDetail::whereIn('submission_form_id', array_column($subset, 'id'))->get();
+    $sub_relasi_detail = $relasi_detail->map(function ($relasi) {
+    return collect($relasi->toArray())
+        ->only(['item_id'])
+        ->all();
+    })->toArray();
+    $items = \App\Models\SubmissionFormDetail::whereIn('id', array_column($sub_relasi_detail, 'item_id'))->get();
+    dd($items)
+@endphp
 <div class="modal fade" id="addModalWarehouseInDetail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addModalWarehouseInDetailLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -31,8 +33,8 @@
 
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label><br>
-                            <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" required>
-                            <option value="">--PILIH BARANG--</option>
+                            <select name="item_id" id="mySelect2" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
+                                <option value="">--PILIH BARANG--</option>
                                 @foreach(\App\Models\Item::select('id','name')->get() as $value => $text)
                                         <option value="{{ $text->id }}">{{ $text->name }}</option>
                                 @endforeach

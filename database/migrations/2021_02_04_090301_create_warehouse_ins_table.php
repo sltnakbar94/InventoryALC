@@ -23,13 +23,14 @@ class CreateWarehouseInsTable extends Migration
             $table->string('discount')->nullable();
             $table->boolean('ppn')->default(false);
             $table->string('grand_total')->nullable();
-            $table->string('term_of_paymnet')->nullable();
+            $table->string('term_of_payment')->nullable();
             $table->string('issued_by')->nullable();
             $table->string('approve_by')->nullable();
             $table->string('confirm_by')->nullable();
             $table->text('description')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->integer('warehouse_id')->nullable();
             //Add-on Data
             $table->string('pic_supplier')->nullable();
             $table->string('user_id');

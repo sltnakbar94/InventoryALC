@@ -123,7 +123,7 @@
                     </td>
                     <td>
                         <font font color="#000000">
-                            : {{date('d-m-Y', strtotime(@$data->date_in))}}
+                            : {{date('d-m-Y', strtotime(@$data->po_date))}}
                         </font>
                     </td>
                 </tr>
@@ -235,15 +235,8 @@
 		<td colspan="3" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom>
             <font color="#000000">
                 <textarea style="border: none; width:auto; height:auto">{{@$data->description}}</textarea>
-                @if (!empty(@$data->customer_id))
-                **Delivery To:<br>
-                @if (!empty(@$data->customer->company))
-                    {{@$data->customer->company}}<br>
-                @endif
-                @if (!empty(@$data->customer->address))
-                    {{@$data->customer->address}}<br>
-                @endif
-                Att : {{@$data->pic_customer}}<br>
+                @if (!empty(@$data->term_of_payment))
+                    <textarea style="border: none; width:auto; height:auto">{{@$data->term_of_payment}}</textarea>
                 @endif
             </font>
         </td>

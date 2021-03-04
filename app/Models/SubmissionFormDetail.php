@@ -40,6 +40,11 @@ class SubmissionFormDetail extends Model
         return $this->hasOne(Item::class, 'id', 'item_id');
     }
 
+    public function submissionForm()
+    {
+        return $this->hasOne(SubmissionForm::class, 'id', 'submission_form_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

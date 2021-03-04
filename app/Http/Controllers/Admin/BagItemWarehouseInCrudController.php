@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Models\BagItemWarehouseIn;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BagItemWarehouseInRequest;
+use App\Models\Stock;
+use App\Models\SubmissionForm;
+use App\Models\SubmissionFormDetail;
 use App\Services\PurchaseOrderServices;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -37,155 +40,36 @@ class BagItemWarehouseInCrudController extends CrudController
      *
      * @return void
      */
-    public function setup()
-    {
-        CRUD::setModel(\App\Models\BagItemWarehouseIn::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/bagitemwarehousein');
-        CRUD::setEntityNameStrings('bagitemwarehousein', 'bag_item_warehouse_ins');
-    }
-
-    /**
-     * Define what happens when the List operation is loaded.
-     *
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
-     * @return void
-     */
-    protected function setupListOperation()
-    {
-        CRUD::column('id');
-        CRUD::column('warehouse_in_id');
-        CRUD::column('item_id');
-        CRUD::column('qty');
-        CRUD::column('price');
-        CRUD::column('created_at');
-        CRUD::column('updated_at');
-        CRUD::column('flag');
-        CRUD::column('qty_confirm');
-        CRUD::column('user_id');
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
-    }
-
-    /**
-     * Define what happens when the Create operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
-    protected function setupCreateOperation()
-    {
-        CRUD::setValidation(BagItemWarehouseInRequest::class);
-
-        CRUD::field('id');
-        CRUD::field('warehouse_in_id');
-        CRUD::field('item_id');
-        CRUD::field('qty');
-        CRUD::field('price');
-        CRUD::field('created_at');
-        CRUD::field('updated_at');
-        CRUD::field('flag');
-        CRUD::field('qty_confirm');
-        CRUD::field('user_id');
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
-         */
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        $this->setupCreateOperation();
-    }
 
     public function store(Request $request)
     {
-        $sub_total = $this->purchaseOrderService->SumItemDiscountToSubTotal($request);
-        try {
-            DB::beginTransaction();
-            $PO_Detail['status'] = $this->purchaseOrderService->CheckItemOnPODetail(array('warehouse_in_id' => $request->warehouse_in_id, 'item_id' => $request->item_id));
-            $PO_Detail['item'] = $this->purchaseOrderService->ItemOnPODetail(array('warehouse_in_id' => $request->warehouse_in_id, 'item_id' => $request->item_id));
-
-            // Check if Item on Purchase Order Detail
-            if ($PO_Detail['status']) {
-
-                // Create new Item on Purchase Order Detail
-                BagItemWarehouseIn::create([
-                    'warehouse_in_id' => $request->warehouse_in_id,
-                    'item_id'        => $request->item_id,
-                    'qty'            => $request->qty,
-                    'price'          => $request->price,
-                    'discount'       => $request->discount,
-                    'sub_total'      => $sub_total,
-                    'status'         => Flag::PLAN
-                ]);
-            }else{
-
-                // Update the Exists Item on Purchase Order Detail
-                BagItemWarehouseIn::find($PO_Detail['item']->id)->update([
-                    'qty'           => $request->qty,
-                    'price'         => $request->price,
-                    'discount'      => $request->discount,
-                    'sub_total'     => $sub_total,
-                    'status'        => Flag::PROCESS
-                ]);
+        $header = WarehouseIn::findOrFail($request->warehouse_in_id);
+        $header_pr = $header->purchaseRequisition;
+        $pr_detail_id = collect($header_pr->toArray())->all();
+        $pr_details = SubmissionFormDetail::whereIn('submission_form_id', array_column($pr_detail_id, 'id'))->get();
+        $item_id = collect($pr_details->toArray())->all();
+        $items = Item::whereIn('id', array_column($item_id, 'item_id'))->get();
+        foreach ($pr_details as $pr_detail) {
+            $item = Item::find($pr_detail->item_id);
+            $find = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->warehouse_in_id)->where('item_id', '=', $pr_detail->item_id)->first();
+            if (empty($find)) {
+                $detail = new BagItemWarehouseIn;
+                $detail->warehouse_in_id = $request->warehouse_in_id;
+                $detail->item_id = $pr_detail->item_id;
+                $detail->qty = $pr_detail->qty;
+                $detail->serial = $item->serial;
+                $detail->uom = $item->uom;
+                $detail->user_id = backpack_auth()->id();
+                $detail->save();
+            } else {
+                $detail = BagItemWarehouseIn::findOrFail($find->id);
+                $detail->qty = $detail->qty + $pr_detail->qty;
+                $detail->update();
             }
 
-            // Update Grand Total on Purchase Order
-            $SO_GT_update = $this->purchaseOrderService->SumItemPriceByPurchaseOrderID($request->warehouse_in_id);
-            WarehouseIn::find($request->warehouse_in_id)->update([
-                'grand_total' => $SO_GT_update
-            ]);
-            DB::commit();
-            \Alert::add('success', 'Berhasil tambah item ')->flash();
-            return redirect()->back();
-        } catch (\Throwable $th) {
-            DB::rollback();
-            \Alert::add('error', 'Gagal tambah item ' . $th->getMessage().' on Line '. $th->getLine())->flash();
-            return redirect()->back();
         }
-
-        // $find = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->warehouse_in_id)->where('item_id', '=', $request->item_id)->first();
-        // if (!empty($find)) {
-        //     $data = BagItemWarehouseIn::findOrFail($request->item_id);
-        //     $data->qty = $data->qty + $request->qty;
-        //     $data->update();
-        // } else {
-        //     $item = Item::findOrFail($request->item_id);
-        //     $data = new BagItemWarehouseIn;
-        //     $data->warehouse_in_id = $request->warehouse_in_id;
-        //     $data->item_id = $request->item_id;
-        //     $data->serial = $item->serial;
-        //     $data->price = $request->price;
-        //     $data->qty = $request->qty;
-        //     $data->uom = $item->unit;
-        //     $data->discount = $request->discount;
-        //     if (!empty($request->discount)) {
-        //         $sub_total = ($request->price - ($request->discount/100*$request->price))*$request->qty;
-        //         $data->sub_total = $sub_total;
-        //     } else {
-        //         $sub_total = $request->price*$request->qty;
-        //         $data->sub_total = $sub_total;
-        //     }
-        //     $data->save();
-        // }
-        // $grand_total = WarehouseIn::findOrFail($request->warehouse_in_id);
-        // $grand_total->grand_total = $grand_total->grand_total + $sub_total;
-        // $grand_total->update();
-
-        // \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
-        // return redirect()->back();
+        \Alert::add('success', 'Berhasil tambah item ')->flash();
+        return redirect()->back();
     }
 
     public function destroy($id)
@@ -197,6 +81,59 @@ class BagItemWarehouseInCrudController extends CrudController
         $data->delete();
 
         \Alert::add('success', 'Berhasil hapus data Item')->flash();
+        return redirect()->back();
+    }
+
+    public function edit(Request $request)
+    {
+        $detail = BagItemWarehouseIn::findOrFail($request->warehouse_in_detail_id);
+        $detail->qty = $request->qty;
+        $detail->price = $request->price;
+        if (!empty($request->discount) || $request->discount == 0) {
+            $detail->discount = $request->discount;
+            $detail->sub_total = (($request->discount/100*$request->price)+$request->price)*$request->qty;
+        }else{
+            $detail->sub_total = $request->price*$request->qty;
+        }
+        $detail->update();
+
+        \Alert::add('success', 'Berhasil ubah data Item')->flash();
+        return redirect()->back();
+    }
+
+    public function qc(Request $request)
+    {
+        $detail = BagItemWarehouseIn::findOrFail($request->warehouse_in_detail_id);
+        $detail->qty_confirm = $request->qty_confirm;
+        $detail->status = Flag::COMPLETE;
+        $detail->confirm_user_id = backpack_auth()->id();
+        $detail->update();
+        $check_stock = Stock::where('warehouse_id', '=', $detail->warehouse_in_id)->where('item_id', '=', $detail->item_id)->first();
+        $stock = Stock::findOrFail($check_stock->id);
+        $stock->stock_in_indent -= $request->qty_confirm;
+        $stock->stock_on_location += $request->qty_confirm;
+        $check = BagItemWarehouseIn::where('warehouse_in_id', '=', $detail->warehouse_in_id)->where('status', '=', Flag::PROCESS)->first();
+        if(empty($check)){
+            $header = WarehouseIn::findOrFail($detail->warehouse_in_id);
+            $header->status = Flag::COMPLETE;
+            $header_pr = $header->purchaseRequisition;
+            $pr_detail_id = collect($header_pr->toArray())->all();
+            $pr_details = SubmissionFormDetail::whereIn('submission_form_id', array_column($pr_detail_id, 'id'))->get();
+            foreach ($header_pr as $prerequisition) {
+                $head_pr = SubmissionForm::findOrFail($prerequisition->id);
+                $head_pr->status = Flag::COMPLETE;
+                $head_pr->update();
+            }
+            foreach ($pr_details as $pr_detail) {
+                $detail_pr = SubmissionFormDetail::findOrFail($pr_detail->id);
+                $detail_pr->status = Flag::COMPLETE;
+                $detail_pr->update();
+            }
+            $stock->update();
+            $header->update();
+        }
+
+        \Alert::add('success', 'Berhasil memvalidasi '. $detail->Item->name)->flash();
         return redirect()->back();
     }
 }

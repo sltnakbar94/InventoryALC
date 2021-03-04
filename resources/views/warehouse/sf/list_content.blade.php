@@ -14,7 +14,7 @@
                 @if (count($crud->entry->details) != 0)
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
-                        $status = array('Plan', 'Process', 'Denied', 'Complete');
+                        $status = array('Plan', 'Submited', 'Process', 'Denied', 'Complete');
                     @endphp
                     <tr>
                         <td>{{$key+1}}</td>

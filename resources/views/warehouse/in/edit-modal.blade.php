@@ -10,12 +10,14 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" id="form-modal-alert" style="display:none;">Data telah tersimpan</div>
-                    <form action="{{ route('bagitemwarehousein.store') }}" method="post" name="form_add_in_detail" id="form_add_in_detail">
+                    <form action="{{ backpack_url('bagitemwarehousein/edit') }}" method="post" name="form_add_in_detail" id="form_add_in_detail">
                         @csrf
                         <input type="hidden" name="warehouse_in_id" value="{{ $crud->entry->id }}">
+                        <input type="hidden" id="warehouse_in_detail_id" name="warehouse_in_detail_id" value="">
+
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label><br>
-                            <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" required>
+                            <select style="width: 100%" name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" required disabled>
                             <option value="">--PILIH BARANG--</option>
                                 @foreach(\App\Models\Item::select('id','name')->get() as $value => $text)
                                         <option value="{{ $text->id }}">{{ $text->name }}</option>

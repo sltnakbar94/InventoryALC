@@ -4,8 +4,9 @@ namespace App;
 class Flag {
 
     const PLAN      = 0;
-    const PROCESS   = 1;
-    const DENIED    = 2;
-    const COMPLETE  = 3;
+    const SUBMITED  = 1;
+    const PROCESS   = 2;
+    const DENIED    = 3;
+    const COMPLETE  = 4;
 
 }

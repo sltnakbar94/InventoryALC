@@ -12,6 +12,10 @@ use App\Models\BagItemWarehouseIn;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\WarehouseInRequest;
+use App\Models\Stock;
+use App\Models\SubmissionForm;
+use App\Models\SubmissionFormDetail;
+use App\Models\Warehouse;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use \App\Services\PurchaseOrderServices;
@@ -175,9 +179,17 @@ class WarehouseInCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'term_of_paymnet',
+            'name' => 'term_of_payment',
             'label' => 'Term of Payment',
             'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'warehouse_id',
+            'label' => 'Pilih gudang tujuan',
+            'type' => 'select2_from_array',
+            'options' => Warehouse::where('active', '=', 1)->get(),
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([
@@ -244,6 +256,9 @@ class WarehouseInCrudController extends CrudController
             'entity'    => 'purchaseRequisition',
             'attribute' => 'form_number',
             'model'     => 'App\Models\SubmissionForm',
+            'options'   => (function ($query) {
+                return $query->where('project_id', '=', 1)->where('status', '=', 0)->get();
+            }),
         ]);
 
         $this->crud->addField([
@@ -266,13 +281,6 @@ class WarehouseInCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'discount',
-            'label' => 'Diskon (%)',
-            'type' => 'number',
-            'hint' => 'Discount keseluruhan',
-        ]);
-
-        $this->crud->addField([
             'name' => 'ppn',
             'label' => 'PPN (10%)',
             'type' => 'boolean',
@@ -280,9 +288,17 @@ class WarehouseInCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'term_of_paymnet',
+            'name' => 'term_of_payment',
             'label' => 'Term of Payment',
-            'type' => 'text',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'warehouse_id',
+            'label' => 'Pilih gudang tujuan',
+            'type' => 'select2_from_array',
+            'options' => Warehouse::where('active', '=', 1)->pluck('name', 'id'),
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([
@@ -406,5 +422,105 @@ class WarehouseInCrudController extends CrudController
         return redirect()->back();
     }
 
+    public function process(Request $request)
+    {
+        $header = WarehouseIn::findOrFail($request->id);
+        $header->status = Flag::SUBMITED;
+        $details = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->id)->get();
+        $header_pr = $header->purchaseRequisition;
+        $pr_detail_id = collect($header_pr->toArray())->all();
+        $pr_details = SubmissionFormDetail::whereIn('submission_form_id', array_column($pr_detail_id, 'id'))->get();
+        foreach ($details as $detail) {
+            $update = BagItemWarehouseIn::findOrFail($detail->id);
+            $update->status = Flag::SUBMITED;
+            $update->update();
+        }
+        foreach ($header_pr as $prerequisition) {
+            $head_pr = SubmissionForm::findOrFail($prerequisition->id);
+            $head_pr->status = Flag::SUBMITED;
+            $head_pr->update();
+        }
+        foreach ($pr_details as $pr_detail) {
+            $detail_pr = SubmissionFormDetail::findOrFail($pr_detail->id);
+            $detail_pr->status = Flag::SUBMITED;
+            $detail_pr->update();
+        }
+        $header->grand_total = $details->sum('sub_total');
+        $header->update();
 
+        \Alert::add('success', 'Berhasil submit ' . $header->po_number)->flash();
+        return redirect()->back();
+    }
+
+    public function acceptHeader(Request $request)
+    {
+        $header = WarehouseIn::findOrFail($request->id);
+        $header->status = Flag::PROCESS;
+        $details = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->id)->get();
+        $header_pr = $header->purchaseRequisition;
+        $pr_detail_id = collect($header_pr->toArray())->all();
+        $pr_details = SubmissionFormDetail::whereIn('submission_form_id', array_column($pr_detail_id, 'id'))->get();
+        foreach ($details as $detail) {
+            $update = BagItemWarehouseIn::findOrFail($detail->id);
+            $update->status = Flag::PROCESS;
+            $update->update();
+            $check_stock = Stock::where('warehouse_id', '=', $header->warehouse_id)->where('item_id', '=', $detail->item_id)->first();
+            if (empty($check_stock)) {
+                $stock = new Stock;
+                $stock->warehouse_id = $header->warehouse_id;
+                $stock->item_id = $detail->item_id;
+                $stock->stock_in_indent = $detail->qty;
+                $stock->save();
+            }else{
+                $stock = new Stock;
+                $stock->stock_in_indent += $detail->qty;
+                $stock->update();
+            }
+        }
+        foreach ($header_pr as $prerequisition) {
+            $head_pr = SubmissionForm::findOrFail($prerequisition->id);
+            $head_pr->status = Flag::PROCESS;
+            $head_pr->update();
+        }
+        foreach ($pr_details as $pr_detail) {
+            $detail_pr = SubmissionFormDetail::findOrFail($pr_detail->id);
+            $detail_pr->status = Flag::PROCESS;
+            $detail_pr->update();
+        }
+        $header->grand_total = $details->sum('sub_total');
+        $header->update();
+
+        \Alert::add('success', 'Berhasil memproses ' . $header->po_number)->flash();
+        return redirect()->back();
+    }
+
+    public function deniedHeader(Request $request)
+    {
+        $header = WarehouseIn::findOrFail($request->id);
+        $header->status = Flag::DENIED;
+        $details = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->id)->get();
+        $header_pr = $header->purchaseRequisition;
+        $pr_detail_id = collect($header_pr->toArray())->all();
+        $pr_details = SubmissionFormDetail::whereIn('submission_form_id', array_column($pr_detail_id, 'id'))->get();
+        foreach ($details as $detail) {
+            $update = BagItemWarehouseIn::findOrFail($detail->id);
+            $update->status = Flag::DENIED;
+            $update->update();
+        }
+        foreach ($header_pr as $prerequisition) {
+            $head_pr = SubmissionForm::findOrFail($prerequisition->id);
+            $head_pr->status = Flag::DENIED;
+            $head_pr->update();
+        }
+        foreach ($pr_details as $pr_detail) {
+            $detail_pr = SubmissionFormDetail::findOrFail($pr_detail->id);
+            $detail_pr->status = Flag::DENIED;
+            $detail_pr->update();
+        }
+        $header->grand_total = $details->sum('sub_total');
+        $header->update();
+
+        \Alert::add('danger', 'Berhasil membatalkan ' . $header->po_number)->flash();
+        return redirect()->back();
+    }
 }

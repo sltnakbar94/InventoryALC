@@ -15,7 +15,7 @@
                 @if (count($crud->entry->details) != 0)
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
-                        $status = array('Plan', 'Process', 'Denied', 'Complete');
+                        $status = array('Plan', 'Submited', 'Process', 'Denied', 'Complete');
                         if ($crud->entry->module == 'sales_order') {
                             $item_header = $crud->entry->salesOrder;
                         }elseif ($crud->entry->module == 'delivery_order') {

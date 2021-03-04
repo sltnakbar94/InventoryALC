@@ -16,7 +16,7 @@
                 @if (count($crud->entry->details) != 0)
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
-                        $status = array('Plan', 'Process', 'Denied', 'Complete');
+                        $status = array('Plan', 'Submited', 'Process', 'Denied', 'Complete');
                         $qty_onhands = \App\Models\Item::select('id','name', 'qty')->where('id', '=', $detail->item->id)->first();
                     @endphp
                     <tr>

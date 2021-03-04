@@ -42,6 +42,7 @@ Route::group([
 
     // In
     Route::crud('warehousein', 'WarehouseInCrudController');
+    Route::post('warehousein/process', 'WarehouseInCrudController@process');
     Route::post('warehousein-pic', 'WarehouseInCrudController@storePic');
     Route::post('generate-po-pdf', 'WarehouseInCrudController@pdf');
     Route::post('item_to-bag_in', 'ApiController@itemToBagIn');
@@ -49,6 +50,8 @@ Route::group([
     Route::post('delete-item_on-bag_in', 'ApiController@deleteItemOnBagIn');
     Route::get('purchase-order/{id}/accept', 'WarehouseInCrudController@accept');
     Route::get('purchase-order/{id}/denied', 'WarehouseInCrudController@denied');
+    Route::get('purchaseorder/{id}/accept', 'WarehouseInCrudController@acceptHeader');
+    Route::get('purchaseorder/{id}/denied', 'WarehouseInCrudController@deniedHeader');
 
 
     //Delivery Note
@@ -90,7 +93,7 @@ Route::group([
 
     // Purchase Order
     Route::post('Api/PurchaseOrderDetail', [PurchaseOrderController::class, 'getPurchaseOrderDetailById']);
-    Route::post('Api/PurchaseOrderDetail_update/{purchase_order_detail_id}', [PurchaseOrderController::class, 'UpdatePurchaseOrder']);
+    // Route::post('Api/PurchaseOrderDetail_update/{purchase_order_detail_id}', [PurchaseOrderController::class, 'UpdatePurchaseOrder']);
 
     // Delivery Order
     Route::post('Api/DeliveryOrderDetail', [DeliveryOrderController::class, 'getDeliveryOrderDetailById']);
@@ -108,11 +111,13 @@ Route::group([
 
 
     Route::crud('bagitemwarehousein', 'BagItemWarehouseInCrudController');
+    Route::post('bagitemwarehousein/edit', 'BagItemWarehouseInCrudController@edit');
+    Route::post('bagitemwarehousein/qc', 'BagItemWarehouseInCrudController@qc');
     Route::crud('bagitemwarehouseout', 'BagItemWarehouseOutCrudController');
     Route::crud('submissionform', 'SubmissionFormCrudController');
     Route::post('generate-sf-pdf', 'SubmissionFormCrudController@pdf');
     Route::crud('submissionformdetail', 'SubmissionFormDetailCrudController');
     Route::get('submissionformdetail/{id}/accept', 'SubmissionFormDetailCrudController@accept');
     Route::get('submissionformdetail/{id}/denied', 'SubmissionFormDetailCrudController@denied');
-    Route::crud('warehouse', 'WarehouseCrudController');
+    Route::crud('gudang', 'WarehouseCrudController');
 }); // this should be the absolute last line of this file
