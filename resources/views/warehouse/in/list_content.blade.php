@@ -43,8 +43,10 @@
                                         <button type="submit" class="btn btn-danger" style="height: 100%"><i class="las la-trash-alt"></i></button>
                                     </form>
                                 @endif
-                                @if ($detail->status == 2)
-                                    <button id="qc" onclick="qc({{ $detail->id }})" type="button" class="btn btn-info" style="height: 100%"><i class="fa fa-check-circle"></i> Hasil QC Barang</button>
+                                @if (backpack_user()->hasRole('operator-gudang'))
+                                    @if ($detail->status == 2)
+                                        <button id="qc" onclick="qc({{ $detail->id }})" type="button" class="btn btn-info" style="height: 100%"><i class="fa fa-check-circle"></i> Hasil QC Barang</button>
+                                    @endif
                                 @endif
                             </div>
                         </td>
