@@ -143,7 +143,6 @@ class WarehouseInCrudController extends CrudController
             'label'     => "Pilih Purchase Requisition",
             'type'      => 'select2_multiple',
             'name'      => 'purchaseRequisition', // the method that defines the relationship in your Model
-            'pivot'     => true,
             'entity'    => 'purchaseRequisition',
             'attribute' => 'form_number',
             'model'     => 'App\Models\SubmissionForm',
