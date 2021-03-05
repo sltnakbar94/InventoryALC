@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        @if (@$crud->entry->status != 0)
+        @if (@$crud->entry->status != 1)
             <div class="row">
                 <div class="col-md 12">
                     <div class="card no-padding no-border">

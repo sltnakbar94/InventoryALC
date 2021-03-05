@@ -77,13 +77,15 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md 12">
-                <div class="card no-padding no-border">
-				@include('warehouse.so.call-output')
+        @if (@$crud->entry->status != 1)
+            <div class="row">
+                <div class="col-md 12">
+                    <div class="card no-padding no-border">
+                    @include('warehouse.so.call-output')
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
 	</div>
 </div>
 @endsection
