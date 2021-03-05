@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        @if (@$crud->entry->status != 0 && @$crud->entry->status != 3)
+        @if (@$crud->entry->status != 0 && @$crud->entry->status != 3 && backpack_user()->hasAnyRole(['sales', 'purchasing', 'superadmin']))
             <div class="row">
                 <div class="col-md 12">
                     <div class="card no-padding no-border">
