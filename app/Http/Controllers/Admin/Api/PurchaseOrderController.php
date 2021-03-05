@@ -33,6 +33,7 @@ class PurchaseOrderController extends Controller
     public function getPurchaseOrderDetailById(Request $request)
     {
         $purchaseOrderDetail = $this->purchaseOrderDetail::find($request->purchase_order_id);
+        dd($purchaseOrderDetail);
         if ($purchaseOrderDetail == null) {
             $return = array (
                 'code' => 404,
@@ -49,7 +50,6 @@ class PurchaseOrderController extends Controller
         }
         return $return;
     }
-
 
     /**
      * Update Purchase Order Detail by Purchase Order ID
