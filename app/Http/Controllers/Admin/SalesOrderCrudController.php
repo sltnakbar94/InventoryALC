@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Flag;
 use App\Http\Requests\SalesOrderRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Stackholder;
 use App\Models\SalesOrder;
 use App\Models\SalesOrderDetail;
+use App\Models\SubmissionForm;
+use App\Models\SubmissionFormDetail;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -370,5 +373,95 @@ class SalesOrderCrudController extends CrudController
     {
         return redirect()->route('generate_delivery-note', [$request->id]);
 
+    }
+
+    public function process(Request $request)
+    {
+        $header = SalesOrder::findOrFail($request->id);
+        $header->status = Flag::SUBMITED;
+        $details = SalesOrderDetail::where('sales_order_id', '=', $request->id)->get();
+        $header_pr = $header->purchaseRequisition;
+        $pr_detail_id = collect($header_pr->toArray())->all();
+        $pr_details = SubmissionFormDetail::whereIn('submission_form_id', array_column($pr_detail_id, 'id'))->get();
+        foreach ($details as $detail) {
+            $update = SalesOrderDetail::findOrFail($detail->id);
+            $update->status = Flag::SUBMITED;
+            $update->update();
+        }
+        foreach ($header_pr as $prerequisition) {
+            $head_pr = SubmissionForm::findOrFail($prerequisition->id);
+            $head_pr->status = Flag::SUBMITED;
+            $head_pr->update();
+        }
+        foreach ($pr_details as $pr_detail) {
+            $detail_pr = SubmissionFormDetail::findOrFail($pr_detail->id);
+            $detail_pr->status = Flag::SUBMITED;
+            $detail_pr->update();
+        }
+        $header->grand_total = $details->sum('sub_total');
+        $header->update();
+
+        \Alert::add('success', 'Berhasil submit ' . $header->so_number)->flash();
+        return redirect()->back();
+    }
+
+    public function acceptHeader(Request $request)
+    {
+        $header = SalesOrder::findOrFail($request->id);
+        $header->status = Flag::PROCESS;
+        $details = SalesOrderDetail::where('sales_order_id', '=', $request->id)->get();
+        $header_pr = $header->purchaseRequisition;
+        $pr_detail_id = collect($header_pr->toArray())->all();
+        $pr_details = SubmissionFormDetail::whereIn('submission_form_id', array_column($pr_detail_id, 'id'))->get();
+        foreach ($details as $detail) {
+            $update = SalesOrderDetail::findOrFail($detail->id);
+            $update->status = Flag::PROCESS;
+            $update->update();
+        }
+        foreach ($header_pr as $prerequisition) {
+            $head_pr = SubmissionForm::findOrFail($prerequisition->id);
+            $head_pr->status = Flag::PROCESS;
+            $head_pr->update();
+        }
+        foreach ($pr_details as $pr_detail) {
+            $detail_pr = SubmissionFormDetail::findOrFail($pr_detail->id);
+            $detail_pr->status = Flag::PROCESS;
+            $detail_pr->update();
+        }
+        $header->grand_total = $details->sum('sub_total');
+        $header->update();
+
+        \Alert::add('success', 'Berhasil memproses ' . $header->so_number)->flash();
+        return redirect()->back();
+    }
+
+    public function deniedHeader(Request $request)
+    {
+        $header = SalesOrder::findOrFail($request->id);
+        $header->status = Flag::DENIED;
+        $details = SalesOrderDetail::where('sales_order_id', '=', $request->id)->get();
+        $header_pr = $header->purchaseRequisition;
+        $pr_detail_id = collect($header_pr->toArray())->all();
+        $pr_details = SubmissionFormDetail::whereIn('submission_form_id', array_column($pr_detail_id, 'id'))->get();
+        foreach ($details as $detail) {
+            $update = SalesOrderDetail::findOrFail($detail->id);
+            $update->status = Flag::DENIED;
+            $update->update();
+        }
+        foreach ($header_pr as $prerequisition) {
+            $head_pr = SubmissionForm::findOrFail($prerequisition->id);
+            $head_pr->status = Flag::PLAN;
+            $head_pr->update();
+        }
+        foreach ($pr_details as $pr_detail) {
+            $detail_pr = SubmissionFormDetail::findOrFail($pr_detail->id);
+            $detail_pr->status = Flag::PLAN;
+            $detail_pr->update();
+        }
+        $header->grand_total = $details->sum('sub_total');
+        $header->update();
+
+        \Alert::add('danger', 'Berhasil membatalkan ' . $header->so_number)->flash();
+        return redirect()->back();
     }
 }

@@ -509,12 +509,12 @@ class WarehouseInCrudController extends CrudController
         }
         foreach ($header_pr as $prerequisition) {
             $head_pr = SubmissionForm::findOrFail($prerequisition->id);
-            $head_pr->status = Flag::DENIED;
+            $head_pr->status = Flag::PLAN;
             $head_pr->update();
         }
         foreach ($pr_details as $pr_detail) {
             $detail_pr = SubmissionFormDetail::findOrFail($pr_detail->id);
-            $detail_pr->status = Flag::DENIED;
+            $detail_pr->status = Flag::PLAN;
             $detail_pr->update();
         }
         $header->grand_total = $details->sum('sub_total');

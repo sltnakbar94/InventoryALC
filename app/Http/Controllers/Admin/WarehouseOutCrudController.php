@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\BagItemWarehouseOut;
 use App\Services\DeliveryOrderServices;
 use App\Http\Requests\WarehouseOutRequest;
+use App\Models\Warehouse;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -130,6 +131,12 @@ class WarehouseOutCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name' => 'do_date',
+            'label' => 'Tanggal DO',
+            'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
             'name' => 'customer_id',
             'label' => 'Customer',
             'type' => 'select2_from_array',
@@ -137,12 +144,6 @@ class WarehouseOutCrudController extends CrudController
                 return $query->where('name', '=', 'customer');
             })->pluck('company', 'id'),
             'allows_null' => true,
-        ]);
-
-        $this->crud->addField([
-            'name' => 'do_date',
-            'label' => 'Tanggal DO',
-            'type' => 'date_picker',
         ]);
 
         $this->crud->addField([
@@ -158,6 +159,26 @@ class WarehouseOutCrudController extends CrudController
             'label' => 'Ekspedisi',
             'name'  => 'expedition',
             'type'  => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'warehouse_id',
+            'label' => 'Pilih Gudang',
+            'type' => 'select2_from_array',
+            'options' => Warehouse::pluck('name', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'destination',
+            'label' => 'Tujuan Pengiriman',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Keterangan',
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([   // date_range
@@ -205,6 +226,12 @@ class WarehouseOutCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name' => 'do_date',
+            'label' => 'Tanggal DO',
+            'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
             'name' => 'customer_id',
             'label' => 'Customer',
             'type' => 'select2_from_array',
@@ -212,12 +239,6 @@ class WarehouseOutCrudController extends CrudController
                 return $query->where('name', '=', 'customer');
             })->pluck('company', 'id'),
             'allows_null' => true,
-        ]);
-
-        $this->crud->addField([
-            'name' => 'do_date',
-            'label' => 'Tanggal DO',
-            'type' => 'date_picker',
         ]);
 
         $this->crud->addField([
@@ -233,6 +254,20 @@ class WarehouseOutCrudController extends CrudController
             'label' => 'Ekspedisi',
             'name'  => 'expedition',
             'type'  => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'warehouse_id',
+            'label' => 'Pilih Gudang',
+            'type' => 'select2_from_array',
+            'options' => Warehouse::pluck('name', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'destination',
+            'label' => 'Tujuan Pengiriman',
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([   // date_range

@@ -1,15 +1,20 @@
 <!-- This file is used to store sidebar items, starting with Backpack\Base 0.9.0 -->
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="las la-tachometer-alt"></i> {{ trans('backpack::base.dashboard') }}</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('submissionform') }}'><i class='lar la-file-alt'></i> Purchase Requisition</a></li>
+<li class="nav-item nav-dropdown">
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-industry"></i> sales</a>
+	<ul class="nav-dropdown-items">
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('salesorder') }}'><i class="lar la-file-alt"></i> Sales Order</a></li>
+    </ul>
+</li>
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-industry"></i> Warehouse</a>
 	<ul class="nav-dropdown-items">
-        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('submissionform') }}'><i class='lar la-file-alt'></i> Purchase Requisition</a></li>
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehousein') }}'><i class="lar la-file-alt"></i> Purchase Order</a></li>
-        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('salesorder') }}'><i class="lar la-file-alt"></i> Sales Order</a></li>
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehouseout') }}'><i class="lar la-file"></i> Delivery Order</a></li>
-        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class="lar la-file"></i> Delivery Note</a></li>
     </ul>
 </li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class="lar la-file"></i> Delivery Note</a></li>
 @if (backpack_user()->hasAnyRole(['admin', 'superadmin']))
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-project-diagram"></i> Config</a>

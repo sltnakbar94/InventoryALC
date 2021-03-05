@@ -9,7 +9,7 @@ use App\Models\SalesOrder;
 
 class SalesOrderDetail extends Model
 {
-    use CrudTrait;
+    use CrudTrait, SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------

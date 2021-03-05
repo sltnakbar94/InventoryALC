@@ -61,31 +61,19 @@ class SalesOrderController extends Controller
      */
     public function UpdateSalesOrder($id, Request $request)
     {
-        $sub_total = $this->salesOrderServices->SumItemDiscountToSubTotal($request);
-        $SO_Detail = $this->salesOrderServices->ItemOnSODetail(array('sales_order_id' => $request->sales_order_id, 'item_id' => $request->item_id));
-        try {
-            DB::beginTransaction();
-
-            // Update Sales Order Detail by Sales Order Detail ID
-            SalesOrderDetail::find($SO_Detail->id)->update([
-                'qty'           => $request->qty,
-                'price'         => $request->price,
-                'discount'      => $request->discount,
-                'sub_total'     => $sub_total,
-            ]);
-
-            // New Grand Total on Sales Order
-            $SO_GT_update = $this->salesOrderServices->SumItemPriceBySalesOrderID($request->sales_order_id);
-            SalesOrder::find($request->sales_order_id)->update([
-                'grand_total' => $SO_GT_update
-            ]);
-
-            DB::commit();
-            return $this->returnSuccess($SO_Detail, 'Sales Order dengan ID '.$SO_Detail->sales_order_id.' Berhasil di Update');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return $this->returnError($th->getMessage());
+        $detail = SalesOrderDetail::findOrFail($request->sales_order_detail_id);
+        $detail->qty = $request->qty;
+        $detail->price = $request->price;
+        if (!empty($request->discount) || $request->discount == 0) {
+            $detail->discount = $request->discount;
+            $detail->sub_total = (($request->discount/100*$request->price)+$request->price)*$request->qty;
+        }else{
+            $detail->sub_total = $request->price*$request->qty;
         }
+        $detail->update();
+
+        \Alert::add('success', 'Berhasil ubah data Item')->flash();
+        return redirect()->back();
     }
 
 

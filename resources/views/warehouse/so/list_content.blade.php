@@ -36,21 +36,12 @@
                         <td>
                             <div class="btn-group">
                                 @if ($detail->status == 0)
-                                    <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning"><i class="las la-pencil-alt"></i></button>
-                                    <form method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                    <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning" style="height: 100%"><i class="las la-pencil-alt"></i></button>
+                                    <form id="delete-form{{ $detail->id }}" method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
                                     </form>
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Status
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-detail" href="{{backpack_url('salesorderdetail/'.$detail->id.'/accept')}}">Setujui</a>
-                                            <a class="dropdown-detail" href="{{backpack_url('salesorderdetail/'.$detail->id.'/denied')}}">Tolak</a>
-                                        </div>
-                                    </div>
                                 @endif
                             </div>
                         </td>
@@ -65,82 +56,3 @@
         </div>
     </div>
 </div>
-
-@section('after_scripts')
-<script>
-    function edit(sales_order_id) {
-        $.ajax({
-            type: "post",
-            url: "{{ backpack_url('Api/SalesOrderDetail') }}",
-            data: {
-                sales_order_id: sales_order_id,
-                _token: '{{ csrf_token() }}'
-            },
-            dataType: "json",
-            success: function (response) {
-                if (response.success) {
-                    var dsc = 0;
-                    $('#editModalSalesOrderDetail').modal('show');
-                    console.log(response.data)
-                    $('#price').val(response.data.price)
-                    $('input[name=qty]').val(response.data.qty)
-                    response.data.discount === null ? dsc = 0 : dsc = response.data.discount
-                    $('input[name=discount]').val(dsc)
-                    $('select[name=item_id]').val(response.data.item_id).trigger('change');
-                }else{
-                    swalError({
-                        message: response.data.message,
-                        response: response.data.error,
-                    })
-                }
-            }
-        });
-    }
-
-    $('#form-edit-so-detail').submit(function(e) {
-        e.preventDefault()
-
-        var data = $(this).serialize()
-		var method = $(this).attr('method')
-		var action = $(this).attr('action')
-
-        $.ajax({
-            url: action,
-			data: data,
-			method: method,
-			beforeSend: function() {
-				$('#edit-buton-so-detail').prop('disabled', true);
-			},
-            success: function (response) {
-                console.log(response);
-                if (response.success) {
-                    swalSuccess(response.message)
-                }else{
-                    swalError(response.message)
-                }
-            }
-        });
-    });
-
-    function swalError(params) {
-        return swal({
-                    title: 'Gagal!',
-                    text: params.message,
-                    icon: 'error'
-                }).then(function () {
-                    location.reload();
-                })
-    }
-
-    function swalSuccess(params) {
-        return swal({
-                    title: 'Sukses!',
-                    text: params.message,
-
-                }).then(function () {
-                    location.reload();
-                })
-    }
-</script>
-
-@endsection

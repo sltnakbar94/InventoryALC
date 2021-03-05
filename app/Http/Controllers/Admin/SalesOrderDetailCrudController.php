@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Prologue\Alerts\Facades\Alert;
 use App\Services\SalesOrderServices;
 use App\Http\Requests\SalesOrderDetailRequest;
+use App\Models\SubmissionFormDetail;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -96,45 +97,32 @@ class SalesOrderDetailCrudController extends CrudController
 
     public function store(Request $request)
     {
-        $sub_total = $this->salesOrderService->SumItemDiscountToSubTotal($request);
-        try {
-            DB::beginTransaction();
-            $SO_Detail['status'] = $this->salesOrderService->CheckItemOnSODetail(array('sales_order_id' => $request->sales_order_id, 'item_id' => $request->item_id));
-            $SO_Detail['item'] = $this->salesOrderService->ItemOnSODetail(array('sales_order_id' => $request->sales_order_id, 'item_id' => $request->item_id));
-
-            if ($SO_Detail['status']) {
-                SalesOrderDetail::create([
-                    'sales_order_id' => $request->sales_order_id,
-                    'item_id'        => $request->item_id,
-                    'qty'            => $request->qty,
-                    'price'          => $request->price,
-                    'discount'       => $request->discount,
-                    'sub_total'      => $sub_total,
-                    'status'         => 0
-                ]);
-            }else{
-                SalesOrderDetail::find($SO_Detail['item']->id)->update([
-                    'qty'           => $request->qty,
-                    'price'         => $request->price,
-                    'discount'      => $request->discount,
-                    'sub_total'     => $sub_total,
-                    'status'        => '1'
-                ]);
+        $header = SalesOrder::findOrFail($request->sales_order_id);
+        $header_pr = $header->purchaseRequisition;
+        $pr_detail_id = collect($header_pr->toArray())->all();
+        $pr_details = SubmissionFormDetail::whereIn('submission_form_id', array_column($pr_detail_id, 'id'))->get();
+        $item_id = collect($pr_details->toArray())->all();
+        $items = Item::whereIn('id', array_column($item_id, 'item_id'))->get();
+        foreach ($pr_details as $pr_detail) {
+            $item = Item::find($pr_detail->item_id);
+            $find = SalesOrderDetail::where('sales_order_id', '=', $request->sales_order_id)->where('item_id', '=', $pr_detail->item_id)->first();
+            if (empty($find)) {
+                $detail = new SalesOrderDetail;
+                $detail->sales_order_id = $request->sales_order_id;
+                $detail->item_id = $pr_detail->item_id;
+                $detail->qty = $pr_detail->qty;
+                $detail->serial = $item->serial;
+                $detail->uom = $item->uom;
+                $detail->user_id = backpack_auth()->id();
+                $detail->save();
+            } else {
+                $detail = SalesOrderDetail::findOrFail($find->id);
+                $detail->qty = $detail->qty + $pr_detail->qty;
+                $detail->update();
             }
 
-            $SO_GT_update = $this->salesOrderService->SumItemPriceBySalesOrderID($request->sales_order_id);
-            SalesOrder::find($request->sales_order_id)->update([
-                'grand_total' => $SO_GT_update
-            ]);
-            DB::commit();
-            \Alert::add('success', 'Berhasil tambah item ')->flash();
-            return redirect()->back();
-        } catch (\Throwable $th) {
-            DB::rollback();
-            \Alert::add('error', 'Gagal tambah item ' . $th->getMessage().' on Line '. $th->getLine())->flash();
-            return redirect()->back();
         }
-        \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
+        \Alert::add('success', 'Berhasil tambah item ')->flash();
         return redirect()->back();
     }
 

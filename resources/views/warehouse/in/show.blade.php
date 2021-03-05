@@ -51,7 +51,7 @@
             <div class="col-md-4">
                 <div class="card no-padding no-border">
                     <div class="card-header">
-                        Nomor PO : {{@$crud->entry->po_number}}
+                        Nomor Purchase Order : {{@$crud->entry->po_number}}
                     </div>
                     <div class="card-body">
                         @include('warehouse.in.form_content')

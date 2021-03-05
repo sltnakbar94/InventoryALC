@@ -13,10 +13,11 @@
                     <form action="{{ backpack_url('Api/SalesOrderDetail_update/'.$crud->entry->id) }}" method="post" id="form-edit-so-detail">
                         @csrf
                         <input type="hidden" name="sales_order_id" value="{{ $crud->entry->id }}">
+                        <input type="hidden" id="sales_order_detail_id" name="sales_order_detail_id" value="">
 
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label>
-                            <select readonly name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}" required>
+                            <select disabled name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}" required>
                             <option value="">--PILIH BARANG--</option>
                                 @foreach(\App\Models\Item::select('id','name')->get() as $value => $text)
                                         <option value="{{ $text->id }}">{{ $text->name }}</option>
