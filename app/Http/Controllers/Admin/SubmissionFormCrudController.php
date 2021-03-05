@@ -79,8 +79,8 @@ class SubmissionFormCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
-            'name'  => 'project',
-            'label' => 'Peruntukan',
+            'name'  => 'status',
+            'label' => 'Status',
             'type'  => 'option',
             // optionally override the Yes/No texts
             'options' => [0 => 'Plan', 1 => 'Submited', 2 => 'Process', 3 => 'Denied', 4 => 'Completed']
