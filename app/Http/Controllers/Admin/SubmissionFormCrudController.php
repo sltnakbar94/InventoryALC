@@ -47,7 +47,7 @@ class SubmissionFormCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
-        $this->crud->addClause('where', 'status', '!=', 0);
+        $this->crud->addClause('where', 'status', '=', 0);
         if (backpack_user()->hasAnyRole(['purchasing', 'operator-gudang'])) {
             $this->crud->removeButton('create');
             $this->crud->removeButton('edit');
