@@ -48,6 +48,8 @@ class SalesOrderCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+
         $this->crud->addColumn([
             'name' => 'so_number',
             'type' => 'text',
