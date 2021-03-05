@@ -34,7 +34,7 @@ class SubmissionFormCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\SubmissionForm::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/submissionform');
-        CRUD::setEntityNameStrings('Form Pengajuan', 'Form Pengajuan');
+        CRUD::setEntityNameStrings('Purchase Requisition', 'Purchase Requisition');
         $this->crud->setShowView('warehouse.sf.show');
     }
 
@@ -155,7 +155,6 @@ class SubmissionFormCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(SubmissionFormRequest::class);
 
         $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
 
@@ -164,7 +163,7 @@ class SubmissionFormCrudController extends CrudController
             'name'  => "form_number",
             'type'  => 'text',
             'attributes' => [
-                'readonly'    => 'readonly',
+                'disabled'    => 'disabled',
             ]
         ]);
 

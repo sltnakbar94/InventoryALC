@@ -68,6 +68,11 @@ class SalesOrder extends Model
         return $this->belongsTo(Stackholder::class, 'customer_id', 'id');
     }
 
+    public function purchaseRequisition()
+    {
+        return $this->belongsToMany(SubmissionForm::class, 'pr_so_relations', 'sales_order_id', 'submission_form_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

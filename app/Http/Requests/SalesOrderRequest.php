@@ -30,7 +30,7 @@ class SalesOrderRequest extends FormRequest
             'so_date' => 'required',
             'supplier_id' => 'required',
             'customer_id' => 'required',
-            'start_date' => 'required',
+            'destination' => 'required',
         ];
     }
 

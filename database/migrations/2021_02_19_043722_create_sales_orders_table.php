@@ -24,10 +24,11 @@ class CreateSalesOrdersTable extends Migration
             $table->string('discount')->nullable();
             $table->boolean('ppn')->default(false);
             $table->bigInteger('grand_total')->nullable()->default(0);
-            $table->string('term_of_paymnet')->nullable();
+            $table->text('term_of_paymnet')->nullable();
             $table->string('issued_by')->nullable();
             $table->string('approve_by')->nullable();
             $table->string('confirm_by')->nullable();
+            $table->text('destination')->nullable();
             $table->text('description')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

@@ -138,6 +138,19 @@ class SalesOrderCrudController extends CrudController
             'type' => 'date_picker',
         ]);
 
+        $this->crud->addField([   // SelectMultiple = n-n relationship (with pivot table)
+            'label'     => "Pilih Purchase Requisition",
+            'type'      => 'select2_multiple',
+            'name'      => 'purchaseRequisition', // the method that defines the relationship in your Model
+            'pivot'     => true,
+            'entity'    => 'purchaseRequisition',
+            'attribute' => 'form_number',
+            'model'     => 'App\Models\SubmissionForm',
+            'options'   => (function ($query) {
+                return $query->where('project_id', '=', 2)->where('status', '=', 0)->get();
+            }),
+        ]);
+
         $this->crud->addField([
             'name' => 'supplier_id',
             'label' => 'Supplier',
@@ -168,13 +181,6 @@ class SalesOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'discount',
-            'label' => 'Diskon (%)',
-            'type' => 'number',
-            'hint' => 'Discount keseluruhan',
-        ]);
-
-        $this->crud->addField([
             'name' => 'ppn',
             'label' => 'PPN (10%)',
             'type' => 'boolean',
@@ -184,7 +190,13 @@ class SalesOrderCrudController extends CrudController
         $this->crud->addField([
             'name' => 'term_of_paymnet',
             'label' => 'Term of Payment',
-            'type' => 'text',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'destination',
+            'label' => 'Tujuan Pengiriman',
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([
@@ -243,6 +255,19 @@ class SalesOrderCrudController extends CrudController
             'type' => 'date_picker',
         ]);
 
+        $this->crud->addField([   // SelectMultiple = n-n relationship (with pivot table)
+            'label'     => "Pilih Purchase Requisition",
+            'type'      => 'select2_multiple',
+            'name'      => 'purchaseRequisition', // the method that defines the relationship in your Model
+            'pivot'     => true,
+            'entity'    => 'purchaseRequisition',
+            'attribute' => 'form_number',
+            'model'     => 'App\Models\SubmissionForm',
+            'options'   => (function ($query) {
+                return $query->where('project_id', '=', 2)->where('status', '=', 0)->get();
+            }),
+        ]);
+
         $this->crud->addField([
             'name' => 'supplier_id',
             'label' => 'Supplier',
@@ -273,13 +298,6 @@ class SalesOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'discount',
-            'label' => 'Diskon (%)',
-            'type' => 'number',
-            'hint' => 'Discount keseluruhan',
-        ]);
-
-        $this->crud->addField([
             'name' => 'ppn',
             'label' => 'PPN (10%)',
             'type' => 'boolean',
@@ -289,7 +307,13 @@ class SalesOrderCrudController extends CrudController
         $this->crud->addField([
             'name' => 'term_of_paymnet',
             'label' => 'Term of Payment',
-            'type' => 'text',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'destination',
+            'label' => 'Tujuan Pengiriman',
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([

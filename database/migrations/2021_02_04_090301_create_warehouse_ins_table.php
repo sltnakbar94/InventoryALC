@@ -23,7 +23,7 @@ class CreateWarehouseInsTable extends Migration
             $table->string('discount')->nullable();
             $table->boolean('ppn')->default(false);
             $table->string('grand_total')->nullable();
-            $table->string('term_of_payment')->nullable();
+            $table->text('term_of_payment')->nullable();
             $table->string('issued_by')->nullable();
             $table->string('approve_by')->nullable();
             $table->string('confirm_by')->nullable();
