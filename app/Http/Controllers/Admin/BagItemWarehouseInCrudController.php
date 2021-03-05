@@ -87,6 +87,7 @@ class BagItemWarehouseInCrudController extends CrudController
     public function edit(Request $request)
     {
         $detail = BagItemWarehouseIn::findOrFail($request->warehouse_in_detail_id);
+        dd($detail);
         $detail->qty = $request->qty;
         $detail->price = $request->price;
         if (!empty($request->discount) || $request->discount == 0) {
