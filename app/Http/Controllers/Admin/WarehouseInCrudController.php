@@ -188,7 +188,7 @@ class WarehouseInCrudController extends CrudController
             'name' => 'warehouse_id',
             'label' => 'Pilih gudang tujuan',
             'type' => 'select2_from_array',
-            'options' => Warehouse::where('active', '=', 1)->get(),
+            'options' => Warehouse::where('active', '=', 1)->pluck('name', 'id'),
             'allows_null' => true,
         ]);
 
@@ -469,10 +469,12 @@ class WarehouseInCrudController extends CrudController
                 $stock = new Stock;
                 $stock->warehouse_id = $header->warehouse_id;
                 $stock->item_id = $detail->item_id;
+                $stock->stock_on_hand = $detail->qty;
                 $stock->stock_in_indent = $detail->qty;
                 $stock->save();
             }else{
                 $stock = new Stock;
+                $stock->stock_on_hand += $detail->qty;
                 $stock->stock_in_indent += $detail->qty;
                 $stock->update();
             }
