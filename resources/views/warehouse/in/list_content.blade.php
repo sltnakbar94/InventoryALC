@@ -8,6 +8,7 @@
                     <th>SKU</th>
                     <th>UoM</th>
                     <th>Jumlah</th>
+                    <th>QC Pass</th>
                     <th>Harga Satuan</th>
                     <th>Discount</th>
                     <th>Sub Total</th>
@@ -25,6 +26,7 @@
                         <td>{{$detail->item->serial}}</td>
                         <td>{{$detail->item->unit}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
+                        <td align="right">{{number_format($detail->qty_confirm)}}</td>
                         <td align="right">{{number_format($detail->price)}}</td>
                         @if (!empty($detail->discount || $detail->discount != 0))
                             <td align="right">{{number_format($detail->discount)}}%</td>
