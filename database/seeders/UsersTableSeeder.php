@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $user1 = User::create([
-            'name' => 'Operator 1',
+            'name' => 'admin',
             'email' => 'operator1@example.com',
             'password' => bcrypt('password')
         ]);
@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
         $user1->assignRole('admin');
 
         $user2 = User::create([
-            'name' => 'Operator 2',
+            'name' => 'sales',
             'email' => 'operator2@example.com',
             'password' => bcrypt('password')
         ]);
@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
         $user2->assignRole('sales');
 
         $user3 = User::create([
-            'name' => 'Operator 3',
+            'name' => 'operator gudang',
             'email' => 'operator3@example.com',
             'password' => bcrypt('password')
         ]);
