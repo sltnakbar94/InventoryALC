@@ -59,12 +59,14 @@
                 </div>
             </div>
             <div class="col-md-7">
-                <div class="card no-padding no-border">
-                    <div class="card-header">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalDeliveryNoteDetail">
-                            <i class="fa fa-plus"></i> TAMBAH ITEM
-                        </button>
-                    </div>
+                <div class="card no-padding no-border">{{dd($crud->entry->status)}}
+                    @if (@$crud->entry->status == 0)
+                        <div class="card-header">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalDeliveryNoteDetail">
+                                <i class="fa fa-plus"></i> TAMBAH ITEM
+                            </button>
+                        </div>
+                    @endif
                     <div class="card-body">
                         @include('warehouse.sf.list_content')
                     </div>
