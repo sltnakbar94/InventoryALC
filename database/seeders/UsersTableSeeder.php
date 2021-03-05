@@ -46,5 +46,13 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $user4->assignRole('superadmin');
+
+        $user5 = User::create([
+            'name' => 'Purchasing',
+            'email' => 'purchasing@example.com',
+            'password' => bcrypt('password')
+        ]);
+
+        $user5->assignRole('purchasing');
     }
 }
