@@ -55,7 +55,9 @@ class WarehouseInCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+        if (backpack_user()->hasRole('sasles')) {
+            $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+        }
 
         $this->crud->addColumn([
             'name' => 'po_number',
