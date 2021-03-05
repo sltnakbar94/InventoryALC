@@ -51,6 +51,7 @@ class SalesOrderCrudController extends CrudController
         if (backpack_user()->hasRole('sales')) {
             $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
         }
+        $this->crud->addClause('where', 'status', '=', 0);
         if (backpack_user()->hasRole('purchasing')) {
             $this->crud->removeButton('create');
             $this->crud->removeButton('update');
