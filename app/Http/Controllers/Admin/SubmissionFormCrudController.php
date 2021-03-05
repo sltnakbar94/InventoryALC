@@ -52,6 +52,11 @@ class SubmissionFormCrudController extends CrudController
             $this->crud->removeButton('edit');
             $this->crud->removeButton('delete');
         }
+        if ($this->crud->status != 0) {
+            $this->crud->removeButton('create');
+            $this->crud->removeButton('edit');
+            $this->crud->removeButton('delete');
+        }
 
         $this->crud->addColumn([
             'name' => 'form_number',
