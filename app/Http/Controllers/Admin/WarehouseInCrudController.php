@@ -60,7 +60,7 @@ class WarehouseInCrudController extends CrudController
         }
         if (backpack_user()->hasRole('purchasing')) {
             $this->crud->removeButton('create');
-            $this->crud->removeButton('edit');
+            $this->crud->removeButton('update');
             $this->crud->removeButton('delete');
         }
 
