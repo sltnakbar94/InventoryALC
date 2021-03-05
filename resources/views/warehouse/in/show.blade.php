@@ -127,7 +127,7 @@
                     console.log(response.data.id)
                     var dsc = 0;
                     $('#editModalPurchaseOrderDetail').modal('show');
-                    $('#warehouse_in_detail_id').val(response.data.id)
+                    $('input[name=warehouse_in_detail_id]').val(response.data.id)
                     $('input[name=price]').val(response.data.price)
                     $('input[name=qty]').val(response.data.qty)
                     response.data.discount === null ? dsc = 0 : dsc = response.data.discount
