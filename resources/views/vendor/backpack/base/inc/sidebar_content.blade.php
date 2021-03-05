@@ -3,7 +3,7 @@
 @if(backpack_user()->hasAnyRole(['sales', 'superadmin']))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('submissionform') }}'><i class='lar la-file-alt'></i> Purchase Requisition</a></li>
 @endif
-@if(backpack_user()->hasAnyRole(['sales', 'superadmin', 'purchasing', 'operator-gudang']))
+@if(backpack_user()->hasAnyRole(['sales', 'superadmin', 'purchasing']))
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-industry"></i> sales</a>
         <ul class="nav-dropdown-items">
@@ -17,6 +17,9 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehouseout') }}'><i class="lar la-file"></i> Delivery Order</a></li>
         </ul>
     </li>
+@endif
+@if(backpack_user()->hasRole('operator-gudang'))
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehousein') }}'><i class="lar la-file-alt"></i> Terima Barang</a></li>
 @endif
 @if(backpack_user()->hasAnyRole(['operator-gudang', 'superadmin']))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class="lar la-file"></i> Delivery Note</a></li>
