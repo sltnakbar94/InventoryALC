@@ -198,7 +198,7 @@ class SalesOrderCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'destination',
-            'label' => 'Tujuan Pengiriman',
+            'label' => 'Alamat Tujuan',
             'type' => 'textarea',
         ]);
 
@@ -315,7 +315,7 @@ class SalesOrderCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'destination',
-            'label' => 'Tujuan Pengiriman',
+            'label' => 'Alamat Tujuan',
             'type' => 'textarea',
         ]);
 

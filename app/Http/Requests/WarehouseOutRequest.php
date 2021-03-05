@@ -28,7 +28,10 @@ class WarehouseOutRequest extends FormRequest
         return [
             'do_number' => 'required|unique:warehouse_outs,do_number',
             'customer_id' => 'required',
-            'do_date' => 'required'
+            'do_date' => 'required',
+            'expedition' => 'required',
+            'destination' => 'required',
+            'warehouse_id' => 'required',
         ];
     }
 

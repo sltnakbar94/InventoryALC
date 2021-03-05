@@ -99,8 +99,58 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        function edit(delivery_order_id) {
+        $.ajax({
+            type: "post",
+            url: "{{ backpack_url('Api/DeliveryOrderDetail') }}",
+            data: {
+                delivery_order_id: delivery_order_id,
+                _token: '{{ csrf_token() }}'
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    console.log(response)
+                    var dsc = 0;
+                    $('#editModalDeliveryOrderDetail').modal('show');
+                    $('#price').val(response.data.price)
+                    $('input[name=qty]').val(response.data.qty)
+                    response.data.discount === null ? dsc = 0 : dsc = response.data.discount
+                    $('input[name=discount]').val(dsc)
+                    $('select[name=item_id]').val(response.data.item_id).trigger('change');
+                }else{
+                    swalError({
+                        message: response.data.message,
+                        response: response.data.error,
+                    })
+                }
+            }
+        });
+    }
         $(document).ready(function() {
 		$('.select2').select2({})
     } );
+    $('#mySelect2').select2({
+        dropdownParent: $('#myModal')
+    });
+    function swalError(message) {
+        return swal({
+                    title: 'Gagal!',
+                    text: message,
+                    icon: 'error'
+                }).then(function () {
+                    location.reload();
+                })
+    }
+
+    function swalSuccess(message) {
+        return swal({
+                    title: 'Sukses!',
+                    text: message,
+                    icon: 'success'
+                }).then(function () {
+                    location.reload();
+                })
+    }
     </script>
 @endsection
