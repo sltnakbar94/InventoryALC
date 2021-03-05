@@ -32,9 +32,14 @@ class RoleSeeder extends Seeder
             'name' => 'operator-gudang',
         ]);
 
-        // Operator Office
-        $OOffice = Role::create([
-            'name' => 'operator-office',
+        // Operator sales
+        $sales = Role::create([
+            'name' => 'sales',
+        ]);
+
+        // Operator purchasing
+        $purchasing = Role::create([
+            'name' => 'purchasing',
         ]);
     }
 }
