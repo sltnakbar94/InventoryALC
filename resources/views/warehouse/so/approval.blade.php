@@ -1,4 +1,4 @@
-@if (!empty(@$crud->entry->details) && @$crud->entry->status == 0)
+@if (!empty(@$crud->entry->details->first()) && @$crud->entry->status == 0)
     <div class="card-footer">
         <form action="{{ backpack_url('salesorder/process') }}" method="post" name="form_add_in_detail" id="form_add_in_detail">
             @csrf
@@ -9,7 +9,7 @@
         </form>
     </div>
 @endif
-@if (!empty(@$crud->entry->details) && @$crud->entry->status == 1)
+@if (!empty(@$crud->entry->details->first()) && @$crud->entry->status == 1)
     <div class="card-footer" align="center">
         <div class="dropdown">
             <button class="btn btn-success dropdown-toggle col-md-8" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
