@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card no-padding no-border">
+                <div class="card no-padding no-border">{{dd($crud->entry->details)}}
                     @if (empty(@$crud->entry->details))
                         <div class="card-header">
                             <form action="{{ route('bagitemwarehousein.store') }}" method="post" name="form_add_in_detail" id="form_add_in_detail">
