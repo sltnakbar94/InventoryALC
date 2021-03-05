@@ -41,5 +41,10 @@ class RoleSeeder extends Seeder
         $purchasing = Role::create([
             'name' => 'purchasing',
         ]);
+
+        // Operator purchasing
+        $purchasing = Role::create([
+            'name' => 'operator-office',
+        ]);
     }
 }
