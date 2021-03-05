@@ -1,4 +1,4 @@
-@if (!empty(@$crud->entry->details->first()) && @$crud->entry->status == 0 && !empty(@$crud->entry->pic_customer) && !empty(@$crud->entry->pic_supplier))
+@if (!empty(@$crud->entry->details->first()) && @$crud->entry->status == 0 && !empty(@$crud->entry->pic_supplier))
     <div class="card-footer">
         <form action="{{ backpack_url('warehousein/process') }}" method="post" name="form_add_in_detail" id="form_add_in_detail">
             @csrf
