@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
 
-        $user2->assignRole('operator-office');
+        $user2->assignRole('sales');
 
         $user3 = User::create([
             'name' => 'Operator 3',
