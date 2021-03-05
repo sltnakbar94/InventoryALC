@@ -13,7 +13,7 @@
                     <form action="{{ backpack_url('bagitemwarehousein/edit') }}" method="post" name="form_add_in_detail" id="form_add_in_detail">
                         @csrf
                         <input type="hidden" name="warehouse_in_id" value="{{ $crud->entry->id }}">
-                        <input type="hidden" id="warehouse_in_detail_id" name="warehouse_in_detail_id" value="">
+                        <input type="text" id="warehouse_in_detail_id" name="warehouse_in_detail_id" value="">
 
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label><br>
