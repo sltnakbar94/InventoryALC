@@ -21,7 +21,7 @@
 @if(backpack_user()->hasRole('operator-gudang'))
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehousein') }}'><i class="lar la-file-alt"></i> Terima Barang</a></li>
 @endif
-@if(backpack_user()->hasAnyRole(['operator-gudang', 'superadmin']))
+@if(backpack_user()->hasAnyRole(['operator-gudang', 'sales', 'superadmin']))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class="lar la-file"></i> Delivery Note</a></li>
 @endif
 @if (backpack_user()->hasAnyRole(['admin', 'superadmin']))
