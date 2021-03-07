@@ -36,8 +36,11 @@ Route::group([
     Route::post('accept', 'ApiController@accept');
     Route::post('decline', 'ApiController@decline');
     Route::post('warehouseout-pic', 'WarehouseOutCrudController@storePic');
+    Route::post('warehouseout/process', 'WarehouseOutCrudController@process');
     Route::get('delivery-order/{id}/accept', 'WarehouseOutCrudController@accept');
     Route::get('delivery-order/{id}/denied', 'WarehouseOutCrudController@denied');
+    Route::get('deliveryorder/{id}/accept', 'WarehouseOutCrudController@acceptHeader');
+    Route::get('deliveryorder/{id}/denied', 'WarehouseOutCrudController@deniedHeader');
 
 
     // In

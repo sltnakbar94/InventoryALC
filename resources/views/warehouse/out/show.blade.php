@@ -60,14 +60,19 @@
             </div>
             <div class="col-md-7">
                 <div class="card no-padding no-border">
-                    <div class="card-header">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalWarehouseOut">
-                            <i class="fa fa-plus"></i> TAMBAH ITEM
-                        </button>
-                    </div>
+                    @if (@$crud->entry->status == 0 && backpack_user()->hasRole('sales'))
+                        <div class="card-header">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalWarehouseOut">
+                                <i class="fa fa-plus"></i> TAMBAH ITEM
+                            </button>
+                        </div>
+                    @endif
                     <div class="card-body">
                         @include('warehouse.out.list_content')
                     </div>
+                    @if (!empty(@$crud->entry->details->first()))
+                        @include('warehouse.out.approval')
+                    @endif
                 </div>
             </div>
         </div>

@@ -129,9 +129,6 @@ class SalesOrderDetailCrudController extends CrudController
     public function destroy($id)
     {
         $order_detail = SalesOrderDetail::findOrFail($id);
-        $grand_total = SalesOrder::findOrFail($order_detail->sales_order_id);
-        $grand_total->grand_total = $grand_total->grand_total - $order_detail->sub_total;
-        $grand_total->update();
         $order_detail->delete();
 
         \Alert::add('success', 'Berhasil hapus data Item')->flash();

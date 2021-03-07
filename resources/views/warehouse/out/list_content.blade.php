@@ -17,7 +17,7 @@
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
                         $status = array('Plan', 'Submited', 'Process', 'Denied', 'Complete');
-                        $qty_onhands = \App\Models\Item::select('id','name', 'qty')->where('id', '=', $detail->item->id)->first();
+                        $qty_onhands = \App\Models\Stock::where('warehouse_id', '=', $crud->entry->warehouse_id)->where('item_id', '=', $detail->item->id)->first();
                     @endphp
                     <tr>
                         <td>{{$key+1}}</td>
@@ -26,7 +26,7 @@
                         <td>{{$detail->item->unit}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
                         {{-- <td align="right">{{number_format($detail->qty_confirm)}}</td> --}}
-                        @if ($qty_onhands->qty >= $detail->qty)
+                        @if ($qty_onhands->stock_on_hand >= $detail->qty)
                             <td> - </td>
                         @else
                             <td><strong class="bg-danger">Stock Tidak Mencukupi</strong></td>
@@ -34,23 +34,14 @@
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
-                                <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning"><i class="las la-pencil-alt"></i></button>
-                                <button id="delete" onclick="return confirmation({{ $detail->id }});" type="button" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
-
-                                <form id="delete-form{{ $detail->id }}" method="POST" action="{{ route('bagitemwarehouseout.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
-                                    @method('DELETE')
-                                    @csrf
-                                    {{-- <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button> --}}
-                                </form>
-                                <div class="btn-group" role="group">
-                                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Status
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                        <a class="dropdown-detail" href="{{backpack_url('delivery-order/'.$detail->id.'/accept')}}">Setujui</a>
-                                        <a class="dropdown-detail" href="{{backpack_url('delivery-order/'.$detail->id.'/denied')}}">Tolak</a>
-                                    </div>
-                                </div>
+                                @if ($detail->status == 0 && backpack_user()->hasRole('sales'))
+                                    <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning" style="height: 100%"><i class="las la-pencil-alt"></i></button>
+                                    <form id="delete-form{{ $detail->id }}" method="POST" action="{{ route('bagitemwarehouseout.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger" style="height: 100%"><i class="las la-trash-alt"></i></button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

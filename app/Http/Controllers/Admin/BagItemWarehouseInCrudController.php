@@ -75,9 +75,6 @@ class BagItemWarehouseInCrudController extends CrudController
     public function destroy($id)
     {
         $data = BagItemWarehouseIn::findOrFail($id);
-        $grand_total = WarehouseIn::findOrFail($data->warehouse_in_id);
-        $grand_total->grand_total = $grand_total->grand_total - $data->sub_total;
-        $grand_total->update();
         $data->delete();
 
         \Alert::add('success', 'Berhasil hapus data Item')->flash();

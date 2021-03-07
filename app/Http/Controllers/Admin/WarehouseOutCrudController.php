@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\BagItemWarehouseOut;
 use App\Services\DeliveryOrderServices;
 use App\Http\Requests\WarehouseOutRequest;
+use App\Models\Stock;
 use App\Models\Warehouse;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -52,6 +53,19 @@ class WarehouseOutCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+
+        if (backpack_user()->hasRole('sales')) {
+            $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+            $this->crud->addClause('where', 'status', '!=', 4);
+            $this->crud->addClause('where', 'status', '!=', 3);
+        }
+        if (backpack_user()->hasRole('purchasing')) {
+            $this->crud->addClause('where', 'status', '=', 1);
+            $this->crud->removeButton('create');
+            $this->crud->removeButton('update');
+            $this->crud->removeButton('delete');
+        }
+
         $this->crud->addColumn([
             'name' => 'do_number',
             'type' => 'text',
@@ -400,4 +414,61 @@ class WarehouseOutCrudController extends CrudController
         return redirect()->back();
     }
 
+    public function process(Request $request)
+    {
+        $header = WarehouseOut::findOrFail($request->id);
+        $header->status = Flag::SUBMITED;
+        $details = BagItemWarehouseOut::where('warehouse_out_id', '=', $request->id)->get();
+        foreach ($details as $detail) {
+            $update = BagItemWarehouseOut::findOrFail($detail->id);
+            $update->status = Flag::SUBMITED;
+            $stocks = Stock::where('warehouse_id', '=', $header->warehouse_id)->where('item_id', '=', $update->item_id)->first();
+            $stock = Stock::findOrFail($stocks->id);
+            $stock->stock_on_location -= $update->qty;
+            $stock->stock_out_indent += $update->qty;
+            $stock->update();
+            $update->update();
+        }
+        $header->update();
+
+        \Alert::add('success', 'Berhasil submit ' . $header->po_number)->flash();
+        return redirect()->back();
+    }
+
+    public function acceptHeader(Request $request)
+    {
+        $header = WarehouseOut::findOrFail($request->id);
+        $header->status = Flag::PROCESS;
+        $details = BagItemWarehouseOut::where('warehouse_out_id', '=', $request->id)->get();
+        foreach ($details as $detail) {
+            $update = BagItemWarehouseOut::findOrFail($detail->id);
+            $update->status = Flag::PROCESS;
+            $update->update();
+        }
+        $header->update();
+
+        \Alert::add('success', 'Berhasil submit ' . $header->po_number)->flash();
+        return redirect()->back();
+    }
+
+    public function deniedHeader(Request $request)
+    {
+        $header = WarehouseOut::findOrFail($request->id);
+        $header->status = Flag::DENIED;
+        $details = BagItemWarehouseOut::where('warehouse_out_id', '=', $request->id)->get();
+        foreach ($details as $detail) {
+            $update = BagItemWarehouseOut::findOrFail($detail->id);
+            $update->status = Flag::DENIED;
+            $stocks = Stock::where('warehouse_id', '=', $header->warehouse_id)->where('item_id', '=', $update->item_id)->first();
+            $stock = Stock::findOrFail($stocks->id);
+            $stock->stock_on_location += $update->qty;
+            $stock->stock_out_indent -= $update->qty;
+            $stock->update();
+            $update->update();
+        }
+        $header->update();
+
+        \Alert::add('success', 'Berhasil submit ' . $header->po_number)->flash();
+        return redirect()->back();
+    }
 }
