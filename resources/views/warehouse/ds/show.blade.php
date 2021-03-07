@@ -60,7 +60,7 @@
             </div>
             <div class="col-md-7">
                 <div class="card no-padding no-border">
-                    {{-- @if (empty(@$crud->entry->details->first()) && backpack_user()->hasRole('operator-gudang')) --}}
+                    @if (empty(@$crud->entry->details->first()) && backpack_user()->hasRole('operator-gudang'))
                         <div class="card-header">
                             <form action="{{ route('deliverybysalesdetail.store') }}" method="post" name="form_add_in_detail" id="form_add_in_detail">
                                 @csrf
@@ -69,7 +69,7 @@
 
                             </form>
                         </div>
-                    {{-- @endif --}}
+                    @endif
                     <div class="card-body">
                         @include('warehouse.ds.list_content')
                     </div>

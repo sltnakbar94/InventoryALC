@@ -50,6 +50,17 @@ class DeliveryNoteCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        if (backpack_user()->hasRole('sales')) {
+            $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+            $this->crud->addClause('where', 'status', '!=', 4);
+            $this->crud->addClause('where', 'status', '!=', 3);
+        }
+        if (backpack_user()->hasRole('purchasing')) {
+            $this->crud->addClause('where', 'status', '=', 1);
+            $this->crud->removeButton('create');
+            $this->crud->removeButton('update');
+            $this->crud->removeButton('delete');
+        }
         $this->crud->addClause('where', 'module', '=', 'delivery_order');
         $this->crud->addColumn([
             'name' => 'dn_number',

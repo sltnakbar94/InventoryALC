@@ -37,7 +37,7 @@ class DeliveryBySalesCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\DeliveryBySales::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/deliverybysales');
-        CRUD::setEntityNameStrings('deliverybysales', 'delivery_by_sales');
+        CRUD::setEntityNameStrings('Delivery by Sales', 'Delivery by Sales');
         $this->crud->setShowView('warehouse.ds.show');
     }
 
@@ -49,7 +49,65 @@ class DeliveryBySalesCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        if (backpack_user()->hasRole('sales')) {
+            $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+            $this->crud->addClause('where', 'status', '!=', 4);
+            $this->crud->addClause('where', 'status', '!=', 3);
+        }
+        if (backpack_user()->hasRole('purchasing')) {
+            $this->crud->addClause('where', 'status', '=', 1);
+            $this->crud->removeButton('create');
+            $this->crud->removeButton('update');
+            $this->crud->removeButton('delete');
+        }
+
+        $this->crud->addColumn([
+            'name' => 'ds_number',
+            'type' => 'text',
+            'label' => 'Nomor Surat Jalan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'sales_order_id',
+            'type' => 'select',
+            'entity' => 'SalesOrder',
+            'attribute' => 'so_number',
+            'model' => 'App\Models\SalesOrder',
+            'label' => 'Nomor Sales Order'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'ds_date',
+            'type' => 'date',
+            'label' => 'Tanggal Delivery Note'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'expedition',
+            'type' => 'text',
+            'label' => 'Ekspedisi'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'etd',
+            'type' => 'date',
+            'label' => 'Estimasi Keberangkatan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'description',
+            'type' => 'text',
+            'label' => 'Catatan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'user_id',
+            'type' => 'select',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => 'App\Models\User',
+            'label' => 'Operator'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
