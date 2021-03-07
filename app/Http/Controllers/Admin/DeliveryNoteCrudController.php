@@ -332,7 +332,7 @@ class DeliveryNoteCrudController extends CrudController
                 $detail_pr->update();
             }
         }
-        if (empty($do_details->where('status', '!=', Flag::COMPLETE)->first())) {
+        if (empty(BagItemWarehouseOut::where('warehouse_out_id', '=', $header_do->id)->where('status', '!=', Flag::COMPLETE)->first())) {
             $delivery_order = WarehouseOut::findOrFail($header_do->id);
             $delivery_order->status = Flag::COMPLETE;
             $delivery_order->update();
