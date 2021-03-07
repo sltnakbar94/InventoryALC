@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Flag;
 use App\Models\WarehouseOut;
 use App\Services\GlobalServices;
 use App\Http\Requests\DeliveryNoteRequest;
+use App\Models\BagItemWarehouseOut;
 use App\Models\DeliveryNote;
+use App\Models\DeliveryNoteDetail;
+use App\Models\Stock;
 use App\Services\DeliveryNoteServices;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -34,7 +38,7 @@ class DeliveryNoteCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\DeliveryNote::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/deliverynote');
-        CRUD::setEntityNameStrings('deliverynote', 'delivery_notes');
+        CRUD::setEntityNameStrings('Delivery Note', 'Delivery Note');
         $this->crud->setShowView('warehouse.dn.show');
     }
 
@@ -81,12 +85,6 @@ class DeliveryNoteCrudController extends CrudController
             'name' => 'etd',
             'type' => 'date',
             'label' => 'Estimasi Keberangkatan'
-        ]);
-
-        $this->crud->addColumn([
-            'name' => 'eta',
-            'type' => 'date',
-            'label' => 'Estimasi Sampai'
         ]);
 
         $this->crud->addColumn([
@@ -152,7 +150,7 @@ class DeliveryNoteCrudController extends CrudController
             'name' => 'reference',
             'label' => 'Nomor DO',
             'type' => 'select2_from_array',
-            'options' => WarehouseOut::pluck('do_number', 'id'),
+            'options' => WarehouseOut::where('status', '=', Flag::PROCESS)->pluck('do_number', 'id'),
             'allows_null' => true,
         ]);
 
@@ -169,18 +167,9 @@ class DeliveryNoteCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'eta',
-            'label' => 'Estimasi Sampai',
-            'type' => 'datetime_picker',
-        ]);
-
-        $this->crud->addField([
-            'name' => 'total_weight',
-            'label' => 'Berat Total Barang',
+            'name' => 'plat_number',
+            'label' => 'Plat Nomor Kendaraan',
             'type' => 'text',
-            'attributes' => [
-                'placeholder' => 'Contoh : 80 KG',
-              ],
         ]);
 
         $this->crud->addField([
@@ -260,18 +249,9 @@ class DeliveryNoteCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'eta',
-            'label' => 'Estimasi Sampai',
-            'type' => 'datetime_picker',
-        ]);
-
-        $this->crud->addField([
-            'name' => 'total_weight',
-            'label' => 'Berat Total Barang',
+            'name' => 'plat_number',
+            'label' => 'Plat Nomor Kendaraan',
             'type' => 'text',
-            'attributes' => [
-                'placeholder' => 'Contoh : 80 KG',
-              ],
         ]);
 
         $this->crud->addField([
@@ -326,5 +306,40 @@ class DeliveryNoteCrudController extends CrudController
 
         $pdf = PDF::loadview('warehouse.dn.output_do',['data'=>$data]);
     	return $pdf->stream($data->do_number.'.pdf');
+    }
+
+    public function process(Request $request)
+    {
+        $header = DeliveryNote::findOrFail($request->id);
+        $header->status = Flag::COMPLETE;
+        $details = DeliveryNoteDetail::where('delivery_note_id', '=', $request->id)->get();
+        $header_do = $header->WarehouseOut;
+        $do_details = BagItemWarehouseOut::where('warehouse_out_id', '=', $header_do->id)->get();
+        foreach ($details as $detail) {
+            $update = DeliveryNoteDetail::findOrFail($detail->id);
+            $stocks = Stock::where('warehouse_id', '=', $header_do->warehouse_id)->where('item_id', '=', $detail->item_id)->first();
+            $stock = Stock::findOrFail($stocks->id);
+            $stock->stock_on_hand -= $detail->qty;
+            $stock->stock_out_indent -= $detail->qty;
+            $update->status = Flag::COMPLETE;
+            $stock->update();
+            $update->update();
+        }
+        foreach ($do_details as $do_detail) {
+            if ($details->where('item_id', '=', $do_detail->item_id)->sum('qty') == $do_detail->qty) {
+                $detail_pr = BagItemWarehouseOut::findOrFail($do_detail->id);
+                $detail_pr->status = Flag::COMPLETE;
+                $detail_pr->update();
+            }
+        }
+        if (empty($do_details->where('status', '!=', Flag::COMPLETE)->first())) {
+            $delivery_order = WarehouseOut::findOrFail($header_do->id);
+            $delivery_order->status = Flag::COMPLETE;
+            $delivery_order->update();
+        }
+        $header->update();
+
+        \Alert::add('success', 'Berhasil submit ' . $header->do_number)->flash();
+        return redirect()->back();
     }
 }

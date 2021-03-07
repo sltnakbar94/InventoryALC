@@ -13,10 +13,11 @@
                     <form action="{{ route('deliverynotedetail.store') }}" method="post" name="form_add_dn_detail" id="form_add_dn_detail">
                         @csrf
                         <input type="hidden" name="delivery_note_id" value="{{ $crud->entry->id }}">
+                        <input type="hidden" id="delivery_note_detail_id" name="delivery_note_detail_id" value="">
 
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label><br>
-                            <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" required>
+                            <select name="item_id" style="width: 100%" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" disabled>
                             <option value="">--PILIH BARANG--</option>
                                 @foreach(\App\Models\Item::select('id','name')->get() as $value => $text)
                                         <option value="{{ $text->id }}">{{ $text->name }}</option>

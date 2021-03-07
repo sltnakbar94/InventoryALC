@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Flag;
 use App\Http\Requests\DeliveryNoteDetailRequest;
+use App\Models\BagItemWarehouseOut;
 use App\Models\DeliveryNote;
 use App\Models\DeliveryNoteDetail;
 use App\Models\Item;
+use App\Models\WarehouseOut;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
@@ -85,24 +87,31 @@ class DeliveryNoteDetailCrudController extends CrudController
 
     public function store(Request $request)
     {
-        $find = DeliveryNoteDetail::where('delivery_note_id', '=', $request->delivery_note_id)->where('item_id', '=', $request->item_id)->first();
-        $item = Item::findOrFail($request->item_id);
-        if (!empty($find)) {
-            $data = DeliveryNoteDetail::findOrFail($request->item_id);
-            $data->qty = $data->qty + $request->qty;
-            $data->update();
-        } else {
-            $data = new DeliveryNoteDetail;
-            $data->delivery_note_id = $request->delivery_note_id;
-            $data->item_id = $request->item_id;
-            $data->serial = $item->serial;
-            $data->qty = $request->qty;
-            $data->uom = $item->unit;
-            $data->save();
-        }
-        $item = Item::findOrFail($request->item_id);
+        $header = DeliveryNote::findOrFail($request->delivery_note_id);
+        $header_do = $header->WarehouseOut;
+        $do_details = BagItemWarehouseOut::where('warehouse_out_id', '=', $header_do->id)->get();
+        $item_id = collect($do_details->toArray())->all();
+        $items = Item::whereIn('id', array_column($item_id, 'item_id'))->get();
+        foreach ($do_details as $do_detail) {
+            $item = Item::find($do_detail->item_id);
+            $find = DeliveryNoteDetail::where('delivery_note_id', '=', $request->delivery_note_id)->where('item_id', '=', $do_detail->item_id)->first();
+            if (empty($find)) {
+                $detail = new DeliveryNoteDetail;
+                $detail->delivery_note_id = $request->delivery_note_id;
+                $detail->item_id = $do_detail->item_id;
+                $detail->qty = $do_detail->qty;
+                $detail->serial = $item->serial;
+                $detail->uom = $item->uom;
+                $detail->user_id = backpack_auth()->id();
+                $detail->save();
+            } else {
+                $detail = DeliveryNoteDetail::findOrFail($find->id);
+                $detail->qty = $detail->qty + $do_detail->qty;
+                $detail->update();
+            }
 
-        \Alert::add('success', 'Berhasil tambah item ' . $item->name)->flash();
+        }
+        \Alert::add('success', 'Berhasil tambah item ')->flash();
         return redirect()->back();
     }
 

@@ -92,8 +92,7 @@
     </table>
     <table cellspacing="0" border="0">
 	<tr>
-		<td colspan="5" height="21" align="left" valign=bottom><font color="#000000">Bersama ini kami kirim kan dengan kendaraan no.pol : {plat} , pengemudi : {{$data->driver}}, Keterangan :</font></td>
-		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000">Bersama ini kami kirim kan dengan kendaraan no.pol : {{$data->plat_number}} , pengemudi : {{$data->driver}}, Berikut list barang yang kami sertakan :</font></td>
 	</tr>
 	<tr>
 		<td width="43" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" height="20" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">No.</font></b></td>

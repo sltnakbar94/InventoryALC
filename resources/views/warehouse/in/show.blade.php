@@ -101,14 +101,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 @endsection
 
-@section('after_styles')
-	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/crud.css') }}">
-	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/show.css') }}">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-@endsection
-
 @section('after_scripts')
     <script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
 	<script src="{{ asset('packages/backpack/crud/js/show.js') }}"></script>

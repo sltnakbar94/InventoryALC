@@ -17,7 +17,7 @@
 
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label>
-                            <select disabled name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}" required>
+                            <select disabled style="width: 100%" name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}" required>
                             <option value="">--PILIH BARANG--</option>
                                 @foreach(\App\Models\Item::select('id','name')->get() as $value => $text)
                                         <option value="{{ $text->id }}">{{ $text->name }}</option>

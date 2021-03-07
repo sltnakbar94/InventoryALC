@@ -39,22 +39,13 @@
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
-                                @if ($detail->status == 0)
-                                    <button onclick="edit({{ $detail->id }})" href="{{ route('salesorderdetail.edit', $detail->id) }}" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button>
-                                    <form method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                @if ($detail->status == 0 && backpack_user()->hasRole('operator-gudang'))
+                                    <button onclick="edit({{ $detail->id }})" href="{{ route('deliverynotedetail.edit', $detail->id) }}" style="height: 100%" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button>
+                                    <form method="POST" action="{{ route('deliverynotedetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-danger"><i class="las la-trash-alt"></i></button>
+                                        <button type="submit" class="btn btn-danger" style="height: 100%"><i class="las la-trash-alt"></i></button>
                                     </form>
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Status
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-detail" href="{{backpack_url('deliverynotedetail/'.$detail->id.'/accept')}}">Setujui</a>
-                                            <a class="dropdown-detail" href="{{backpack_url('deliverynotedetail/'.$detail->id.'/denied')}}">Tolak</a>
-                                        </div>
-                                    </div>
                                 @endif
                             </div>
                         </td>
@@ -69,30 +60,3 @@
         </div>
     </div>
 </div>
-
-@section('after_scripts')
-    <script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
-	<script src="{{ asset('packages/backpack/crud/js/show.js') }}"></script>
-    <script>
-        function edit(params) {
-            $.ajax({
-                type: "post",
-                url: "{{ backpack_url('Api/DeliverySODetail') }}",
-                data: {
-
-                },
-                dataType: "dataType",
-                success: function (response) {
-
-                }
-            });
-        }
-    </script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-		$('.select2').select2({})
-    } );
-    </script>
-@endsection

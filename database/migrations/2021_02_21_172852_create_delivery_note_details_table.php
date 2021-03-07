@@ -21,6 +21,7 @@ class CreateDeliveryNoteDetailsTable extends Migration
             $table->bigInteger('qty')->nullable();
             $table->string('uom')->nullable();
             $table->integer('status')->default(0);
+            $table->string('user_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

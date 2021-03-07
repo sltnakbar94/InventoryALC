@@ -431,7 +431,7 @@ class WarehouseOutCrudController extends CrudController
         }
         $header->update();
 
-        \Alert::add('success', 'Berhasil submit ' . $header->po_number)->flash();
+        \Alert::add('success', 'Berhasil submit ' . $header->do_number)->flash();
         return redirect()->back();
     }
 

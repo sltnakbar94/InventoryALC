@@ -28,6 +28,7 @@ class DeliveryNoteRequest extends FormRequest
         return [
             'dn_number' => 'required|unique:delivery_notes,dn_number',
             'reference' => 'required',
+            'plat_number' => 'required',
             'dn_date' => 'required',
             'driver' => 'required',
             'driver_phone' => 'required',

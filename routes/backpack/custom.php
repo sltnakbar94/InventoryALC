@@ -61,6 +61,7 @@ Route::group([
     Route::crud('deliverynote', 'DeliveryNoteCrudController');
     Route::get('deliverynote/{warehouse_out_id}', 'DeliveryNoteCrudController@generateDeliveryNote');
     Route::get('deliverynote/{id}/pdf', 'DeliveryNoteCrudController@pdf');
+    Route::post('deliverynote/process', 'DeliveryNoteCrudController@process');
 
     //Data Master
     Route::crud('item', 'ItemCrudController');

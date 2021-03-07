@@ -23,6 +23,7 @@ class CreateDeliveryNotesTable extends Migration
             $table->dateTime('etd')->nullable();
             $table->dateTime('eta')->nullable();
             $table->string('total_weight')->nullable();
+            $table->string('plat_number')->nullable();
             $table->string('driver')->nullable();
             $table->string('driver_phone')->nullable();
             $table->string('module')->nullable();

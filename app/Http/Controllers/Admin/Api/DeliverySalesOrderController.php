@@ -11,23 +11,23 @@ use App\Services\DeliveryNoteServices;
 
 class DeliverySalesOrderController extends Controller
 {
-    public function __construct(
-        DeliveryNoteDetail $deliveryNoteDetail,
-        DeliveryNote $deliveryNote,
-
-        CRUDServices $crudService,
-        DeliveryNoteServices $deliveryNoteService
-
-        ) {
-        $this->deliveryNoteDetail = $deliveryNoteDetail;
-        $this->deliveryNote = $deliveryNote;
-
-        $this->crudService = $crudService;
-        $this->deliveryNoteService = $deliveryNoteService;
-    }
-
     public function getDeliverySalesOrderById(Request $request)
     {
-        dd($request);
+        $deliveryNoteDetail = DeliveryNoteDetail::find($request->delivery_note_id);
+        if ($deliveryNoteDetail == null) {
+            $return = array (
+                'code' => 404,
+                'error' => true,
+                'message' => 'Data Tidak Ditemukan',
+            );
+        }else{
+            $return = array (
+                'code' => 200,
+                'success' => true,
+                'data' => $deliveryNoteDetail,
+                'message' => 'Data Ditemukan',
+            );
+        }
+        return $return;
     }
 }
