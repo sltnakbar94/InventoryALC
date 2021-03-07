@@ -60,7 +60,7 @@
             </div>
             <div class="col-md-8">
                 <div class="card no-padding no-border">
-                    @if (empty(@$crud->entry->details->first()))
+                    @if (empty(@$crud->entry->details->first()) && backpack_user()->hasRole('sales'))
                         <div class="card-header">
                             <form action="{{ route('salesorderdetail.store') }}" method="post" name="form_add_in_detail" id="form_add_in_detail">
                                 @csrf

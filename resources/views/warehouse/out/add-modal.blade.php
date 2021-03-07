@@ -16,10 +16,10 @@
 
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label><br>
-                            <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" required>
+                            <select name="item_id" id="mySelect2" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
                             <option value="">--PILIH BARANG--</option>
-                                @foreach(\App\Models\Item::select('id','name', 'qty')->get() as $value => $text)
-                                        <option value="{{ $text->id }}">{{ $text->name }} - Stock : {{ $text->qty }}</option>
+                                @foreach(\App\Models\Stock::where('warehouse_id', '=', $crud->entry->warehouse_id)->get() as $text)
+                                        <option value="{{ $text->item_id }}">{{ $text->item->name }} - Stock on Hand : {{ $text->stock_on_hand }}, Stock on Location {{ $text->stock_on_location }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -29,24 +29,6 @@
                             @if ($errors->has('qty'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('qty') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="price">Harga Satuan</label>
-                            <input type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ old('price') }}" required>
-                            @if ($errors->has('price'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('price') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="discount">Diskon (%)</label>
-                            <input type="number" class="form-control{{ $errors->has('discount') ? ' is-invalid' : '' }}" name="discount" value="{{ old('discount') }}">
-                            @if ($errors->has('discount'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('discount') }}</strong>
                                 </span>
                             @endif
                         </div>

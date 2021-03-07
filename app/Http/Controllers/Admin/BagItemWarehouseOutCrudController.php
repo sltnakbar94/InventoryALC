@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Stock;
 use App\Models\WarehouseOut;
 
 /**
@@ -98,11 +99,23 @@ class BagItemWarehouseOutCrudController extends CrudController
 
     public function store(Request $request)
     {
+        $warehouse = WarehouseOut::find($request->warehouse_out_id);
+        $stock = Stock::where('warehouse_id', '=', $warehouse->warehouse_id)->where('item_id', '=', $request->item_id)->first();
+        if ($request->qty > $stock->stock_on_hand) {
+            \Alert::add('danger', 'Stock tidak mencukupi')->flash();
+            return redirect()->back();
+        }
         $find = BagItemWarehouseOut::where('warehouse_out_id', '=', $request->warehouse_out_id)->where('item_id', '=', $request->item_id)->first();
         if (!empty($find)) {
-            $data = BagItemWarehouseOut::findOrFail($request->item_id);
-            $data->qty = $data->qty + $request->qty;
-            $data->update();
+            $limit = $find->qty + $request->qty;
+            if ($limit > $stock->stock_on_hand) {
+                \Alert::add('danger', 'Stock tidak mencukupi')->flash();
+                return redirect()->back();
+            }else{
+                $data = BagItemWarehouseOut::findOrFail($request->item_id);
+                $data->qty = $data->qty + $request->qty;
+                $data->update();
+            }
         } else {
             $item = Item::findOrFail($request->item_id);
             $data = new BagItemWarehouseOut;

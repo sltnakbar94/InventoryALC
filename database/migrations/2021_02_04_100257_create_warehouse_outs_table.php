@@ -27,6 +27,10 @@ class CreateWarehouseOutsTable extends Migration
             $table->text('description')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->string('warehouse_id')->nullable();
+            $table->text('destination')->nullable();
+            $table->bigInteger('grand_total')->nullable();
+            $table->string('term_of_payment')->nullable();
             //Add-on Data
             $table->string('pic_customer')->nullable();
             $table->string('user_id');

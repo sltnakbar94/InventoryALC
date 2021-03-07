@@ -48,7 +48,17 @@ class SalesOrderCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+        if (backpack_user()->hasRole('sales')) {
+            $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+            $this->crud->addClause('where', 'status', '!=', 4);
+            $this->crud->addClause('where', 'status', '!=', 3);
+        }
+        if (backpack_user()->hasRole('purchasing')) {
+            $this->crud->addClause('where', 'status', '=', 1);
+            $this->crud->removeButton('create');
+            $this->crud->removeButton('update');
+            $this->crud->removeButton('delete');
+        }
 
         $this->crud->addColumn([
             'name' => 'so_number',
@@ -200,7 +210,7 @@ class SalesOrderCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'destination',
-            'label' => 'Tujuan Pengiriman',
+            'label' => 'Alamat Tujuan',
             'type' => 'textarea',
         ]);
 
@@ -317,7 +327,7 @@ class SalesOrderCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'destination',
-            'label' => 'Tujuan Pengiriman',
+            'label' => 'Alamat Tujuan',
             'type' => 'textarea',
         ]);
 
