@@ -55,6 +55,18 @@ class WarehouseInCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        if (backpack_user()->hasRole('sales')) {
+            $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+            $this->crud->addClause('where', 'status', '!=', 4);
+            $this->crud->addClause('where', 'status', '!=', 3);
+        }
+        if (backpack_user()->hasRole('purchasing')) {
+            $this->crud->addClause('where', 'status', '=', 1);
+            $this->crud->removeButton('create');
+            $this->crud->removeButton('update');
+            $this->crud->removeButton('delete');
+        }
+
         $this->crud->addColumn([
             'name' => 'po_number',
             'type' => 'text',
@@ -143,12 +155,11 @@ class WarehouseInCrudController extends CrudController
             'label'     => "Pilih Purchase Requisition",
             'type'      => 'select2_multiple',
             'name'      => 'purchaseRequisition', // the method that defines the relationship in your Model
-            'pivot'     => true,
             'entity'    => 'purchaseRequisition',
             'attribute' => 'form_number',
             'model'     => 'App\Models\SubmissionForm',
             'options'   => (function ($query) {
-                return $query->where('project_id', '=', 1)->where('status', '=', 0)->get();
+                return $query->where('project_id', '=', 1)->where('status', '=', 0)->where('user_id', '=', backpack_auth()->id())->get();
             }),
         ]);
 

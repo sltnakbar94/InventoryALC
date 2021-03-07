@@ -1,4 +1,4 @@
-@if (!empty(@$crud->entry->details->first()) && @$crud->entry->status == 0 && !empty(@$crud->entry->pic_customer) && !empty(@$crud->entry->pic_supplier))
+@if (!empty(@$crud->entry->details->first()) && @$crud->entry->status == 0 && !empty(@$crud->entry->pic_supplier) && backpack_user()->hasRole('sales'))
     <div class="card-footer">
         <form action="{{ backpack_url('warehousein/process') }}" method="post" name="form_add_in_detail" id="form_add_in_detail">
             @csrf
@@ -9,7 +9,7 @@
         </form>
     </div>
 @endif
-@if (!empty(@$crud->entry->details->first()) && @$crud->entry->status == 1)
+@if (!empty(@$crud->entry->details->first()) && @$crud->entry->status == 1 && backpack_user()->hasRole('purchasing'))
     <div class="card-footer" align="center">
         <div class="dropdown">
             <button class="btn btn-success dropdown-toggle col-md-8" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

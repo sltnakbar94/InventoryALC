@@ -35,7 +35,7 @@
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
-                                @if ($detail->status == 0)
+                                @if ($detail->status == 0 && backpack_user()->hasRole('sales'))
                                     <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning" style="height: 100%"><i class="las la-pencil-alt"></i></button>
                                     <form id="delete-form{{ $detail->id }}" method="POST" action="{{ route('salesorderdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
                                         @method('DELETE')

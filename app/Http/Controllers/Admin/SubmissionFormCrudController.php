@@ -46,7 +46,62 @@ class SubmissionFormCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
+        $this->crud->addClause('where', 'status', '=', 0);
+        if (backpack_user()->hasAnyRole(['purchasing', 'operator-gudang'])) {
+            $this->crud->removeButton('create');
+            $this->crud->removeButton('edit');
+            $this->crud->removeButton('delete');
+        }
+
+        $this->crud->addColumn([
+            'name' => 'form_number',
+            'type' => 'text',
+            'label' => 'Nomor Purchase Requisition'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'form_date',
+            'type' => 'date',
+            'label' => 'Tanggal Pengajuan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'ref_no',
+            'type' => 'text',
+            'label' => 'Nomor Referensi'
+        ]);
+
+        $this->crud->addColumn([
+            'name'  => 'project_id',
+            'label' => 'Peruntukan',
+            'type'  => 'select_from_array',
+            // optionally override the Yes/No texts
+            'options' => [1 => 'Stock', 2 => 'Proyek']
+        ]);
+
+        $this->crud->addColumn([
+            'name'  => 'status',
+            'label' => 'Status',
+            'type'  => 'select_from_array',
+            // optionally override the Yes/No texts
+            'options' => [0 => 'Plan', 1 => 'Submited', 2 => 'Process', 3 => 'Denied', 4 => 'Completed']
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'description',
+            'type' => 'textarea',
+            'label' => 'Keterangan'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'user_id',
+            'type' => 'select',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => 'App\Models\User',
+            'label' => 'Operator'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
