@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Flag;
-use App\Http\Requests\DeliveryNoteDetailRequest;
-use App\Models\BagItemWarehouseOut;
-use App\Models\DeliveryNote;
-use App\Models\DeliveryNoteDetail;
+use App\Http\Requests\DeliveryBySalesDetailRequest;
+use App\Models\DeliveryBySales;
+use App\Models\DeliveryBySalesDetail;
 use App\Models\Item;
-use App\Models\WarehouseOut;
+use App\Models\SalesOrderDetail;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
 
 /**
- * Class DeliveryNoteDetailCrudController
+ * Class DeliveryBySalesDetailCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class DeliveryNoteDetailCrudController extends CrudController
+class DeliveryBySalesDetailCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -33,9 +31,9 @@ class DeliveryNoteDetailCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\DeliveryNoteDetail::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/deliverynotedetail');
-        CRUD::setEntityNameStrings('deliverynotedetail', 'delivery_note_details');
+        CRUD::setModel(\App\Models\DeliveryBySalesDetail::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/deliverybysalesdetail');
+        CRUD::setEntityNameStrings('deliverybysalesdetail', 'delivery_by_sales_details');
     }
 
     /**
@@ -63,7 +61,7 @@ class DeliveryNoteDetailCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(DeliveryNoteDetailRequest::class);
+        CRUD::setValidation(DeliveryBySalesDetailRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -87,26 +85,26 @@ class DeliveryNoteDetailCrudController extends CrudController
 
     public function store(Request $request)
     {
-        $header = DeliveryNote::findOrFail($request->delivery_note_id);
-        $header_do = $header->WarehouseOut;
-        $do_details = BagItemWarehouseOut::where('warehouse_out_id', '=', $header_do->id)->get();
-        $item_id = collect($do_details->toArray())->all();
+        $header = DeliveryBySales::findOrFail($request->delivery_by_sales_id);
+        $header_so = $header->SalesOrder;
+        $so_details = SalesOrderDetail::where('sales_order_id', '=', $header_so->id)->get();
+        $item_id = collect($so_details->toArray())->all();
         $items = Item::whereIn('id', array_column($item_id, 'item_id'))->get();
-        foreach ($do_details as $do_detail) {
-            $item = Item::find($do_detail->item_id);
-            $find = DeliveryNoteDetail::where('delivery_note_id', '=', $request->delivery_note_id)->where('item_id', '=', $do_detail->item_id)->first();
+        foreach ($so_details as $so_detail) {
+            $item = Item::find($so_detail->item_id);
+            $find = DeliveryBySalesDetail::where('delivery_by_sales_id', '=', $request->delivery_by_sales_id)->where('item_id', '=', $so_detail->item_id)->first();
             if (empty($find)) {
-                $detail = new DeliveryNoteDetail;
-                $detail->delivery_note_id = $request->delivery_note_id;
-                $detail->item_id = $do_detail->item_id;
-                $detail->qty = $do_detail->qty;
+                $detail = new DeliveryBySalesDetail();
+                $detail->delivery_by_sales_id = $request->delivery_by_sales_id;
+                $detail->item_id = $so_detail->item_id;
+                $detail->qty = $so_detail->qty;
                 $detail->serial = $item->serial;
                 $detail->uom = $item->uom;
                 $detail->user_id = backpack_auth()->id();
                 $detail->save();
             } else {
-                $detail = DeliveryNoteDetail::findOrFail($find->id);
-                $detail->qty = $detail->qty + $do_detail->qty;
+                $detail = DeliveryBySalesDetail::findOrFail($find->id);
+                $detail->qty = $detail->qty + $so_detail->qty;
                 $detail->update();
             }
 
@@ -115,39 +113,29 @@ class DeliveryNoteDetailCrudController extends CrudController
         return redirect()->back();
     }
 
-    public function accept($id)
+    public function getDetail(Request $request)
     {
-        $data = DeliveryNoteDetail::findOrFail($id);
-        $data->status = Flag::COMPLETE;
-        $data->update();
-        if (empty(DeliveryNoteDetail::where('delivery_note_id', '=', $data->delivery_note_id)->where('status', '=', 0)->first())) {
-            $header = DeliveryNote::findOrFail($data->delivery_note_id);
-            $header->status = Flag::COMPLETE;
-            $header->update();
+        $deliverybysalesdetail = DeliveryBySalesDetail::find($request->delivery_by_sales_detail_id);
+        if ($deliverybysalesdetail == null) {
+            $return = array (
+                'code' => 404,
+                'error' => true,
+                'message' => 'Data Tidak Ditemukan',
+            );
+        }else{
+            $return = array (
+                'code' => 200,
+                'success' => true,
+                'data' => $deliverybysalesdetail,
+                'message' => 'Data Ditemukan',
+            );
         }
-
-        \Alert::add('success', 'Berhasil konfirmasi data Item')->flash();
-        return redirect()->back();
-    }
-
-    public function denied($id)
-    {
-        $data = DeliveryNoteDetail::findOrFail($id);
-        $data->status = Flag::DENIED;
-        $data->update();
-        if (empty(DeliveryNoteDetail::where('delivery_note_id', '=', $data->delivery_note_id)->where('status', '=', 0)->first())) {
-            $header = DeliveryNote::findOrFail($id);
-            $header->status = Flag::COMPLETE;
-            $header->update();
-        }
-
-        \Alert::add('success', 'Berhasil konfirmasi data Item')->flash();
-        return redirect()->back();
+        return $return;
     }
 
     public function edit(Request $request)
     {
-        $detail = DeliveryNoteDetail::findOrFail($request->delivery_by_sales_detail_id);
+        $detail = DeliveryBySalesDetail::findOrFail($request->delivery_by_sales_detail_id);
         $detail->qty = $request->qty;
         $detail->update();
 
@@ -157,7 +145,7 @@ class DeliveryNoteDetailCrudController extends CrudController
 
     public function destroy($id)
     {
-        $data = DeliveryNoteDetail::findOrFail($id);
+        $data = DeliveryBySalesDetail::findOrFail($id);
         $data->delete();
 
         \Alert::add('danger', 'Berhasil hapus data Item')->flash();

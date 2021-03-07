@@ -16,7 +16,7 @@
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
                         $status = array('Plan', 'Submited', 'Process', 'Denied', 'Complete');
-                        $comparison = $crud->entry->WarehouseOut->details->where('item_id', '=', $detail->item_id)->sum('qty');
+                        $comparison = $crud->entry->SalesOrder->details->where('item_id', '=', $detail->item_id)->sum('qty');
                     @endphp
                     <tr>
                         <td>{{$key+1}}</td>
@@ -32,14 +32,14 @@
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
-                                @if ($detail->status == 0 && backpack_user()->hasRole('operator-gudang'))
-                                    <button onclick="edit({{ $detail->id }})" href="{{ route('deliverynotedetail.edit', $detail->id) }}" style="height: 100%" type="button" class="btn btn-warning editModalSalesOrderDetail" data-toggle="modal" data-target="#editModalSalesOrderDetail"><i class="las la-pencil-alt"></i></button>
-                                    <form method="POST" action="{{ route('deliverynotedetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
+                                {{-- @if ($detail->status == 0 && backpack_user()->hasRole('operator-gudang')) --}}
+                                    <button onclick="edit({{ $detail->id }})" href="{{ route('deliverybysalesdetail.edit', $detail->id) }}" style="height: 100%" type="button" class="btn btn-warning editModalDeliveryBySalesDetail" data-toggle="modal" data-target="#editModalDeliveryBySalesDetail"><i class="las la-pencil-alt"></i></button>
+                                    <form method="POST" action="{{ route('deliverybysalesdetail.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-danger" style="height: 100%"><i class="las la-trash-alt"></i></button>
                                     </form>
-                                @endif
+                                {{-- @endif --}}
                             </div>
                         </td>
                     </tr>

@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateDeliveryNotesTable extends Migration
+class CreateDeliveryBySalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateDeliveryNotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('delivery_notes', function (Blueprint $table) {
+        Schema::create('delivery_by_sales', function (Blueprint $table) {
             $table->id();
-            $table->string('dn_number');
-            $table->string('reference')->nullable();
-            $table->date('dn_date')->nullable();
+            $table->string('ds_number');
+            $table->string('sales_order_id')->nullable();
+            $table->date('ds_date')->nullable();
             $table->string('expedition')->nullable();
             $table->string('consignee')->nullable();//penerima barang
             $table->dateTime('etd')->nullable();
@@ -42,6 +42,6 @@ class CreateDeliveryNotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delivery_notes');
+        Schema::dropIfExists('delivery_by_sales');
     }
 }

@@ -10,17 +10,24 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" id="form-modal-alert" style="display:none;">Data telah tersimpan</div>
-                    <form action="{{ backpack_url('deliverynotedetail/edit') }}" method="post" name="form_add_dn_detail" id="form_add_dn_detail">
+                    <form action="{{ route('deliverynotedetail.store') }}" method="post" name="form_add_dn_detail" id="form_add_dn_detail">
                         @csrf
                         <input type="hidden" name="delivery_note_id" value="{{ $crud->entry->id }}">
-                        <input type="hidden" id="delivery_note_detail_id" name="delivery_note_detail_id" value="">
-
+                        @php
+                            if ($crud->entry->module == 'sales_order') {
+                                $relasi = $crud->entry->salesOrder;
+                            }elseif ($crud->entry->module == 'delivery_order') {
+                                $relasi = $crud->entry->WarehouseOut;
+                            }else {
+                                $relasi = NULL;
+                            }
+                        @endphp
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label><br>
-                            <select name="item_id" style="width: 100%" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" disabled>
+                            <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" required>
                             <option value="">--PILIH BARANG--</option>
-                                @foreach(\App\Models\Item::select('id','name')->get() as $value => $text)
-                                        <option value="{{ $text->id }}">{{ $text->name }}</option>
+                                @foreach($relasi->details as $value => $text)
+                                        <option value="{{ $text->item->id }}">{{ $text->item->name }} - {{ $text->qty }} {{ $text->item->unit }}</option>
                                 @endforeach
                             </select>
                         </div>

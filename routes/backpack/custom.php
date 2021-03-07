@@ -83,6 +83,7 @@ Route::group([
     Route::post('generate-dn-pdf', 'DeliveryNoteCrudController@pdf');
     Route::post('generate-sdn-pdf', 'SalesDnCrudController@pdf');
     Route::crud('deliverynotedetail', 'DeliveryNoteDetailCrudController');
+    Route::post('deliverynotedetail/edit', 'DeliveryNoteDetailCrudController@edit');
     Route::get('salesorderdetail/{id}/accept', 'SalesOrderDetailCrudController@accept');
     Route::get('salesorderdetail/{id}/denied', 'SalesOrderDetailCrudController@denied');
     Route::get('deliverynotedetail/{id}/accept', 'DeliveryNoteDetailCrudController@accept');
@@ -112,6 +113,7 @@ Route::group([
 
 
     Route::post('Api/DeliverySODetail', [DeliverySalesOrderController::class, 'getDeliverySalesOrderById']);
+    Route::post('Api/DeliveryBySalesDetail', 'DeliveryBySalesDetailCrudController@getDetail');
 
 
 
@@ -127,4 +129,10 @@ Route::group([
     Route::get('submissionformdetail/{id}/accept', 'SubmissionFormDetailCrudController@accept');
     Route::get('submissionformdetail/{id}/denied', 'SubmissionFormDetailCrudController@denied');
     Route::crud('gudang', 'WarehouseCrudController');
+    Route::crud('deliverybysales', 'DeliveryBySalesCrudController');
+    Route::post('generate-ds-pdf', 'DeliveryBySalesCrudController@pdf');
+    Route::post('deliverybysales/process', 'DeliveryBySalesCrudController@process');
+    Route::crud('deliverybysalesdetail', 'DeliveryBySalesDetailCrudController');
+    Route::post('deliverybysalesdetail/edit', 'DeliveryBySalesDetailCrudController@edit');
 }); // this should be the absolute last line of this file
+

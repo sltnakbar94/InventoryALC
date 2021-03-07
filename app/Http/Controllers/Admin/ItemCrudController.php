@@ -86,7 +86,7 @@ class ItemCrudController extends CrudController
             'label' => 'Brand',
             'type' => 'select_from_array',
             'options' => Brand::pluck('name' , 'id'),
-            // 'allows_null' => true,
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([

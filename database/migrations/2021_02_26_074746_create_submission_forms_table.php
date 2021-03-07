@@ -28,7 +28,7 @@ class CreateSubmissionFormsTable extends Migration
             $table->string('warehouse_id')->nullable();
             $table->string('project_name')->nullable();
             $table->string('user_id');
-            $table->bigInteger('company_id')->nullable();
+            $table->integer('company_id')->nullable();
             $table->integer('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
