@@ -11,15 +11,15 @@
                     <th class="text-center text-light bg-info">Stock on Hand</th>
                     <th class="text-center text-light bg-info">Stock on Location</th>
                 </tr>
-                @foreach($items as $key=>$item)
+                @foreach(@$items as $key=>$item)
                     <tr @if ($loop->odd) class="bg-secondary" @endif>
-                        <td>{{ $key+1 }}</td>
-                        <td>{{ $item->gudang->name }}</td>
-                        <td>{{ $item->item->name }}</td>
-                        <td>{{ $item->item->Brand->name }}</td>
-                        <td>{{ $item->item->Category->name }}</td>
-                        <td>{{ $item->stock_on_hand }}</td>
-                        <td>{{ $item->stock_on_location }}</td>
+                        <td>{{ @$key+1 }}</td>
+                        <td>{{ @$item->gudang->name }}</td>
+                        <td>{{ @$item->item->name }}</td>
+                        <td>{{ @$item->item->Brand->name }}</td>
+                        <td>{{ @$item->item->Category->name }}</td>
+                        <td>{{ @$item->stock_on_hand }}</td>
+                        <td>{{ @$item->stock_on_location }}</td>
                     </tr>
                 @endforeach
             </table>
