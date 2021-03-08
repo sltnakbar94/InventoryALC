@@ -5,6 +5,8 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Stock;
+use App\Models\Unit;
+use App\Models\Category;
 
 class Item extends Model
 {
@@ -39,6 +41,16 @@ class Item extends Model
     public function stock()
     {
         return $this->hasMany(Stock::class, 'item_id', 'id');
+    }
+
+    public function uom()
+    {
+        return $this->hasOne(Unit::class, 'id', 'unit');
+    }
+
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'category');
     }
 
     /*
