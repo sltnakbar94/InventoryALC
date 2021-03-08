@@ -1,0 +1,2 @@
+INSERT INTO stackholders (id, company, address, pic, active, created_at, updated_at) VALUES (1, 'PT. Phillips Supplier Lampu', 'gedung Phillips', '[{\"name\":\"Rama\",\"email\":\"rama@philips.com\",\"telp\":\"0812123123\"}]', 1, '2021-03-08 09:21:34', '2021-03-08 09:21:34'),
+(2, 'PT. Telkom Indonesia Customer Setia', 'Gedung Telkom Jakarta', '[{\"name\":\"Dhanu\",\"email\":\"Dhanu@telkom.com\",\"telp\":\"08112317746\"}]', 1, '2021-03-08 09:22:17', '2021-03-08 09:22:17');
