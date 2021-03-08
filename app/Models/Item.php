@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Stock;
 use App\Models\Unit;
 use App\Models\Category;
+use App\Models\Brand;
 
 class Item extends Model
 {
@@ -43,12 +44,17 @@ class Item extends Model
         return $this->hasMany(Stock::class, 'item_id', 'id');
     }
 
+    public function Brand()
+    {
+        return $this->hasOne(Brand::class, 'id', 'brand');
+    }
+
     public function uom()
     {
         return $this->hasOne(Unit::class, 'id', 'unit');
     }
 
-    public function category()
+    public function Category()
     {
         return $this->hasOne(Category::class, 'id', 'category');
     }

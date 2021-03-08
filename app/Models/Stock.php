@@ -44,7 +44,7 @@ class Stock extends Model
 
     public function gudang()
     {
-        return $this->belongsTo(Warehouse::class, 'id', 'warehouse_id');
+        return $this->belongsTo(Warehouse::class, 'warehouse_id', 'id');
     }
 
     /*
