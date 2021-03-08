@@ -3,7 +3,7 @@
     <table class="table no-border">
         <tr>
             <td>Tanggal Sales Order</td>
-            <td><strong>{{ date('d M Y', strtotime($crud->entry->ds_date)) }}</strong></td>
+            <td><strong>{{ date('d M Y', strtotime($crud->entry->dn_date)) }}</strong></td>
         </tr>
         <tr>
             <td>Ekspedisi</td>

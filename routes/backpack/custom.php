@@ -134,5 +134,10 @@ Route::group([
     Route::post('deliverybysales/process', 'DeliveryBySalesCrudController@process');
     Route::crud('deliverybysalesdetail', 'DeliveryBySalesDetailCrudController');
     Route::post('deliverybysalesdetail/edit', 'DeliveryBySalesDetailCrudController@edit');
+    Route::crud('reportpurchaserequisition', 'ReportPurchaseRequisitionCrudController');
+    Route::crud('reportsalesorder', 'ReportSalesOrderCrudController');
+    Route::crud('reportdeliverybysales', 'ReportDeliveryBySalesCrudController');
+    Route::crud('reportpurchaseorder', 'ReportPurchaseOrderCrudController');
+    Route::crud('reportdeliveryorder', 'ReportDeliveryOrderCrudController');
+    Route::crud('reportdeliverynote', 'ReportDeliveryNoteCrudController');
 }); // this should be the absolute last line of this file
-

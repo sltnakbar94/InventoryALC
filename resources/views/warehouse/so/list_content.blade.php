@@ -6,8 +6,8 @@
                     <th>No.</th>
                     <th>nama Item</th>
                     <th>SKU</th>
-                    <th>UoM</th>
                     <th>Jumlah</th>
+                    <th>UoM</th>
                     <th>Harga Satuan</th>
                     <th>Discount</th>
                     <th>Sub Total</th>
@@ -23,8 +23,8 @@
                         <td>{{$key+1}}</td>
                         <td>{{$detail->item->name}}</td>
                         <td>{{$detail->item->serial}}</td>
-                        <td>{{$detail->item->unit}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
+                        <td>{{$detail->item->uom->name}}</td>
                         <td align="right">{{number_format($detail->price)}}</td>
                         @if (!empty($detail->discount || $detail->discount != 0))
                             <td align="right">{{number_format($detail->discount)}}%</td>
