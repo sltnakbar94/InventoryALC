@@ -9,6 +9,7 @@ use App\Models\WarehouseIn;
 use App\Models\WarehouseOut;
 use App\Models\Item;
 use App\Models\Stackholder;
+use App\Models\Stock;
 use Carbon;
 
 class AdminController extends Controller
@@ -108,7 +109,7 @@ class AdminController extends Controller
 
     public function tableItem()
     {
-        $items = Item::all();
+        $items = Stock::all();
 
         $this->data['items'] = $items;
     }
