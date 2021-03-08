@@ -66,6 +66,12 @@ class WarehouseInCrudController extends CrudController
             $this->crud->removeButton('update');
             $this->crud->removeButton('delete');
         }
+        if (backpack_user()->hasRole('operator-gudang')) {
+            $this->crud->addClause('where', 'status', '=', 2);
+            $this->crud->removeButton('create');
+            $this->crud->removeButton('update');
+            $this->crud->removeButton('delete');
+        }
 
         $this->crud->addColumn([
             'name' => 'po_number',

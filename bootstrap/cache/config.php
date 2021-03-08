@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:BL4dzMYH8a49Cd8M2wKz3brEjbWiV33+BNNHUS5kVzw=',
+    'key' => 'base64:VA8f5FB9Gh8l8SHsH2zwq6SyaEBCHGj3V2ZIn8V321w=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -355,7 +355,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\framework/cache/data',
+        'path' => 'C:\\MAMP\\htdocs\\inventory\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -434,7 +434,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'invent',
+        'database' => 'inventory',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -444,7 +444,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'invent',
+        'database' => 'inventory',
         'username' => 'root',
         'password' => 'root',
         'unix_socket' => '',
@@ -464,7 +464,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'invent',
+        'database' => 'inventory',
         'username' => 'root',
         'password' => 'root',
         'charset' => 'utf8',
@@ -479,7 +479,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'invent',
+        'database' => 'inventory',
         'username' => 'root',
         'password' => 'root',
         'charset' => 'utf8',
@@ -526,7 +526,7 @@
     array (
       'enabled' => true,
       'driver' => 'file',
-      'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\debugbar',
+      'path' => 'C:\\MAMP\\htdocs\\inventory\\storage\\debugbar',
       'connection' => NULL,
       'provider' => '',
       'hostname' => '127.0.0.1',
@@ -622,12 +622,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\MAMP\\htdocs\\invent\\storage\\app',
+        'root' => 'C:\\MAMP\\htdocs\\inventory\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\MAMP\\htdocs\\invent\\storage\\app/public',
+        'root' => 'C:\\MAMP\\htdocs\\inventory\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -644,12 +644,12 @@
       'root' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\MAMP\\htdocs\\invent',
+        'root' => 'C:\\MAMP\\htdocs\\inventory',
       ),
     ),
     'links' => 
     array (
-      'C:\\MAMP\\htdocs\\invent\\public\\storage' => 'C:\\MAMP\\htdocs\\invent\\storage\\app/public',
+      'C:\\MAMP\\htdocs\\inventory\\public\\storage' => 'C:\\MAMP\\htdocs\\inventory\\storage\\app/public',
     ),
   ),
   'gravatar' => 
@@ -680,7 +680,7 @@
   ),
   'jwt' => 
   array (
-    'secret' => 'WENlgOxt4SBRN6H7tFGAXomQApPLNZWwYc4GOB9rbwEPdEujrEt9H6fZYaJwuK9c',
+    'secret' => 'Tq6xZ3nVLh4raTw5Mk22jl49DFBQTqzhdRw5CNzcFI0mHRUHllSz3T4ZAUwIZ365',
     'keys' => 
     array (
       'public' => NULL,
@@ -731,13 +731,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\logs/laravel.log',
+        'path' => 'C:\\MAMP\\htdocs\\inventory\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\logs/laravel.log',
+        'path' => 'C:\\MAMP\\htdocs\\inventory\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -787,7 +787,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\logs/laravel.log',
+        'path' => 'C:\\MAMP\\htdocs\\inventory\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -844,7 +844,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\MAMP\\htdocs\\invent\\resources\\views/vendor/mail',
+        0 => 'C:\\MAMP\\htdocs\\inventory\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -971,7 +971,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\MAMP\\htdocs\\invent\\storage\\framework/sessions',
+    'files' => 'C:\\MAMP\\htdocs\\inventory\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -991,9 +991,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\MAMP\\htdocs\\invent\\resources\\views',
+      0 => 'C:\\MAMP\\htdocs\\inventory\\resources\\views',
     ),
-    'compiled' => 'C:\\MAMP\\htdocs\\invent\\storage\\framework\\views',
+    'compiled' => 'C:\\MAMP\\htdocs\\inventory\\storage\\framework\\views',
   ),
   'dompdf' => 
   array (
@@ -1001,10 +1001,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => 'C:\\MAMP\\htdocs\\invent\\storage\\fonts/',
-      'font_cache' => 'C:\\MAMP\\htdocs\\invent\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\satri\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\MAMP\\htdocs\\invent',
+      'font_dir' => 'C:\\MAMP\\htdocs\\inventory\\storage\\fonts/',
+      'font_cache' => 'C:\\MAMP\\htdocs\\inventory\\storage\\fonts/',
+      'temp_dir' => 'C:\\Users\\Auldrien\\AppData\\Local\\Temp',
+      'chroot' => 'C:\\MAMP\\htdocs\\inventory',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
