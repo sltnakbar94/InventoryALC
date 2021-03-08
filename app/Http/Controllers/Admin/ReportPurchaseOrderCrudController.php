@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ReportPurchaseOrderRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\WarehouseIn;
 
 /**
  * Class ReportPurchaseOrderCrudController
@@ -28,7 +29,8 @@ class ReportPurchaseOrderCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\WarehouseIn::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/reportpurchaseorder');
-        CRUD::setEntityNameStrings('reportpurchaseorder', 'report_purchase_orders');
+        CRUD::setEntityNameStrings('Report Purchase Order', 'Report Purchase Order');
+        $this->crud->setShowView('warehouse.in.show');
     }
 
     /**

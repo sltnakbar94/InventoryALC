@@ -28,6 +28,8 @@
                         {{-- <td align="right">{{number_format($detail->qty_confirm)}}</td> --}}
                         @if ($qty_onhands->stock_on_hand >= $detail->qty)
                             <td> - </td>
+                        @elseif($status[$detail->status]="Complete")
+                            <td><strong class="bg-success">Sudah Terkirim</strong></td>
                         @else
                             <td><strong class="bg-danger">Stock Tidak Mencukupi</strong></td>
                         @endif
