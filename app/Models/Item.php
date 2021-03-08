@@ -46,15 +46,30 @@ class Item extends Model
 
     public function Brand()
     {
-        return $this->hasOne(Brand::class, 'id', 'brand');
+        return $this->belongsTo(Brand::class, 'id', 'brand');
     }
 
     public function uom()
     {
-        return $this->hasOne(Unit::class, 'id', 'unit');
+        return $this->belongsTo(Unit::class, 'id', 'unit');
     }
 
     public function Category()
+    {
+        return $this->belongsTo(Category::class, 'id', 'category');
+    }
+
+    public function Brands()
+    {
+        return $this->hasOne(Brand::class, 'id', 'brand');
+    }
+
+    public function uoms()
+    {
+        return $this->hasOne(Unit::class, 'id', 'unit');
+    }
+
+    public function Categories()
     {
         return $this->hasOne(Category::class, 'id', 'category');
     }

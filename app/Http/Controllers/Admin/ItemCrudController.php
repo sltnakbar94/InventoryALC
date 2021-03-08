@@ -42,7 +42,44 @@ class ItemCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->crud->addColumn([
+            'name' => 'name',
+            'type' => 'text',
+            'label' => 'Nama Item'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'serial',
+            'type' => 'text',
+            'label' => 'Serial'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'category',
+            'type' => 'select',
+            'entity' => 'Categories',
+            'attribute' => 'name',
+            'model' => 'App\Models\Category',
+            'label' => 'Kategori'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'brand',
+            'type' => 'select',
+            'entity' => 'Brands',
+            'attribute' => 'name',
+            'model' => 'App\Models\Brand',
+            'label' => 'Brand'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'unit',
+            'type' => 'select',
+            'entity' => 'uoms',
+            'attribute' => 'name',
+            'model' => 'App\Models\Unit',
+            'label' => 'UoM'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
