@@ -25,9 +25,9 @@
                                         <option value="{{ $text->id }}">{{ $text->name }} - Stock on Hand {{ @$stock }}</option>
                                         @else
                                         <option value="{{ $text->id }}">{{ $text->name }} - Stock Kosong</option>
-                                        @endif
-                                        @endforeach
-                                    </select>
+                                    @endif
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="qty">Jumlah</label>
@@ -39,6 +39,7 @@
                             @endif
                         </div>
                         <div class="form-group text-right">
+                            <a href="#" data-toggle="modal" data-target="#addModalMasterItem" style="float: left">Item tidak ada ?</a>
                             <label for=""></label>
                             <button type="submit" class="btn btn-primary" id="add-buton-out">SIMPAN</button>
                         </div>

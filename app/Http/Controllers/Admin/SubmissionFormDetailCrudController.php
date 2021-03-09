@@ -144,4 +144,27 @@ class SubmissionFormDetailCrudController extends CrudController
         \Alert::add('success', 'Berhasil konfirmasi data Item')->flash();
         return redirect()->back();
     }
+
+    public function addItem(Request $request)
+    {
+        $new_item = new Item;
+        $new_item->name = $request->item;
+        $new_item->serial = $request->serial;
+        $new_item->unit = $request->uom;
+        $new_item->category = $request->category;
+        $new_item->brand = $request->brand;
+        $new_item->save();
+
+        $find = Item::where('name', '=', $request->item)->first();
+        $data = new SubmissionFormDetail;
+        $data->submission_form_id = $request->submission_form_id;
+        $data->item_id = $find->id;
+        $data->serial = $find->serial;
+        $data->qty = $request->qty;
+        $data->uom = $find->unit;
+        $data->save();
+
+        \Alert::add('success', 'Berhasil Menambah data Item')->flash();
+        return redirect()->back();
+    }
 }

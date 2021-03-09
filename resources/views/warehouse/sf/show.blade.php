@@ -84,6 +84,7 @@
 </div>
 @endsection
 @include('warehouse.sf.add-modal')
+@include('warehouse.sf.add-master-item')
 @include('warehouse.sf.edit-modal')
 
 
@@ -134,6 +135,15 @@
 		$('.select2').select2({})
     } );
     $('#mySelect2').select2({
+        dropdownParent: $('#myModal')
+    });
+    $('#uom').select2({
+        dropdownParent: $('#myModal')
+    });
+    $('#category').select2({
+        dropdownParent: $('#myModal')
+    });
+    $('#brand').select2({
         dropdownParent: $('#myModal')
     });
     </script>
