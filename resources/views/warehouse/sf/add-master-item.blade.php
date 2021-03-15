@@ -37,8 +37,8 @@
                                 <option value="">--PILIH SATUAN--</option>
                                 @foreach(\App\Models\Unit::get() as $value => $text)
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
-                                    <option href="{{ backpack_url('unit/create') }}">Tambah Satuan</option>
                                 @endforeach
+                                {{-- <a href="{{ backpack_url('unit/create') }}">Tambah Satuan</a> --}}
                             </select>
                         </div>
                         <div class="form-group">
@@ -47,8 +47,8 @@
                                 <option value="">--PILIH KATEGORI--</option>
                                 @foreach(\App\Models\Category::get() as $value => $text)
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
-                                    <option href="{{ backpack_url('category/create') }}">Tambah Kategori</option>
                                 @endforeach
+                                {{-- <a href="{{ backpack_url('category/create') }}">Tambah Kategori</a> --}}
                             </select>
                         </div>
                         <div class="form-group">
@@ -57,8 +57,8 @@
                                 <option value="">--PILIH BRAND--</option>
                                 @foreach(\App\Models\Brand::get() as $value => $text)
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
-                                    <option href="{{ backpack_url('brand/create') }}">Tambah Brand</option>
                                 @endforeach
+                                {{-- <a href="{{ backpack_url('brand/create') }}">Tambah Brand</a> --}}
                             </select>
                         </div>
                         <div class="form-group">
