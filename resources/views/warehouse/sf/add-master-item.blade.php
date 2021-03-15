@@ -38,6 +38,7 @@
                                 @foreach(\App\Models\Unit::get() as $value => $text)
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
                                 @endforeach
+                                {{-- <a href="{{ backpack_url('unit/create') }}">Tambah Satuan</a> --}}
                             </select>
                             <a href="{{ backpack_url('unit/create') }}" data-toggle="modal" style="float: left">Satuan tidak ada ?</a>
                         </div>
@@ -48,6 +49,7 @@
                                 @foreach(\App\Models\Category::get() as $value => $text)
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
                                 @endforeach
+                                {{-- <a href="{{ backpack_url('category/create') }}">Tambah Kategori</a> --}}
                             </select>
                             <a href="{{ backpack_url('category/create') }}" data-toggle="modal" style="float: left">Kategori tidak ada ?</a>
                         </div>
@@ -58,6 +60,7 @@
                                 @foreach(\App\Models\Brand::get() as $value => $text)
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
                                 @endforeach
+                                {{-- <a href="{{ backpack_url('brand/create') }}">Tambah Brand</a> --}}
                             </select>
                             <a href="{{ backpack_url('brand/create') }}" data-toggle="modal" style="float: left">Brand tidak ada ?</a>
                         </div>
