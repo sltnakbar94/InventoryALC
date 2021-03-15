@@ -37,9 +37,9 @@
                                 <option value="">--PILIH SATUAN--</option>
                                 @foreach(\App\Models\Unit::get() as $value => $text)
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
+                                    <option href="{{ backpack_url('unit/create') }}">Tambah Satuan</option>
                                 @endforeach
                             </select>
-                            <a href="{{ backpack_url('unit/create') }}" data-toggle="modal" style="float: left">Satuan tidak ada ?</a>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="category">Kategori</label><br>
@@ -47,9 +47,9 @@
                                 <option value="">--PILIH KATEGORI--</option>
                                 @foreach(\App\Models\Category::get() as $value => $text)
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
+                                    <option href="{{ backpack_url('category/create') }}">Tambah Kategori</option>
                                 @endforeach
                             </select>
-                            <a href="{{ backpack_url('category/create') }}" data-toggle="modal" style="float: left">Kategori tidak ada ?</a>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="brand">Brand</label><br>
@@ -57,9 +57,9 @@
                                 <option value="">--PILIH BRAND--</option>
                                 @foreach(\App\Models\Brand::get() as $value => $text)
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
+                                    <option href="{{ backpack_url('brand/create') }}">Tambah Brand</option>
                                 @endforeach
                             </select>
-                            <a href="{{ backpack_url('brand/create') }}" data-toggle="modal" style="float: left">Brand tidak ada ?</a>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="qty">Jumlah</label>
