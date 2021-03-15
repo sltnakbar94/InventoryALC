@@ -39,6 +39,7 @@
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
                                 @endforeach
                             </select>
+                            <a href="{{ backpack_url('unit/create') }}" data-toggle="modal" style="float: left">Satuan tidak ada ?</a>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="category">Kategori</label><br>
@@ -48,6 +49,7 @@
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
                                 @endforeach
                             </select>
+                            <a href="{{ backpack_url('category/create') }}" data-toggle="modal" style="float: left">Kategori tidak ada ?</a>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="brand">Brand</label><br>
@@ -57,6 +59,7 @@
                                     <option value="{{ $text->id }}">{{ $text->name }}</option>
                                 @endforeach
                             </select>
+                            <a href="{{ backpack_url('brand/create') }}" data-toggle="modal" style="float: left">Brand tidak ada ?</a>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="qty">Jumlah</label>
