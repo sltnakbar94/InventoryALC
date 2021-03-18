@@ -39,26 +39,6 @@ class Item extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function stock()
-    {
-        return $this->hasMany(Stock::class, 'item_id', 'id');
-    }
-
-    public function Brand()
-    {
-        return $this->belongsTo(Brand::class, 'brand', 'id');
-    }
-
-    public function uom()
-    {
-        return $this->belongsTo(Unit::class, 'unit', 'id');
-    }
-
-    public function Category()
-    {
-        return $this->belongsTo(Category::class, 'category', 'id');
-    }
-
     public function Brands()
     {
         return $this->hasOne(Brand::class, 'id', 'brand');
