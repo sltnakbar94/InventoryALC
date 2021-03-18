@@ -10,6 +10,9 @@ use App\Models\Item;
 use App\Models\SubmissionForm;
 use App\Models\SubmissionFormDetail;
 use App\Flag;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Unit;
 
 /**
  * Class SubmissionFormDetailCrudController
@@ -148,11 +151,40 @@ class SubmissionFormDetailCrudController extends CrudController
     public function addItem(Request $request)
     {
         $new_item = new Item;
+        $brand = $request->brand ;
+        if ($brand == "AddBrand") {
+            $new_master_brand = new Brand ;
+            $new_master_brand->code = $request->BrandCode ;
+            $new_master_brand->name = $request->TambahBrand ;
+            $new_master_brand->save();
+            $new_item->brand = $brand ;
+        }else{
+            $new_item->brand = $request->brand;
+        }
+
+        $satuan = $request->uom;
+        if ($satuan == "NewItem") {
+            $new_master_units = new Unit ;
+            $new_master_units->name = $request->SatuanBaru ;
+            $new_master_units->code = $request->SatuanCode ;
+            $new_master_units->save();
+            $new_item->unit = $request->SatuanBaru ;
+        }else{
+            $new_item->unit = $request->uom;
+        }
+
+        $category = $request->category ;
+        if ($category == "AddCategory") {
+            $new_master_category = new Category ;
+            $new_master_category->name = $request->TambahCategory ;
+            $new_master_category->code = $request->CategoryCode;
+            $new_master_category->save();
+            $new_item->category = $request->TambahCategory;
+        }else{
+            $new_item->category = $request->category;
+        }
         $new_item->name = $request->item;
         $new_item->serial = $request->serial;
-        $new_item->unit = $request->uom;
-        $new_item->category = $request->category;
-        $new_item->brand = $request->brand;
         $new_item->save();
 
         $find = Item::where('name', '=', $request->item)->first();

@@ -14,6 +14,58 @@
                         @csrf
                         <input type="hidden" name="submission_form_id" value="{{ $crud->entry->id }}">
                         <div class="form-group">
+                            <label class="control-label" for="category">Kategori</label><br>
+                            <select name="category" id="category" onchange="AddCategory();" class="form-control{{ $errors->has('category') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
+                                <option value="">--PILIH KATEGORI--</option>
+                                @foreach(\App\Models\Category::get() as $value => $text)
+                                    <option value="{{ $text->id }}">{{ $text->name }}</option>
+                                @endforeach
+                                <option value="AddCategory">Tambah Kategori</option>
+                            </select>
+                             <div class="form-group mt-2" style="display:none" id="addCategory">
+                                <input type="text" class="form-control" id="newCategory" name="TambahCategory" placeholder="Input Kategori">
+                            </div>
+                            <div class="form-group mt-2" style="display:none" id="addCodeCategory">
+                                <input type="text" class="form-control" id="newCategory" name="CategoryCode" placeholder="Input Kode Kategori">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="brand">Brand</label><br>
+                            <select name="brand" id="brand" onchange="AddBrand()" class="form-control{{ $errors->has('brand') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
+                                <option value="">--PILIH BRAND--</option>
+                                @foreach(\App\Models\Brand::get() as $value => $text)
+                                    <option value="{{ $text->id }}">{{ $text->name }}</option>
+                                @endforeach
+                                <option value="AddBrand">Tambah Brand</option>
+                                {{-- <a href="{{ backpack_url('brand/create') }}">Tambah Brand</a> --}}
+                            </select>
+                            <div class="form-group mt-2" style="display:none" id="addBrand">
+                                <input type="text" class="form-control" id="newBrand" name="TambahBrand" placeholder="Tambah Brand">
+                            </div>
+                            <div class="form-group mt-2" style="display:none" id="BrandCode">
+                                <input type="text" class="form-control" id="newCodeBrand" name="BrandCode" placeholder="Tambah Kode Brand">
+                            </div>
+                          </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="uom">Satuan</label><br>
+                            <select name="uom" id="uom" onchange="changeFunc();" class="form-control{{ $errors->has('uom') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
+                                <option value="">--PILIH SATUAN--</option>
+                                @foreach(\App\Models\Unit::get() as $value => $text)
+                                    <option value="{{ $text->id }}">{{ $text->name }}</option>
+                                @endforeach
+                                <option value="NewItem" >Tambah Satuan</option>
+                            </select>
+                            <div class="form-group mt-2" style="display:none" id="AddItem">
+                                <input type="text" class="form-control" id="exampleFormControlInput" name="SatuanBaru" placeholder="Input Satuan">
+                            </div>
+                            <div class="form-group mt-2" style="display:none" id="AddSatuanCode">
+                                <input type="text" class="form-control" id="exampleFormControlInput" name="SatuanCode" placeholder="Input Kode Satuan">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="control-label" for="item">Nama Barang</label><br>
                             <input type="text" class="form-control{{ $errors->has('item') ? ' is-invalid' : '' }}" name="item" value="{{ old('item') }}" required>
                             @if ($errors->has('item'))
@@ -31,47 +83,7 @@
                                 </span>
                             @endif
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="uom">Satuan</label><br>
-                            <select name="uom" id="uom" onchange="changeFunc();" class="form-control{{ $errors->has('uom') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
-                                <option value="">--PILIH SATUAN--</option>
-                                @foreach(\App\Models\Unit::get() as $value => $text)
-                                    <option value="{{ $text->id }}">{{ $text->name }}</option>
-                                @endforeach
-                                <option value="NewItem" >Tambah Satuan</option>
-                            </select>
 
-                            <div class="form-group mt-2" style="display:none" id="AddItem">
-                                <input type="text" class="form-control" id="exampleFormControlInput" name="" placeholder="Input Satuan">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="category">Kategori</label><br>
-                            <select name="category" id="category" onchange="AddCategory();" class="form-control{{ $errors->has('category') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
-                                <option value="">--PILIH KATEGORI--</option>
-                                @foreach(\App\Models\Category::get() as $value => $text)
-                                    <option value="{{ $text->id }}">{{ $text->name }}</option>
-                                @endforeach
-                                <option value="AddCategory">Tambah Kategori</option>
-                            </select>
-                             <div class="form-group mt-2" style="display:none" id="addCategory">
-                                <input type="text" class="form-control" id="newCategory" name="" placeholder="Input Kategori">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="brand">Brand</label><br>
-                            <select name="brand" id="brand" onchange="AddBrand()" class="form-control{{ $errors->has('brand') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
-                                <option value="">--PILIH BRAND--</option>
-                                @foreach(\App\Models\Brand::get() as $value => $text)
-                                    <option value="{{ $text->id }}">{{ $text->name }}</option>
-                                @endforeach
-                                <option value="AddBrand">Tambah Brand</option>
-                                {{-- <a href="{{ backpack_url('brand/create') }}">Tambah Brand</a> --}}
-                            </select>
-                            <div class="form-group mt-2" style="display:none" id="addBrand">
-                                <input type="text" class="form-control" id="newBrand" name="" placeholder="Tambah Brand">
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label class="control-label" for="qty">Jumlah</label>
                             <input type="number" class="form-control{{ $errors->has('qty') ? ' is-invalid' : '' }}" name="qty" value="{{ old('qty') }}" required>
@@ -97,11 +109,14 @@
     function changeFunc() {
      var selectBox = document.getElementById("uom");
      var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+     var addSatuanCode = document.getElementById("AddSatuanCode")
     var addItem = document.getElementById("AddItem")
      if(selectedValue == "NewItem"){
         addItem.style.display = "block" ;
+        addSatuanCode.style.display = "block";
      }else{
         addItem.style.display = "none" ;
+        addSatuanCode.style.display = "none";
      }
     }
 
@@ -109,10 +124,13 @@
     var newCategory = document.getElementById("category");
     var selectedValues = newCategory.options[newCategory.selectedIndex].value;
     var addCategory = document.getElementById("addCategory");
+    var addCodeCategory = document.getElementById("addCodeCategory");
     if(selectedValues == "AddCategory"){
         addCategory.style.display = "block";
+        addCodeCategory.style.display = "block";
     }else{
         addCategory.style.display = "none" ;
+        addCodeCategory.style.display = "none";
     }
     }
 
@@ -120,10 +138,13 @@
         var newBrand = document.getElementById("brand");
         var selectedValue = newBrand.options[newBrand.selectedIndex].value ;
         var addBrand = document.getElementById("addBrand");
+        var addCodeBrand = document.getElementById("BrandCode");
         if(selectedValue == "AddBrand"){
             addBrand.style.display = "block";
+            addCodeBrand.style.display = "block" ;
         }else{
-            addBrand.style.display = "none"
+            addBrand.style.display = "none" ;
+            addCodeBrand.style.display = "none";
         }
     }
 
