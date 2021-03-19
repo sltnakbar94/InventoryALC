@@ -54,6 +54,11 @@ class Item extends Model
         return $this->hasOne(Category::class, 'id', 'category');
     }
 
+    public function stock()
+    {
+        return $this->hasMany(Warehouse::class , 'id' , 'item_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

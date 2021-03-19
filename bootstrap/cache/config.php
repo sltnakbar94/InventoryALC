@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:BL4dzMYH8a49Cd8M2wKz3brEjbWiV33+BNNHUS5kVzw=',
+    'key' => 'base64:NT11KyhVs/jCENxiVIPBLDgIipIgPUPkeEOHWMsmvtk=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -176,7 +176,7 @@
       'mix_scripts' => 
       array (
       ),
-      'cachebusting_string' => '4.1.38@90cf9d0613848144c1e5f3822892bf2a7afa860f',
+      'cachebusting_string' => '4.1.36@779364646e3b57258b981ff9f1bdcd9887143836',
       'registration_open' => true,
       'route_prefix' => 'admin',
       'web_middleware' => 'web',
@@ -355,7 +355,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\inventory\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -434,7 +434,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'invent',
+        'database' => 'warehouse_alc',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -444,9 +444,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'invent',
+        'database' => 'warehouse_alc',
         'username' => 'root',
-        'password' => 'root',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -464,9 +464,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'invent',
+        'database' => 'warehouse_alc',
         'username' => 'root',
-        'password' => 'root',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -479,9 +479,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'invent',
+        'database' => 'warehouse_alc',
         'username' => 'root',
-        'password' => 'root',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -526,7 +526,7 @@
     array (
       'enabled' => true,
       'driver' => 'file',
-      'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\debugbar',
+      'path' => 'C:\\xampp\\htdocs\\inventory\\storage\\debugbar',
       'connection' => NULL,
       'provider' => '',
       'hostname' => '127.0.0.1',
@@ -622,12 +622,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\MAMP\\htdocs\\invent\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\inventory\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\MAMP\\htdocs\\invent\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\inventory\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -644,12 +644,12 @@
       'root' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\MAMP\\htdocs\\invent',
+        'root' => 'C:\\xampp\\htdocs\\inventory',
       ),
     ),
     'links' => 
     array (
-      'C:\\MAMP\\htdocs\\invent\\public\\storage' => 'C:\\MAMP\\htdocs\\invent\\storage\\app/public',
+      'C:\\xampp\\htdocs\\inventory\\public\\storage' => 'C:\\xampp\\htdocs\\inventory\\storage\\app/public',
     ),
   ),
   'gravatar' => 
@@ -680,7 +680,7 @@
   ),
   'jwt' => 
   array (
-    'secret' => 'WENlgOxt4SBRN6H7tFGAXomQApPLNZWwYc4GOB9rbwEPdEujrEt9H6fZYaJwuK9c',
+    'secret' => NULL,
     'keys' => 
     array (
       'public' => NULL,
@@ -731,13 +731,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\inventory\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\inventory\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -787,7 +787,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\MAMP\\htdocs\\invent\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\inventory\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -844,7 +844,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\MAMP\\htdocs\\invent\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\inventory\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -971,7 +971,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\MAMP\\htdocs\\invent\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\inventory\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -991,9 +991,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\MAMP\\htdocs\\invent\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\inventory\\resources\\views',
     ),
-    'compiled' => 'C:\\MAMP\\htdocs\\invent\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\inventory\\storage\\framework\\views',
   ),
   'dompdf' => 
   array (
@@ -1001,10 +1001,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => 'C:\\MAMP\\htdocs\\invent\\storage\\fonts/',
-      'font_cache' => 'C:\\MAMP\\htdocs\\invent\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\satri\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\MAMP\\htdocs\\invent',
+      'font_dir' => 'C:\\xampp\\htdocs\\inventory\\storage\\fonts/',
+      'font_cache' => 'C:\\xampp\\htdocs\\inventory\\storage\\fonts/',
+      'temp_dir' => 'C:\\Users\\SULTAN~1\\AppData\\Local\\Temp',
+      'chroot' => 'C:\\xampp\\htdocs\\inventory',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -1014,7 +1014,7 @@
       'enable_php' => false,
       'enable_javascript' => true,
       'enable_remote' => true,
-      'font_height_ratio' => 1.100000000000000088817841970012523233890533447265625,
+      'font_height_ratio' => 1.1,
       'enable_html5_parser' => false,
     ),
   ),
