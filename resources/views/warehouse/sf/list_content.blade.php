@@ -17,11 +17,12 @@
                         $status = array('Plan', 'Submited', 'Process', 'Denied', 'Complete');
                     @endphp
                     <tr>
+
                         <td>{{$key+1}}</td>
                         <td>{{$detail->item->name}}</td>
                         <td>{{$detail->item->serial}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
-                        <td>{{$detail->item->uoms->name}}</td>
+                        <td>{{$detail->item->unit}}</td>
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">

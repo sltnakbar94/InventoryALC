@@ -150,6 +150,25 @@ class SubmissionFormDetailCrudController extends CrudController
 
     public function addItem(Request $request)
     {
+
+        if ($request->brand == "AddBrand") {
+            $request->validate([
+               'TambahBrand' => 'required',
+               'BrahdCode'   => 'required|unique:brand,code'
+           ]);
+        }
+        if ($request->uom == "NewItem") {
+            $request->validate([
+                'SatuanBaru'=> 'required',
+                'SatuanCode'=>  'required|unique:units,code'
+            ]);
+        }
+        if ($request->category == "AddCategory") {
+            $request->validate([
+                'TambahCategory'=> 'required',
+                'CodeCategory'  => 'required|unique:categories,code'
+            ]);
+        }
         $new_item = new Item;
         $brand = $request->brand ;
         if ($brand == "AddBrand") {
@@ -157,7 +176,7 @@ class SubmissionFormDetailCrudController extends CrudController
             $new_master_brand->code = $request->BrandCode ;
             $new_master_brand->name = $request->TambahBrand ;
             $new_master_brand->save();
-            $new_item->brand = $brand ;
+            $new_item->brand = $new_master_brand->name ;
         }else{
             $new_item->brand = $request->brand;
         }
