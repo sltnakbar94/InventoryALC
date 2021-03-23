@@ -13,6 +13,7 @@ use App\Flag;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Unit;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class SubmissionFormDetailCrudController
@@ -150,25 +151,41 @@ class SubmissionFormDetailCrudController extends CrudController
 
     public function addItem(Request $request)
     {
-
         if ($request->brand == "AddBrand") {
-            $request->validate([
+            $validateBrand = Validator::make($request->all(), [
                'TambahBrand' => 'required',
                'BrahdCode'   => 'required|unique:brand,code'
            ]);
         }
         if ($request->uom == "NewItem") {
-            $request->validate([
+            $validateNewItem = Validator::make($request->all(),[
                 'SatuanBaru'=> 'required',
                 'SatuanCode'=>  'required|unique:units,code'
             ]);
         }
+
         if ($request->category == "AddCategory") {
-            $request->validate([
+            $validator = Validator::make($request->all(),[
                 'TambahCategory'=> 'required',
                 'CodeCategory'  => 'required|unique:categories,code'
             ]);
         }
+
+        if ($validator->fails() == true ) {
+            \Alert::add('danger', 'Gagal menambah kategori,kategory harus diisi, Kode kategory harus unik')->flash();
+            return redirect()->back();
+        }
+
+        if ($validateBrand->fails() == true) {
+            \Alert::add('danger', 'Gagal Menambah Brand ,Nama Satuan Harus Diisi, Kode Satuan Harus unik')->flash();
+            return redirect()->back();
+        }
+
+        if ($validateNewItem->fails() == true) {
+            \Alert::add('danger', 'Gagal Menambah Item ,Nama Satuan Harus Diisi, Kode Satuan Harus unik')->flash();
+            return redirect()->back();
+        }
+
         $new_item = new Item;
         $brand = $request->brand ;
         if ($brand == "AddBrand") {
@@ -216,6 +233,6 @@ class SubmissionFormDetailCrudController extends CrudController
         $data->save();
 
         \Alert::add('success', 'Berhasil Menambah data Item')->flash();
-        return redirect()->back();
+
     }
 }
