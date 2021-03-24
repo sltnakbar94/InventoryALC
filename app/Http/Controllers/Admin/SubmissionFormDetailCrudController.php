@@ -193,7 +193,8 @@ class SubmissionFormDetailCrudController extends CrudController
             $new_master_brand->code = $request->BrandCode ;
             $new_master_brand->name = $request->TambahBrand ;
             $new_master_brand->save();
-            $new_item->brand = $new_master_brand->name ;
+            $brand = Unit::where('code' , '=' , $request->BrandCode)->first();
+            $new_item->unit = $brand->id ;
         }else{
             $new_item->brand = $request->brand;
         }
@@ -204,7 +205,8 @@ class SubmissionFormDetailCrudController extends CrudController
             $new_master_units->name = $request->SatuanBaru ;
             $new_master_units->code = $request->SatuanCode ;
             $new_master_units->save();
-            $new_item->unit = $request->SatuanBaru ;
+            $item = Unit::where('code' , '=' , $request->SatuanCode)->first();
+            $new_item->unit = $item->id ;
         }else{
             $new_item->unit = $request->uom;
         }
@@ -215,7 +217,8 @@ class SubmissionFormDetailCrudController extends CrudController
             $new_master_category->name = $request->TambahCategory ;
             $new_master_category->code = $request->CategoryCode;
             $new_master_category->save();
-            $new_item->category = $request->TambahCategory;
+            $category = Category::where('code' , '=' , $request->CategoryCode)->first();
+            $new_item->category = $category->id;
         }else{
             $new_item->category = $request->category;
         }
@@ -232,7 +235,7 @@ class SubmissionFormDetailCrudController extends CrudController
         $data->uom = $find->unit;
         $data->save();
 
-        return redirect()->back()->withInput();
+        return redirect()->back();
         \Alert::add('success', 'Berhasil Menambah data Item')->flash();
 
     }
