@@ -170,7 +170,7 @@ class SubmissionFormDetailCrudController extends CrudController
            if ($validateBrand->fails() == true) {
             \Alert::add('danger', 'Gagal Menambah Brand ,Nama Brand Harus Diisi, Kode Brand Harus unik')->flash();
             return redirect()->back();
-        }
+            }
         }
 
         if ($request->uom == "NewItem") {
@@ -185,12 +185,6 @@ class SubmissionFormDetailCrudController extends CrudController
         }
 
         // dd($validateBrand,$validator,$validateNewItem);
-
-
-
-
-
-
 
         $new_item = new Item;
         $brand = $request->brand ;
@@ -238,6 +232,7 @@ class SubmissionFormDetailCrudController extends CrudController
         $data->uom = $find->unit;
         $data->save();
 
+        return redirect()->back()->withInput();
         \Alert::add('success', 'Berhasil Menambah data Item')->flash();
 
     }
