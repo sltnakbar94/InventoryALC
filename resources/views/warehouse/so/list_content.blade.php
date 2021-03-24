@@ -24,7 +24,7 @@
                         <td>{{$detail->item->name}}</td>
                         <td>{{$detail->item->serial}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
-                        <td>{{$detail->item->uom->name}}</td>
+                        <td>{{$detail->item->uoms->name}}</td>
                         <td align="right">{{number_format($detail->price)}}</td>
                         @if (!empty($detail->discount || $detail->discount != 0))
                             <td align="right">{{number_format($detail->discount)}}%</td>

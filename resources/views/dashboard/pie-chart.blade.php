@@ -7,7 +7,7 @@
             'content' => [ // widgets
                 ['type'       => 'chart',
                 'controller' => \App\Http\Controllers\Admin\Charts\CounterChartController::class,
-                'wrapper' => ['class' => 'col-md-5 text-center'],
+                'wrapper' => ['class' => 'col text-center'],
                 'content' => ['header' => 'Persentase'],
                 ]
             ]
