@@ -151,40 +151,46 @@ class SubmissionFormDetailCrudController extends CrudController
 
     public function addItem(Request $request)
     {
-        if ($request->brand == "AddBrand") {
-            $validateBrand = Validator::make($request->all(), [
-               'TambahBrand' => 'required',
-               'BrahdCode'   => 'required|unique:brand,code'
-           ]);
-        }
-        if ($request->uom == "NewItem") {
-            $validateNewItem = Validator::make($request->all(),[
-                'SatuanBaru'=> 'required',
-                'SatuanCode'=>  'required|unique:units,code'
-            ]);
-        }
-
         if ($request->category == "AddCategory") {
             $validator = Validator::make($request->all(),[
                 'TambahCategory'=> 'required',
                 'CodeCategory'  => 'required|unique:categories,code'
             ]);
+            if ($validator->fails() == true ) {
+                \Alert::add('danger', 'Gagal menambah kategori,kategory harus diisi, Kode kategory harus unik')->flash();
+                return redirect()->back();
+            }
         }
 
-        if ($validator->fails() == true ) {
-            \Alert::add('danger', 'Gagal menambah kategori,kategory harus diisi, Kode kategory harus unik')->flash();
+        if ($request->brand == "AddBrand") {
+            $validateBrand = Validator::make($request->all(), [
+               'TambahBrand' => 'required',
+               'BrandCode'   => 'required|unique:brand,code'
+           ]);
+           if ($validateBrand->fails() == true) {
+            \Alert::add('danger', 'Gagal Menambah Brand ,Nama Brand Harus Diisi, Kode Brand Harus unik')->flash();
             return redirect()->back();
+        }
         }
 
-        if ($validateBrand->fails() == true) {
-            \Alert::add('danger', 'Gagal Menambah Brand ,Nama Satuan Harus Diisi, Kode Satuan Harus unik')->flash();
-            return redirect()->back();
+        if ($request->uom == "NewItem") {
+            $validateNewItem = Validator::make($request->all(),[
+                'SatuanBaru'=> 'required',
+                'SatuanCode'=>  'required|unique:units,code'
+            ]);
+            if ($validateNewItem->fails() == true) {
+                \Alert::add('danger', 'Gagal Menambah Item ,Nama Satuan Harus Diisi, Kode Satuan Harus unik')->flash();
+                return redirect()->back();
+            }
         }
 
-        if ($validateNewItem->fails() == true) {
-            \Alert::add('danger', 'Gagal Menambah Item ,Nama Satuan Harus Diisi, Kode Satuan Harus unik')->flash();
-            return redirect()->back();
-        }
+        // dd($validateBrand,$validator,$validateNewItem);
+
+
+
+
+
+
 
         $new_item = new Item;
         $brand = $request->brand ;
