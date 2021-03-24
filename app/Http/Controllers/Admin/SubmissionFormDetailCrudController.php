@@ -154,7 +154,7 @@ class SubmissionFormDetailCrudController extends CrudController
         if ($request->brand == "AddBrand") {
             $validateBrand = Validator::make($request->all(), [
                'TambahBrand' => 'required',
-               'BrahdCode'   => 'required|unique:brand,code'
+               'BrandCode'   => 'required|unique:brand,code'
            ]);
         }
         if ($request->uom == "NewItem") {
