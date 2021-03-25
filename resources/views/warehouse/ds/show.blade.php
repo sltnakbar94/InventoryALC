@@ -79,9 +79,11 @@
         </div>
         <div class="row">
             <div class="col-md 12">
+                @if (@$crud->entry->status != 0 && @$crud->entry->status != 3)
                 <div class="card no-padding no-border">
                     @include('warehouse.ds.call-output')
                 </div>
+                @endif
             </div>
         </div>
 	</div>

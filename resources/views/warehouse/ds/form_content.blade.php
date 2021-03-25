@@ -18,7 +18,7 @@
             <td><strong>{{ $crud->entry->driver_phone }}</strong></td>
         </tr>
         <tr>
-            <td>Estimasi Keberangkatanr</td>
+            <td>Estimasi Keberangkatan</td>
             <td><strong>{{ date('d M Y', strtotime($crud->entry->etd)) }}</strong></td>
         </tr>
     </table>
