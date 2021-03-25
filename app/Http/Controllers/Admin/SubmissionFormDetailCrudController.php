@@ -151,7 +151,7 @@ class SubmissionFormDetailCrudController extends CrudController
 
     public function addItem(Request $request)
     {
-        dd($request->all());
+
         if ($request->category == "AddCategory") {
             $validator = Validator::make($request->all(),[
                 'TambahCategory'=> 'required',
