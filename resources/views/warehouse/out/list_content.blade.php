@@ -24,7 +24,7 @@
                         <td>{{$detail->item->name}}</td>
                         <td>{{$detail->item->serial}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
-                        <td>{{$detail->item->uoms->name}}</td>
+                        <td>{{@$detail->item->uoms->name}}</td>
                         {{-- <td align="right">{{number_format($detail->qty_confirm)}}</td> --}}
                         @if ($qty_onhands->stock_on_hand >= $detail->qty)
                             <td> - </td>

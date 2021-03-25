@@ -24,7 +24,7 @@
                         <td>{{$key+1}}</td>
                         <td>{{$detail->item->name}}</td>
                         <td>{{$detail->item->serial}}</td>
-                        <td>{{$detail->item->uoms->name}}</td>
+                        <td>{{@$detail->item->uoms->name}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
                         <td align="right">{{number_format($detail->qty_confirm)}}</td>
                         <td align="right">{{number_format($detail->price)}}</td>
