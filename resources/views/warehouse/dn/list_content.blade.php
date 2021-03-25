@@ -23,7 +23,7 @@
                         <td>{{$detail->item->name}}</td>
                         <td>{{$detail->item->serial}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
-                        <td>{{$detail->item->uoms->name}}</td>
+                        <td>{{@$detail->item->uoms->name}}</td>
                         @if ($detail->qty > $comparison)
                             <td><strong style="background-color: red; color:white">Jumlah Melebihi Stock</strong></td>
                         @else
