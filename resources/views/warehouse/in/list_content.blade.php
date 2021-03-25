@@ -9,9 +9,11 @@
                     <th>UoM</th>
                     <th>Jumlah</th>
                     <th>QC Pass</th>
-                    <th>Harga Satuan</th>
-                    <th>Discount</th>
-                    <th>Sub Total</th>
+                    @if(backpack_user()->hasAnyRole(['sales','purchasing','admin','superadmin']))
+                        <th>Harga Satuan</th>
+                        <th>Discount</th>
+                        <th>Sub Total</th>
+                    @endif
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -27,13 +29,15 @@
                         <td>{{@$detail->item->uoms->name}}</td>
                         <td align="right">{{number_format($detail->qty)}}</td>
                         <td align="right">{{number_format($detail->qty_confirm)}}</td>
-                        <td align="right">{{number_format($detail->price)}}</td>
-                        @if (!empty($detail->discount || $detail->discount != 0))
-                            <td align="right">{{number_format($detail->discount)}}%</td>
-                        @else
-                            <td align="center"> - </td>
+                        @if(backpack_user()->hasAnyRole(['sales','purchasing','admin','superadmin']))
+                            <td align="right">{{number_format($detail->price)}}</td>
+                            @if (!empty($detail->discount || $detail->discount != 0))
+                                <td align="right">{{number_format($detail->discount)}}%</td>
+                            @else
+                                <td align="center"> - </td>
+                            @endif
+                            <td align="right">{{number_format($detail->sub_total)}}</td>
                         @endif
-                        <td align="right">{{number_format($detail->sub_total)}}</td>
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
