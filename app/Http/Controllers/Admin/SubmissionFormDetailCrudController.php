@@ -185,7 +185,6 @@ class SubmissionFormDetailCrudController extends CrudController
                 return redirect()->back();
             }
         }
-        // dd($validateBrand,$validator,$validateNewItem);
 
         $new_item = new Item;
         $brand = $request->brand ;
@@ -194,7 +193,7 @@ class SubmissionFormDetailCrudController extends CrudController
             $new_master_brand->code = $request->BrandCode ;
             $new_master_brand->name = $request->TambahBrand ;
             $new_master_brand->save();
-            $brand = Unit::where('code' , '=' , $request->BrandCode)->first();
+            $brand = Brand::where('code' , '=' , $request->BrandCode)->first();
             $new_item->unit = $brand->id ;
         }else{
             $new_item->brand = $request->brand;
