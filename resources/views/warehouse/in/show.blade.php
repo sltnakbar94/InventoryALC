@@ -73,7 +73,9 @@
                     <div class="card-body">
                         @include('warehouse.in.list_content')
                     </div>
+                    @if (!empty(@$crud->entry->details->first()))
                     @include('warehouse.in.approval')
+                    @endif
                 </div>
             </div>
         </div>
