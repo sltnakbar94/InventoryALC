@@ -126,9 +126,9 @@ class BagItemWarehouseInCrudController extends CrudController
                 $detail_pr->status = Flag::COMPLETE;
                 $detail_pr->update();
             }
-            $stock->update();
             $header->update();
         }
+        $stock->update();
 
         \Alert::add('success', 'Berhasil memvalidasi '. $detail->Item->name)->flash();
         return redirect()->back();
