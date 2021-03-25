@@ -151,16 +151,18 @@ class SubmissionFormDetailCrudController extends CrudController
 
     public function addItem(Request $request)
     {
+        dd($request->all());
         if ($request->category == "AddCategory") {
             $validator = Validator::make($request->all(),[
                 'TambahCategory'=> 'required',
-                'CodeCategory'  => 'required|unique:categories,code'
+                'CategoryCode'  => 'required|unique:categories,code'
             ]);
             if ($validator->fails() == true ) {
                 \Alert::add('danger', 'Gagal menambah kategori,kategory harus diisi, Kode kategory harus unik')->flash();
                 return redirect()->back();
             }
         }
+
 
         if ($request->brand == "AddBrand") {
             $validateBrand = Validator::make($request->all(), [
@@ -183,7 +185,6 @@ class SubmissionFormDetailCrudController extends CrudController
                 return redirect()->back();
             }
         }
-
         // dd($validateBrand,$validator,$validateNewItem);
 
         $new_item = new Item;
