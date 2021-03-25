@@ -167,7 +167,7 @@ class SubmissionFormDetailCrudController extends CrudController
         if ($request->brand == "AddBrand") {
             $validateBrand = Validator::make($request->all(), [
                'TambahBrand' => 'required',
-               'BrandCode'   => 'required|unique:brand,code'
+               'BrandCode'   => 'required|unique:brands,code'
            ]);
            if ($validateBrand->fails() == true) {
             \Alert::add('danger', 'Gagal Menambah Brand ,Nama Brand Harus Diisi, Kode Brand Harus unik')->flash();
@@ -194,7 +194,7 @@ class SubmissionFormDetailCrudController extends CrudController
             $new_master_brand->name = $request->TambahBrand ;
             $new_master_brand->save();
             $brand = Brand::where('code' , '=' , $request->BrandCode)->first();
-            $new_item->unit = $brand->id ;
+            $new_item->brand = $brand->id ;
         }else{
             $new_item->brand = $request->brand;
         }
