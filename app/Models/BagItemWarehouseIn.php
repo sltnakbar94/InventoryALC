@@ -41,6 +41,11 @@ class BagItemWarehouseIn extends Model
         return $this->hasOne(Item::class, 'id', 'item_id');
     }
 
+    public function Header()
+    {
+        return $this->belongsTo(WarehouseIn::class, 'warehouse_in_id', 'id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

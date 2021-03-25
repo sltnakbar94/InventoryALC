@@ -105,7 +105,7 @@ class BagItemWarehouseInCrudController extends CrudController
         $detail->status = Flag::COMPLETE;
         $detail->confirm_user_id = backpack_auth()->id();
         $detail->update();
-        $check_stock = Stock::where('warehouse_id', '=', $detail->warehouse_in_id)->where('item_id', '=', $detail->item_id)->first();
+        $check_stock = Stock::where('warehouse_id', '=', $detail->Header->warehouse_id)->where('item_id', '=', $detail->item_id)->first();
         $stock = Stock::findOrFail($check_stock->id);
         $stock->stock_in_indent -= $request->qty_confirm;
         $stock->stock_on_location += $request->qty_confirm;
