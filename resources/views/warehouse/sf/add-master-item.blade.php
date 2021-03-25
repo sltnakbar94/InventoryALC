@@ -22,11 +22,14 @@
                                 @endforeach
                                 <option value="AddCategory">Tambah Kategori</option>
                             </select>
-                             <div class="form-group mt-2" style="display:none" id="addCategory">
-                                <input type="text" class="form-control" id="newCategory" name="TambahCategory" placeholder="Input Kategori">
-                            </div>
+
                             <div class="form-group mt-2" style="display:none" id="addCodeCategory">
-                                <input type="text" class="form-control" id="newCategory" name="CategoryCode" placeholder="Input Kode Kategori : Contoh : JARINGAN (JRG) ">
+                                <label class="control-label" for="category">Kode Category</label>
+                                <input type="text" class="form-control" id="newCategory" name="CategoryCode" placeholder="Contoh : JRG ">
+                            </div>
+                            <div class="form-group mt-2" style="display:none" id="addCategory">
+                                <label class="control-label" for="category">Nama Category</label>
+                                <input type="text" class="form-control" id="newCategory" name="TambahCategory" placeholder="Input Kategori">
                             </div>
                         </div>
 
@@ -40,11 +43,16 @@
                                 <option value="AddBrand">Tambah Brand</option>
                                 {{-- <a href="{{ backpack_url('brand/create') }}">Tambah Brand</a> --}}
                             </select>
-                            <div class="form-group mt-2" style="display:none" id="addBrand">
-                                <input type="text" class="form-control" id="newBrand" name="TambahBrand" placeholder="Tambah Brand : Contoh = Samsung">
-                            </div>
+
+
+
                             <div class="form-group mt-2" style="display:none" id="BrandCode">
-                                <input type="text" class="form-control" id="newCodeBrand" name="BrandCode" placeholder="Tambah Kode Brand : Contoh Samsung = SMG(3 HURUF)">
+                                <label class="control-label" for="uom">Kode Brand</label>
+                                <input type="text" class="form-control" id="newCodeBrand" name="BrandCode" placeholder="Contoh Samsung = SMG(3 HURUF)">
+                            </div>
+                            <div class="form-group mt-2" style="display:none" id="addBrand">
+                                <label class="control-label" for="uom">Nama Brand</label>
+                                <input type="text" class="form-control" id="newBrand" name="TambahBrand" placeholder="Contoh = Samsung">
                             </div>
                           </div>
 
@@ -57,11 +65,14 @@
                                 @endforeach
                                 <option value="NewItem" >Tambah Satuan</option>
                             </select>
-                            <div class="form-group mt-2" style="display:none" id="AddItem">
-                                <input type="text" class="form-control" id="exampleFormControlInput" name="SatuanBaru" placeholder="Input Satuan">
-                            </div>
+
                             <div class="form-group mt-2" style="display:none" id="AddSatuanCode">
-                                <input type="text" class="form-control" id="exampleFormControlInput" name="SatuanCode" placeholder="Input Kode Satuan : Contoh PCS/BOX(3 HURUF)">
+                                <label class="control-label" for="uom">Kode Satuan</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput" name="SatuanCode" placeholder="Contoh PCS/BOX(3 HURUF)">
+                            </div>
+                            <div class="form-group mt-2" style="display:none" id="AddItem">
+                                <label class="control-label" for="uom">Nama Satuan</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput" name="SatuanBaru" placeholder="Input Satuan">
                             </div>
                         </div>
 
