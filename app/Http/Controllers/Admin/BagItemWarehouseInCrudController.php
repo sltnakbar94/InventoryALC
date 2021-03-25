@@ -88,7 +88,7 @@ class BagItemWarehouseInCrudController extends CrudController
         $detail->price = $request->price;
         if (!empty($request->discount) || $request->discount == 0) {
             $detail->discount = $request->discount;
-            $detail->sub_total = (($request->discount/100*$request->price)+$request->price)*$request->qty;
+            $detail->sub_total = (($request->discount/100*$request->price)-$request->price)*$request->qty;
         }else{
             $detail->sub_total = $request->price*$request->qty;
         }
