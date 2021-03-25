@@ -4,7 +4,7 @@
             @csrf
             <input type="hidden" name="id" value="{{ $crud->entry->id }}">
             <input type="checkbox" id="confirm_process" name="confirm_process" value="Bike" required>
-            <label for="confirm_process"> Saya menyetujui data diatas sudah benar</label><br>
+            <label for="confirm_process">Data diatas sudah benar?</label><br>
             <button type="submit" class="btn btn-success" id="add-buton-out"><i class="fa fa-check"></i> SUBMIT</button>
         </form>
     </div>
