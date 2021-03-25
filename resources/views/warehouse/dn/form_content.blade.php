@@ -7,7 +7,7 @@
         </tr>
         <tr>
             <td>Ekspedisi</td>
-            <td><strong>{{ $crud->entry->expedition }}</strong></td>
+            <td><strong>{{ $crud->entry->WarehouseOut->expedition }}</strong></td>
         </tr>
         <tr>
             <td>Nama Driver</td>
