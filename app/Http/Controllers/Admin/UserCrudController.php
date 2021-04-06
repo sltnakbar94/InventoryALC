@@ -102,7 +102,7 @@ class UserCrudController extends CrudController
         return $this->traitUpdate();
     }
 
-    public function handlePasswordInput()
+    public function handlePasswordInput($request)
     {
         $request->request->remove('password_confirmation');
         $request->request->remove('roles_show');
