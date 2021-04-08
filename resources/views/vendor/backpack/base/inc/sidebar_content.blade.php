@@ -20,12 +20,12 @@
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
         <ul class="nav-dropdown-items">
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaserequisition') }}'><i class='nav-icon la la-question'></i> ReportPurchaseRequisitions</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportsalesorder') }}'><i class='nav-icon la la-question'></i> ReportSalesOrders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverybysales') }}'><i class='nav-icon la la-question'></i> ReportDeliveryBySales</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaseorder') }}'><i class='nav-icon la la-question'></i> ReportPurchaseOrders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='nav-icon la la-question'></i> ReportDeliveryOrders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='nav-icon la la-question'></i> ReportDeliveryNotes</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaserequisition') }}'><i class='lar la-file-alt'></i> ReportPurchaseRequisitions</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportsalesorder') }}'><i class="lar la-file-alt"></i> ReportSalesOrders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverybysales') }}'><i class='lar la-file'></i> ReportDeliveryBySales</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaseorder') }}'><i class="lar la-file-alt"></i> ReportPurchaseOrders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class="lar la-file"></i> ReportDeliveryOrders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class="lar la-file"></i> ReportDeliveryNotes</a></li>
         </ul>
     </li>
 @endif
@@ -46,9 +46,9 @@
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
         <ul class="nav-dropdown-items">
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaserequisition') }}'><i class='nav-icon la la-question'></i> ReportPurchaseRequisitions</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportsalesorder') }}'><i class='nav-icon la la-question'></i> ReportSalesOrders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverybysales') }}'><i class='nav-icon la la-question'></i> ReportDeliveryBySales</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaserequisition') }}'><i class='lar la-file-alt'></i> ReportPurchaseRequisitions</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportsalesorder') }}'><i class="lar la-file-alt"></i> ReportSalesOrders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverybysales') }}'><i class='lar la-file'></i> ReportDeliveryBySales</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaseorder') }}'><i class='nav-icon la la-question'></i> ReportPurchaseOrders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='nav-icon la la-question'></i> ReportDeliveryOrders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='nav-icon la la-question'></i> ReportDeliveryNotes</a></li>
@@ -61,10 +61,10 @@
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
         <ul class="nav-dropdown-items">
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaserequisition') }}'><i class='nav-icon la la-question'></i> ReportPurchaseRequisitions</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportsalesorder') }}'><i class='nav-icon la la-question'></i> ReportSalesOrders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverybysales') }}'><i class='nav-icon la la-question'></i> ReportDeliveryBySales</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaseorder') }}'><i class='nav-icon la la-question'></i> ReportPurchaseOrders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaserequisition') }}'><i class='lar la-file-alt'> ReportPurchaseRequisitions</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportsalesorder') }}'><i class="lar la-file-alt"></i> ReportSalesOrders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverybysales') }}'><i class='lar la-file'></i></i> ReportDeliveryBySales</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaseorder') }}'><i class='nav-icon la la-question'></i>ReportPurchaseOrders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='nav-icon la la-question'></i> ReportDeliveryOrders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='nav-icon la la-question'></i> ReportDeliveryNotes</a></li>
         </ul>
@@ -90,12 +90,12 @@
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
         <ul class="nav-dropdown-items">
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaserequisition') }}'><i class='nav-icon la la-question'></i> ReportPurchaseRequisitions</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportsalesorder') }}'><i class='nav-icon la la-question'></i> ReportSalesOrders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverybysales') }}'><i class='nav-icon la la-question'></i> ReportDeliveryBySales</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaseorder') }}'><i class='nav-icon la la-question'></i> ReportPurchaseOrders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='nav-icon la la-question'></i> ReportDeliveryOrders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='nav-icon la la-question'></i> ReportDeliveryNotes</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaserequisition') }}'><i class='lar la-file-alt'> ReportPurchaseRequisitions</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportsalesorder') }}'><i class="lar la-file-alt"></i> ReportSalesOrders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverybysales') }}'><i class="lar la-file"></i> ReportDeliveryBySales</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaseorder') }}'><i class="las la-list-ol"></i> ReportPurchaseOrders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='las la-list-ol'></i> ReportDeliveryOrders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='las la-list-ol'></i></i> ReportDeliveryNotes</a></li>
         </ul>
     </li>
     <li class="nav-item nav-dropdown">
