@@ -57,9 +57,9 @@ class User extends Authenticatable implements JWTSubject
         'active' => 'boolean',
     ];
 
-    public function setPasswordAttribute($value){
-        $this->attributes['password'] = Hash::make($value);
-    }
+    // public function setPasswordAttribute($value){
+    //     $this->attributes['password'] = bcrypt($value);
+    // }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
