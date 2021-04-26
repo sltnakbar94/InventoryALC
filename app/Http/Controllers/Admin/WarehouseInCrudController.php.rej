@@ -1,0 +1,10 @@
+diff a/app/Http/Controllers/Admin/WarehouseInCrudController.php b/app/Http/Controllers/Admin/WarehouseInCrudController.php	(rejected hunks)
+@@ -304,6 +304,8 @@
+             'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
+         ]);
+ 
++
++
+         $this->crud->addField([
+             'name' => 'term_of_payment',
+             'label' => 'Term of Payment',
