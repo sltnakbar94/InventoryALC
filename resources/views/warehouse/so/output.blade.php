@@ -2,6 +2,8 @@
     //sub total
     $sub_total = $sum;
 
+
+
     //discount
     if (!empty($data->discount)) {
         $discount = ($data->discount/100)*$sub_total;
@@ -253,23 +255,30 @@
 		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
 </table>
-<table cellspacing="0" border="0">
+<table cellspacing="0" style="margin-top:50px" border="0">
     <tr>
-        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Issued By</font></td>
-		<td width="18" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Approve By</font></td>
-		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Received By</font></td>
-		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="160" style="" align="center" valign=bottom><font color="#000000">Jakarta , {{date('d-m-Y', strtotime(@$data->po_date))}}</font></td>
+		<td width="18" align="left" style="" valign=bottom><font color="#000000"><br></font></td>
+        <td width="160" style="" align="center" valign=bottom><font color="#000000"></font></td>
+		<td width="17" align="left" style="" valign=bottom><font color="#000000"><br></font></td>
+        <td width="160" style="" align="center" valign=bottom><font color="#000000">Vendor</font></td>
+		<td width="17" align="left" style="" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
-        <td height="50" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
-		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
-		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
-		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td height="10" style="margin-top:0; margin-bottom:100px" align="center" valign=bottom><font color="#000000">PT. Anomali Lintas Cakrawala,</font></td>
+		<td align="left" style="" valign=bottom><font color="#000000"><br></font></td>
+        <td style="" align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" style=""><br></font></td>
+        <td style="" align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" style= valign=bottom><font color="#000000"><br></font></td>
 	</tr>
+    <tr>
+        <td height="250" align="center" style=>Direktur,</td>
+        <td align="left" style="" valign=bottom><font color="#000000"><br></font></td>
+        <td style="" align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" style=""><br></font></td>
+        <td  align="center" >________________________</td>
+    </tr>
 </table>
 <!-- ************************************************************************** -->
 </body>
