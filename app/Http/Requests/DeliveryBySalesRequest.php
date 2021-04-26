@@ -29,10 +29,7 @@ class DeliveryBySalesRequest extends FormRequest
             'ds_number' => 'required|unique:delivery_by_sales,ds_number',
             'sales_order_id' => 'required',
             'expedition' => 'required',
-            'plat_number' => 'required',
             'ds_date' => 'required',
-            'driver' => 'required',
-            'driver_phone' => 'required',
         ];
     }
 
