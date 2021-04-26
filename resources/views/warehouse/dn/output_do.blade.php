@@ -41,7 +41,7 @@
         </tr>
         <tr>
             <td>
-                <table cellspacing="0" border="0">
+                <table cellspacing="0" style="margin-top:30px" border="0">
                     <tr>
                         <td width="50">
                             <font font color="#000000">
@@ -86,13 +86,49 @@
                             </td>
                         @endif
                     </tr>
+                    <tr>
+                        <td>
+                            <font font color="#000000">
+                                Nomer Polisi :
+                            </font>
+                        </td>
+                        <td>
+                            <font font color="#000000">
+                                : {{$data->plat_number}}
+                            </font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <font font color="#000000">
+                                Pengemudi
+                            </font>
+                        </td>
+                        <td>
+                            <font font color="#000000">
+                                : {{$data->driver}}
+                            </font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <font font color="#000000">
+                                No. Telfon Pengemudi
+                            </font>
+                        </td>
+                        <td>
+                            <font font color="#000000">
+                                : {{$data->driver_phone}}
+                            </font>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>
     </table>
-    <table cellspacing="0" border="0">
+    <table cellspacing="0" style="margin-top:20px" border="0">
 	<tr>
-		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000">Bersama ini kami kirim kan dengan kendaraan no.pol : {{$data->plat_number}} , pengemudi : {{$data->driver}}, Berikut list barang yang kami sertakan :</font></td>
+		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"></td>
 	</tr>
 	<tr>
 		<td width="43" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" height="20" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">No.</font></b></td>
