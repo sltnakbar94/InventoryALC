@@ -304,6 +304,8 @@ class WarehouseInCrudController extends CrudController
             'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
         ]);
 
+
+
         $this->crud->addField([
             'name' => 'term_of_payment',
             'label' => 'Term of Payment',
@@ -371,7 +373,7 @@ class WarehouseInCrudController extends CrudController
 
     public function pdf(Request $request)
     {
-        $sum = BagItemWarehouseIn::sum('sub_total');
+        $sum = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->id)->sum('sub_total');
         $data = WarehouseIn::where('id', '=', $request->id)->first();
 
         $pdf = PDF::loadview('warehouse.in.output',['data'=>$data, 'sum'=>$sum]);
