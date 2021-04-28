@@ -19,7 +19,7 @@
                             <select name="item_id" id="mySelect2" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
                             <option value="">--PILIH BARANG--</option>
                                 @foreach(\App\Models\Stock::where('warehouse_id', '=', $crud->entry->warehouse_id)->get() as $text)
-                                        <option value="{{ $text->item_id }}">{{ $text->item->name }} - Stock on Hand : {{ $text->stock_on_hand }}, Stock on Location {{ $text->stock_on_location }}</option>
+                                        <option value="{{ @$text->item_id }}">{{ @$text->item->name }} - Stock on Hand : {{ @$text->stock_on_hand }}, Stock on Location {{ @$text->stock_on_location }}</option>
                                 @endforeach
                             </select>
                         </div>

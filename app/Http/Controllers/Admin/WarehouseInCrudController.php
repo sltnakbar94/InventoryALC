@@ -304,8 +304,6 @@ class WarehouseInCrudController extends CrudController
             'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
         ]);
 
-
-
         $this->crud->addField([
             'name' => 'term_of_payment',
             'label' => 'Term of Payment',
