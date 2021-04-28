@@ -296,7 +296,7 @@ class SalesOrderCrudController extends CrudController
         $this->crud->addField([
             'name' => 'customer_id',
             'label' => 'Customer',
-            'type' => 'select2_from_array',
+            'type' => 'text',
             'options' => Stackholder::whereHas('stackholderRole', function ($query) {
                 return $query->where('name', '=', 'customer');
             })->pluck('company', 'id'),
