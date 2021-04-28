@@ -57,7 +57,7 @@ class ReportDeliveryOrderCrudController extends CrudController
 
             $this->crud->addColumn([
                 'name' => 'customer_id',
-                'type' => 'select',
+                'type' => 'text',
                 'entity' => 'customer',
                 'attribute' => 'company',
                 'model' => 'App\Models\Stackholder',
