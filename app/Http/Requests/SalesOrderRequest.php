@@ -31,6 +31,7 @@ class SalesOrderRequest extends FormRequest
             'supplier_id' => 'required',
             'customer_id' => 'required',
             'destination' => 'required',
+            'perusahaan'  => 'required'
         ];
     }
 

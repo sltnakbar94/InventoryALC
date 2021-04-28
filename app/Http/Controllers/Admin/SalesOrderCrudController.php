@@ -167,6 +167,13 @@ class SalesOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'text',
+        ]);
+
+
+        $this->crud->addField([
             'name' => 'supplier_id',
             'label' => 'Supplier',
             'type' => 'select2_from_array',
@@ -381,6 +388,68 @@ class SalesOrderCrudController extends CrudController
     	return $pdf->stream($data->so_number.'.pdf');
     }
 
+    public function store(Request $request)
+    {
+
+        $count = SalesOrder::withTrashed()->whereDate('so_date', date($request->so_number))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $day = date('d', strtotime($request->so_date));
+        $month = date('m', strtotime($request->so_date));
+        $year = date('Y', strtotime($request->so_date));
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SO/".$year;
+        $data = new SalesOrder();
+        $data->so_number = $nomor;
+        $data->so_date = $request->so_date;
+        $data->supplier_id = $request->supplier_id ;
+        $data->customer_id = $request->customer_id;
+        $data->ppn = $request->ppn ;
+        $data->term_of_paymnet = $request->term_of_paymnet ;
+        $data->destination = $request->destination;
+        $data->ref_no = $request->ref_no;
+        $data->description = $request->description;
+        $data->user_id = $request->user_id;
+        $data->company_id = $request->company_id;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('sales_order/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-SO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+        $data->save();
+        $cari = SalesOrder::where('so_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('salesorder/'.$cari->id.'/show'));
+    }
+
+    public function update(Request $request)
+    {
+        $count = SalesOrder::withTrashed()->whereDate('so_date', date($request->so_number))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $day = date('d', strtotime($request->so_date));
+        $month = date('m', strtotime($request->so_date));
+        $year = date('Y', strtotime($request->so_date));
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SO/".$year;
+        $data = new SalesOrder();
+        $data->so_number = $nomor;
+        $data->so_date = $request->so_date;
+        $data->supplier_id = $request->supplier_id ;
+        $data->customer_id = $request->customer_id;
+        $data->ppn = $request->ppn ;
+        $data->term_of_paymnet = $request->term_of_paymnet ;
+        $data->destination = $request->destination;
+        $data->ref_no = $request->ref_no;
+        $data->description = $request->description;
+        $data->user_id = $request->user_id;
+        $data->company_id = $request->company_id;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('sales_order/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-SO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+        $data->save();
+        $cari = SalesOrder::where('so_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('salesorder/'.$cari->id.'/show'));
+    }
+
+
     public function dn(Request $request)
     {
         return redirect()->route('generate_delivery-note', [$request->id]);
@@ -449,7 +518,7 @@ class SalesOrderCrudController extends CrudController
 
     public function deniedHeader(Request $request)
     {
-        $header = SalesOrder::findOrFail($request->id);
+       $header = SalesOrder::withoutTrashed()->whereDate('form_date' , date($request->form_date))->count();
         $header->status = Flag::DENIED;
         $details = SalesOrderDetail::where('sales_order_id', '=', $request->id)->get();
         $header_pr = $header->purchaseRequisition;
