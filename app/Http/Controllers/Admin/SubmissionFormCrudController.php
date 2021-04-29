@@ -128,7 +128,7 @@ class SubmissionFormCrudController extends CrudController
 
         $generate = $month.$day."-".$number."/WHI-SF/".$year;
 
-        return $generate;
+        return $number;
     }
 
     protected function setupCreateOperation()
@@ -138,19 +138,21 @@ class SubmissionFormCrudController extends CrudController
         $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
 
         $this->crud->addField([
-            'label' => "Nomor Form Pengajuan",
             'name'  => "form_number",
-            'type'  => 'text',
+            'type'  => 'hidden',
             'value' => $this->generateNomorPengiriman(),
-            'attributes' => [
-                'readonly'    => 'readonly',
-            ]
         ]);
 
         $this->crud->addField([
             'label' => "Tanggal Form Pengajuan",
             'name'  => "form_date",
             'type'  => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -175,6 +177,14 @@ class SubmissionFormCrudController extends CrudController
             'attributes' => [
                 'placeholder' => 'Contoh : Nomor Surat Penawaran Harga',
               ],
+        ]);
+
+        $this->crud->addField([   // Upload
+            'name'      => 'uploadref',
+            'label'     => 'Upload Referensi',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
         ]);
 
         $this->crud->addField([
@@ -226,6 +236,15 @@ class SubmissionFormCrudController extends CrudController
             'label' => "Tanggal Form Pengajuan",
             'name'  => "form_date",
             'type'  => 'date_picker',
+            'attributes' => [
+                'disabled'    => 'disabled',
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -252,6 +271,14 @@ class SubmissionFormCrudController extends CrudController
               ],
         ]);
 
+        $this->crud->addField([   // Upload
+            'name'      => 'uploadref',
+            'label'     => 'Upload Referensi',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
+        ]);
+
         $this->crud->addField([
             'name' => 'description',
             'label' => 'Keterangan',
@@ -271,5 +298,58 @@ class SubmissionFormCrudController extends CrudController
 
         $pdf = PDF::loadview('warehouse.sf.output',['data'=>$data]);
     	return $pdf->stream($data->do_number.'.pdf');
+    }
+    public function store(Request $request)
+    {
+        $count = SubmissionForm::withTrashed()->whereDate('form_date', date($request->form_date))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $day = date('d', strtotime($request->form_date));
+        $month = date('m', strtotime($request->form_date));
+        $year = date('Y', strtotime($request->form_date));
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SF/".$year;
+        $data = new SubmissionForm();
+        $data->form_number = $nomor;
+        $data->form_date = $request->form_date;
+        $data->perusahaan = $request->perusahaan;
+        $data->project_id = $request->project_id;
+        $data->project_name = $request->project_name;
+        $data->ref_no = $request->ref_no;
+        $data->description = $request->description;
+        $data->user_id = $request->user_id;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('reference', $nomor. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+        $data->save();
+        $cari = SubmissionForm::where('form_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('submissionform/'.$cari->id.'/show'));
+    }
+
+    public function update(Request $request)
+    {
+        $data = SubmissionForm::findOrFail($request->id);
+        $day = date('d', strtotime($request->form_date));
+        $month = date('m', strtotime($request->form_date));
+        $year = date('Y', strtotime($request->form_date));
+        $number = substr($data->form_number,5,3);
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SF/".$year;
+        $data->form_number = $nomor;
+        $data->form_date = $request->form_date;
+        $data->perusahaan = $request->perusahaan;
+        $data->project_id = $request->project_id;
+        $data->project_name = $request->project_name;
+        $data->ref_no = $request->ref_no;
+        $data->description = $request->description;
+        $data->user_id = $request->user_id;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('reference', $nomor. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+        $data->update();
+        $cari = SubmissionForm::where('form_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('submissionform/'.$cari->id.'/show'));
+
     }
 }
