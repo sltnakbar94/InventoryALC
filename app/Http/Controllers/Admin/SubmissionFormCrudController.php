@@ -318,7 +318,7 @@ class SubmissionFormCrudController extends CrudController
         $data->user_id = $request->user_id;
         if($request->hasFile('uploadref')) {
             $file = $request->file('uploadref');
-            $path = $file->storeAs('reference', $nomor. '.' . $file->getClientOriginalExtension() , 'public');
+            $path = $file->storeAs('submission_form/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-SF-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
             $data->uploadref = $path;
         }
         $data->save();
@@ -344,7 +344,7 @@ class SubmissionFormCrudController extends CrudController
         $data->user_id = $request->user_id;
         if($request->hasFile('uploadref')) {
             $file = $request->file('uploadref');
-            $path = $file->storeAs('reference', $nomor. '.' . $file->getClientOriginalExtension() , 'public');
+            $path = $file->storeAs('submission_form/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-SF-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
             $data->uploadref = $path;
         }
         $data->update();
