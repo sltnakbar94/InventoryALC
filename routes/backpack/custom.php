@@ -29,6 +29,7 @@ Route::group([
 
     // Out
     Route::crud('warehouseout', 'WarehouseOutCrudController');
+    Route::post('warehouseout/revision', 'WarehouseOutCrudController@revision');
     Route::post('generate-do-pdf', 'WarehouseOutCrudController@pdf');
     Route::post('item_to-bag', 'ApiController@itemToBag');
     Route::get('item_on-bag', 'ApiController@checkItemOnBagById');
