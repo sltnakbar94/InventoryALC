@@ -73,14 +73,19 @@ Route::group([
     Route::crud('brand', 'BrandCrudController');
     Route::crud('unit', 'UnitCrudController');
     Route::crud('stackholder', 'StackholderCrudController');
+
+    //Sales Order
     Route::crud('salesorder', 'SalesOrderCrudController');
     Route::post('salesorder-pic', 'SalesOrderCrudController@storePic');
     Route::post('salesorder/process', 'SalesOrderCrudController@process');
+    Route::post('salesorder/revision', 'SalesOrderCrudController@revision');
     Route::get('salesorder/{id}/accept', 'SalesOrderCrudController@acceptHeader');
     Route::get('salesorder/{id}/denied', 'SalesOrderCrudController@deniedHeader');
     Route::post('generate-so-pdf', 'SalesOrderCrudController@pdf');
     Route::post('generate-so-dn', 'SalesOrderCrudController@dn');
     Route::crud('salesorderdetail', 'SalesOrderDetailCrudController');
+
+    //Delivery by Sales
     Route::crud('salesdn', 'SalesDnCrudController');
     Route::post('generate-dn-pdf', 'DeliveryNoteCrudController@pdf');
     Route::post('generate-sdn-pdf', 'SalesDnCrudController@pdf');
