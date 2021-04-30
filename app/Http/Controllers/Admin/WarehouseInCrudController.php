@@ -12,14 +12,16 @@ use App\Models\BagItemWarehouseIn;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\WarehouseInRequest;
+use App\Models\Revision;
 use App\Models\Stock;
 use App\Models\SubmissionForm;
 use App\Models\SubmissionFormDetail;
 use App\Models\Warehouse;
+use App\Module;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use \App\Services\PurchaseOrderServices;
-
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class WarehouseInCrudController
@@ -541,5 +543,35 @@ class WarehouseInCrudController extends CrudController
 
         \Alert::add('danger', 'Berhasil membatalkan ' . $header->po_number)->flash();
         return redirect()->back();
+    }
+
+    public function revision(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'warehouse_in_id' => 'required',
+            'revision' => 'required',
+        ]);
+        if ($validator->fails()) {
+            \Alert::add('danger', 'Data tidak lengkap')->flash();
+            return redirect()->back();
+        } else {
+            $revision = new Revision();
+            $revision->module = Module::PurchaseOrder;
+            $revision->module_id = $request->warehouse_in_id;
+            $revision->revision = $request->revision;
+            $revision->user_id = backpack_user()->id;
+            $header = WarehouseIn::findOrFail($request->warehouse_in_id);
+            $header->status = Flag::REVISION;
+            $details = BagItemWarehouseIn::where('warehouse_in_id', '=', $request->warehouse_in_id)->get();
+            foreach ($details as $detail) {
+                $update = BagItemWarehouseIn::findOrFail($detail->id);
+                $update->status = Flag::REVISION;
+                $update->update();
+            }
+            $revision->save();
+            $header->update();
+            \Alert::add('success', 'Berhasil memberikan pesan revisi')->flash();
+            return redirect()->back();
+        }
     }
 }

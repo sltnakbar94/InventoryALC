@@ -46,6 +46,7 @@ Route::group([
     // In
     Route::crud('warehousein', 'WarehouseInCrudController');
     Route::post('warehousein/process', 'WarehouseInCrudController@process');
+    Route::post('warehousein/revision', 'WarehouseInCrudController@revision');
     Route::post('warehousein-pic', 'WarehouseInCrudController@storePic');
     Route::post('generate-po-pdf', 'WarehouseInCrudController@pdf');
     Route::post('item_to-bag_in', 'ApiController@itemToBagIn');

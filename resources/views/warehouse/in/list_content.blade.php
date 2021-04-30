@@ -20,7 +20,7 @@
                 @if (count($crud->entry->details) != 0)
                     @foreach ($crud->entry->details as $key=>$detail)
                     @php
-                        $status = array('Plan', 'Submited', 'Process', 'Denied', 'Complete');
+                        $status = array('Plan', 'Submited', 'Process', 'Denied', 'Complete', 'Revision');
                     @endphp
                     <tr>
                         <td>{{$key+1}}</td>
@@ -41,7 +41,7 @@
                         <td>{{$status[$detail->status]}}</td>
                         <td>
                             <div class="btn-group">
-                                @if ($detail->status == 0)
+                                @if ($detail->status == 0 || $detail->status == 5)
                                     <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning" style="height: 100%"><i class="las la-pencil-alt"></i></button>
                                     <form id="delete-form{{ $detail->id }}" method="POST" action="{{ route('bagitemwarehousein.destroy', $detail->id) }}" class="js-confirm" data-confirm="Apakah anda yakin ingin menghapus data ini?">
                                         @method('DELETE')

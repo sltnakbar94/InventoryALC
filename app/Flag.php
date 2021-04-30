@@ -8,5 +8,6 @@ class Flag {
     const PROCESS   = 2;
     const DENIED    = 3;
     const COMPLETE  = 4;
+    const REVISION  = 5;
 
 }
