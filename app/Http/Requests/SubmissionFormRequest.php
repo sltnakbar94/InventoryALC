@@ -29,6 +29,7 @@ class SubmissionFormRequest extends FormRequest
             'form_number' => 'required|unique:submission_forms,form_number',
             'form_date' => 'required',
             'project_id' => 'required',
+            'perusahaan' => 'required',
         ];
     }
 

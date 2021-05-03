@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Flag;
 use App\Http\Requests\SalesOrderRequest;
+use App\Models\Revision;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Stackholder;
@@ -11,7 +12,9 @@ use App\Models\SalesOrder;
 use App\Models\SalesOrderDetail;
 use App\Models\SubmissionForm;
 use App\Models\SubmissionFormDetail;
+use App\Module;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use PDF;
 
 /**
@@ -475,5 +478,35 @@ class SalesOrderCrudController extends CrudController
 
         \Alert::add('danger', 'Berhasil membatalkan ' . $header->so_number)->flash();
         return redirect()->back();
+    }
+
+    public function revision(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'sales_order_id' => 'required',
+            'revision' => 'required',
+        ]);
+        if ($validator->fails()) {
+            \Alert::add('danger', 'Data tidak lengkap')->flash();
+            return redirect()->back();
+        } else {
+            $revision = new Revision();
+            $revision->module = Module::SalesOrder;
+            $revision->module_id = $request->sales_order_id;
+            $revision->revision = $request->revision;
+            $revision->user_id = backpack_user()->id;
+            $header = SalesOrder::findOrFail($request->sales_order_id);
+            $header->status = Flag::REVISION;
+            $details = SalesOrderDetail::where('sales_order_id', '=', $request->sales_order_id)->get();
+            foreach ($details as $detail) {
+                $update = SalesOrderDetail::findOrFail($detail->id);
+                $update->status = Flag::REVISION;
+                $update->update();
+            }
+            $revision->save();
+            $header->update();
+            \Alert::add('success', 'Berhasil memberikan pesan revisi')->flash();
+            return redirect()->back();
+        }
     }
 }

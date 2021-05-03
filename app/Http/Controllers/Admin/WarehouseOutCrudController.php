@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\DB;
 use App\Models\BagItemWarehouseOut;
 use App\Services\DeliveryOrderServices;
 use App\Http\Requests\WarehouseOutRequest;
+use App\Models\Revision;
 use App\Models\Stock;
 use App\Models\Warehouse;
+use App\Module;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class WarehouseOutCrudController
@@ -470,5 +473,35 @@ class WarehouseOutCrudController extends CrudController
 
         \Alert::add('success', 'Berhasil submit ' . $header->po_number)->flash();
         return redirect()->back();
+    }
+
+    public function revision(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'warehouse_out_id' => 'required',
+            'revision' => 'required',
+        ]);
+        if ($validator->fails()) {
+            \Alert::add('danger', 'Data tidak lengkap')->flash();
+            return redirect()->back();
+        } else {
+            $revision = new Revision();
+            $revision->module = Module::DeliveryOrder;
+            $revision->module_id = $request->warehouse_out_id;
+            $revision->revision = $request->revision;
+            $revision->user_id = backpack_user()->id;
+            $header = WarehouseOut::findOrFail($request->warehouse_out_id);
+            $header->status = Flag::REVISION;
+            $details = BagItemWarehouseOut::where('warehouse_out_id', '=', $request->warehouse_out_id)->get();
+            foreach ($details as $detail) {
+                $update = BagItemWarehouseOut::findOrFail($detail->id);
+                $update->status = Flag::REVISION;
+                $update->update();
+            }
+            $revision->save();
+            $header->update();
+            \Alert::add('success', 'Berhasil memberikan pesan revisi')->flash();
+            return redirect()->back();
+        }
     }
 }
