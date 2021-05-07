@@ -132,7 +132,8 @@ class SalesOrderCrudController extends CrudController
 
         $generate = $month.$day."-".$number."/WHI-SO/".$year;
 
-        return $generate;
+        return $generate ;
+        return $number;
     }
 
     protected function setupCreateOperation()
@@ -154,6 +155,12 @@ class SalesOrderCrudController extends CrudController
             'name' => 'so_date',
             'label' => 'Tanggal SO',
             'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type'  => 'text'
         ]);
 
         $this->crud->addField([   // SelectMultiple = n-n relationship (with pivot table)
@@ -199,17 +206,28 @@ class SalesOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name'  => 'uploadref',
+            'label' => 'Upload Refrensi',
+            'type'  => 'upload' ,
+            'upload' => true ,
+            'disk'  => 'public'
+        ]);
+
+
+        $this->crud->addField([
+            'name' => 'term_of_paymnet',
+            'label' => 'Term of Payment',
+            'type' => 'textarea',
+            ]);
+
+
+        $this->crud->addField([
             'name' => 'ppn',
             'label' => 'PPN (10%)',
             'type' => 'boolean',
             'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
         ]);
 
-        $this->crud->addField([
-            'name' => 'term_of_paymnet',
-            'label' => 'Term of Payment',
-            'type' => 'textarea',
-        ]);
 
         $this->crud->addField([
             'name' => 'destination',
@@ -287,6 +305,12 @@ class SalesOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type'  => 'text'
+        ]);
+
+        $this->crud->addField([
             'name' => 'supplier_id',
             'label' => 'Supplier',
             'type' => 'select2_from_array',
@@ -316,16 +340,24 @@ class SalesOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name'  => 'uploadref',
+            'label' => 'Upload Refrensi',
+            'type'  => 'upload' ,
+            'upload' => true ,
+            'disk'  => 'public'
+        ]);
+
+        $this->crud->addField([
+            'name' => 'term_of_payment',
+            'label' => 'Term of Payment',
+            'type' => 'textarea',
+            ]);
+
+        $this->crud->addField([
             'name' => 'ppn',
             'label' => 'PPN (10%)',
             'type' => 'boolean',
             'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
-        ]);
-
-        $this->crud->addField([
-            'name' => 'term_of_paymnet',
-            'label' => 'Term of Payment',
-            'type' => 'textarea',
         ]);
 
         $this->crud->addField([
@@ -373,6 +405,64 @@ class SalesOrderCrudController extends CrudController
 
         \Alert::add('success', 'Berhasil tambah pic ' . $request->pic)->flash();
        return redirect()->back();
+    }
+
+    public function store(Request $request)
+    {
+        $count = SalesOrder::withTrashed()->whereDate('so_date',date($request->so_date))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $day = date('d', strtotime($request->so_date));
+        $month = date('m', strtotime($request->so_date));
+        $year = date('Y', strtotime($request->so_date));
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SO/".$year;
+        $data = new SalesOrder();
+        $data->so_number = $nomor;
+        $data->so_date = $request->so_date;
+        $data->supplier_id = $request->supplier_id ;
+        $data->customer_id = $request->customer_id ;
+        $data->ref_no = $request->ref_no ;
+        $data->ppn = $request->ppn ;
+        $data->term_of_payment = $request->term_of_payment;
+        $data->user_id = $request->user_id ;
+        $data->description = $request->description ;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('reference', $nomor. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+
+        $data->save();
+        $cari = SalesOrder::where('so_number','=',$nomor)->first();
+        return redirect(backpack_url('salesorder/'.$cari->id.'/show'));
+    }
+
+    public function update(Request $request)
+    {
+        $count = SalesOrder::withTrashed()->whereDate('so_date',date($request->so_date))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $day = date('d', strtotime($request->so_date));
+        $month = date('m', strtotime($request->so_date));
+        $year = date('Y', strtotime($request->so_date));
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SO/".$year;
+        $data = new SalesOrder();
+        $data->so_number = $nomor;
+        $data->so_date = $request->so_date;
+        $data->supplier_id = $request->supplier_id ;
+        $data->customer_id = $request->customer_id ;
+        $data->ref_no = $request->ref_no ;
+        $data->ppn = $request->ppn ;
+        $data->term_of_payment = $request->term_of_payment;
+        $data->user_id = $request->user_id ;
+        $data->description = $request->description ;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('reference', $nomor. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+
+        $data->update();
+        $cari = SalesOrder::where('so_number','=',$nomor)->first();
+        return redirect(backpack_url('salesorder/'.$cari->id.'/show'));
     }
 
     public function pdf(Request $request)
