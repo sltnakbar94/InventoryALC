@@ -73,8 +73,6 @@ class SalesOrder extends Model
         return $this->belongsToMany(SubmissionForm::class, 'pr_so_relations', 'sales_order_id', 'submission_form_id');
     }
 
-
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -92,12 +90,4 @@ class SalesOrder extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-
-    public function setUploadrefAttribute($value){
-        $attribute_name = "uploadref";
-        $disk = "public";
-        $destination_path = "sales_order/uploadref";
-
-        $this->uploadFileToDisk($value , $attribute_name ,$disk , $destination_path);
-    }
 }
