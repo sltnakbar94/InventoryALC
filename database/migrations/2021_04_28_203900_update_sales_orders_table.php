@@ -27,10 +27,12 @@ class UpdateSalesOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::table('sales_orders', function(Blueprint $table) {
-            $table->string('so_number')->nullable(false)->change();
-            $table->string('perusahaan');
-            $table->string('uploadref')->nullable();
+        Schema::table('sales_orders', function (Blueprint $table) {
+            $table->dropColumn([
+                'so_number',
+                'perusahaan',
+                'uploadref',
+            ]);
         });
     }
 }
