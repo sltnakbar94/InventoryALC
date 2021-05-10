@@ -50,6 +50,7 @@ class DeliveryBySales extends Model
         return $this->belongsTo(User::class);
     }
 
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -67,4 +68,5 @@ class DeliveryBySales extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
 }

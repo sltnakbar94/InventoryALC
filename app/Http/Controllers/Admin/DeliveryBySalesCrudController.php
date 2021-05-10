@@ -14,6 +14,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use PDF;
 use Illuminate\Http\Request;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * Class DeliveryBySalesCrudController
@@ -133,7 +134,7 @@ class DeliveryBySalesCrudController extends CrudController
 
         $generate = $month.$day."-".$number."/DBS-SJ/".$year;
 
-        return $generate;
+        return $number;
     }
 
     protected function setupCreateOperation()
@@ -145,11 +146,17 @@ class DeliveryBySalesCrudController extends CrudController
         $this->crud->addField([
             'label' => "Nomor Surat jalan",
             'name'  => "ds_number",
-            'type'  => 'text',
+            'type'  => 'hidden',
             'value' => $this->generateNomorPengiriman(),
             'attributes' => [
-                'readonly'    => 'readonly',
+                'readonly'    => 'disabled',
             ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -228,10 +235,16 @@ class DeliveryBySalesCrudController extends CrudController
         $this->crud->addField([
             'label' => "Nomor Surat jalan",
             'name'  => "ds_number",
-            'type'  => 'text',
+            'type'  => 'hidden',
             'attributes' => [
                 'readonly'    => 'readonly',
             ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -283,6 +296,37 @@ class DeliveryBySalesCrudController extends CrudController
             'type' => 'hidden',
             'value' => backpack_auth()->user()->company_id
         ]);
+    }
+
+
+    public function store(Request $request)
+    {
+
+        $count = DeliveryBySales::withTrashed()->whereDate('form_date', date($request->ds_date))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $day = date('d', strtotime($request->ds_date));
+        $month = date('m', strtotime($request->ds_date));
+        $year = date('Y', strtotime($request->ds_date));
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SF/".$year;
+        $data = new SubmissionForm();
+        $data->form_number = $nomor;
+        $data->form_date = $request->ds_date;
+        $data->perusahaan = $request->company;
+        $data->sales_order_id = $request->sales_order_id;
+        $data->etd = $request->etd;
+        $data->expedition = $request->expedition;
+        $data->plat_number = $request->plat_number;
+        $data->user_id = $request->user_id;
+        $data->driver = $request->driver ;
+        $data->driver_phone = $request->driver_phone;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('delivery_by_slaes/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-DS-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+        $data->save();
+        $cari = DeliveryBySales::where('ds_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('deliverybysales/'.$cari->id.'/show'));
     }
 
     public function process(Request $request)

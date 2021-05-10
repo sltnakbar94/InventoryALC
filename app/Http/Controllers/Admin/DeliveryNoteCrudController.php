@@ -138,7 +138,7 @@ class DeliveryNoteCrudController extends CrudController
 
         $generate = $month.$day."-".$number."/WHO-SJ/".$year;
 
-        return $generate;
+        return $number;
     }
 
     protected function setupCreateOperation()
@@ -150,11 +150,17 @@ class DeliveryNoteCrudController extends CrudController
         $this->crud->addField([
             'label' => "Nomor Surat jalan",
             'name'  => "dn_number",
-            'type'  => 'text',
+            'type'  => 'hidden',
             'value' => $this->generateNomorPengiriman(),
             'attributes' => [
-                'readonly'    => 'readonly',
+                'readonly'    => 'disable',
             ]
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Perusahaan',
+            'name'  => 'company',
+            'type'  => 'text'
         ]);
 
         $this->crud->addField([
@@ -233,10 +239,16 @@ class DeliveryNoteCrudController extends CrudController
         $this->crud->addField([
             'label' => "Nomor Surat jalan",
             'name'  => "dn_number",
-            'type'  => 'text',
+            'type'  => 'hidden',
             'attributes' => [
-                'readonly'    => 'readonly',
+                'readonly'    => 'disable',
             ]
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Perusahaan',
+            'name'  => 'company',
+            'type'  => 'text'
         ]);
 
         $this->crud->addField([
@@ -294,6 +306,31 @@ class DeliveryNoteCrudController extends CrudController
             'type' => 'hidden',
             'value' => backpack_auth()->user()->company_id
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $count = DeliveryNote::withTrashed()->whereDate('dn_date', date($request->dn_number))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $day = date('d', strtotime($request->dn_date));
+        $month = date('m', strtotime($request->dn_date));
+        $year = date('Y', strtotime($request->dn_date));
+        $nomor = $month.$day."-".$number."/".$request->company."-DN/".$year;
+        $data = new DeliveryNote();
+        $data->dn_number = $nomor;
+        $data->perusahaan = $request->company ;
+        $data->reference = $request->reference;
+        $data->dn_date = $request->dn_date;
+        $data->etd = $request->etd ;
+        $data->plat_number = $request->plat_number;
+        $data->driver = $request->driver ;
+        $data->driver_phone = $request->driver_phone ;
+        $data->module = $request->module ;
+        $data->user_id = $request->user_id ;
+        $data->company_id = $request->company_id ;
+        $data->save();
+        $cari = DeliveryNote::where('dn_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('deliverynote/'.$cari->id.'/show'));
     }
 
     public function generateDeliveryNote($id)
