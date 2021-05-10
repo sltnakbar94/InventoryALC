@@ -87,6 +87,7 @@ class DeliveryNoteDetailCrudController extends CrudController
 
     public function store(Request $request)
     {
+
         $header = DeliveryNote::findOrFail($request->delivery_note_id);
         $header_do = $header->WarehouseOut;
         $do_details = BagItemWarehouseOut::where('warehouse_out_id', '=', $header_do->id)->get();
