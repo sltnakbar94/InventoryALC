@@ -127,7 +127,7 @@ class WarehouseOutCrudController extends CrudController
 
         $generate = $month.$day."-".$number."/WHO-DO/".$year;
 
-        return $generate;
+        return $number;
     }
     protected function setupCreateOperation()
     {
@@ -137,11 +137,17 @@ class WarehouseOutCrudController extends CrudController
         $this->crud->addField([
             'label' => 'Nomor DO',
             'name'  => 'do_number',
-            'type'  => 'text',
+            'type'  => 'hidden',
             'value' => $this->generateNomorPengiriman(),
             'attributes' => [
                 'readonly'    => 'readonly',
             ]
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Perusahaan' ,
+            'name'  => 'company' ,
+            'type'  => 'text' ,
         ]);
 
         $this->crud->addField([
@@ -167,6 +173,14 @@ class WarehouseOutCrudController extends CrudController
             'attributes' => [
                 'placeholder' => 'Contoh : Nomor Bill',
               ],
+        ]);
+
+        $this->crud->addField([   // Upload
+            'name'      => 'uploadref',
+            'label'     => 'Upload Referensi',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
         ]);
 
         $this->crud->addField([
@@ -233,10 +247,16 @@ class WarehouseOutCrudController extends CrudController
         $this->crud->addField([
             'label' => 'Nomor DO',
             'name'  => 'do_number',
-            'type'  => 'text',
+            'type'  => 'hidden',
             'attributes' => [
                 'readonly'    => 'readonly',
             ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -262,6 +282,14 @@ class WarehouseOutCrudController extends CrudController
             'attributes' => [
                 'placeholder' => 'Contoh : Nomor Bill',
               ],
+        ]);
+
+        $this->crud->addField([   // Upload
+            'name'      => 'uploadref',
+            'label'     => 'Upload Referensi',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
         ]);
 
         $this->crud->addField([
@@ -351,6 +379,39 @@ class WarehouseOutCrudController extends CrudController
 
         $pdf = PDF::loadview('warehouse.out.output',['data'=>$data]);
     	return $pdf->stream($data->do_number.'.pdf');
+    }
+
+    public function store(Request $request)
+    {
+        $count = WarehouseOut::withTrashed()->whereDate('do_date',date($request->do_date))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $day = date('d', strtotime($request->do_date));
+        $month = date('m', strtotime($request->do_date));
+        $year = date('Y', strtotime($request->do_date));
+        $nomor = $month.$day."-".$number."/".$request->company."-PO/".$year;
+        $data = new WarehouseOut();
+        $data->do_number = $nomor;
+        $data->perusahaan = $request->company;
+        $data->do_date = $request->do_date;
+        $data->customer_id = $request->customer_id;
+        $data->ref_no = $request->ref_no;
+        $data->expedition = $request->expedition;
+        $data->warehouse_id = $request->warehouse_id;
+        $data->destination = $request->destination ;
+        $data->description = $request->description;
+        $data->start_date = $request->start_date;
+        $data->end_Date = $request->end_date;
+        $data->user_id = $request->user_id;
+        $data->status = Flag::PLAN;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('delivery_order/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-DO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+        $data->save();
+
+        $cari = WarehouseOut::where('do_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('warehouseout/'.$cari->id.'/show'));
     }
 
     public function storePic(Request $request)

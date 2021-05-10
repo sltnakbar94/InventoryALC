@@ -130,7 +130,7 @@ class SalesOrderCrudController extends CrudController
         $generate = $month.$day."-".$number."/WHI-SO/".$year;
 
         return $number;
-        return $generate;
+
     }
 
     protected function setupCreateOperation()
@@ -141,7 +141,7 @@ class SalesOrderCrudController extends CrudController
         $this->crud->addField([
             'label' => "Nomor SO",
             'name'  => "so_number",
-            'type'  => 'text',
+            'type'  => 'hidden',
             'value' => $this->generateNomorPengiriman(),
             'attributes' => [
                 'readonly'    => 'readonly',
@@ -275,7 +275,7 @@ class SalesOrderCrudController extends CrudController
         $this->crud->addField([
             'label' => "Nomor SO",
             'name'  => "so_number",
-            'type'  => 'text',
+            'type'  => 'hidden',
             'attributes' => [
                 'readonly'    => 'readonly',
             ]

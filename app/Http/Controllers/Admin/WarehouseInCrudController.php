@@ -88,6 +88,12 @@ class WarehouseInCrudController extends CrudController
             'label' => 'Supplier'
         ]);
 
+        $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'text',
+        ]);
+
         $this->crud->addColumn([
             'name' => 'po_date',
             'type' => 'date',
@@ -133,7 +139,7 @@ class WarehouseInCrudController extends CrudController
 
         $generate = $month.$day."-".$number."/WHI-PO/".$year;
 
-        return $generate;
+        return $number;
     }
 
     protected function setupCreateOperation()
@@ -144,11 +150,17 @@ class WarehouseInCrudController extends CrudController
         $this->crud->addField([
             'label' => "Nomor PO",
             'name'  => "po_number",
-            'type'  => 'text',
+            'type'  => 'hidden',
             'value' => $this->generateNomorPengiriman(),
             'attributes' => [
                 'readonly'    => 'readonly',
             ]
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Perusahaan' ,
+            'name'  => 'company' ,
+            'type'  => 'text' ,
         ]);
 
         $this->crud->addField([
@@ -186,6 +198,14 @@ class WarehouseInCrudController extends CrudController
             'attributes' => [
                 'placeholder' => 'Contoh : Nomor Surat Penawaran Harga',
               ],
+        ]);
+
+        $this->crud->addField([   // Upload
+            'name'      => 'uploadref',
+            'label'     => 'Upload Referensi',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
         ]);
 
         $this->crud->addField([
@@ -253,10 +273,16 @@ class WarehouseInCrudController extends CrudController
         $this->crud->addField([
             'label' => "Nomor PO",
             'name'  => "po_number",
-            'type'  => 'text',
+            'type'  => 'hidden',
             'attributes' => [
                 'readonly'    => 'readonly',
             ]
+        ]);
+
+        $this->crud->addField([
+            'label' => 'perusahaan' ,
+            'name'  => 'company' ,
+            'type'  => 'text' ,
         ]);
 
         $this->crud->addField([
@@ -295,6 +321,14 @@ class WarehouseInCrudController extends CrudController
             'attributes' => [
                 'placeholder' => 'Contoh : Nomor Surat Penawaran Harga',
               ],
+        ]);
+
+        $this->crud->addField([   // Upload
+            'name'      => 'uploadref',
+            'label'     => 'Upload Referensi',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
         ]);
 
         $this->crud->addField([
@@ -414,6 +448,40 @@ class WarehouseInCrudController extends CrudController
         }
         \Alert::add($return['status'], $return['message'])->flash();
         return redirect()->back();
+    }
+
+    public function store(Request $request)
+    {
+
+        $count = WarehouseIn::withTrashed()->whereDate('po_date',date($request->po_date))->count();
+        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $day = date('d', strtotime($request->po_date));
+        $month = date('m', strtotime($request->po_date));
+        $year = date('Y', strtotime($request->po_date));
+        $nomor = $month.$day."-".$number."/".$request->company."-PO/".$year;
+        $data = new WarehouseIn();
+        $data->po_number = $nomor;
+        $data->po_date = $request->po_date;
+        $data->perusahaan = $request->company;
+        $data->supplier_id = $request->supplier_id;
+        $data->ppn = $request->ppn;
+        $data->term_of_payment = $request->term_of_payment;
+        $data->warehouse_id = $request->warehouse_id;
+        $data->description = $request->description ;
+        $data->start_date = $request->start_date;
+        $data->end_date = $request->end_date;
+        $data->user_id = $request->user_id;
+        $data->status = Flag::PLAN ;
+
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('purchase_orderin/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-PO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+        $data->save();
+
+        $cari = WarehouseIn::where('po_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('warehousein/'.$cari->id.'/show'));
     }
 
     public function denied($id)

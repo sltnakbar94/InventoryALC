@@ -80,4 +80,12 @@ class WarehouseOut extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function setUploadrefAttribute($value)
+    {
+        $attribute_name = "uploadref";
+        $disk = "public";
+        $destination_path = "delivery_order/uploadref";
+
+        $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
+    }
 }
