@@ -93,6 +93,7 @@
 @endsection
 @include('warehouse.in.qc-modal')
 @include('warehouse.in.edit-modal')
+@include('warehouse.in.revision-modal')
 
 
 @section('after_styles')

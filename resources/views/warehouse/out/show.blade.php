@@ -90,6 +90,7 @@
 @endsection
 @include('warehouse.out.add-modal')
 @include('warehouse.out.edit-modal')
+@include('warehouse.out.revision-modal')
 
 
 @section('after_styles')

@@ -91,6 +91,7 @@
 @endsection
 @include('warehouse.so.add-modal')
 @include('warehouse.so.edit-modal')
+@include('warehouse.so.revision-modal')
 
 
 @section('after_styles')
