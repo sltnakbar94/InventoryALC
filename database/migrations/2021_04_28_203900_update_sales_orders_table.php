@@ -13,7 +13,7 @@ class UpdateSalesOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::table('sales_orders', function(Blueprint $table) {
+        Schema::table('sales_orders', function (Blueprint $table) {
             $table->string('so_number')->nullable()->change();
             $table->string('perusahaan');
             $table->string('uploadref')->nullable();
