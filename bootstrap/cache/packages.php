@@ -25,17 +25,6 @@
       0 => 'Backpack\\PermissionManager\\PermissionManagerServiceProvider',
     ),
   ),
-  'barryvdh/laravel-debugbar' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Barryvdh\\Debugbar\\ServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
-    ),
-  ),
   'barryvdh/laravel-dompdf' => 
   array (
     'providers' => 

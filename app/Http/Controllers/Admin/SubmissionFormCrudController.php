@@ -9,6 +9,7 @@ use App\Models\SubmissionForm;
 use App\Models\SubmissionFormDetail;
 use Illuminate\Http\Request;
 use App\Flag;
+use App\Models\Company;
 use App\Models\Item;
 use PDF;
 
@@ -147,12 +148,17 @@ class SubmissionFormCrudController extends CrudController
             'label' => "Tanggal Form Pengajuan",
             'name'  => "form_date",
             'type'  => 'date_picker',
+            'date_picker_options' => [
+                'todayBtn' => 'linked',
+            ],
         ]);
 
         $this->crud->addField([
             'name' => 'perusahaan',
             'label' => 'Nama Perusahaan',
-            'type' => 'text',
+            'type' => 'select2_from_array',
+            'options' => Company::pluck('name', 'id'),
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([
@@ -248,6 +254,14 @@ class SubmissionFormCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'select2_from_array',
+            'options' => Company::pluck('name', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
             'name' => 'project_id',
             'label' => 'Peruntukan',
             'type' => 'select2_from_array',
@@ -302,12 +316,13 @@ class SubmissionFormCrudController extends CrudController
 
     public function store(Request $request)
     {
+        $perusahaan = Company::find($request->perusahaan);
         $count = SubmissionForm::withTrashed()->whereDate('form_date', date($request->form_date))->count();
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
         $day = date('d', strtotime($request->form_date));
         $month = date('m', strtotime($request->form_date));
         $year = date('Y', strtotime($request->form_date));
-        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SF/".$year;
+        $nomor = $month.$day."-".$number."/".$perusahaan->code."-SF/".$year;
         $data = new SubmissionForm();
         $data->form_number = $nomor;
         $data->form_date = $request->form_date;

@@ -51,7 +51,7 @@
             <div class="col-md-4">
                 <div class="card no-padding no-border">
                     <div class="card-header">
-                        Nomor SO : {{@$crud->entry->form_number}}
+                        Nomor PR : {{@$crud->entry->form_number}}
                     </div>
                     <div class="card-body">
                         @include('warehouse.sf.form_content')
