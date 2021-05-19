@@ -52,4 +52,14 @@ class Company extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function setLogoAttribute($value)
+    {
+        $attribute_name = "logo";
+        $disk = "public";
+        $destination_path = "company/logo";
+
+        $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
+
+    // return $this->attributes[{$attribute_name}]; // uncomment if this is a translatable field
+    }
 }

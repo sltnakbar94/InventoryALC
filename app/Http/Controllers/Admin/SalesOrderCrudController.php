@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Flag;
 use App\Http\Requests\SalesOrderRequest;
+use App\Models\Company;
 use App\Models\Revision;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -155,6 +156,9 @@ class SalesOrderCrudController extends CrudController
             'name' => 'so_date',
             'label' => 'Tanggal SO',
             'type' => 'date_picker',
+            'date_picker_options' => [
+                'todayBtn' => 'linked',
+            ],
         ]);
 
         $this->crud->addField([   // SelectMultiple = n-n relationship (with pivot table)
@@ -173,9 +177,10 @@ class SalesOrderCrudController extends CrudController
         $this->crud->addField([
             'name' => 'perusahaan',
             'label' => 'Nama Perusahaan',
-            'type' => 'text',
+            'type' => 'select2_from_array',
+            'options' => Company::pluck('name', 'id'),
+            'allows_null' => true,
         ]);
-
 
         $this->crud->addField([
             'name' => 'supplier_id',
@@ -190,13 +195,21 @@ class SalesOrderCrudController extends CrudController
         $this->crud->addField([
             'name' => 'customer_id',
             'label' => 'Customer',
-            'type' => 'select2_from_array',
-            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
-                return $query->where('name', '=', 'customer');
-            })->pluck('company', 'id'),
-            'allows_null' => true,
+            'type' => 'text',
         ]);
 
+        $this->crud->addField([   // radio
+            'name'        => 'type_customer', // the name of the db column
+            'label'       => 'Tipe Customer', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label;
+                0 => "Perorangan",
+                1 => "Perusahaan"
+            ],
+            // optional
+            //'inline'      => false, // show the radios all on the same line?
+        ]);
 
         $this->crud->addField([
             'name' => 'ref_no',
@@ -205,13 +218,6 @@ class SalesOrderCrudController extends CrudController
             'attributes' => [
                 'placeholder' => 'Contoh : Nomor Surat Penawaran Harga',
             ],
-        ]);
-
-        $this->crud->addField([
-            'name' => 'ppn',
-            'label' => 'PPN (10%)',
-            'type' => 'boolean',
-            'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
         ]);
 
         $this->crud->addField([   // Upload
@@ -223,7 +229,7 @@ class SalesOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'term_of_paymnet',
+            'name' => 'term_of_payment',
             'label' => 'Term of Payment',
             'type' => 'textarea',
         ]);
@@ -317,10 +323,19 @@ class SalesOrderCrudController extends CrudController
             'name' => 'customer_id',
             'label' => 'Customer',
             'type' => 'text',
-            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
-                return $query->where('name', '=', 'customer');
-            })->pluck('company', 'id'),
-            'allows_null' => true,
+        ]);
+
+        $this->crud->addField([   // radio
+            'name'        => 'type_customer', // the name of the db column
+            'label'       => 'Tipe Customer', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label;
+                0 => "Perorangan",
+                1 => "Perusahaan"
+            ],
+            // optional
+            //'inline'      => false, // show the radios all on the same line?
         ]);
 
         $this->crud->addField([
@@ -332,13 +347,6 @@ class SalesOrderCrudController extends CrudController
               ],
         ]);
 
-        $this->crud->addField([
-            'name' => 'ppn',
-            'label' => 'PPN (10%)',
-            'type' => 'boolean',
-            'hint' => 'Bila supplier belum PKP maka tidak Pakai PPN',
-        ]);
-
         $this->crud->addField([   // Upload
             'name'      => 'uploadref',
             'label'     => 'Upload Referensi',
@@ -348,7 +356,7 @@ class SalesOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'term_of_paymnet',
+            'name' => 'term_of_payment',
             'label' => 'Term of Payment',
             'type' => 'textarea',
         ]);
@@ -411,20 +419,33 @@ class SalesOrderCrudController extends CrudController
 
     public function store(Request $request)
     {
+        if ($request->type_customer == 1) {
+            $words = explode(" ", $request->customer_id);
+            $acronym = "";
 
+            foreach ($words as $w) {
+            $acronym .= $w[0];
+            }
+            $customer = substr($acronym, 1);
+        }else{
+            $customer = "PSN";
+        }
+        $perusahaan = Company::find($request->perusahaan);
         $count = SalesOrder::withTrashed()->whereDate('so_date', date($request->so_number))->count();
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
         $day = date('d', strtotime($request->so_date));
         $month = date('m', strtotime($request->so_date));
         $year = date('Y', strtotime($request->so_date));
-        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SO/".$year;
+        $nomor = $month.$day."-".$number."/".$perusahaan->code."-SO-".$customer."/".$year;
         $data = new SalesOrder();
         $data->so_number = $nomor;
         $data->so_date = $request->so_date;
-        $data->supplier_id = $request->supplier_id ;
+        $data->perusahaan = $request->perusahaan;
+        // $data->purchaseRequisition = implode($request->purchaseRequisition);
+        $data->supplier_id = $request->supplier_id;
         $data->customer_id = $request->customer_id;
-        $data->ppn = $request->ppn ;
-        $data->term_of_paymnet = $request->term_of_paymnet ;
+        $data->type_customer = $request->type_customer;
+        $data->term_of_payment = $request->term_of_payment;
         $data->destination = $request->destination;
         $data->ref_no = $request->ref_no;
         $data->description = $request->description;
@@ -437,6 +458,9 @@ class SalesOrderCrudController extends CrudController
         }
         $data->save();
         $cari = SalesOrder::where('so_number' , '=' , $nomor)->first();
+        foreach ($request->purchaseRequisition as $pr) {
+            $data->purchaseRequisition()->sync($cari->id, $pr);
+        }
         return redirect(backpack_url('salesorder/'.$cari->id.'/show'));
     }
 
@@ -460,6 +484,10 @@ class SalesOrderCrudController extends CrudController
         $data->description = $request->description;
         $data->user_id = $request->user_id;
         $data->company_id = $request->company_id;
+        foreach ($request->purchaseRequisition as $pr) {
+            dd($pr);
+            $data->purchaseRequisition->sync();
+        }
         if($request->hasFile('uploadref')) {
             $file = $request->file('uploadref');
             $path = $file->storeAs('sales_order/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-SO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
@@ -467,6 +495,7 @@ class SalesOrderCrudController extends CrudController
         }
         $data->save();
         $cari = SalesOrder::where('so_number' , '=' , $nomor)->first();
+
         return redirect(backpack_url('salesorder/'.$cari->id.'/show'));
     }
 
