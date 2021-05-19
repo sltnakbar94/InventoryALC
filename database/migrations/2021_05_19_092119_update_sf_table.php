@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateTableDeliverysales extends Migration
+class UpdateSfTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class UpdateTableDeliverysales extends Migration
      */
     public function up()
     {
-        Schema::table('delivery_by_sales', function(Blueprint $table) {
-            $table->string('ds_number')->nullable()->change();
+        Schema::table('submission_forms', function(Blueprint $table) {
+            $table->string('form_number')->nullable()->change();
             $table->string('perusahaan')->change();
+            $table->string('uploadref')->nullable()->change();
         });
     }
 
@@ -26,11 +27,10 @@ class UpdateTableDeliverysales extends Migration
      */
     public function down()
     {
-        Schema::table('delivery_by_sales', function(Blueprint $table) {
-            $table->string('ds_number')->nullable(false)->change();
+        Schema::table('submission_forms', function(Blueprint $table) {
+            $table->string('form_number')->nullable()->change();
             $table->string('perusahaan')->change();
+            $table->string('uploadref')->nullable()->change();
         });
-
-      
     }
 }

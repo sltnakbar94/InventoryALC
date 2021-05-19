@@ -13,9 +13,9 @@ class UpdateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::table('companies', function(Blueprint $table) {
-            $table->string('logo')->nullable();
-        });
+        // Schema::table('companies', function(Blueprint $table) {
+        //     $table->string('logo')->nullable();
+        // });
     }
 
     /**
@@ -25,10 +25,10 @@ class UpdateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::table('companies', function (Blueprint $table) {
-            $table->dropColumn([
-                'logo',
-            ]);
-        });
+        // Schema::table('companies', function (Blueprint $table) {
+        //     $table->dropColumn([
+        //         'logo',
+        //     ]);
+        // });
     }
 }
