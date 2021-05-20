@@ -466,13 +466,12 @@ class SalesOrderCrudController extends CrudController
 
     public function update(Request $request)
     {
-        $count = SalesOrder::withTrashed()->whereDate('so_date', date($request->so_number))->count();
-        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $data = SalesOrder::findOrFail($request->id);
         $day = date('d', strtotime($request->so_date));
         $month = date('m', strtotime($request->so_date));
         $year = date('Y', strtotime($request->so_date));
-        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SO/".$year;
-        $data = new SalesOrder();
+        $number = substr($data->so_number,5,3);
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-SO/".$year;    
         $data->so_number = $nomor;
         $data->so_date = $request->so_date;
         $data->supplier_id = $request->supplier_id ;
@@ -493,7 +492,7 @@ class SalesOrderCrudController extends CrudController
             $path = $file->storeAs('sales_order/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-SO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
             $data->uploadref = $path;
         }
-        $data->save();
+        $data->update();
         $cari = SalesOrder::where('so_number' , '=' , $nomor)->first();
 
         return redirect(backpack_url('salesorder/'.$cari->id.'/show'));
