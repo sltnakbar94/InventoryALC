@@ -333,6 +333,27 @@ class DeliveryNoteCrudController extends CrudController
         return redirect(backpack_url('deliverynote/'.$cari->id.'/show'));
     }
 
+    public function update(Request $request)
+    {
+        $data = DeliveryNote::findOrFail($request->id);
+        $number = substr($data->po_number,5,3);
+        $day = date('d', strtotime($request->dn_date));
+        $month = date('m', strtotime($request->dn_date));
+        $year = date('Y', strtotime($request->dn_date));
+        $nomor = $month.$day."-".$number."/".$request->company."-DN/".$year;
+        $data->dn_number = $nomor;
+        $data->perusahaan = $request->company ;
+        $data->reference = $request->reference;
+        $data->dn_date = $request->dn_date;
+        $data->etd = $request->etd ;
+        $data->plat_number = $request->plat_number;
+        $data->driver = $request->driver ;
+        $data->driver_phone = $request->driver_phone ;
+        $data->module = $request->module ;
+        $data->user_id = $request->user_id ;
+        $data->company_id = $request->company_id ;
+    }
+
     public function generateDeliveryNote($id)
     {
         $deliveryNoteService = new DeliveryNoteServices();

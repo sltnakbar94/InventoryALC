@@ -488,7 +488,6 @@ class WarehouseInCrudController extends CrudController
 
     public function update(Request $request)
     {
-        dd($request->all());
         $data = WarehouseIn::findOrFail($request->id);
         $day = date('d', strtotime($request->po_date));
         $month = date('m', strtotime($request->po_date));
