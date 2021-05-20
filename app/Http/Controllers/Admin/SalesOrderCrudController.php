@@ -286,7 +286,7 @@ class SalesOrderCrudController extends CrudController
             'name'  => "so_number",
             'type'  => 'hidden',
             'attributes' => [
-                'readonly'    => 'readonly',
+                'disabled'    => 'disabled'
             ]
         ]);
 
@@ -294,6 +294,15 @@ class SalesOrderCrudController extends CrudController
             'name' => 'so_date',
             'label' => 'Tanggal SO',
             'type' => 'date_picker',
+            'attributes' => [
+                'disabled'    => 'disabled'
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([   // SelectMultiple = n-n relationship (with pivot table)
@@ -567,7 +576,7 @@ class SalesOrderCrudController extends CrudController
 
     public function deniedHeader(Request $request)
     {
-       $header = SalesOrder::withoutTrashed()->whereDate('form_date' , date($request->form_date))->count();
+         $header = SalesOrder::withoutTrashed()->whereDate('form_date' , date($request->form_date))->count();
         $header->status = Flag::DENIED;
         $details = SalesOrderDetail::where('sales_order_id', '=', $request->id)->get();
         $header_pr = $header->purchaseRequisition;
