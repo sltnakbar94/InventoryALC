@@ -486,6 +486,33 @@ class WarehouseInCrudController extends CrudController
         return redirect(backpack_url('warehousein/'.$cari->id.'/show'));
     }
 
+    public function update(Request $request)
+    {
+        $data = WarehouseIn::findOrFail($request->id);
+        $day = date('d', strtotime($request->po_date));
+        $month = date('m', strtotime($request->po_date));
+        $year = date('Y', strtotime($request->po_date));
+        $number = substr($data->po_number,5,3);
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-PO/".$year;
+        $data->po_number = $nomor;
+        $data->po_date = $request->po_date;
+        $data->perusahaan = $request->perusahaan;
+        $data->project_id = $request->project_id;
+        $data->project_name = $request->project_name;
+        $data->ref_no = $request->ref_no;
+        $data->description = $request->description;
+        $data->user_id = $request->user_id;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('purchase_order/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-PO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+        $data->update();
+        $cari = WarehouseIn::where('po_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('warehousein/'.$cari->id.'/show'));
+
+    }
+
     public function denied($id)
     {
         try {
