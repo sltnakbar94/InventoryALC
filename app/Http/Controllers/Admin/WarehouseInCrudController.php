@@ -283,7 +283,7 @@ class WarehouseInCrudController extends CrudController
 
         $this->crud->addField([
             'label' => 'perusahaan' ,
-            'name'  => 'company' ,
+            'name'  => 'perusahaan' ,
             'type'  => 'text' ,
         ]);
 
@@ -488,6 +488,7 @@ class WarehouseInCrudController extends CrudController
 
     public function update(Request $request)
     {
+        dd($request->all());
         $data = WarehouseIn::findOrFail($request->id);
         $day = date('d', strtotime($request->po_date));
         $month = date('m', strtotime($request->po_date));
@@ -496,11 +497,14 @@ class WarehouseInCrudController extends CrudController
         $nomor = $month.$day."-".$number."/".$request->perusahaan."-PO/".$year;
         $data->po_number = $nomor;
         $data->po_date = $request->po_date;
-        $data->perusahaan = $request->perusahaan;
-        $data->project_id = $request->project_id;
-        $data->project_name = $request->project_name;
-        $data->ref_no = $request->ref_no;
-        $data->description = $request->description;
+        $data->perusahaan = $request->company;
+        $data->supplier_id = $request->supplier_id;
+        $data->ppn = $request->ppn;
+        $data->term_of_payment = $request->term_of_payment;
+        $data->warehouse_id = $request->warehouse_id;
+        $data->description = $request->description ;
+        $data->start_date = $request->start_date;
+        $data->end_date = $request->end_date;
         $data->user_id = $request->user_id;
         if($request->hasFile('uploadref')) {
             $file = $request->file('uploadref');
