@@ -19,6 +19,7 @@ class CreateGoodReceivesTable extends Migration
             $table->string('dn_number')->nullable();
             $table->string('do_number')->nullable();
             $table->string('po_number')->nullable();
+            $table->string('warehouse_id')->nullable();
             $table->date('dn_date')->nullable();
             $table->string('sender')->nullable();
             $table->string('sender_address')->nullable();
@@ -29,6 +30,7 @@ class CreateGoodReceivesTable extends Migration
             $table->string('driver')->nullable();
             $table->string('driver_phone')->nullable();
             $table->integer('status')->default(0);
+            $table->text('goods')->nullable();
             $table->string('user_id')->nullable();
             $table->integer('company_id')->nullable();
             $table->softDeletes();

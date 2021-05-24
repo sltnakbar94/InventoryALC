@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\GoodReceiveRequest;
 use App\Models\Company;
+use App\Models\GoodReceive;
+use App\Models\Item;
+use App\Models\Stock;
+use App\Models\Warehouse;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Http\Request;
 
 /**
  * Class GoodReceiveCrudController
@@ -40,7 +45,9 @@ class GoodReceiveCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        // CRUD::setFromDb(); // columns
+        $this->crud->removeButton('update');
+        $this->crud->removeButton('delete');
+
         $this->crud->addColumn([
             'label' => "Nomor Surat jalan",
             'name'  => "dn_number",
@@ -191,6 +198,14 @@ class GoodReceiveCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'name' => 'warehouse_id',
+            'label' => 'Pilih gudang penerima',
+            'type' => 'select2_from_array',
+            'options' => Warehouse::where('active', '=', 1)->pluck('name', 'id'),
+            'allows_null' => false,
+        ]);
+
+        $this->crud->addField([
             'label' => "Nama Penerima",
             'name'  => "consignee",
             'type'  => 'text',
@@ -234,6 +249,79 @@ class GoodReceiveCrudController extends CrudController
             'type' => 'text',
         ]);
 
+        $this->crud->addField([   // repeatable
+            'name'  => 'goods',
+            'label' => 'Data Barang',
+            'type'  => 'repeatable',
+            'fields' => [
+                [
+                    'label'    => 'Material Code',
+                    'type'    => 'text',
+                    'name'   => 'material_code',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'Material Description',
+                    'type'    => 'text',
+                    'name'   => 'material_description',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'PO Number',
+                    'type'    => 'text',
+                    'name'   => 'po_number',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'SO Number',
+                    'type'    => 'text',
+                    'name'   => 'so_number',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'Quantity',
+                    'type'    => 'number',
+                    'name'   => 'qty',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'UoM',
+                    'type'    => 'text',
+                    'name'   => 'uom',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'Boxes',
+                    'type'    => 'number',
+                    'name'   => 'boxes',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'Weight',
+                    'type'    => 'number',
+                    'name'   => 'weight',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'Volume',
+                    'type'    => 'number',
+                    'name'   => 'volume',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'Pallets',
+                    'type'    => 'number',
+                    'name'   => 'pallet',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+            ],
+
+            // optional
+            'new_item_label'  => 'Add Group', // customize the text of the button
+            'min_rows' => 1, // minimum rows allowed, when reached the "delete" buttons will be hidden
+
+        ]);
+
         $this->crud->addField([
             'name' => 'user_id',
             'type' => 'hidden',
@@ -257,5 +345,132 @@ class GoodReceiveCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function store(Request $request)
+    {
+        $data = new GoodReceive();
+        $data->dn_number = $request->dn_number;
+        $data->do_number = $request->do_number;
+        $data->po_number = $request->po_number;
+        $data->sender = $request->sender;
+        $data->sender_address = $request->sender_address;
+        $data->consignee = $request->consignee;
+        $data->company_id = $request->company_id;
+        $data->project_name = $request->project_name;
+        $data->expedition = $request->expedition;
+        $data->plat_number = $request->plat_number;
+        $data->driver = $request->driver;
+        $data->driver_phone = $request->driver_phone;
+        $data->goods = $request->goods;
+        $data->user_id = $request->user_id;
+        $items = json_decode($request->goods);
+        foreach ($items as $item) {
+            $look_item = Item::where('serial', '=', $item->material_code)->first();
+            if (empty($look_item)) {
+                $save_item = new Item();
+                $save_item->name = $item->material_description;
+                $save_item->serial = $item->material_code;
+                $save_item->category = "0";
+                $save_item->brand = "0";
+                $save_item->unit = "0";
+                $save_item->save();
+                $get_item = Item::where('serial', '=', $item->material_code)->first();
+                $check_stock = Stock::where('warehouse_id', '=', $request->warehouse_id)->where('item_id', '=', $get_item->id)->first();
+                if (empty($check_stock)) {
+                    $stock = new Stock;
+                    $stock->warehouse_id = $request->warehouse_id;
+                    $stock->item_id = $get_item->id;
+                    $stock->stock_on_hand = $item->qty;
+                    $stock->stock_on_location = $item->qty;
+                    $stock->save();
+                }else{
+                    $stock = Stock::findOrFail($check_stock->id);
+                    $stock->stock_on_hand += $item->qty;
+                    $stock->stock_on_location += $item->qty;
+                    $stock->update();
+                }
+            } else {
+                $get_item = Item::where('serial', '=', $item->material_code)->first();
+                $save_item = Item::findOrFail($get_item->id);
+                $save_item->name = $item->material_description;
+                $save_item->serial = $item->material_code;
+                $save_item->category = "0";
+                $save_item->brand = "0";
+                $save_item->unit = "0";
+                $check_stock = Stock::where('warehouse_id', '=', $request->warehouse_id)->where('item_id', '=', $get_item->id)->first();
+                $stock = Stock::findOrFail($check_stock->id);
+                $stock->stock_on_hand += $item->qty;
+                $stock->stock_on_location += $item->qty;
+                $stock->update();
+                $save_item->update();
+            }
+        }
+        $data->save();
+        $cari = GoodReceive::where('dn_number' , '=' , $request->dn_number)->first();
+        return redirect(backpack_url('goodreceive/'.$cari->id.'/show'));
+    }
+
+    public function update(Request $request)
+    {
+        $data = GoodReceive::findOrFail($request->id);
+        $data->dn_number = $request->dn_number;
+        $data->do_number = $request->do_number;
+        $data->po_number = $request->po_number;
+        $data->sender = $request->sender;
+        $data->sender_address = $request->sender_address;
+        $data->consignee = $request->consignee;
+        $data->company_id = $request->company_id;
+        $data->project_name = $request->project_name;
+        $data->expedition = $request->expedition;
+        $data->plat_number = $request->plat_number;
+        $data->driver = $request->driver;
+        $data->driver_phone = $request->driver_phone;
+        $data->goods = $request->goods;
+        $data->user_id = $request->user_id;
+        $items = json_decode($request->goods);
+        foreach ($items as $item) {
+            $look_item = Item::where('serial', '=', $item->material_code)->first();
+            if (empty($look_item)) {
+                $save_item = new Item();
+                $save_item->name = $item->material_description;
+                $save_item->serial = $item->material_code;
+                $save_item->category = "0";
+                $save_item->brand = "0";
+                $save_item->unit = "0";
+                $save_item->save();
+                $get_item = Item::where('serial', '=', $item->material_code)->first();
+                $check_stock = Stock::where('warehouse_id', '=', $request->warehouse_id)->where('item_id', '=', $get_item->id)->first();
+                if (empty($check_stock)) {
+                    $stock = new Stock;
+                    $stock->warehouse_id = $request->warehouse_id;
+                    $stock->item_id = $get_item->id;
+                    $stock->stock_on_hand = $item->qty;
+                    $stock->stock_on_location = $item->qty;
+                    $stock->save();
+                }else{
+                    $stock = Stock::findOrFail($check_stock->id);
+                    $stock->stock_on_hand += $item->qty;
+                    $stock->stock_on_location += $item->qty;
+                    $stock->update();
+                }
+            } else {
+                $get_item = Item::where('serial', '=', $item->material_code)->first();
+                $save_item = Item::findOrFail($get_item->id);
+                $save_item->name = $item->material_description;
+                $save_item->serial = $item->material_code;
+                $save_item->category = "0";
+                $save_item->brand = "0";
+                $save_item->unit = "0";
+                $check_stock = Stock::where('warehouse_id', '=', $request->warehouse_id)->where('item_id', '=', $get_item->id)->first();
+                $stock = Stock::findOrFail($check_stock->id);
+                $stock->stock_on_hand += $item->qty;
+                $stock->stock_on_location += $item->qty;
+                $stock->update();
+                $save_item->update();
+            }
+        }
+        $data->update();
+        return redirect(backpack_url('goodreceive/'.$request->id.'/show'));
     }
 }

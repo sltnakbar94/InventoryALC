@@ -590,7 +590,7 @@ class WarehouseInCrudController extends CrudController
                 $stock->stock_in_indent = $detail->qty;
                 $stock->save();
             }else{
-                $stock = new Stock;
+                $stock = Stock::findOrFail($check_stock->id);
                 $stock->stock_on_hand += $detail->qty;
                 $stock->stock_in_indent += $detail->qty;
                 $stock->update();

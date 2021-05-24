@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(InventorySeeder::class);
         $this->call(StackholderRoleSeeder::class);
         $this->call(CompanySeeder::class);
+        $this->call(WarehouseSeeder::class);
     }
 }
