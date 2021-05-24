@@ -7,16 +7,16 @@
         </tr>
         <tr>
             <td>Customer</td>
-            
+
             <td><strong>{{ @$crud->entry->customer_id }}</strong></td>
         </tr>
-        @if (!empty(@$crud->entry->customer_id))
+        @if (!empty(@$crud->entry->pic_customer))
             <tr>
                 <td>Att Customer</td>
-                <td><strong>{{ @$crud->entry->customer_id }}</strong></td>
+                <td><strong>{{ @$crud->entry->pic_customer }}</strong></td>
             </tr>
         @else
-            
+
             <tr>
                 <td>Att Customer</td>
                 <td>
@@ -24,13 +24,9 @@
                         @csrf
                         {!! Form::hidden('id', $crud->entry->id, [null]) !!}
                         {!! Form::hidden('type', 'customer', [null]) !!}
-                        {{-- @php
-                            $pics = json_decode($crud->entry->customer->pic);
-                        @endphp --}}
-                       
                         <div class="mb-3">
                             <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Name">
-                          </div>
+                        </div>
                         {!! Form::submit('Pilih PIC', ['class' => 'btn btn-primary', 'id' => 'btn-submit']) !!}
                     </form>
                 </td>

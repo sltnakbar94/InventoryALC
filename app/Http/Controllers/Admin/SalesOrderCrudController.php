@@ -441,7 +441,6 @@ class SalesOrderCrudController extends CrudController
         $data->so_number = $nomor;
         $data->so_date = $request->so_date;
         $data->perusahaan = $request->perusahaan;
-        // $data->purchaseRequisition = implode($request->purchaseRequisition);
         $data->supplier_id = $request->supplier_id;
         $data->customer_id = $request->customer_id;
         $data->type_customer = $request->type_customer;
