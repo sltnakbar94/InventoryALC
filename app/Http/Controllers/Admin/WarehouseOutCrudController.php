@@ -391,7 +391,7 @@ class WarehouseOutCrudController extends CrudController
         $day = date('d', strtotime($request->do_date));
         $month = date('m', strtotime($request->do_date));
         $year = date('Y', strtotime($request->do_date));
-        $nomor = $month.$day."-".$number."/".$request->company."-PO/".$year;
+        $nomor = $month.$day."-".$number."/".$request->company."-DO/".$year;
         $data = new WarehouseOut();
         $data->do_number = $nomor;
         $data->perusahaan = $request->company;
@@ -412,6 +412,49 @@ class WarehouseOutCrudController extends CrudController
             $data->uploadref = $path;
         }
         $data->save();
+
+        $cari = WarehouseOut::where('do_number' , '=' , $nomor)->first();
+        return redirect(backpack_url('warehouseout/'.$cari->id.'/show'));
+    }
+
+    public function update(Request $request)
+    {
+        $data = WarehouseOut::findOrFail($request->id);
+        $day = date('d', strtotime($request->po_date));
+        $month = date('m', strtotime($request->po_date));
+        $year = date('Y', strtotime($request->po_date));
+        $number = substr($data->po_number,5,3);
+        $nomor = $month.$day."-".$number."/".$request->perusahaan."-PO/".$year;
+        $data->po_number = $nomor;
+        $data->po_date = $request->po_date;
+        $data->perusahaan = $request->company;
+        $data->supplier_id = $request->supplier_id;
+        $data->ppn = $request->ppn;
+        $data->term_of_payment = $request->term_of_payment;
+        $data->warehouse_id = $request->warehouse_id;
+        $data->description = $request->description ;
+        $data->start_date = $request->start_date;
+        $data->end_date = $request->end_date;
+        $data->user_id = $request->user_id;
+        $data->do_number = $nomor;
+        $data->perusahaan = $request->company;
+        $data->do_date = $request->do_date;
+        $data->customer_id = $request->customer_id;
+        $data->ref_no = $request->ref_no;
+        $data->expedition = $request->expedition;
+        $data->warehouse_id = $request->warehouse_id;
+        $data->destination = $request->destination ;
+        $data->description = $request->description;
+        $data->start_date = $request->start_date;
+        $data->end_Date = $request->end_date;
+        $data->user_id = $request->user_id;
+        $data->status = Flag::PLAN;
+        if($request->hasFile('uploadref')) {
+            $file = $request->file('uploadref');
+            $path = $file->storeAs('delivery_order/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-DO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
+            $data->uploadref = $path;
+        }
+        $data->update();
 
         $cari = WarehouseOut::where('do_number' , '=' , $nomor)->first();
         return redirect(backpack_url('warehouseout/'.$cari->id.'/show'));
