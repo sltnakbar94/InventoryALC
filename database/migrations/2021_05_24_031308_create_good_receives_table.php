@@ -21,16 +21,13 @@ class CreateGoodReceivesTable extends Migration
             $table->string('po_number')->nullable();
             $table->date('dn_date')->nullable();
             $table->string('sender')->nullable();
+            $table->string('sender_address')->nullable();
             $table->string('consignee')->nullable();//penerima barang
             $table->string('project_name')->nullable();
             $table->string('expedition')->nullable();
-            $table->dateTime('etd')->nullable();
-            $table->dateTime('eta')->nullable();
-            $table->string('total_weight')->nullable();
             $table->string('plat_number')->nullable();
             $table->string('driver')->nullable();
             $table->string('driver_phone')->nullable();
-            $table->string('module')->nullable();
             $table->integer('status')->default(0);
             $table->string('user_id')->nullable();
             $table->integer('company_id')->nullable();
