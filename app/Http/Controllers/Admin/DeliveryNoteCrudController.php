@@ -324,7 +324,7 @@ class DeliveryNoteCrudController extends CrudController
         $nomor = $month.$day."-".$number."/".$perusahaan->code."-DN/".$year;
         $data = new DeliveryNote();
         $data->dn_number = $nomor;
-        $data->perusahaan = $request->company ;
+        $data->perusahaan = $request->perusahaan;
         $data->reference = $request->reference;
         $data->dn_date = $request->dn_date;
         $data->etd = $request->etd ;
@@ -349,7 +349,7 @@ class DeliveryNoteCrudController extends CrudController
         $year = date('Y', strtotime($request->dn_date));
         $nomor = $month.$day."-".$number."/".$perusahaan->code."-DN/".$year;
         $data->dn_number = $nomor;
-        $data->perusahaan = $request->company ;
+        $data->perusahaan = $request->perusahaan;
         $data->reference = $request->reference;
         $data->dn_date = $request->dn_date;
         $data->etd = $request->etd ;
