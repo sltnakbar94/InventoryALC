@@ -399,7 +399,7 @@ class WarehouseOutCrudController extends CrudController
         $nomor = $month.$day."-".$number."/".$perusahaan->code."-DO/".$year;
         $data = new WarehouseOut();
         $data->do_number = $nomor;
-        $data->perusahaan = $request->company;
+        $data->perusahaan = $request->perusahaan;
         $data->do_date = $request->do_date;
         $data->customer_id = $request->customer_id;
         $data->ref_no = $request->ref_no;
@@ -433,7 +433,7 @@ class WarehouseOutCrudController extends CrudController
         $nomor = $month.$day."-".$number."/".$perusahaan->code."-DO/".$year;
         $data->po_number = $nomor;
         $data->po_date = $request->po_date;
-        $data->perusahaan = $request->company;
+        $data->perusahaan = $request->perusahaan;
         $data->supplier_id = $request->supplier_id;
         $data->ppn = $request->ppn;
         $data->term_of_payment = $request->term_of_payment;
