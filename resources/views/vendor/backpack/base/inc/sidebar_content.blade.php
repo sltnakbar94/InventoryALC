@@ -17,6 +17,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('goodreceive') }}'><i class='las la-industry'></i> Terima Barang</a></li>
         </ul>
     </li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('stackholder') }}'><i class="las la-list-ol"></i> Stackholders</a></li>
     {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class="lar la-file"></i> Delivery Note</a></li> --}}
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
