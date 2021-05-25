@@ -297,13 +297,13 @@ class GoodReceiveCrudController extends CrudController
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
-                    'label'    => 'Weight',
+                    'label'    => 'Weight (Kg)',
                     'type'    => 'number',
                     'name'   => 'weight',
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
-                    'label'    => 'Volume',
+                    'label'    => 'Volume (m3)',
                     'type'    => 'number',
                     'name'   => 'volume',
                     'wrapper' => ['class' => 'form-group col-md-4'],
@@ -354,7 +354,7 @@ class GoodReceiveCrudController extends CrudController
         $data->do_number = $request->do_number;
         $data->po_number = $request->po_number;
         $data->dn_date = $request->dn_date;
-        $data->warehoue_id = $request->warehouse_id;
+        $data->warehouse_id = $request->warehouse_id;
         $data->sender = $request->sender;
         $data->sender_address = $request->sender_address;
         $data->consignee = $request->consignee;
@@ -422,7 +422,7 @@ class GoodReceiveCrudController extends CrudController
         $data->do_number = $request->do_number;
         $data->po_number = $request->po_number;
         $data->dn_date = $request->dn_date;
-        $data->warehoue_id = $request->warehouse_id;
+        $data->warehouse_id = $request->warehouse_id;
         $data->sender = $request->sender;
         $data->sender_address = $request->sender_address;
         $data->consignee = $request->consignee;
