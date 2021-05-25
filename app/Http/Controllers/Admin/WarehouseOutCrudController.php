@@ -148,9 +148,11 @@ class WarehouseOutCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => 'Perusahaan' ,
-            'name'  => 'company' ,
-            'type'  => 'text' ,
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'select2_from_array',
+            'options' => Company::pluck('name', 'id'),
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([
@@ -259,7 +261,9 @@ class WarehouseOutCrudController extends CrudController
         $this->crud->addField([
             'name' => 'perusahaan',
             'label' => 'Nama Perusahaan',
-            'type' => 'text',
+            'type' => 'select2_from_array',
+            'options' => Company::pluck('name', 'id'),
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([
@@ -386,12 +390,13 @@ class WarehouseOutCrudController extends CrudController
 
     public function store(Request $request)
     {
+        $perusahaan = Company::find($request->perusahaan);
         $count = WarehouseOut::withTrashed()->whereDate('do_date',date($request->do_date))->count();
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
         $day = date('d', strtotime($request->do_date));
         $month = date('m', strtotime($request->do_date));
         $year = date('Y', strtotime($request->do_date));
-        $nomor = $month.$day."-".$number."/".$request->company."-DO/".$year;
+        $nomor = $month.$day."-".$number."/".$perusahaan->code."-DO/".$year;
         $data = new WarehouseOut();
         $data->do_number = $nomor;
         $data->perusahaan = $request->company;
@@ -419,12 +424,13 @@ class WarehouseOutCrudController extends CrudController
 
     public function update(Request $request)
     {
+        $perusahaan = Company::find($request->perusahaan);
         $data = WarehouseOut::findOrFail($request->id);
         $day = date('d', strtotime($request->po_date));
         $month = date('m', strtotime($request->po_date));
         $year = date('Y', strtotime($request->po_date));
         $number = substr($data->po_number,5,3);
-        $nomor = $month.$day."-".$number."/".$request->perusahaan."-PO/".$year;
+        $nomor = $month.$day."-".$number."/".$perusahaan->code."-DO/".$year;
         $data->po_number = $nomor;
         $data->po_date = $request->po_date;
         $data->perusahaan = $request->company;

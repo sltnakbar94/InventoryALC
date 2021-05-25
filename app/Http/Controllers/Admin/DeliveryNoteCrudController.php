@@ -7,6 +7,7 @@ use App\Models\WarehouseOut;
 use App\Services\GlobalServices;
 use App\Http\Requests\DeliveryNoteRequest;
 use App\Models\BagItemWarehouseOut;
+use App\Models\Company;
 use App\Models\DeliveryNote;
 use App\Models\DeliveryNoteDetail;
 use App\Models\Stock;
@@ -158,9 +159,11 @@ class DeliveryNoteCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => 'Perusahaan',
-            'name'  => 'company',
-            'type'  => 'text'
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'select2_from_array',
+            'options' => Company::pluck('name', 'id'),
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([
@@ -246,9 +249,11 @@ class DeliveryNoteCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => 'Perusahaan',
-            'name'  => 'company',
-            'type'  => 'text'
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'select2_from_array',
+            'options' => Company::pluck('name', 'id'),
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([
@@ -310,12 +315,13 @@ class DeliveryNoteCrudController extends CrudController
 
     public function store(Request $request)
     {
+        $perusahaan = Company::find($request->perusahaan);
         $count = DeliveryNote::withTrashed()->whereDate('dn_date', date($request->dn_number))->count();
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
         $day = date('d', strtotime($request->dn_date));
         $month = date('m', strtotime($request->dn_date));
         $year = date('Y', strtotime($request->dn_date));
-        $nomor = $month.$day."-".$number."/".$request->company."-DN/".$year;
+        $nomor = $month.$day."-".$number."/".$perusahaan->code."-DN/".$year;
         $data = new DeliveryNote();
         $data->dn_number = $nomor;
         $data->perusahaan = $request->company ;
@@ -335,12 +341,13 @@ class DeliveryNoteCrudController extends CrudController
 
     public function update(Request $request)
     {
+        $perusahaan = Company::find($request->perusahaan);
         $data = DeliveryNote::findOrFail($request->id);
         $number = substr($data->po_number,5,3);
         $day = date('d', strtotime($request->dn_date));
         $month = date('m', strtotime($request->dn_date));
         $year = date('Y', strtotime($request->dn_date));
-        $nomor = $month.$day."-".$number."/".$request->company."-DN/".$year;
+        $nomor = $month.$day."-".$number."/".$perusahaan->code."-DN/".$year;
         $data->dn_number = $nomor;
         $data->perusahaan = $request->company ;
         $data->reference = $request->reference;

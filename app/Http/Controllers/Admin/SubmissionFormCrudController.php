@@ -250,12 +250,6 @@ class SubmissionFormCrudController extends CrudController
         $this->crud->addField([
             'name' => 'perusahaan',
             'label' => 'Nama Perusahaan',
-            'type' => 'text',
-        ]);
-
-        $this->crud->addField([
-            'name' => 'perusahaan',
-            'label' => 'Nama Perusahaan',
             'type' => 'select2_from_array',
             'options' => Company::pluck('name', 'id'),
             'allows_null' => true,
