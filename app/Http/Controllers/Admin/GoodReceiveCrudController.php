@@ -45,7 +45,7 @@ class GoodReceiveCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->removeButton('update');
+        // $this->crud->removeButton('update');
         $this->crud->removeButton('delete');
 
         $this->crud->addColumn([
@@ -421,6 +421,8 @@ class GoodReceiveCrudController extends CrudController
         $data->dn_number = $request->dn_number;
         $data->do_number = $request->do_number;
         $data->po_number = $request->po_number;
+        $data->dn_date = $request->dn_date;
+        $data->warehoue_id = $request->warehouse_id;
         $data->sender = $request->sender;
         $data->sender_address = $request->sender_address;
         $data->consignee = $request->consignee;
@@ -434,10 +436,15 @@ class GoodReceiveCrudController extends CrudController
         $data->user_id = $request->user_id;
         $items = json_decode($request->goods);
         foreach ($old_items as $old_item) {
-
+            $old_item_id = Item::where('serial', '=', $old_item->material_code)->first();
+            dd($request->all(), $old_items, $old_warehouse, $old_item);
+            $get_old_stock = Stock::where('warehouse_id', '=', $old_warehouse)->where('item_id', '=', $old_item_id->id)->first();
+            $remove_old_stock = Stock::findOrFail($get_old_stock->id);
+            $remove_old_stock->stock_on_hand += $old_item->qty;
+            $remove_old_stock->stock_on_location += $old_item->qty;
+            $remove_old_stock->update();
         }
         foreach ($items as $item) {
-            dd($request->all(), $item, $old_items, $old_warehouse);
             $look_item = Item::where('serial', '=', $item->material_code)->first();
             if (empty($look_item)) {
                 $save_item = new Item();
