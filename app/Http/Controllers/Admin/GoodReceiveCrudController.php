@@ -353,6 +353,8 @@ class GoodReceiveCrudController extends CrudController
         $data->dn_number = $request->dn_number;
         $data->do_number = $request->do_number;
         $data->po_number = $request->po_number;
+        $data->dn_date = $request->dn_date;
+        $data->warehoue_id = $request->warehouse_id;
         $data->sender = $request->sender;
         $data->sender_address = $request->sender_address;
         $data->consignee = $request->consignee;
@@ -414,6 +416,8 @@ class GoodReceiveCrudController extends CrudController
     public function update(Request $request)
     {
         $data = GoodReceive::findOrFail($request->id);
+        $old_items = json_decode($data->goods);
+        $old_warehouse = $data->warehouse_id;
         $data->dn_number = $request->dn_number;
         $data->do_number = $request->do_number;
         $data->po_number = $request->po_number;
@@ -429,7 +433,11 @@ class GoodReceiveCrudController extends CrudController
         $data->goods = $request->goods;
         $data->user_id = $request->user_id;
         $items = json_decode($request->goods);
+        foreach ($old_items as $old_item) {
+
+        }
         foreach ($items as $item) {
+            dd($request->all(), $item, $old_items, $old_warehouse);
             $look_item = Item::where('serial', '=', $item->material_code)->first();
             if (empty($look_item)) {
                 $save_item = new Item();
