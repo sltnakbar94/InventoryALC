@@ -437,7 +437,6 @@ class GoodReceiveCrudController extends CrudController
         $items = json_decode($request->goods);
         foreach ($old_items as $old_item) {
             $old_item_id = Item::where('serial', '=', $old_item->material_code)->first();
-            dd($request->all(), $old_items, $old_warehouse, $old_item);
             $get_old_stock = Stock::where('warehouse_id', '=', $old_warehouse)->where('item_id', '=', $old_item_id->id)->first();
             $remove_old_stock = Stock::findOrFail($get_old_stock->id);
             $remove_old_stock->stock_on_hand += $old_item->qty;
