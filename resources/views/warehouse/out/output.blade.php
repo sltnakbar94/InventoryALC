@@ -7,7 +7,7 @@
 	<title>{{@$data->do_number}}</title>
 
 	<style type="text/css">
-		body,div,table,thead,tbody,tfoot,tr,th,td,p,textarea { font-family:"Calibri"; font-size:small }
+		body,div,table,thead,tbody,tfoot,tr,th,td,p,textarea {  font-family:"Calibri"; font-size:small }
 		a.comment-indicator:hover + comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em;  }
 		a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:0.5em; height:0.5em;  }
 		comment { display:none;  }
@@ -16,76 +16,70 @@
 </head>
 
 <body>
-    {{-- {{dd($data)}} --}}
-    <table cellspacing="0" border="0">
+ {{-- {{dd($data)}} --}}
+    <table cellspacing="0">
         <tr>
-            <td width="260"><img src="{{ public_path('pdf\do\result_htm_312545a060562a73.png')}}" width=144 height=83 hspace=12 vspace=6></td>
-            <td width="260" rowspan="3" valign="top">
-                <table cellspacing="0" border="1" style="border-style:solid; margin-top: 50px">
+            <td width="100%"><img src="{{ public_path('logo/ALA.jpeg')}}" style="width: 50%; margin-right:50px"></td>
+            <td>
+                <table cellspacing="0" style="margin-left: 50%" >
                     <tr>
-                        <td width="260"><font color="#000000">DELIVERY TO :</font></td>
+                        <td width="260"><font color="#000000"></font></td>
                     </tr>
                     <tr>
                         <td>
                             <font color="#000000">
-                                {{@$data->customer->company}}<br>
-                                {{@$data->customer->address}}<br>
-                                Att : {{@$data->pic_customer}}<br>
+								<strong> PT. ANOMALI LUMBUNG ARTHA </strong><br>
+                                Jln. Siliwangi km 3 kp Ciroyom <br>
+                                Rt 31 Rw 08, Desa Pada Asih, 
+								Kec. Cisaat, Kab. Sukabumi, Jawa Barat <br>
+								Phone / Fax: +62 266 - 2485989
+								<br>
                             </font>
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
-        <tr>
-            <td><font face="Arial Black" size=5 color="#000000"><b>DELIVERY ORDER</b></font></td>
-        </tr>
-        <tr>
-            <td>
-                <table cellspacing="0" border="0">
-                    <tr>
-                        <td width="50">
-                            <font font color="#000000">
-                                Date
-                            </font>
-                        </td>
-                        <td>
-                            <font font color="#000000">
-                                : {{date('d-m-Y', strtotime(@$data->do_date))}}
-                            </font>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <font font color="#000000">
-                                Number
-                            </font>
-                        </td>
-                        <td>
-                            <font font color="#000000">
-                                : {{@$data->do_number}}
-                            </font>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <font font color="#000000">
-                                REF no
-                            </font>
-                        </td>
-                        <td>
-                            <font font color="#000000">
-                                : {{@$data->ref_no}}
-                            </font>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <table cellspacing="0" border="0">
+</table>
+
+<hr>
+<div style="width:100%;height:1;border-bottom:10px solid blue;">
+</div>  
+<hr>
+
+<table cellspacing="0" border="0">
 	<tr>
-		<td colspan="2" height="21" align="left" valign=bottom><font color="#000000">Daftar Item Barang:</font></td>
+		<td colspan="2" width="350" height="50" align="left" valign=bottom><font color="#000000"><p style="font-weight: bolder;font-size:larger">Delivery Order </p></font></td>
+		<td colspan="2" width="350" height="50" align="left" valign=bottom><font color="#000000"><p style="font-weight: bolder;font-size:larger">Konsumen </p></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+    <tr>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Tanggal  :    {{$data->do_date}} <br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nama     :     {{$data->pic_customer}} <br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+    </tr>
+    <tr>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">No. PO    :<br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{$data->destination}} <br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+    </tr>
+    <tr>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">No. DO    :  {{$data->do_number}} <br></font></td>
+        <td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+    </tr>
+</table>
+    <table cellspacing="0" border="0" style="margin-top:10px">
+	<tr>
+		<td colspan="2" height="21" align="left" valign=bottom><font color="#000000">Dikirimkan barang-barang sebagai berikut :</font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
@@ -93,60 +87,49 @@
 	</tr>
 	<tr>
 		<td width="43" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" height="20" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">No.</font></b></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">No Item</font></b></td>
-		<td width="150" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Nama Item</font></b></td>
-		<td width="50" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Jumlah</font></b></td>
-		<td width="70" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Unit Satuan</font></b></td>
-		<td width="95" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Remark</font></b></td>
+		<td width="200" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Nama Item</font></b></td>
+		<td width="60" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">  Kode Item  </font></b></td>
+		<td width="50" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">QTY</font></b></td>
+		<td width="150" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000;  1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Jumlah/Kg
+            (Netto)
+            </font></b></td>
+	
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
     @foreach ($data->details as $key=>$detil)
         <tr>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$key+1}}</font></td>
-            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->item->serial}}</font></td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle>{{@$detil->item->name}}</td>
+            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->item->serial}}</font></td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000">{{@$detil->qty}}</font></td>
             <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->item->uoms->name}}</font></td>
-            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">-</font></td>
             <td style="border-left: 1px solid #000000;"></td>
         </tr>
     @endforeach
-    <tr>
-		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
-	</tr>
-    <tr>
-        <td colspan="2" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="left" valign=bottom><font color="#000000">Keterangan :</font></td>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
-		<td colspan="2" align="left" valign=bottom><font color="#000000"><br></font></td>
-	</tr>
-    <tr>
-		<td colspan="3" style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan=2 align="left" valign=bottom>
-            <font color="#000000">
-                <textarea style="border: none; width:auto; height:auto">{{@$data->description}}</textarea>
-            </font>
-        </td>
-		<td colspan="2" style="border-left: 1px solid #000000;" align="left" valign=bottom><font color="#000000"><br></font></td>
-	</tr>
-    <tr>
-		<td colspan="6" height="21" align="left" valign=bottom><font color="#000000"><br></font></td>
-	</tr>
 </table>
+<br>
+<p>Dengan ini menyatakan bahwa barang diterima dalam keadaan baik,</p>
 <table cellspacing="0" border="0">
     <tr>
-        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Issued By</font></td>
-		<td width="18" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Approve By</font></td>
-		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Received By</font></td>
-		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+       
+        <td height="75" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
-        <td height="50" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
-		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
-		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
-		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Penerima Barang</font></td>
+		<td width="18" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Tanda Tangan Pengirim</font></td>
+		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Bag. Pengeluaran Barang </font></td>
+		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Bag. Penjualan</font></td>
+		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
 </table>
 <!-- ************************************************************************** -->

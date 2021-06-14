@@ -465,7 +465,15 @@ class SalesOrderCrudController extends CrudController
             $data->uploadref = $path;
         }
         $data->save();
+        $emailData = [
+            'title' => 'New Sales Order' ,
+            'form_number' => $request->nomor
+        ];
+
+        \Mail::to('purchasing@anomali.co.id')->send(new \App\Mail\MyTestMail($emailData));
+
         $cari = SalesOrder::where('so_number' , '=' , $nomor)->first();
+
         foreach ($request->purchaseRequisition as $pr) {
             $data->purchaseRequisition()->sync($cari->id, $pr);
         }
@@ -568,14 +576,14 @@ class SalesOrderCrudController extends CrudController
         }
         $header->grand_total = $details->sum('sub_total');
         $header->update();
-
+        
         \Alert::add('success', 'Berhasil memproses ' . $header->so_number)->flash();
         return redirect()->back();
     }
 
     public function deniedHeader(Request $request)
     {
-         $header = SalesOrder::withoutTrashed()->whereDate('form_date' , date($request->form_date))->count();
+        $header = SalesOrder::withoutTrashed()->whereDate('form_date' , date($request->form_date))->count();
         $header->status = Flag::DENIED;
         $details = SalesOrderDetail::where('sales_order_id', '=', $request->id)->get();
         $header_pr = $header->purchaseRequisition;

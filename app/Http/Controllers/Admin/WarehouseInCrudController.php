@@ -480,7 +480,15 @@ class WarehouseInCrudController extends CrudController
             $path = $file->storeAs('purchase_orderin/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-PO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
             $data->uploadref = $path;
         }
+        
         $data->save();
+
+        $emailData = [
+            'title' => 'New Purchase Order' ,
+            'form_number' => $request->nomor
+        ];
+        
+        \Mail::to('purchasing@anomali.co.id')->send(new \App\Mail\MyTestMail($emailData));
 
         $cari = WarehouseIn::where('po_number' , '=' , $nomor)->first();
         return redirect(backpack_url('warehousein/'.$cari->id.'/show'));
