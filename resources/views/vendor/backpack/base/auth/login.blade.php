@@ -5,7 +5,7 @@
         <div class="col-12 col-md-8 col-lg-4">
             <!-- <h3 class="text-center mb-4">{{ trans('backpack::base.login') }}</h3> -->
             <h3 class="text-center mb-4 mt-3">
-                <img src="/logo.png" alt="CMS" style="width:200px;height:auto;">
+                <img src="/logo/ALA.jpeg" alt="CMS" style="width:200px;height:auto;">
             </h3>
             <div class="card">
                 <div class="card-body">
