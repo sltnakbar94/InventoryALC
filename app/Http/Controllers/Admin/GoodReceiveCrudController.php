@@ -299,7 +299,7 @@ class GoodReceiveCrudController extends CrudController
                 [
                     'label'    => 'Weight (Kg)',
                     'type'    => 'number',
-                    'name'   => 'weight',
+                    'name'   => 'netto',
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
@@ -376,6 +376,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item->category = "0";
                 $save_item->brand = "0";
                 $save_item->unit = "0";
+                $save_item->netto = $item->netto;
                 $save_item->save();
                 $get_item = Item::where('serial', '=', $item->material_code)->first();
                 $check_stock = Stock::where('warehouse_id', '=', $request->warehouse_id)->where('item_id', '=', $get_item->id)->first();
