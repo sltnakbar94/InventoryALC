@@ -102,6 +102,7 @@ class SubmissionFormDetailCrudController extends CrudController
             $data->serial = $item->serial;
             $data->qty = $request->qty;
             $data->uom = $item->unit;
+
             $data->save();
         }
         $item = Item::findOrFail($request->item_id);
@@ -224,6 +225,7 @@ class SubmissionFormDetailCrudController extends CrudController
         }
         $new_item->name = $request->item;
         $new_item->serial = $request->serial;
+        $new_item->netto = $request->netto ;
         $new_item->save();
 
         $find = Item::where('name', '=', $request->item)->first();

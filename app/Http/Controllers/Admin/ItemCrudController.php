@@ -134,6 +134,12 @@ class ItemCrudController extends CrudController
             'allows_null' => true,
         ]);
 
+        $this->crud->addField([
+            'name' => 'netto',
+            'label' => 'Jumlah/Kg(Netto)',
+            'type' => 'text'
+        ]);
+
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');

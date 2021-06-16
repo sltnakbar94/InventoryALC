@@ -43,9 +43,6 @@
                                 <option value="AddBrand">Tambah Brand</option>
                                 {{-- <a href="{{ backpack_url('brand/create') }}">Tambah Brand</a> --}}
                             </select>
-
-
-
                             <div class="form-group mt-2" style="display:none" id="BrandCode">
                                 <label class="control-label" for="uom">Kode Brand</label>
                                 <input type="text" class="form-control" id="newCodeBrand" name="BrandCode" placeholder="Contoh Samsung = SMG(3 HURUF)">
@@ -85,12 +82,23 @@
                                 </span>
                             @endif
                         </div>
+
                         <div class="form-group">
                             <label class="control-label" for="serial">Nomor Serial</label><br>
                             <input type="text" class="form-control{{ $errors->has('serial') ? ' is-invalid' : '' }}" name="serial" value="{{ old('serial') }}" required>
                             @if ($errors->has('serial'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('serial') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="serial">Jumalh/Kg(netto)</label><br>
+                            <input type="text" class="form-control{{ $errors->has('netto') ? ' is-invalid' : '' }}" name="netto" value="{{ old('netto') }}" required>
+                            @if ($errors->has('netto'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('netto') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -157,6 +165,10 @@
             addBrand.style.display = "none" ;
             addCodeBrand.style.display = "none";
         }
+    }
+
+    function AddNetto(){
+
     }
 
 
