@@ -1,4 +1,4 @@
-<div class="row">
+{{-- <div class="row">
     <div class="col-md-12">
         <div class="table table-responsive">
             <table class="table table-bordered bg-white table-striped thead-light" style="width:100%;">
@@ -25,4 +25,4 @@
             </table>
         </div>
     </div>
-</div>
+</div> --}}

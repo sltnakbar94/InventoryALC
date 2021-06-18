@@ -9,8 +9,8 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverybysales') }}'><i class='lar la-file'></i> Delivery By Sales</a></li>
         </ul>
     </li> --}}
-    <li class="nav-item nav-dropdown">
-        <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-industry"></i> Warehouse</a>
+    {{-- <i class="nav-item nav-dropdown">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-industry"></i> Warehouse</a> --}}
             {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehousein') }}'><i class="lar la-file-alt"></i> Purchase Order</a></li> --}}
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehouseout') }}'><i class="lar la-file"></i> Delivery Order</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('goodreceive') }}'><i class='las la-industry'></i> Terima Barang</a></li>

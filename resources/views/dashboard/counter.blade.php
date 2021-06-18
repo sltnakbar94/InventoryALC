@@ -1,4 +1,4 @@
-<div class="row" name="widget_899479116" section="before_content">
+{{-- <div class="row" name="widget_899479116" section="before_content">
 
     <div class="col-md-4" data-toggle="modal">
         <div class="card text-white bg-warning mb-2 text-right">
@@ -54,4 +54,4 @@
         </div>
     </div>
 
-</div>
+</div> --}}
