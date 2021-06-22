@@ -299,7 +299,7 @@ class GoodReceiveCrudController extends CrudController
                 [
                     'label'    => 'Weight (Kg)',
                     'type'    => 'number',
-                    'name'   => 'weight',
+                    'name'   => 'netto',
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
@@ -373,6 +373,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item = new Item();
                 $save_item->name = $item->material_description;
                 $save_item->serial = $item->material_code;
+                $save_item->netto = $item->netto ;
                 $save_item->category = "0";
                 $save_item->brand = "0";
                 $save_item->unit = "0";

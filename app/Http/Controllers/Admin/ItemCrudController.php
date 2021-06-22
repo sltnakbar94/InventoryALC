@@ -9,6 +9,8 @@ use App\Models\Unit;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
+use function PHPSTORM_META\type;
+
 /**
  * Class ItemCrudController
  * @package App\Http\Controllers\Admin
@@ -132,6 +134,12 @@ class ItemCrudController extends CrudController
             'type' => 'select_from_array',
             'options' => Unit::pluck('name' , 'id'),
             'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'netto' ,
+            'label' => 'Jumlah/Kg(netto)',
+            'type'  => 'text'
         ]);
 
         /**
