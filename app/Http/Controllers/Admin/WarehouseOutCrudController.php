@@ -530,11 +530,11 @@ class WarehouseOutCrudController extends CrudController
     public function process(Request $request)
     {
         $header = WarehouseOut::findOrFail($request->id);
-        $header->status = Flag::SUBMITED;
+        $header->status = Flag::PROCESS;
         $details = BagItemWarehouseOut::where('warehouse_out_id', '=', $request->id)->get();
         foreach ($details as $detail) {
             $update = BagItemWarehouseOut::findOrFail($detail->id);
-            $update->status = Flag::SUBMITED;
+            $update->status = Flag::PROCESS;
             $stocks = Stock::where('warehouse_id', '=', $header->warehouse_id)->where('item_id', '=', $update->item_id)->first();
             $stock = Stock::findOrFail($stocks->id);
             $stock->stock_on_location -= $update->qty;
