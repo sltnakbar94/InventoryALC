@@ -8,6 +8,7 @@ use App\Models\BagItemWarehouseOut;
 use App\Models\DeliveryNote;
 use App\Models\DeliveryNoteDetail;
 use App\Models\Item;
+use App\Models\Stock;
 use App\Models\WarehouseOut;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -148,7 +149,23 @@ class DeliveryNoteDetailCrudController extends CrudController
 
     public function edit(Request $request)
     {
-        $detail = DeliveryNoteDetail::findOrFail($request->delivery_by_sales_detail_id);
+        $detail = DeliveryNoteDetail::findOrFail($request->delivery_note_detail_id);
+        $headDN = DeliveryNote::find($request->delivery_note_id);
+        $headWO = WarehouseOut::find($headDN->reference);
+        $find_stock = Stock::where('item_id', '=', $detail->item_id)->where('warehouse_id', '=', $headWO->warehouse_id)->first();
+        if ($request->qty < $detail->qty) {
+            $gap = $detail->qty - $request->qty;
+            $stock = Stock::find($find_stock->id);
+            $stock->stock_on_location += $gap;
+            $stock->stock_out_indent -= $gap;
+            $stock->update();
+        }elseif ($request->qty > $detail->qty) {
+            $gap = $request->qty - $detail->qty;
+            $stock = Stock::find($find_stock->id);
+            $stock->stock_on_location -= $gap;
+            $stock->stock_out_indent += $gap;
+            $stock->update();
+        }
         $detail->qty = $request->qty;
         $detail->update();
 
