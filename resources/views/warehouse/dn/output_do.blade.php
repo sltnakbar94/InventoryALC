@@ -19,7 +19,7 @@
 
     <table cellspacing="0">
         <tr>
-            <td width="100%"><img src="{{ public_path('logo/ALA.jpeg')}}" style="width: 50%; margin-right:50px"></td>
+            <td width="100%"><img src="{{ public_path('logo/logoiti.png')}}" style="width: 50%; margin-right:50px"></td>
             <td>
                 <table cellspacing="0" style="margin-left: 50%" >
                     <tr>
@@ -30,7 +30,7 @@
                             <font color="#000000">
 								<strong> PT. ANOMALI LUMBUNG ARTHA </strong><br>
                                 Jln. Siliwangi km 3 kp Ciroyom <br>
-                                Rt 31 Rw 08, Desa Pada Asih, 
+                                Rt 31 Rw 08, Desa Pada Asih,
 								Kec. Cisaat, Kab. Sukabumi, Jawa Barat <br>
 								Phone / Fax: +62 266 - 2485989
 								<br>
@@ -44,7 +44,7 @@
 
 <hr>
 <div style="width:100%;height:1;border-bottom:10px solid blue;">
-</div>  
+</div>
 <hr>
 
 <table cellspacing="0" border="0">
@@ -100,7 +100,7 @@
 		<td width="140" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000;  1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Jumlah/Kg
             (Netto)
             </font></b></td>
-	
+
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
     @foreach ($data->details as $key=>$detil)
@@ -124,7 +124,7 @@
 		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-       
+
 	</tr>
     <tr>
         <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Staff Gudang </font></td>
@@ -133,7 +133,7 @@
 		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
         <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Penerima Barang</font></td>
 		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-       
+
 	</tr>
 </table>
 <!-- ************************************************************************** -->

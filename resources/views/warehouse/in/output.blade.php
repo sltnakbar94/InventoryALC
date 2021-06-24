@@ -91,7 +91,7 @@
 <body>
 <table cellspacing="0" border="0">
     <tr>
-        <td width="260"><img src="{{ public_path('logo\ALA.jpeg')}}" width=144 height=83 hspace=12 vspace=6></td>
+        <td width="260"><img src="{{ public_path('logo\logoiti.png')}}" width=144 height=83 hspace=12 vspace=6></td>
         <td width="260" rowspan="3" valign="top">
             <table cellspacing="0" border="1" style="border-style:solid; margin-top: 50px">
                 <tr>

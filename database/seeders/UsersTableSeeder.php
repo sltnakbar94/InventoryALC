@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
     {
         $user1 = User::create([
             'name' => 'admin',
-            'email' => 'admin@anomali.co.id',
+            'email' => 'admin@inovtech-in.com',
             'password' => bcrypt('password')
         ]);
 
@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
 
         $user2 = User::create([
             'name' => 'sales',
-            'email' => 'sales@anomali.co.id',
+            'email' => 'sales@inovtech-in.com',
             'password' => bcrypt('password')
         ]);
 
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
 
         $user3 = User::create([
             'name' => 'operator gudang',
-            'email' => 'opgudang@anomali.co.id',
+            'email' => 'opgudang@inovtech-in.com',
             'password' => bcrypt('password')
         ]);
 
@@ -41,7 +41,7 @@ class UsersTableSeeder extends Seeder
 
         $user4 = User::create([
             'name' => 'Superadmin',
-            'email' => 'superadmin@anomali.co.id',
+            'email' => 'superadmin@inovtech-in.com',
             'password' => bcrypt('password')
         ]);
 
@@ -49,7 +49,7 @@ class UsersTableSeeder extends Seeder
 
         $user5 = User::create([
             'name' => 'Purchasing',
-            'email' => 'purchasing@anomali.co.id',
+            'email' => 'purchasing@inovtech-in.com',
             'password' => bcrypt('password')
         ]);
 
