@@ -314,6 +314,15 @@ class GoodReceiveCrudController extends CrudController
                     'name'   => 'pallet',
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
+                [
+                    'label'    => 'Expirate Date',
+                    'type'  => 'date_picker',
+                    'date_picker_options' => [
+                        'todayBtn' => 'linked',
+                    ],
+                    'name'   => 'expirate_date',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
             ],
 
             // optional
@@ -377,6 +386,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item->brand = "0";
                 $save_item->unit = "0";
                 $save_item->netto = $item->netto;
+                $save_item->expirate_date = $item->expirate_date;
                 $save_item->save();
                 $get_item = Item::where('serial', '=', $item->material_code)->first();
                 $check_stock = Stock::where('warehouse_id', '=', $request->warehouse_id)->where('item_id', '=', $get_item->id)->first();
@@ -401,6 +411,8 @@ class GoodReceiveCrudController extends CrudController
                 $save_item->category = "0";
                 $save_item->brand = "0";
                 $save_item->unit = "0";
+                $save_item->netto = $item->netto;
+                $save_item->expirate_date = $item->expirate_date;
                 $check_stock = Stock::where('warehouse_id', '=', $request->warehouse_id)->where('item_id', '=', $get_item->id)->first();
                 $stock = Stock::findOrFail($check_stock->id);
                 $stock->stock_on_hand += $item->qty;
@@ -453,6 +465,8 @@ class GoodReceiveCrudController extends CrudController
                 $save_item->category = "0";
                 $save_item->brand = "0";
                 $save_item->unit = "0";
+                $save_item->netto = $item->netto;
+                $save_item->expirate_date = $item->expirate_date;
                 $save_item->save();
                 $get_item = Item::where('serial', '=', $item->material_code)->first();
                 $check_stock = Stock::where('warehouse_id', '=', $request->warehouse_id)->where('item_id', '=', $get_item->id)->first();
@@ -477,6 +491,8 @@ class GoodReceiveCrudController extends CrudController
                 $save_item->category = "0";
                 $save_item->brand = "0";
                 $save_item->unit = "0";
+                $save_item->netto = $item->netto;
+                $save_item->expirate_date = $item->expirate_date;
                 $check_stock = Stock::where('warehouse_id', '=', $request->warehouse_id)->where('item_id', '=', $get_item->id)->first();
                 $stock = Stock::findOrFail($check_stock->id);
                 $stock->stock_on_hand += $item->qty;
