@@ -152,7 +152,7 @@ class WarehouseOutCrudController extends CrudController
             'label' => 'Nama Perusahaan',
             'type' => 'select2_from_array',
             'options' => Company::pluck('name', 'id'),
-            'allows_null' => true,
+            'allows_null' => false,
         ]);
 
         $this->crud->addField([
@@ -199,7 +199,7 @@ class WarehouseOutCrudController extends CrudController
             'label' => 'Pilih Gudang',
             'type' => 'select2_from_array',
             'options' => Warehouse::pluck('name', 'id'),
-            'allows_null' => true,
+            'allows_null' => false,
         ]);
 
         $this->crud->addField([

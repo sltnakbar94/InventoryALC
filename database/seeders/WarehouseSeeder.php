@@ -15,9 +15,9 @@ class WarehouseSeeder extends Seeder
     public function run()
     {
         $bks = Warehouse::create([
-            'code' => 'BKS',
-            'name' => 'Gudang Bekasi',
-            'address' => 'Jl. Caringin RT.003/RW.001, Mustikasari, Kec. Mustika Jaya, Kota Bekasi, Jawa Barat',
+            'code' => 'SKBM',
+            'name' => 'Gudang Sukabumi',
+            'address' => '',
             'active' => 1
         ]);
     }

@@ -32,11 +32,11 @@ class CounterChartController extends ChartController
         $this->chart = new Chart();
 
         $this->chart->dataset('Status Pengiriman', 'pie', [
-                (int)$db->data['counter']['purchase_order']['count'],
+                // (int)$db->data['counter']['purchase_order']['count'],
                 (int)$db->data['counter']['delivery_order']['count'],
                 (int)$db->data['counter']['delivery_note']['count'],
             ])->backgroundColor([
-                '#FFA500',
+                // '#FFA500',
                 '#CD211F',
                 '#4dbd74',
             ]);
@@ -44,7 +44,7 @@ class CounterChartController extends ChartController
         $this->chart->displayAxes(false);
         $this->chart->displayLegend(true);
 
-        $this->chart->labels(['Purchase Order', 'Delivery Order', 'Accepted']);
+        $this->chart->labels(['Delivery Order', 'Surat Jalan']);
     }
 
     /**
