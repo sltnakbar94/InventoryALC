@@ -29,6 +29,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class="lar la-file-alt"></i> Delivery Notes</a></li>
         </ul>
     </li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('invoice') }}'><i class='nav-icon la la-question'></i> Invoices</a></li>
 @endif
 @if(backpack_user()->hasRole('purchasing'))
     {{-- <li class="nav-item nav-dropdown">
