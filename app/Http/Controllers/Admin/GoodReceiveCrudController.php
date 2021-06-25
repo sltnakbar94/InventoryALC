@@ -216,14 +216,14 @@ class GoodReceiveCrudController extends CrudController
             'label' => 'Pilih Perusahaan',
             'type' => 'select2_from_array',
             'options' => Company::where('active', '=', 1)->pluck('name', 'id'),
-            'allows_null' => true,
+            'allows_null' => false,
         ]);
 
-        $this->crud->addField([
-            'label' => "Nama Project",
-            'name'  => "project_name",
-            'type'  => 'text',
-        ]);
+        // $this->crud->addField([
+        //     'label' => "Nama Project",
+        //     'name'  => "project_name",
+        //     'type'  => 'text',
+        // ]);
 
         $this->crud->addField([
             'label' => "Nama Ekspedisi",
@@ -255,67 +255,37 @@ class GoodReceiveCrudController extends CrudController
             'type'  => 'repeatable',
             'fields' => [
                 [
-                    'label'    => 'Material Code',
+                    'label'    => 'Batch Code',
                     'type'    => 'text',
                     'name'   => 'material_code',
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
-                    'label'    => 'Material Description',
+                    'label'    => 'Kode Feed',
+                    'type'    => 'text',
+                    'name'   => 'feed_code',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'label'    => 'Nama Barang',
                     'type'    => 'text',
                     'name'   => 'material_description',
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
-                    'label'    => 'PO Number',
-                    'type'    => 'text',
-                    'name'   => 'po_number',
-                    'wrapper' => ['class' => 'form-group col-md-4'],
-                ],
-                [
-                    'label'    => 'SO Number',
-                    'type'    => 'text',
-                    'name'   => 'so_number',
-                    'wrapper' => ['class' => 'form-group col-md-4'],
-                ],
-                [
-                    'label'    => 'Quantity',
+                    'label'    => 'Banyak (Bag)',
                     'type'    => 'number',
                     'name'   => 'qty',
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
-                    'label'    => 'UoM',
-                    'type'    => 'text',
-                    'name'   => 'uom',
-                    'wrapper' => ['class' => 'form-group col-md-4'],
-                ],
-                [
-                    'label'    => 'Boxes',
-                    'type'    => 'number',
-                    'name'   => 'boxes',
-                    'wrapper' => ['class' => 'form-group col-md-4'],
-                ],
-                [
-                    'label'    => 'Weight (Kg)',
+                    'label'    => 'Jumlah/KG (Netto)',
                     'type'    => 'number',
                     'name'   => 'netto',
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
-                    'label'    => 'Volume (m3)',
-                    'type'    => 'number',
-                    'name'   => 'volume',
-                    'wrapper' => ['class' => 'form-group col-md-4'],
-                ],
-                [
-                    'label'    => 'Pallets',
-                    'type'    => 'number',
-                    'name'   => 'pallet',
-                    'wrapper' => ['class' => 'form-group col-md-4'],
-                ],
-                [
-                    'label'    => 'Expirate Date',
+                    'label'    => 'Expired Date',
                     'type'  => 'date_picker',
                     'date_picker_options' => [
                         'todayBtn' => 'linked',
