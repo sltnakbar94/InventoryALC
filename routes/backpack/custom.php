@@ -96,7 +96,7 @@ Route::group([
     Route::get('deliverynotedetail/{id}/accept', 'DeliveryNoteDetailCrudController@accept');
     Route::get('deliverynotedetail/{id}/denied', 'DeliveryNoteDetailCrudController@denied');
 
-
+    //
 
 
 
@@ -150,4 +150,6 @@ Route::group([
     Route::crud('reportdeliverynote', 'ReportDeliveryNoteCrudController');
     Route::crud('goodreceive', 'GoodReceiveCrudController');
     Route::crud('invoice', 'InvoiceCrudController');
+
+    Route::crud('invoicedetail', 'InvoiceDetailCrudController');
 }); // this should be the absolute last line of this file

@@ -348,7 +348,7 @@ class WarehouseOutCrudController extends CrudController
         $globalService = new GlobalServices;
         $content = $this->traitShow($id);
         $content['data'] = WarehouseOut::findOrFail($id)->with('customer')->first();
-
+       
         //Check if Flag There's No Submit
         $bagItemOnWarehouseOut = BagItemWarehouseOut::where('warehouse_out_id', $id)->get();
         $checkApprovalByWarehouseID = $globalService->CheckingOnArray($bagItemOnWarehouseOut, 'submit');

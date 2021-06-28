@@ -17,7 +17,8 @@ class CreateInvoiceDetail extends Migration
             $table->id();
             $table->timestamps();
             $table->string('invoice_id');
-            $table->string('item');
+            $table->string('item_id');
+            $table->integer('qty');
             $table->integer('price');
             $table->integer('discount');
             $table->integer('price_sum');

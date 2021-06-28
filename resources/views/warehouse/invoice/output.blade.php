@@ -47,7 +47,7 @@
 </div>  
 <hr>
 
-{{ dd($data) }}
+
 
 <table cellspacing="0" border="0">
 	<tr>

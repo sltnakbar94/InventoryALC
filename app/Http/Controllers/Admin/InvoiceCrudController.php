@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\InvoiceRequest;
 use App\Models\DeliveryNote;
+use App\Models\DeliveryNoteDetail;
 use App\Models\Invoice;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -43,7 +44,7 @@ class InvoiceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+       
 
         $this->crud->addColumn([
             'name' => 'invoice_no',
@@ -66,7 +67,7 @@ class InvoiceCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'user',
             'type' => 'text',
-            'label'=> 'User who generate'
+            'label'=> 'GeneratedBy'
         ]);
 
         /**
@@ -86,7 +87,7 @@ class InvoiceCrudController extends CrudController
         $count = DB::table('invoice')->count();
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
 
-        $generate = $month.$day."-".$number."/WHO-IN/".$year;
+        $generate = $month.$day."-".$number."/Invoice/".$year;
 
         return $generate ;
     }
@@ -115,7 +116,7 @@ class InvoiceCrudController extends CrudController
             'label' => 'Pilih Surat Jalan',
             'type'  => 'select2_from_array',
             'name'  => 'dn_number',
-            'options' => DeliveryNote::where('status', '=', 4)->pluck('dn_number', 'id'),
+            'options' => DeliveryNote::where('status', '=', 4)->pluck('dn_number', 'dn_number'),
             'allows_null' => false
         ]);
 
@@ -134,7 +135,8 @@ class InvoiceCrudController extends CrudController
         $this->crud->addField([
             'name' => 'user',
             'type' => 'hidden',
-            'label'=> 'User who generate'
+            'label'=> 'User who generate',
+            'value'=> backpack_auth()->id()
         ]);
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -157,10 +159,32 @@ class InvoiceCrudController extends CrudController
 
     public function store(Request $request)
     {
-       
+        $invoice = new Invoice();
+        $invoice->invoice_no = $request->invoice_no;
+        $invoice->dn_number = $request->dn_number;
+        $invoice->invoice_date = $request->invoice_date ;
+        $invoice->ppn = $request->ppn ;
+        $invoice->user = $request->user ;
+        $invoice->save();
+        $dn = DeliveryNote::where('dn_number' , '=' , $request->dn_number )->first();
+        $dndetails = DeliveryNoteDetail::where('delivery_note_id' , '=' , $dn['id'])->get();
+     
+        
         $cari = Invoice::where('dn_number' , '=' , $request->dn_number)->first();
-        dd($cari);
-        return redirect(backpack_url('warehouseout/'.$cari->id.'/show'));
+        return redirect(backpack_url('invoice/'.$cari->id.'/show'));
+    }
+
+    public function show($id)
+    {
+        $invoice = Invoice::where('id' , '=' , $id)->first();
+        $dn_number = $invoice['dn_number'];
+        $dn = DeliveryNote::where('dn_number' , '=' , $dn_number)->first();
+        $data = [
+            'invoice'=> $invoice , 
+            'dn' => $dn
+        ];
+
+        return view('warehouse.invoice.show' , ['data' => $data]) ;
     }
 
 
