@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateItems extends Migration
+class UpdateItems1Table extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class UpdateItems extends Migration
     public function up()
     {
         Schema::table('items', function(Blueprint $table) {
-            $table->string('netto')->nullable();
+            $table->date('expirate_date')->nullable();
         });
     }
 
@@ -25,9 +25,9 @@ class UpdateItems extends Migration
      */
     public function down()
     {
-        Schema::table('submission_forms', function (Blueprint $table) {
+        Schema::table('delivery_notes' ,function(Blueprint $table){
             $table->dropColumn([
-                'netto',
+                'expirate_date',
             ]);
         });
     }

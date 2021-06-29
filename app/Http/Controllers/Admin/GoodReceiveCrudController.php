@@ -352,6 +352,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item = new Item();
                 $save_item->name = $item->material_description;
                 $save_item->serial = $item->material_code;
+                $save_item->feed_code = $item->feed_code;
                 $save_item->category = "0";
                 $save_item->brand = "0";
                 $save_item->unit = "0";
@@ -378,6 +379,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item = Item::findOrFail($get_item->id);
                 $save_item->name = $item->material_description;
                 $save_item->serial = $item->material_code;
+                $save_item->feed_code = $item->feed_code;
                 $save_item->category = "0";
                 $save_item->brand = "0";
                 $save_item->unit = "0";
@@ -432,6 +434,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item = new Item();
                 $save_item->name = $item->material_description;
                 $save_item->serial = $item->material_code;
+                $save_item->feed_code = $item->feed_code;
                 $save_item->category = "0";
                 $save_item->brand = "0";
                 $save_item->unit = "0";
@@ -458,6 +461,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item = Item::findOrFail($get_item->id);
                 $save_item->name = $item->material_description;
                 $save_item->serial = $item->material_code;
+                $save_item->feed_code = $item->feed_code;
                 $save_item->category = "0";
                 $save_item->brand = "0";
                 $save_item->unit = "0";

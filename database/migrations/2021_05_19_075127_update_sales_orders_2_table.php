@@ -30,12 +30,10 @@ class UpdateSalesOrders2Table extends Migration
      */
     public function down()
     {
-        Schema::table('sales_orders', function (Blueprint $table) {
-            $table->string('type_customer')->nullable();
+        Schema::table('sales_orders' ,function(Blueprint $table){
+            $table->dropColumn([
+                'type_customer',
+            ]);
         });
-
-        // Schema::table('sales_orders', function (Blueprint $table) {
-        //    $table->string('ppn');
-        // });
     }
 }
