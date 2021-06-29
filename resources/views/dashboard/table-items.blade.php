@@ -10,6 +10,7 @@
                     <th class="text-center text-light bg-info">Category</th> --}}
                     <th class="text-center text-light bg-info">Stock on Hand</th>
                     <th class="text-center text-light bg-info">Stock on Location</th>
+                    <th class="text-center text-light bg-info">Expired Date</th>
                 </tr>
                 @foreach(@$items as $key=>$item)
                     <tr @if ($loop->odd) class="bg-secondary" @endif>
@@ -20,6 +21,7 @@
                         <td>{{ @$item->item->Category->name }}</td> --}}
                         <td>{{ @$item->stock_on_hand }}</td>
                         <td>{{ @$item->stock_on_location }}</td>
+                        <td>{{ @$item->item->expirate_date }}</td>
                     </tr>
                 @endforeach
             </table>
