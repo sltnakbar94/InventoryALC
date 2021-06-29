@@ -25,8 +25,10 @@ class UpdateDeliverynote extends Migration
      */
     public function down()
     {
-        Schema::table('delivery_notes', function(Blueprint $table) {
-            $table->string('kendaraan')->nullable();
+        Schema::table('delivery_notes', function (Blueprint $table) {
+            $table->dropColumn([
+                'kendaraan',
+            ]);
         });
     }
 }

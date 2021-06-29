@@ -27,10 +27,12 @@ class UpdateSfTable extends Migration
      */
     public function down()
     {
-        Schema::table('submission_forms', function(Blueprint $table) {
-            $table->string('form_number')->nullable()->change();
-            $table->string('perusahaan')->change();
-            $table->string('uploadref')->nullable()->change();
+        Schema::table('submission_forms' ,function(Blueprint $table){
+            $table->dropColumn([
+                'form_number',
+                'perusahaan',
+                'uploadref',
+            ]);
         });
     }
 }

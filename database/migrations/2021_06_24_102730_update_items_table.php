@@ -25,8 +25,10 @@ class UpdateItemsTable extends Migration
      */
     public function down()
     {
-        Schema::table('items', function(Blueprint $table) {
-            $table->date('expirate_date')->nullable();
+        Schema::table('items' ,function(Blueprint $table){
+            $table->dropColumn([
+                'expirate_date',
+            ]);
         });
     }
 }

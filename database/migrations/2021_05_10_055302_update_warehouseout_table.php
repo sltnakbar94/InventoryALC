@@ -27,12 +27,6 @@ class UpdateWarehouseoutTable extends Migration
      */
     public function down()
     {
-        Schema::table('warehouse_outs', function(Blueprint $table) {
-            $table->string('do_number')->nullable(false)->change();
-            $table->string('perusahaan');
-            $table->string('uploadref')->nullable();
-        });
-
         Schema::table('warehouse_outs' ,function(Blueprint $table){
             $table->dropColumn([
                 'do_number',
