@@ -14,7 +14,7 @@ class UpdateItems1Table extends Migration
     public function up()
     {
         Schema::table('items', function(Blueprint $table) {
-            $table->date('expirate_date')->nullable();
+            $table->date('feed_code')->nullable();
         });
     }
 
@@ -27,7 +27,7 @@ class UpdateItems1Table extends Migration
     {
         Schema::table('delivery_notes' ,function(Blueprint $table){
             $table->dropColumn([
-                'expirate_date',
+                'feed_code',
             ]);
         });
     }
