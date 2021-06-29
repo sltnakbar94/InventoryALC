@@ -6,6 +6,7 @@ use App\Http\Requests\InvoiceRequest;
 use App\Models\DeliveryNote;
 use App\Models\DeliveryNoteDetail;
 use App\Models\Invoice;
+use App\Models\InvoiceDetail;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
@@ -168,9 +169,15 @@ class InvoiceCrudController extends CrudController
         $invoice->save();
         $dn = DeliveryNote::where('dn_number' , '=' , $request->dn_number )->first();
         $dndetails = DeliveryNoteDetail::where('delivery_note_id' , '=' , $dn['id'])->get();
-     
-        
+        foreach($dndetails as $item){
+            $invdetails = new InvoiceDetail() ;
+            $invdetails->invoice_id = $dn['id'];
+            $invdetails->item_id = $item->id ;
+            $invdetails->qty = $item->qty ;
+            $invdetails->save();
+        }
         $cari = Invoice::where('dn_number' , '=' , $request->dn_number)->first();
+        $invdetails->invoice_id = $cari->id ;
         return redirect(backpack_url('invoice/'.$cari->id.'/show'));
     }
 
