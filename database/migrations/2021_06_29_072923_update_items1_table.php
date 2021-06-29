@@ -14,7 +14,7 @@ class UpdateItems1Table extends Migration
     public function up()
     {
         Schema::table('items', function(Blueprint $table) {
-            $table->date('feed_code')->nullable();
+            $table->string('feed_code')->nullable();
         });
     }
 
