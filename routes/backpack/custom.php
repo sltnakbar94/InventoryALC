@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\Api\DeliverySalesOrderController;
 use App\Http\Controllers\Admin\Api\SubmissionFormController;
 use App\Models\SubmissionForm;
 
+use Illuminate\Support\Facades\Route;
+
 Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
     'middleware' => array_merge(
@@ -97,7 +99,7 @@ Route::group([
     Route::get('deliverynotedetail/{id}/denied', 'DeliveryNoteDetailCrudController@denied');
 
     //
-
+    Route::post('generate-invoice' , 'InvoiceCrudController@pdf');
 
 
     // API

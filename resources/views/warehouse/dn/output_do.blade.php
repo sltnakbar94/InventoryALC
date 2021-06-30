@@ -63,15 +63,8 @@
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
     <tr>
-        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Jenis Kendaraan :<br></font></td>
-        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{$data->WarehouseOut->destination}} <br></font></td>
-		<td align="left" valign=bottom><font color="#000000"><br></font></td>
-		<td align="center" valign=bottom><font color="#000000"><br></font></td>
-		<td align="left" valign=bottom><font color="#000000"><br></font></td>
-    </tr>
-    <tr>
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">No. Polisi&ensp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  {{$data->plat_number}} <br></font></td>
-        <td align="left" valign=bottom><font color="#000000"><br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{$data->WarehouseOut->destination}} <br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
@@ -83,6 +76,7 @@
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
+    
 </table>
     <table cellspacing="0" border="0" style="margin-top:10px">
 	<tr>

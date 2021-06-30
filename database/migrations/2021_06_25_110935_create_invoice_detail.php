@@ -19,9 +19,9 @@ class CreateInvoiceDetail extends Migration
             $table->string('invoice_id');
             $table->string('item_id');
             $table->integer('qty');
-            $table->integer('price');
-            $table->integer('discount');
-            $table->integer('price_sum');
+            $table->integer('price')->nullable();
+            $table->integer('discount')->nullable();
+            $table->integer('price_sum')->nullable();
         });
     }
 

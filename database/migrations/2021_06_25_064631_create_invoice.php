@@ -20,7 +20,8 @@ class CreateInvoice extends Migration
             $table->date('invoice_date');
             $table->string('dn_number');
             $table->string('user');
-            $table->integer('ppn');
+            $table->integer('ppn')->nullable();
+            $table->integer('discount')->nullable();
         });
     }
 

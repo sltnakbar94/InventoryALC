@@ -38,6 +38,14 @@ class InvoiceDetail extends Model
     {
         return $this->hasMany(Item::class, 'id', 'item_id');
     }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class , 'id' , 'invoice_id');
+    }
+
+
+    
     /*
     |--------------------------------------------------------------------------
     | SCOPES

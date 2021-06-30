@@ -44,7 +44,7 @@ class ReportDeliveryOrderCrudController extends CrudController
         if (backpack_user()->hasAnyRole(['sales','purchasing','operator-gudang'])) {
             $this->crud->addClause('where', 'user_id', '=', backpack_auth()->id());
             }
-            $this->crud->addClause('where', 'status', '>', 2);
+         
             $this->crud->removeButton('create');
             $this->crud->removeButton('update');
             $this->crud->removeButton('delete');

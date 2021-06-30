@@ -11,6 +11,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
 
 /**
  * Class InvoiceCrudController
@@ -197,9 +198,14 @@ class InvoiceCrudController extends CrudController
 
     public function pdf(Request $request)
     {
-        $data = DeliveryNote::findOrFail($request->dn_number);
-
-        $pdf = PDF::loadview('warehouse.invoice.output',['data'=>$data]);
-    	return $pdf->stream($data->invoice_no.'.pdf');
+        
+        $data = DeliveryNote::findOrFail($request->id);
+        $invoice = Invoice::findOrFail($request->id);
+        $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $invoice['id'])->get();
+        $pdf = PDF::loadview('warehouse.invoice.output',
+                             ['data' => $data , 
+                             'invoice' => $invoice ,
+                             'invoiceDetails' => $invoiceDetails ]);
+    	return $pdf->stream($invoice->invoice_no.'.pdf');
     }
 }

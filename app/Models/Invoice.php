@@ -39,6 +39,10 @@ class Invoice extends Model
         return $this->belongsTo(DeliveryNote::class , 'dn_number' , 'dn_number')->orderby('created_at', 'asc');
     }
   
+    public function details()
+    {
+        return $this->hasMany(Invoice::class , 'id' , 'invoice_id')->orderby('created_at', 'asc');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

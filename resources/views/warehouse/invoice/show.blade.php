@@ -7,7 +7,7 @@
 
 <div class="container">
 
-    <table class="table table-hover mt-5">
+    {{-- <table class="table table-hover mt-5">
         <thead>
           <tr>
             <th scope="col">NO</th>
@@ -28,9 +28,9 @@
             <td>{{ $item->Item['name']  }} </td>
             <td>{{ $item['qty'] }} </td>
             <td>{{ $item->Item['netto']  }} </td>
-            <td>   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPrice">
-                <i class="fa fa-plus"></i> TAMBAH ITEM
-            </button> </td>
+            <td>   <form class="form-floating" >
+              <input type="number" class="form-control" id="price" name="price" >
+            </form></td>
 
             <td> - </td>
       
@@ -39,14 +39,22 @@
              endforeach ;   
             @endphp
         </tbody>
-      </table>
+      </table> --}}
 
-      
+      <h4 style="text-align: center;margin-top:10px">More future coming soon</h4>
+
+      <div class="card-body" >
+        <form action="{{ backpack_url('generate-invoice') }}" id="invoice-pdf" method="post" target="_blank">
+            @csrf
+            <input type="hidden" name="id" value=" {{ $data['dn']['id'] }} " id="invoice">
+            <BUTton class="btn btn-success" style="width: 100%" type="submit">Generate invoice</BUTton>
+        </form>
+    </div>
 
     </div>
 
 @endsection
-@include('warehouse.invoice.pricemodal')
+{{-- @include('warehouse.invoice.pricemodal') --}}
 @section('after_styles')
 	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/crud.css') }}">
 	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/show.css') }}">

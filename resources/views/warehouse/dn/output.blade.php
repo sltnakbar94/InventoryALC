@@ -63,9 +63,9 @@
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
     <tr>
-        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Jenis Kendaraan    :<br></font></td>
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{$data->destination}} <br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+        <td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
