@@ -46,7 +46,7 @@ class Stock extends Model
     {
         return $this->belongsTo(Warehouse::class, 'warehouse_id', 'id');
     }
-
+       
     /*
     |--------------------------------------------------------------------------
     | SCOPES

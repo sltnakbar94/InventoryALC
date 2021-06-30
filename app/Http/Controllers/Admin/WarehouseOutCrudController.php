@@ -68,6 +68,8 @@ class WarehouseOutCrudController extends CrudController
             $this->crud->removeButton('update');
             $this->crud->removeButton('delete');
         }
+       
+
 
         $this->crud->addColumn([
             'name' => 'do_number',
