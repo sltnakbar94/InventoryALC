@@ -46,7 +46,7 @@
             {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('goodreceive') }}'><i class='las la-industry'></i> Terima Barang</a></li> --}}
         {{-- </ul> --}}
     {{-- </li> --}}
-    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('invoice') }}'><i class="lar la-file-alt"></i>Invoice</a></li>
+ 
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
         <ul class="nav-dropdown-items">
@@ -91,6 +91,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehouseout') }}'><i class="lar la-file"></i> Delivery Order</a></li>
         </ul>
     </li>
+    
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class="lar la-file"></i> Delivery Note</a></li> --}}
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
@@ -103,6 +104,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='lar la-file-alt'></i></i> Delivery Notes</a></li>
         </ul>
     </li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('invoice') }}'><i class="lar la-file-alt"></i>Invoice</a></li>
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-project-diagram"></i> Config</a>
         <ul class="nav-dropdown-items">
