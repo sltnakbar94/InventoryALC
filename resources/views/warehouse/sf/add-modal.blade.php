@@ -17,14 +17,11 @@
                             <label class="control-label" for="item_id">Nama Barang</label><br>
                             <select name="item_id" id="mySelect2" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
                                 <option value="">--PILIH BARANG--</option>
-                                @foreach(\App\Models\Item::get() as $value => $text)
-                                    @if (!empty($text->stock->where('item_id', '=', $text->id)->first()))
-                                        @php
-                                        $stock = $text->stock->where('item_id', '=', $text->id)->sum('stock_on_hand');
-                                        @endphp
-                                        <option value="{{ $text->id }}">{{ $text->name }} - Stock on Hand {{ @$stock }}</option>
+                                @foreach(\App\Models\Stock::get() as $value => $text)
+                                    @if ($text->stock_on_location != 0 || $text->stock_on_hand != 0)
+                                        <option value="{{ $text->item_id }}">{{ $text->item->name }} - Stock on location {{ @$text->stock_on_location }} - Lokasi :{{ @$text->gudang->name }} </option>
                                         @else
-                                        <option value="{{ $text->id }}">{{ $text->name }} - Stock Kosong</option>
+                                        <option value="{{ $text->item->id }}">{{ $text->item->name }} - Stock Kosong</option>
                                     @endif
                                 @endforeach
                             </select>

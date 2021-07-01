@@ -165,7 +165,7 @@ class SubmissionFormCrudController extends CrudController
             'name' => 'project_id',
             'label' => 'Peruntukan',
             'type' => 'select2_from_array',
-            'options' => ['1' => 'Stok', '2' => 'Proyek'],
+            'options' => [ '2' => 'Proyek'],
             'allows_null' => true,
         ]);
 

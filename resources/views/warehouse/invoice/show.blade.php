@@ -41,7 +41,7 @@
         </tbody>
       </table> --}}
 
-      <h4 style="text-align: center;margin-top:10px">More future coming soon</h4>
+      <h4 style="text-align: center;margin-top:10px">More feature coming soon</h4>
 
       <div class="card-body" >
         <form action="{{ backpack_url('generate-invoice') }}" id="invoice-pdf" method="post" target="_blank">
