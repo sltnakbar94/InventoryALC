@@ -188,35 +188,42 @@ function rupiah($angka){
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Discount</font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
-        {{ $totalWeight }}
+        
         @php
-         if ($totalWeight > 100) {
+         if ($totalWeight >= 100 && $totalWeight < 500) {
              $discount = 1/100 ;
+             $d = "1%" ;
          }
-         if ($totalWeight ) {
-             # code...
+         if ($totalWeight >= 500 && $totalWeight <= 1000 ) {
+             $discount = 2/100;
+             $d = "2%" ;
+         }
+         if ($totalWeight >= 1000 && $totalWeight <= 5000) {
+             $discount = 3/100;
+             $d = "3%" ;
+         }
+         if ($totalWeight >= 5000 && $totalWeight < 8000 ) {
+             $discount = 4/100 ;
+             $d = "4%" ;
          }   
+         if ($totalWeight >= 8000 ) {
+             $discount = 5/100;
+             $d = "5%" ;
+         }
+
+         $discountHarga = $totalPrice*$discount ;
         @endphp
-        <font color="#000000"></font></td>
+        <font color="#000000"> {{ rupiah($discountHarga) }} </font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
-    <tr>
-        <td  align="center" valign=middle><font color="#000000"></font></td>
-        <td  align="left" valign=middle></td>
-        <td  align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000"></font></td>
-        <td  align="center" valign=middle><font color="#000000"></font></td>
-        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">PPN</font></td>
-        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"></font></td>
-        <td style="border-left: 1px solid #000000;"></td>
-    </tr>
-  
+    
     <tr>
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  align="left" valign=middle></td>
         <td  align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000"></font></td>
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Total Keseluruhan</font></td>
-        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"></font></td>
+        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{ rupiah($totalPrice-$discountHarga) }}</font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
 </table>

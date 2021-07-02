@@ -72,7 +72,7 @@ class ReportPurchaseRequisitionCrudController extends CrudController
                 'label' => 'Peruntukan',
                 'type'  => 'select_from_array',
                 // optionally override the Yes/No texts
-                'options' => [1 => 'Stock', 2 => 'Proyek']
+                'options' => [ 2 => 'Proyek']
             ]);
 
             $this->crud->addColumn([
