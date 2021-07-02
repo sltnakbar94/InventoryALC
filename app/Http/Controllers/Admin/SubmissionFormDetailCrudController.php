@@ -102,7 +102,6 @@ class SubmissionFormDetailCrudController extends CrudController
             $data->serial = $item->serial;
             $data->qty = $request->qty;
             $data->uom = $item->unit;
-
             $data->save();
         }
         $item = Item::findOrFail($request->item_id);

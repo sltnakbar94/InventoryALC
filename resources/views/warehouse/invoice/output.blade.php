@@ -16,6 +16,19 @@
 </head>
 
 <body>
+
+    <?php 
+
+ 
+function rupiah($angka){
+	
+	$hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+	return $hasil_rupiah;
+ 
+}
+ 
+
+?>
    
     <table cellspacing="0">
         <tr>
@@ -73,9 +86,11 @@
     </tr>
    
 </table>
-    <table cellspacing="0" border="0" style="margin-top:10px">
+
+<table cellspacing="0" border="0">
+ 
 	<tr>
-		<td colspan="2" height="21" align="left" valign=bottom><font color="#000000"></font></td>
+		<td colspan="3" height="20" align="left" valign=bottom><font color="#000000">Berikut barang dan harga sesuai dengan pesanan:</font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
@@ -95,9 +110,65 @@
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$key+1}}</font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>{{@$detil->item->name}}</td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->qty}}</font></td>
-        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000">{{@$detil->item->netto}}</font></td>
-        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"></font></td>
-        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"></font></td>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="65" sdnum="1033;">
+        @php
+        $currWeight = $detil->item->netto*$detil->qty ;
+         if ($key == 0) {
+             $totalWeight = $currWeight ;
+         }else{
+             $totalWeight += $currWeight ;
+         }   
+        @endphp
+        <font color="#000000">{{@$detil->item->netto}}</font></td>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
+        @php
+          if ($detil->item->name == "MPL PRO-2") 
+            {
+                $harga = 9944 ;
+            }
+            if (@$detil->item->name == "MPL PRO-3")
+            {
+                $harga = 9829 ;
+            }
+            if (@$detil->item->name == "MPE-2") {
+                $harga = 5486;
+            }
+            if (@$detil->item->name == "MPE-3") {
+                $harga = 5315;
+            }
+            if (@$detil->item->name == "MPE-4") {
+                $harga = 5315 ;
+            }
+            if (@$detil->item->name == "MPM-3") {
+                $harga = 9000;
+            }
+            if (@$detil->item->name == "MR-01") {
+                $harga = 16600;
+            }
+            if (@$detil->item->name == "MR-03") {
+                $harga = 16.100;
+            } 
+ 
+        @endphp
+        <font color="#000000
+             $totalPrice = $c">
+            {{ rupiah($harga) }}
+        </font></td>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
+          @php
+        $currPrice = $harga*$detil->qty*$detil->item->netto  ;
+         if (@$key == 0) {
+             $totalPrice = $currPrice ;
+         }else{
+            $totalPrice  += $currPrice ;
+         }      
+          @endphp
+        <font color="#000000">
+            @php
+            $jumlahHarga = $harga*$detil->qty*$detil->item->netto ;
+            @endphp
+            {{ rupiah($jumlahHarga) }}
+        </font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
 @endforeach
@@ -107,7 +178,7 @@
         <td  align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000"></font></td>
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Sub Total</font></td>
-        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"></font></td>
+        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"> {{ rupiah($totalPrice) }} </font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
     <tr>
@@ -116,7 +187,17 @@
         <td  align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000"></font></td>
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Discount</font></td>
-        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"></font></td>
+        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
+        {{ $totalWeight }}
+        @php
+         if ($totalWeight > 100) {
+             $discount = 1/100 ;
+         }
+         if ($totalWeight ) {
+             # code...
+         }   
+        @endphp
+        <font color="#000000"></font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
     <tr>
@@ -128,21 +209,13 @@
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"></font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
+  
     <tr>
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  align="left" valign=middle></td>
         <td  align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000"></font></td>
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Total Keseluruhan</font></td>
-        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"></font></td>
-        <td style="border-left: 1px solid #000000;"></td>
-    </tr>
-    <tr>
-        <td  align="center" valign=middle><font color="#000000"></font></td>
-        <td  align="left" valign=middle></td>
-        <td  align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000"></font></td>
-        <td  align="center" valign=middle><font color="#000000"></font></td>
-        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Total</font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000"></font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
