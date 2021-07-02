@@ -78,7 +78,7 @@ function rupiah($angka){
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
     <tr>
-        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nomer Invoice : {{$invoice->invoice_date}} <br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nomer Invoice : {{$invoice->invoice_no}} <br></font></td>
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{$data->WarehouseOut->destination}} <br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
