@@ -87,9 +87,9 @@ class InvoiceCrudController extends CrudController
         $year = date("Y");
 
         $count = DB::table('invoice')->count();
-        $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
+        $number = $count+70 ;
 
-        $generate = $count +70 ;
+        $generate = "0".$number ;
         
         return $generate ;
     }
