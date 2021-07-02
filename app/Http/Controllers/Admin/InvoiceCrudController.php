@@ -28,7 +28,7 @@ class InvoiceCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -40,13 +40,13 @@ class InvoiceCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
     protected function setupListOperation()
     {
-       
+
 
         $this->crud->addColumn([
             'name' => 'invoice_no',
@@ -75,7 +75,7 @@ class InvoiceCrudController extends CrudController
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
     }
 
@@ -96,7 +96,7 @@ class InvoiceCrudController extends CrudController
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -114,7 +114,7 @@ class InvoiceCrudController extends CrudController
             ]
         ]);
 
-        $this->crud->addField([   
+        $this->crud->addField([
             'label' => 'Pilih Surat Jalan',
             'type'  => 'select2_from_array',
             'name'  => 'dn_number',
@@ -143,20 +143,20 @@ class InvoiceCrudController extends CrudController
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
          */
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-    }   
+    }
 
 
     public function store(Request $request)
@@ -188,7 +188,7 @@ class InvoiceCrudController extends CrudController
         $dn_number = $invoice['dn_number'];
         $dn = DeliveryNote::where('dn_number' , '=' , $dn_number)->first();
         $data = [
-            'invoice'=> $invoice , 
+            'invoice'=> $invoice ,
             'dn' => $dn
         ];
 
@@ -198,12 +198,12 @@ class InvoiceCrudController extends CrudController
 
     public function pdf(Request $request)
     {
-        
+        dd($request->all());
         $data = DeliveryNote::findOrFail($request->id);
         $invoice = Invoice::findOrFail($request->id);
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $invoice['id'])->get();
         $pdf = PDF::loadview('warehouse.invoice.output',
-                             ['data' => $data , 
+                             ['data' => $data ,
                              'invoice' => $invoice ,
                              'invoiceDetails' => $invoiceDetails ]);
     	return $pdf->stream($invoice->invoice_no.'.pdf');
