@@ -4,7 +4,7 @@
 <head>
 
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
-	<title>{{@$data->do_number}}</title>
+	<title>{{@$invoice->invoice_no}}</title>
 
 	<style type="text/css">
 		body,div,table,thead,tbody,tfoot,tr,th,td,p,textarea {  font-family:"Calibri"; font-size:small }
@@ -71,15 +71,25 @@ function rupiah($angka){
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
+<<<<<<< HEAD
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Tanggal  :    {{$invoice->invoice_date}} <br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nama     :    {{@$invoice->dn->pic_customer}}<br></font></td>
+=======
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Tanggal  :    {{date('d-m-Y', strtotime($invoice->invoice_date))}} <br></font></td>
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nama     :    {{@$data->WarehouseOut->pic_customer}}<br></font></td>
+>>>>>>> 4d8415b28e153e822df6b8247390544a9c2d8794
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
     <tr>
+<<<<<<< HEAD
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nomer Invoice : {{$invoice->invoice_no}} <br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{$invoice->dn->destination}} <br></font></td>
+=======
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nomor Invoice : {{$invoice->invoice_no}} <br></font></td>
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{$data->WarehouseOut->destination}} <br></font></td>
+>>>>>>> 4d8415b28e153e822df6b8247390544a9c2d8794
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
@@ -105,10 +115,12 @@ function rupiah($angka){
         <td width="100" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000;  1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Jumlah Harga</font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
-    @foreach ($data->details as $key=>$detil)
+
+    @foreach ($data as $key=>$detil)
+    
     <tr>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$key+1}}</font></td>
-        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>{{@$detil->item->name}}</td>
+        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>{{@$detil->Item}}</td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{@$detil->qty}}</font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="65" sdnum="1033;">
         @php
