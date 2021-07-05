@@ -46,7 +46,7 @@
       <div class="card-body" >
         <form action="{{ backpack_url('generate-invoice') }}" id="invoice-pdf" method="post" target="_blank">
             @csrf
-            <input type="hidden" name="id" value=" {{ $data['dn']['id'] }} " id="invoice">
+            <input type="hidden" name="id" value=" {{ $data['invoice']['id'] }} " id="invoice">
             <BUTton class="btn btn-success" style="width: 100%" type="submit">Generate invoice</BUTton>
         </form>
     </div>
