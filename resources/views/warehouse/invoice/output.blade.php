@@ -122,34 +122,7 @@ function rupiah($angka){
         <font color="#000000">{{@$detil->item->netto}}</font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
         @php
-          if (strpos( $detil->item->name, "MPL PRO-2"))
-            {
-                $harga = 9944 ;
-            }
-            if (strpos( $detil->item->name, "MPL PRO-3"))
-            {
-                $harga = 9829 ;
-            }
-            if (strpos( $detil->item->name, "MPE-2")) {
-                $harga = 5486;
-            }
-            if (strpos( $detil->item->name, "MPE-3")) {
-                $harga = 5315;
-            }
-            if (strpos( $detil->item->name, "MPE-4")) {
-                $harga = 5315 ;
-            }
-            if (strpos( $detil->item->name, "MPM-3")) {
-                $harga = 9000;
-            }
-            if (strpos( $detil->item->name, "MR-01")) {
-                $harga = 16600;
-            }
-            if (strpos( $detil->item->name, "MR-03")) {
-                $harga = 16100;
-            }else{
-                $harga = 0;
-            }
+          $harga = $detil->price;
 
         @endphp
         <font color="#000000

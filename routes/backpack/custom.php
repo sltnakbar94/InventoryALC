@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Api\DeliveryOrderController;
 use App\Http\Controllers\Admin\Api\PurchaseOrderController;
 use App\Http\Controllers\Admin\Api\SalesDeliveryNoteController;
 use App\Http\Controllers\Admin\Api\DeliverySalesOrderController;
+use App\Http\Controllers\Admin\Api\InvoiceController;
 use App\Http\Controllers\Admin\Api\SubmissionFormController;
 use App\Models\SubmissionForm;
 
@@ -125,6 +126,8 @@ Route::group([
     Route::post('Api/DeliveryBySalesDetail', 'DeliveryBySalesDetailCrudController@getDetail');
 
 
+    Route::post('Api/InvoiceDetail', [InvoiceController::class, 'getInvoiceDetailById']);
+    Route::post('Api/InvoiceDetail_update/{delivery_order_detail_id}', [InvoiceController::class, 'UpdateInvoiceDetail']);
 
 
 
