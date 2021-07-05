@@ -36,6 +36,7 @@ class InvoiceCrudController extends CrudController
         CRUD::setModel(\App\Models\Invoice::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/invoice');
         CRUD::setEntityNameStrings('invoice', 'invoices');
+        $this->crud->setShowView('warehouse.invoice.show');
     }
 
     /**
@@ -172,7 +173,7 @@ class InvoiceCrudController extends CrudController
         $dndetails = DeliveryNoteDetail::where('delivery_note_id' , '=' , $dn['id'])->get();
         foreach($dndetails as $item){
             $invdetails = new InvoiceDetail() ;
-            $invdetails->invoice_id = $invoice->id;
+            $invdetails->invoice_id = $dn['id'];
             $invdetails->item_id = $item->id ;
             $invdetails->qty = $item->qty ;
             $invdetails->save();
@@ -182,28 +183,14 @@ class InvoiceCrudController extends CrudController
         return redirect(backpack_url('invoice/'.$cari->id.'/show'));
     }
 
-    public function show($id)
-    {
-        $invoice = Invoice::where('id' , '=' , $id)->first();
-        $dn_number = $invoice['dn_number'];
-        $dn = DeliveryNote::where('dn_number' , '=' , $dn_number)->first();
-        $data = [
-            'invoice'=> $invoice ,
-            'dn' => $dn
-        ];
-
-        return view('warehouse.invoice.show' , ['data' => $data]) ;
-    }
-
-
     public function pdf(Request $request)
     {
         $invoice = Invoice::findOrFail($request->id);
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $request->id)->get();
     
         $pdf = PDF::loadview('warehouse.invoice.output',
-                             ['invoice' => $invoice ,
-                             'data' => $invoiceDetails]);
+                             ['data' => $invoiceDetails ,
+                             'invoice' => $invoice ]);
     	return $pdf->stream($invoice->invoice_no.'.pdf');
     }
 }

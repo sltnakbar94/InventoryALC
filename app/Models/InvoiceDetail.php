@@ -34,7 +34,7 @@ class InvoiceDetail extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function item()
+    public function Item()
     {
         return $this->hasMany(Item::class, 'id', 'item_id');
     }
