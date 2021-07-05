@@ -174,7 +174,7 @@ class InvoiceCrudController extends CrudController
         foreach($dndetails as $item){
             $invdetails = new InvoiceDetail() ;
             $invdetails->invoice_id = $invoice->id;
-            $invdetails->item_id = $item->id ;
+            $invdetails->item_id = $item->item_id ;
             $invdetails->qty = $item->qty ;
             $invdetails->save();
         }
