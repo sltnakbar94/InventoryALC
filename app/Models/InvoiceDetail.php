@@ -31,10 +31,10 @@ class InvoiceDetail extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | RELATIONS
+    | RELATION
     |--------------------------------------------------------------------------
     */
-    public function Item()
+    public function item()
     {
         return $this->hasMany(Item::class, 'id', 'item_id');
     }
