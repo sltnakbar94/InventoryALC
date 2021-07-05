@@ -6,47 +6,12 @@
 
 
 <div class="container">
-
-    {{-- <table class="table table-hover mt-5">
-        <thead>
-          <tr>
-            <th scope="col">NO</th>
-            <th scope="col">Name</th>
-            <th scope="col">Qty</th>
-            <th scope="col">Jumlah/Kg(Netto)</th>
-            <th scope="col">Harga</th>
-            <th scope="col">Jumlah(Rp)</th>
-          </tr>
-        </thead>
-        <tbody>
-            @php
-            $i = 0;
-            foreach ($data['dn']->details as $item): $i++
-            @endphp
-          <tr>
-            <th scope="row"><?= $i ?> </th>
-            <td>{{ $item->Item['name']  }} </td>
-            <td>{{ $item['qty'] }} </td>
-            <td>{{ $item->Item['netto']  }} </td>
-            <td>   <form class="form-floating" >
-              <input type="number" class="form-control" id="price" name="price" >
-            </form></td>
-
-            <td> - </td>
-      
-          </tr>
-            @php
-             endforeach ;   
-            @endphp
-        </tbody>
-      </table> --}}
-
       <h4 style="text-align: center;margin-top:10px">More feature coming soon</h4>
 
       <div class="card-body" >
         <form action="{{ backpack_url('generate-invoice') }}" id="invoice-pdf" method="post" target="_blank">
             @csrf
-            <input type="hidden" name="id" value=" {{ $data['dn']['id'] }} " id="invoice">
+            <input type="hidden" name="id" value=" {{ $crud->entry->id }} " id="invoice">
             <BUTton class="btn btn-success" style="width: 100%" type="submit">Generate invoice</BUTton>
         </form>
     </div>
