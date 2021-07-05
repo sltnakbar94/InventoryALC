@@ -173,7 +173,7 @@ class InvoiceCrudController extends CrudController
         $dndetails = DeliveryNoteDetail::where('delivery_note_id' , '=' , $dn['id'])->get();
         foreach($dndetails as $item){
             $invdetails = new InvoiceDetail() ;
-            $invdetails->invoice_id = $invoice->id;
+            $invdetails->invoice_id = $dn['id'];
             $invdetails->item_id = $item->id ;
             $invdetails->qty = $item->qty ;
             $invdetails->save();
@@ -185,12 +185,14 @@ class InvoiceCrudController extends CrudController
 
     public function pdf(Request $request)
     {
+        $data = DeliveryNote::findOrFail($request->id);
         $invoice = Invoice::findOrFail($request->id);
         $data = DeliveryNote::where('dn_number' ,'=' ,$invoice->dn_number)->first();
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $invoice['id'])->get();
         $pdf = PDF::loadview('warehouse.invoice.output',
-                             ['invoice' => $invoice ,
-                             'data' => $invoiceDetails]);
+                             ['data' => $data ,
+                             'invoice' => $invoice ,
+                             'invoiceDetails' => $invoiceDetails ]);
     	return $pdf->stream($invoice->invoice_no.'.pdf');
     }
 }
