@@ -122,7 +122,12 @@ function rupiah($angka){
         <font color="#000000">{{@$detil->item->netto}}</font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
         @php
-          $harga = $detil->price;
+        if (!empty($detil->price)) {
+            $harga = $detil->price;
+        } else {
+            $harga = 0;
+        }
+
 
         @endphp
         <font color="#000000

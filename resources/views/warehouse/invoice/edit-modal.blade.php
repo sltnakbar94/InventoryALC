@@ -33,29 +33,11 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="price">Harga (satuan)</label>
+                            <label class="control-label" for="price">Harga (/KG)</label>
                             <input type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ old('price') }}" required>
                             @if ($errors->has('price'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('price') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="discount">Discount</label>
-                            <input type="number" class="form-control{{ $errors->has('discount') ? ' is-invalid' : '' }}" name="discount" value="{{ old('discount') }}" required>
-                            @if ($errors->has('discount'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('discount') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="price_sum">Total Harga</label>
-                            <input type="number" class="form-control{{ $errors->has('price_sum') ? ' is-invalid' : '' }}" name="price_sum" value="{{ old('price_sum') }}" required>
-                            @if ($errors->has('price_sum'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('price_sum') }}</strong>
                                 </span>
                             @endif
                         </div>
