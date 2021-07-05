@@ -187,7 +187,7 @@ class InvoiceCrudController extends CrudController
     {
         $invoice = Invoice::findOrFail($request->id);
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $request->id)->get();
-    
+
         $pdf = PDF::loadview('warehouse.invoice.output',
                              ['data' => $invoiceDetails ,
                              'invoice' => $invoice ]);

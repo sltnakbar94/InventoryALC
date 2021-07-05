@@ -17,19 +17,19 @@
 
 <body>
 
-    <?php 
+    <?php
 
- 
+
 function rupiah($angka){
-	
+
 	$hasil_rupiah = "Rp " . number_format($angka,2,',','.');
 	return $hasil_rupiah;
- 
+
 }
- 
+
 
 ?>
-   
+
     <table cellspacing="0">
         <tr>
             <td width="100%"><img src="{{ public_path('logo/ALA.jpeg')}}" style="width: 50%; margin-right:50px"></td>
@@ -43,7 +43,7 @@ function rupiah($angka){
                             <font color="#000000">
 								<strong> PT. ANOMALI LUMBUNG ARTHA </strong><br>
                                 Jln. Siliwangi km 3 kp Ciroyom <br>
-                                Rt 31 Rw 08, Desa Pada Asih, 
+                                Rt 31 Rw 08, Desa Pada Asih,
 								Kec. Cisaat, Kab. Sukabumi, Jawa Barat <br>
 								Phone / Fax: +62 266 - 2485989
 								<br>
@@ -57,7 +57,7 @@ function rupiah($angka){
 
 <hr>
 <div style="width:100%;height:1;border-bottom:10px solid blue;">
-</div>  
+</div>
 <hr>
 
 
@@ -72,23 +72,23 @@ function rupiah($angka){
 	</tr>
     <tr>
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Tanggal  :    {{$invoice->invoice_date}} <br></font></td>
-        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nama     :    {{@$invoice->dn->pic_customer}}<br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nama     :    {{@@$invoice->dn->WarehouseOut->pic_customer}}<br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
     <tr>
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nomer Invoice : {{$invoice->invoice_no}} <br></font></td>
-        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{$invoice->dn->destination}} <br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{@$invoice->dn->WarehouseOut->destination}} <br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
-   
+
 </table>
 
 <table cellspacing="0" border="0">
- 
+
 	<tr>
 		<td colspan="3" height="20" align="left" valign=bottom><font color="#000000">Berikut barang dan harga sesuai dengan pesanan:</font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
@@ -105,8 +105,7 @@ function rupiah($angka){
         <td width="100" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000;  1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Jumlah Harga</font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
-    @foreach ($data as $detil)
- 
+    @foreach ($data as $key=>$detil)
     <tr>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$key+1}}</font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>{{@$detil->item->name}}</td>
@@ -118,38 +117,40 @@ function rupiah($angka){
              $totalWeight = $currWeight ;
          }else{
              $totalWeight += $currWeight ;
-         }   
+         }
         @endphp
         <font color="#000000">{{@$detil->item->netto}}</font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
         @php
-          if ($detil->item->name == "MPL PRO-2") 
+          if (strpos( $detil->item->name, "MPL PRO-2"))
             {
                 $harga = 9944 ;
             }
-            if (@$detil->item->name == "MPL PRO-3")
+            if (strpos( $detil->item->name, "MPL PRO-3"))
             {
                 $harga = 9829 ;
             }
-            if (@$detil->item->name == "MPE-2") {
+            if (strpos( $detil->item->name, "MPE-2")) {
                 $harga = 5486;
             }
-            if (@$detil->item->name == "MPE-3") {
+            if (strpos( $detil->item->name, "MPE-3")) {
                 $harga = 5315;
             }
-            if (@$detil->item->name == "MPE-4") {
+            if (strpos( $detil->item->name, "MPE-4")) {
                 $harga = 5315 ;
             }
-            if (@$detil->item->name == "MPM-3") {
+            if (strpos( $detil->item->name, "MPM-3")) {
                 $harga = 9000;
             }
-            if (@$detil->item->name == "MR-01") {
+            if (strpos( $detil->item->name, "MR-01")) {
                 $harga = 16600;
             }
-            if (@$detil->item->name == "MR-03") {
-                $harga = 16.100;
-            } 
- 
+            if (strpos( $detil->item->name, "MR-03")) {
+                $harga = 16100;
+            }else{
+                $harga = 0;
+            }
+
         @endphp
         <font color="#000000
              $totalPrice = $c">
@@ -162,7 +163,7 @@ function rupiah($angka){
              $totalPrice = $currPrice ;
          }else{
             $totalPrice  += $currPrice ;
-         }      
+         }
           @endphp
         <font color="#000000">
             @php
@@ -189,7 +190,7 @@ function rupiah($angka){
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Discount</font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
-        
+
         @php
          if ($totalWeight >= 100 && $totalWeight < 500) {
              $discount = 1/100 ;
@@ -206,7 +207,7 @@ function rupiah($angka){
          if ($totalWeight >= 5000 && $totalWeight < 8000 ) {
              $discount = 4/100 ;
              $d = "4%" ;
-         }   
+         }
          if ($totalWeight >= 8000 ) {
              $discount = 5/100;
              $d = "5%" ;
@@ -217,7 +218,7 @@ function rupiah($angka){
         <font color="#000000"> {{ rupiah($discountHarga) }} </font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
-    
+
     <tr>
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  align="left" valign=middle></td>
@@ -231,13 +232,13 @@ function rupiah($angka){
 <br>
 
 <table cellspacing="0" border="0" style="margin-top:10px">
-    
+
     <tr>
         <td width="110" style="border-top: 1px solid #000000;" align="center" valign=bottom><font color="#000000">Hormat Kami</font></td>
 		<td width="18" align="left" valign=bottom><font color="#000000"><br></font></td>
         <td width="110" style="border-top: 1px solid #000000;" align="center" valign=bottom><font color="#000000">Tanda Terima</font></td>
 		<td width="17" align="left" valign=bottom><font color="#000000"><br></font></td>
-       
+
 	</tr>
 </table>
 <!-- ************************************************************************** -->

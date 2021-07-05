@@ -36,7 +36,7 @@ class InvoiceDetail extends Model
     */
     public function item()
     {
-        return $this->hasMany(Item::class, 'id', 'item_id');
+        return $this->hasOne(Item::class, 'id', 'item_id');
     }
 
     public function invoice()
@@ -44,8 +44,11 @@ class InvoiceDetail extends Model
         return $this->belongsTo(Invoice::class , 'id' , 'invoice_id');
     }
 
+    public function dn()
+    {
+        return $this->belongsTo(DeliveryNote::class , 'dn_number' , 'dn_number');
+    }
 
-    
     /*
     |--------------------------------------------------------------------------
     | SCOPES
