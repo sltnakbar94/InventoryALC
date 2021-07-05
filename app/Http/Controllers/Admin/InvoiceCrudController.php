@@ -185,7 +185,6 @@ class InvoiceCrudController extends CrudController
 
     public function pdf(Request $request)
     {
-        $data = DeliveryNote::findOrFail($request->id);
         $invoice = Invoice::findOrFail($request->id);
         $data = DeliveryNote::where('dn_number' ,'=' ,$invoice->dn_number)->first();
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $invoice['id'])->get();
