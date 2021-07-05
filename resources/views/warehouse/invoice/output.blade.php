@@ -106,7 +106,7 @@ function rupiah($angka){
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
     @foreach ($data as $detil)
- 
+    {{  dd($detil) }}
     <tr>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle sdval="1" sdnum="1033;"><font color="#000000">{{@$key+1}}</font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>{{@$detil->item->name}}</td>
