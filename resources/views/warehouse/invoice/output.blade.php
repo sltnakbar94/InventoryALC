@@ -211,7 +211,7 @@ function rupiah($angka){
             <td  align="left" valign=middle></td>
             <td  align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000"></font></td>
             <td  align="center" valign=middle><font color="#000000"></font></td>
-            <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Diabayarkan/{{date('d-m-Y', strtotime($due_date))}}</font></td>
+            <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Dibayarkan/{{date('d-m-Y', strtotime($due_date))}}</font></td>
             <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{ rupiah($pay_of) }}</font></td>
             <td style="border-left: 1px solid #000000;"></td>
         </tr>
