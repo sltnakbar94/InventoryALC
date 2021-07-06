@@ -281,9 +281,11 @@ class InvoiceCrudController extends CrudController
         $invoice = Invoice::findOrFail($request->id);
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $request->id)->get();
         $pay_of = $request->pay_of;
+        $due_date = $request->due_date;
         $pdf = PDF::loadview('warehouse.invoice.output',
                              ['data' => $invoiceDetails ,
                              'pay_of' => $pay_of ,
+                             'due_date' => $due_date ,
                              'invoice' => $invoice ]);
     	return $pdf->stream($invoice->invoice_no.'.pdf');
     }
