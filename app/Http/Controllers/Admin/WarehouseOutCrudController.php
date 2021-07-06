@@ -588,7 +588,7 @@ class WarehouseOutCrudController extends CrudController
             $revision->module = Module::DeliveryOrder;
             $revision->module_id = $request->warehouse_out_id;
             $revision->revision = $request->revision;
-            $revision->user_id = backpack_user()->id;
+            $revision->userid = backpack_user()->id;
             $header = WarehouseOut::findOrFail($request->warehouse_out_id);
             $header->status = Flag::REVISION;
             $details = BagItemWarehouseOut::where('warehouse_out_id', '=', $request->warehouse_out_id)->get();
