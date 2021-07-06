@@ -27,8 +27,9 @@ class InvoiceRequest extends FormRequest
     {
         return [
             // 'name' => 'required|min:5|max:255'
-               'invoice_no' => 'unique:invoice,invoice_no' ,
-               'dn_number' => 'required'
+               'invoice_no' => 'unique:invoice,invoice_no',
+               'invoice_date' => 'required',
+               'dn_number' => 'required',
         ];
     }
 

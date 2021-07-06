@@ -135,6 +135,35 @@ class InvoiceCrudController extends CrudController
             'label' => 'PPN'
         ]);
 
+        $this->crud->addField([   // repeatable
+            'name'  => 'termin',
+            'label' => 'Termin',
+            'hint' => 'Hiraukan bila dibayar lunas',
+            'type'  => 'repeatable',
+            'fields' => [
+                [
+                    'name'    => 'termin_no',
+                    'type'    => 'number',
+                    'label'   => 'Nomor Termin',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'name'    => 'pay_of',
+                    'type'    => 'number',
+                    'label'   => 'Jumlah dibayarkan',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'name'    => 'due_date',
+                    'type'    => 'date',
+                    'label'   => 'Tanggal tenggang',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ]
+            ],
+            'new_item_label'  => 'Tambah Termin', // customize the text of the button
+            'init_rows' => 0, // number of empty rows to be initialized, by default 1
+        ]);
+
         $this->crud->addField([
             'name' => 'user',
             'type' => 'hidden',
@@ -156,7 +185,70 @@ class InvoiceCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        $this->crud->addField([
+            'label' => "Invoice Number",
+            'name'  => "invoice_no",
+            'type'  => 'hidden' ,
+            'attributes' => [
+                'readonly'    => 'readonly',
+            ]
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Pilih Surat Jalan',
+            'type'  => 'select2_from_array',
+            'name'  => 'dn_number',
+            'options' => DeliveryNote::where('status', '=', 4)->pluck('dn_number', 'dn_number'),
+            'allows_null' => false
+        ]);
+
+        $this->crud->addField([
+            'name' => 'invoice_date',
+            'type' => 'date',
+            'label' => 'Invoice Date'
+        ]);
+
+        $this->crud->addField([
+            'name' => 'ppn',
+            'type' => 'number',
+            'label' => 'PPN'
+        ]);
+
+        $this->crud->addField([   // repeatable
+            'name'  => 'termin',
+            'label' => 'Termin',
+            'hint' => 'Hiraukan bila dibayar lunas',
+            'type'  => 'repeatable',
+            'fields' => [
+                [
+                    'name'    => 'termin_no',
+                    'type'    => 'number',
+                    'label'   => 'Nomor Termin',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'name'    => 'pay_of',
+                    'type'    => 'number',
+                    'label'   => 'Jumlah dibayarkan',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
+                    'name'    => 'due_date',
+                    'type'    => 'date',
+                    'label'   => 'Tanggal tenggang',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ]
+            ],
+            'new_item_label'  => 'Tambah Termin', // customize the text of the button
+            'init_rows' => 0, // number of empty rows to be initialized, by default 1
+        ]);
+
+        $this->crud->addField([
+            'name' => 'user',
+            'type' => 'hidden',
+            'label'=> 'User who generate',
+            'value'=> backpack_auth()->id()
+        ]);
     }
 
 
@@ -166,8 +258,9 @@ class InvoiceCrudController extends CrudController
         $invoice->invoice_no = $request->invoice_no;
         $invoice->dn_number = $request->dn_number;
         $invoice->invoice_date = $request->invoice_date ;
-        $invoice->ppn = $request->ppn ;
-        $invoice->user = $request->user ;
+        $invoice->ppn = $request->ppn;
+        $invoice->termin = $request->termin;
+        $invoice->user = $request->user;
         $invoice->save();
         $dn = DeliveryNote::where('dn_number' , '=' , $request->dn_number )->first();
         $dndetails = DeliveryNoteDetail::where('delivery_note_id' , '=' , $dn['id'])->get();
@@ -187,8 +280,10 @@ class InvoiceCrudController extends CrudController
     {
         $invoice = Invoice::findOrFail($request->id);
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $request->id)->get();
+        $pay_of = $request->pay_of;
         $pdf = PDF::loadview('warehouse.invoice.output',
                              ['data' => $invoiceDetails ,
+                             'pay_of' => $pay_of ,
                              'invoice' => $invoice ]);
     	return $pdf->stream($invoice->invoice_no.'.pdf');
     }

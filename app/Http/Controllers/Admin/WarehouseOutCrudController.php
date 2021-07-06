@@ -68,7 +68,7 @@ class WarehouseOutCrudController extends CrudController
             $this->crud->removeButton('update');
             $this->crud->removeButton('delete');
         }
-       
+
 
 
         $this->crud->addColumn([
@@ -350,7 +350,7 @@ class WarehouseOutCrudController extends CrudController
         $globalService = new GlobalServices;
         $content = $this->traitShow($id);
         $content['data'] = WarehouseOut::findOrFail($id)->with('customer')->first();
-       
+
         //Check if Flag There's No Submit
         $bagItemOnWarehouseOut = BagItemWarehouseOut::where('warehouse_out_id', $id)->get();
         $checkApprovalByWarehouseID = $globalService->CheckingOnArray($bagItemOnWarehouseOut, 'submit');
@@ -428,24 +428,11 @@ class WarehouseOutCrudController extends CrudController
     {
         $perusahaan = Company::find($request->perusahaan);
         $data = WarehouseOut::findOrFail($request->id);
-        $day = date('d', strtotime($request->po_date));
-        $month = date('m', strtotime($request->po_date));
-        $year = date('Y', strtotime($request->po_date));
-        $number = substr($data->po_number,5,3);
-        $nomor = $month.$day."-".$number."/".$perusahaan->code."-DO/".$year;
-        $data->po_number = $nomor;
-        $data->po_date = $request->po_date;
+        $day = date('d', strtotime($request->do_date));
+        $month = date('m', strtotime($request->do_date));
+        $year = date('Y', strtotime($request->do_date));
+        $data->do_number = $request->do_number;
         $data->perusahaan = $request->perusahaan;
-        $data->supplier_id = $request->supplier_id;
-        $data->ppn = $request->ppn;
-        $data->term_of_payment = $request->term_of_payment;
-        $data->warehouse_id = $request->warehouse_id;
-        $data->description = $request->description ;
-        $data->start_date = $request->start_date;
-        $data->end_date = $request->end_date;
-        $data->user_id = $request->user_id;
-        $data->do_number = $nomor;
-        $data->perusahaan = $request->company;
         $data->do_date = $request->do_date;
         $data->customer_id = $request->customer_id;
         $data->ref_no = $request->ref_no;
@@ -459,12 +446,12 @@ class WarehouseOutCrudController extends CrudController
         $data->status = Flag::PLAN;
         if($request->hasFile('uploadref')) {
             $file = $request->file('uploadref');
-            $path = $file->storeAs('delivery_order/uploadref', $month.$day.'-'.$number.'-'.$request->perusahaan.'-DO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
+            $path = $file->storeAs('delivery_order/uploadref', $month.$day.'-'.$request->do_number.'-'.$request->perusahaan.'-DO-'.$year. '.' . $file->getClientOriginalExtension() , 'public');
             $data->uploadref = $path;
         }
         $data->update();
 
-        $cari = WarehouseOut::where('do_number' , '=' , $nomor)->first();
+        $cari = WarehouseOut::where('do_number' , '=' , $request->do_number)->first();
         return redirect(backpack_url('warehouseout/'.$cari->id.'/show'));
     }
 
