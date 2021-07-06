@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Flag;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use App\Models\BagItemWarehouseOut;
+use App\Models\DeliveryNote;
 use App\Models\WarehouseIn;
 use App\Models\WarehouseOut;
 use App\Models\Item;
@@ -91,7 +93,7 @@ class AdminController extends Controller
     {
         $purchase_order = WarehouseIn::count('id');
         $delivery_order = WarehouseOut::count('id');
-        $delivery_note = BagItemWarehouseOut::where('status', '=', 'complete')->distinct('warehouse_out_id')->count('warehouse_out_id');
+        $delivery_note = DeliveryNote::where('status', '=', Flag::COMPLETE)->count('id');
 
         // redis check here
         $this->data['counter'] = [
