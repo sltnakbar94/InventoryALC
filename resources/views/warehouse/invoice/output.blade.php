@@ -173,22 +173,21 @@ function rupiah($angka){
          if ($totalWeight >= 100 && $totalWeight < 500) {
              $discount = 1/100 ;
              $d = "1%" ;
-         }
-         if ($totalWeight >= 500 && $totalWeight <= 1000 ) {
+         }elseif ($totalWeight >= 500 && $totalWeight <= 1000 ) {
              $discount = 2/100;
              $d = "2%" ;
-         }
-         if ($totalWeight >= 1000 && $totalWeight <= 5000) {
+         }elseif ($totalWeight >= 1000 && $totalWeight <= 5000) {
              $discount = 3/100;
              $d = "3%" ;
-         }
-         if ($totalWeight >= 5000 && $totalWeight < 8000 ) {
+         }elseif ($totalWeight >= 5000 && $totalWeight < 8000 ) {
              $discount = 4/100 ;
              $d = "4%" ;
-         }
-         if ($totalWeight >= 8000 ) {
+         }elseif ($totalWeight >= 8000 ) {
              $discount = 5/100;
              $d = "5%" ;
+         }elseif ($totalWeight < 100) {
+            $discount = 0/100 ;
+            $d = "0%" ;
          }
 
          $discountHarga = $totalPrice*$discount ;
