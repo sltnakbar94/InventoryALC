@@ -29,7 +29,7 @@
                             <select name="pic" class="form-control select2" required id="pic">
                             <option value="">- Pilih Item -</option>
                             @foreach ($pics as $pic)
-                                <option value="{{ $pic->name }}">{{ @$pic->name }} - {{ @$pic->email }} - {{ @$pic->telp }}</option>
+                                <option value="{{ @$pic->name }}">{{ @$pic->name }} - {{ @$pic->email }} - {{ @$pic->telp }}</option>
                             @endforeach
                             </select>
                         </div>
