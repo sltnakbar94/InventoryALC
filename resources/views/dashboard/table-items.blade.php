@@ -10,6 +10,8 @@
                     <th class="text-center text-light bg-info">Category</th> --}}
                     <th class="text-center text-light bg-info">Stock on Hand</th>
                     <th class="text-center text-light bg-info">Stock on Location</th>
+                    <th class="text-center text-light bg-info">Brand</th>
+                    <th class="text-center text-light bg-info">Netto</th>
                     <th class="text-center text-light bg-info">Expired Date</th>
                 </tr>
                 @foreach(@$items as $key=>$item)
