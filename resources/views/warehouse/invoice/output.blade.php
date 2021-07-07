@@ -71,7 +71,7 @@ function rupiah($angka){
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
-        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Tanggal  :    {{$invoice->invoice_date}} <br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Tanggal  :    {{date('d-m-Y', strtotime($invoice->invoice_date))}} <br></font></td>
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Nama     :    {{@@$invoice->dn->WarehouseOut->pic_customer}}<br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
@@ -101,7 +101,7 @@ function rupiah($angka){
 		<td width="150" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Nama Item</font></b></td>
 		<td width="60" style="border-top: 1px solid #   000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">  QTY  </font></b></td>
 		<td width="50" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Netto/Kg</font></b></td>
-		<td width="100" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Harga</font></b></td>
+		<td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Harga</font></b></td>
         <td width="100" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000;  1px solid #000000" align="center" valign=middle bgcolor="#D9D9D9"><b><font color="#000000">Jumlah Harga</font></b></td>
         <td style="border-left: 1px solid #000000;"></td>
 	</tr>
@@ -173,22 +173,21 @@ function rupiah($angka){
          if ($totalWeight >= 100 && $totalWeight < 500) {
              $discount = 1/100 ;
              $d = "1%" ;
-         }
-         if ($totalWeight >= 500 && $totalWeight <= 1000 ) {
+         }elseif ($totalWeight >= 500 && $totalWeight <= 1000 ) {
              $discount = 2/100;
              $d = "2%" ;
-         }
-         if ($totalWeight >= 1000 && $totalWeight <= 5000) {
+         }elseif ($totalWeight >= 1000 && $totalWeight <= 5000) {
              $discount = 3/100;
              $d = "3%" ;
-         }
-         if ($totalWeight >= 5000 && $totalWeight < 8000 ) {
+         }elseif ($totalWeight >= 5000 && $totalWeight < 8000 ) {
              $discount = 4/100 ;
              $d = "4%" ;
-         }
-         if ($totalWeight >= 8000 ) {
+         }elseif ($totalWeight >= 8000 ) {
              $discount = 5/100;
              $d = "5%" ;
+         }elseif ($totalWeight < 100) {
+            $discount = 0/100 ;
+            $d = "0%" ;
          }
 
          $discountHarga = $totalPrice*$discount ;
@@ -206,6 +205,17 @@ function rupiah($angka){
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{ rupiah($totalPrice-$discountHarga) }}</font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
+    @if (!empty($pay_of))
+        <tr>
+            <td  align="center" valign=middle><font color="#000000"></font></td>
+            <td  align="left" valign=middle></td>
+            <td  align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000"></font></td>
+            <td  align="center" valign=middle><font color="#000000"></font></td>
+            <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Dibayarkan/{{date('d-m-Y', strtotime($due_date))}}</font></td>
+            <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{ rupiah($pay_of) }}</font></td>
+            <td style="border-left: 1px solid #000000;"></td>
+        </tr>
+    @endif
 </table>
 <br>
 

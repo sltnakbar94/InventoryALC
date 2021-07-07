@@ -66,15 +66,7 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="card-body" >
-              <form action="{{ backpack_url('generate-invoice') }}" id="invoice-pdf" method="post" target="_blank">
-                  @csrf
-                  <input type="hidden" name="id" value=" {{ $crud->entry->id }} " id="invoice">
-                  <BUTton class="btn btn-success" style="width: 100%" type="submit">Generate invoice</BUTton>
-              </form>
-          </div>
-      </div>
+        @include('warehouse.invoice.generate')
 	</div>
 </div>
 @endsection

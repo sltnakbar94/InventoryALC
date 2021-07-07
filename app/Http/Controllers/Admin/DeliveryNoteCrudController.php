@@ -316,7 +316,7 @@ class DeliveryNoteCrudController extends CrudController
     public function store(Request $request)
     {
         $perusahaan = Company::find($request->perusahaan);
-        $count = DeliveryNote::withTrashed()->whereDate('dn_date', date($request->dn_number))->count();
+        $count = DeliveryNote::withTrashed()->whereDate('dn_date', date($request->dn_date))->count();
         $number = str_pad($count + 1,3,"0",STR_PAD_LEFT);
         $day = date('d', strtotime($request->dn_date));
         $month = date('m', strtotime($request->dn_date));
@@ -348,7 +348,7 @@ class DeliveryNoteCrudController extends CrudController
         $month = date('m', strtotime($request->dn_date));
         $year = date('Y', strtotime($request->dn_date));
         $nomor = $month.$day."-".$number."/".$perusahaan->code."-DN/".$year;
-        $data->dn_number = $nomor;
+        $data->dn_number = $request->dn_number;
         $data->perusahaan = $request->perusahaan;
         $data->reference = $request->reference;
         $data->dn_date = $request->dn_date;
