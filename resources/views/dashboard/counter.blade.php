@@ -1,6 +1,6 @@
 <div class="row" name="widget_899479116" section="before_content">
 
-    <div class="col-md-4" data-toggle="modal">
+    <div class="col-md-6" data-toggle="modal">
         <div class="card text-white bg-danger mb-2 text-right">
             <div class="card-body">
                 <div class="text-value">{{ number_format($counter['delivery_order']['count']) }}</div>
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="col-md-4" data-toggle="modal">
+    <div class="col-md-6" data-toggle="modal">
         <div class="card text-white bg-success mb-2 text-right">
             <div class="card-body">
                 <div class="text-value">{{ number_format($counter['delivery_note']['count']) }}</div>
