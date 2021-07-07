@@ -21,6 +21,8 @@
                         <td>{{ @$item->item->Category->name }}</td> --}}
                         <td>{{ @$item->stock_on_hand }}</td>
                         <td>{{ @$item->stock_on_location }}</td>
+                        <td>{{ @$item->item->brand}} </td>
+                        <td> {{@$item->item->netto}} </td>
                         <td>{{ @$item->item->expirate_date }}</td>
                     </tr>
                 @endforeach
