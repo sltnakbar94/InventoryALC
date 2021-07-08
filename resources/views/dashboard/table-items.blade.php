@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="table table-responsive">
-            <table class="table table-bordered bg-white table-striped thead-light" style="width:100%;">
+        <table id="tableItem" class="display nowrap" style="width:100%">
+            <thead>
                 <tr>
                     <th class="text-center text-light bg-info">No</th>
                     <th class="text-center text-light bg-info">Gudang</th>
@@ -14,6 +14,8 @@
                     <th class="text-center text-light bg-info">Netto</th>
                     <th class="text-center text-light bg-info">Expired Date</th>
                 </tr>
+            </thead>
+            <tbody>
                 @foreach(@$items as $key=>$item)
                     <tr @if ($loop->odd) class="bg-secondary" @endif>
                         <td>{{ @$key+1 }}</td>
@@ -28,7 +30,7 @@
                         <td>{{ @$item->item->expirate_date }}</td>
                     </tr>
                 @endforeach
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
 </div>
