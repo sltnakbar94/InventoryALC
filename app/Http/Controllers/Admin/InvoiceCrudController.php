@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Flag;
 use App\Http\Requests\InvoiceRequest;
 use App\Models\DeliveryNote;
 use App\Models\DeliveryNoteDetail;
@@ -198,7 +199,7 @@ class InvoiceCrudController extends CrudController
             'label' => 'Pilih Surat Jalan',
             'type'  => 'select2_from_array',
             'name'  => 'dn_number',
-            'options' => DeliveryNote::where('status', '=', 4)->pluck('dn_number', 'dn_number'),
+            'options' => DeliveryNote::where('status', '>', 0)->pluck('dn_number', 'dn_number'),
             'allows_null' => false
         ]);
 
