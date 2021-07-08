@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\GoodReceiveRequest;
+use App\Models\Brand;
 use App\Models\Company;
 use App\Models\GoodReceive;
 use App\Models\Item;
@@ -285,6 +286,13 @@ class GoodReceiveCrudController extends CrudController
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
+                    'name' => 'brand_id',
+                    'label' => 'Brand',
+                    'type' => 'select2_from_array',
+                    'options' => Brand::pluck('name', 'id'),
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [
                     'label'    => 'Expired Date',
                     'type'  => 'date_picker',
                     'date_picker_options' => [
@@ -354,7 +362,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item->serial = $item->material_code;
                 $save_item->feed_code = $item->feed_code;
                 $save_item->category = "0";
-                $save_item->brand = "0";
+                $save_item->brand = $item->brand_id;
                 $save_item->unit = "0";
                 $save_item->netto = $item->netto;
                 $save_item->expirate_date = $item->expirate_date;
@@ -381,7 +389,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item->serial = $item->material_code;
                 $save_item->feed_code = $item->feed_code;
                 $save_item->category = "0";
-                $save_item->brand = "0";
+                $save_item->brand = $item->brand_id;
                 $save_item->unit = "0";
                 $save_item->netto = $item->netto;
                 $save_item->expirate_date = $item->expirate_date;
@@ -436,7 +444,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item->serial = $item->material_code;
                 $save_item->feed_code = $item->feed_code;
                 $save_item->category = "0";
-                $save_item->brand = "0";
+                $save_item->brand = $item->brand_id;
                 $save_item->unit = "0";
                 $save_item->netto = $item->netto;
                 $save_item->expirate_date = $item->expirate_date;
@@ -463,7 +471,7 @@ class GoodReceiveCrudController extends CrudController
                 $save_item->serial = $item->material_code;
                 $save_item->feed_code = $item->feed_code;
                 $save_item->category = "0";
-                $save_item->brand = "0";
+                $save_item->brand = $item->brand_id;
                 $save_item->unit = "0";
                 $save_item->netto = $item->netto;
                 $save_item->expirate_date = $item->expirate_date;
