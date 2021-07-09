@@ -170,25 +170,30 @@ function rupiah($angka){
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
 
         @php
-         if ($totalWeight >= 100 && $totalWeight < 500) {
-             $discount = 1/100 ;
-             $d = "1%" ;
-         }elseif ($totalWeight >= 500 && $totalWeight <= 1000 ) {
-             $discount = 2/100;
-             $d = "2%" ;
-         }elseif ($totalWeight >= 1000 && $totalWeight <= 5000) {
-             $discount = 3/100;
-             $d = "3%" ;
-         }elseif ($totalWeight >= 5000 && $totalWeight < 8000 ) {
-             $discount = 4/100 ;
-             $d = "4%" ;
-         }elseif ($totalWeight >= 8000 ) {
-             $discount = 5/100;
-             $d = "5%" ;
-         }elseif ($totalWeight < 100) {
-            $discount = 0/100 ;
-            $d = "0%" ;
-         }
+            if ($invoice->invoice_no == "0709-080/Invoice/2021") {
+                $discount = 0/100 ;
+                $d = "0%" ;
+            }else{
+                if ($totalWeight >= 100 && $totalWeight < 500) {
+                    $discount = 1/100 ;
+                    $d = "1%" ;
+                }elseif ($totalWeight >= 500 && $totalWeight <= 1000 ) {
+                    $discount = 2/100;
+                    $d = "2%" ;
+                }elseif ($totalWeight >= 1000 && $totalWeight <= 5000) {
+                    $discount = 3/100;
+                    $d = "3%" ;
+                }elseif ($totalWeight >= 5000 && $totalWeight < 8000 ) {
+                    $discount = 4/100 ;
+                    $d = "4%" ;
+                }elseif ($totalWeight >= 8000 ) {
+                    $discount = 5/100;
+                    $d = "5%" ;
+                }elseif ($totalWeight < 100) {
+                    $discount = 0/100 ;
+                    $d = "0%" ;
+                }
+            }
 
          $discountHarga = $totalPrice*$discount ;
         @endphp
