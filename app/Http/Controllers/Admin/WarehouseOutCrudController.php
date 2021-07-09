@@ -597,6 +597,17 @@ class WarehouseOutCrudController extends CrudController
                 $update->status = Flag::REVISION;
                 $update->update();
             }
+            $details = BagItemWarehouseOut::where('warehouse_out_id', '=', $request->warehouse_out_id)->get();
+            foreach ($details as $detail) {
+                $update = BagItemWarehouseOut::findOrFail($detail->id);
+                $update->status = Flag::DENIED;
+                $stocks = Stock::where('warehouse_id', '=', $header->warehouse_id)->where('item_id', '=', $update->item_id)->first();
+                $stock = Stock::findOrFail($stocks->id);
+                $stock->stock_on_location -= $update->qty;
+                $stock->stock_out_indent += $update->qty;
+                $stock->update();
+                $update->update();
+            }
             $revision->save();
             $header->update();
             \Alert::add('success', 'Berhasil memberikan pesan revisi')->flash();
