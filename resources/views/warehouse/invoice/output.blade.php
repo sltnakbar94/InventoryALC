@@ -171,8 +171,8 @@ function rupiah($angka){
 
         @php
             if ($invoice->invoice_no == "0709-080/Invoice/2021") {
-                $discount = 0/100 ;
-                $d = "0%" ;
+                $discount = 2.44191/100 ;
+                $d = "2,44191%" ;
             }else{
                 if ($totalWeight >= 100 && $totalWeight < 500) {
                     $discount = 1/100 ;
