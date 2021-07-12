@@ -22,7 +22,7 @@
                         <td>{{$key+1}}</td>
                         <td>{{$detail->item->name}}</td>
                         <td>{{$detail->item->serial}}</td>
-                        <td align="right">{{number_format($detail->qty)}}</td>
+                        <td align="right">{{number_format($detail->qty*$detail->item->netto)}} KG</td>
                         <td>{{@$detail->price}}</td>
                         <td>{{@$detail->discount}}</td>
                         <td>{{@$detail->price_sum}}</td>

@@ -43,6 +43,11 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceDetail::class , 'invoice_id' , 'id')->orderby('created_at', 'asc');
     }
+
+    public function userid()
+    {
+        return $this->belongsTo(User::class, 'user' , 'id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

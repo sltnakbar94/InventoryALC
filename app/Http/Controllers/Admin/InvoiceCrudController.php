@@ -48,8 +48,6 @@ class InvoiceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
-
         $this->crud->addColumn([
             'name' => 'invoice_no',
             'type' => 'text',
@@ -69,9 +67,20 @@ class InvoiceCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'label'    => 'Customer',
+            'type'     => 'closure',
+            'function' => function($entry) {
+                return $entry->dn->WarehouseOut->pic_customer;
+            }
+        ]);
+
+        $this->crud->addColumn([
             'name' => 'user',
-            'type' => 'text',
-            'label'=> 'GeneratedBy'
+            'type' => 'select',
+            'entity' => 'userid',
+            'attribute' => 'name',
+            'model' => 'App\Models\User',
+            'label' => 'Operator'
         ]);
 
         /**

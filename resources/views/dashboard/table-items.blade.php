@@ -12,6 +12,7 @@
                     <th class="text-center text-light bg-info">Stock on Location</th>
                     <th class="text-center text-light bg-info">Brand</th>
                     <th class="text-center text-light bg-info">Netto</th>
+                    <th class="text-center text-light bg-info">Weight on Location</th>
                     <th class="text-center text-light bg-info">Expired Date</th>
                 </tr>
             </thead>
@@ -23,10 +24,11 @@
                         <td>{{ @$item->item->name }}</td>
                         {{-- <td>{{ @$item->item->Brand->name }}</td>
                         <td>{{ @$item->item->Category->name }}</td> --}}
-                        <td>{{ @$item->stock_on_hand }}</td>
-                        <td>{{ @$item->stock_on_location }}</td>
+                        <td>{{ number_format(@$item->stock_on_hand) }}</td>
+                        <td>{{ number_format(@$item->stock_on_location) }}</td>
                         <td>{{ @$item->item->Brands->name}} </td>
-                        <td> {{@$item->item->netto}} </td>
+                        <td> {{@$item->item->netto}} KG </td>
+                        <td> {{@$item->item->netto*@$item->stock_on_location}} KG </td>
                         <td>{{ @$item->item->expirate_date }}</td>
                     </tr>
                 @endforeach
