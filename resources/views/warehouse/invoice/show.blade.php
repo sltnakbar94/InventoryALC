@@ -103,7 +103,7 @@
                     $('input[name=invoice_detail_id]').val(response.data.id)
                     $('input[name=qty]').val(response.data.qty)
                     $('input[name=price]').val(response.data.price)
-                    $('input[name=dsicount]').val(response.data.dsicount)
+                    $('input[name=discount]').val(response.data.discount)
                     $('input[name=price_sum]').val(response.data.price_sum)
                     $('select[name=item_id]').val(response.data.item_id).trigger('change');
                 }else{

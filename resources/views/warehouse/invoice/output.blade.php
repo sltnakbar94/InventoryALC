@@ -168,36 +168,7 @@ function rupiah($angka){
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Discount</font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle>
-
-        @php
-            if ($invoice->invoice_no == "0709-080/Invoice/2021") {
-                $discount = 2.44191/100 ;
-                $d = "2,44191%" ;
-            }else{
-                if ($totalWeight >= 100 && $totalWeight < 500) {
-                    $discount = 1/100 ;
-                    $d = "1%" ;
-                }elseif ($totalWeight >= 500 && $totalWeight <= 1000 ) {
-                    $discount = 2/100;
-                    $d = "2%" ;
-                }elseif ($totalWeight >= 1000 && $totalWeight <= 5000) {
-                    $discount = 3/100;
-                    $d = "3%" ;
-                }elseif ($totalWeight >= 5000 && $totalWeight < 8000 ) {
-                    $discount = 4/100 ;
-                    $d = "4%" ;
-                }elseif ($totalWeight >= 8000 ) {
-                    $discount = 5/100;
-                    $d = "5%" ;
-                }elseif ($totalWeight < 100) {
-                    $discount = 0/100 ;
-                    $d = "0%" ;
-                }
-            }
-
-         $discountHarga = $totalPrice*$discount ;
-        @endphp
-        <font color="#000000"> {{ rupiah($discountHarga) }} </font></td>
+        <font color="#000000"> {{ rupiah($totalPrice-$data->sum('price_after_discount')) }} </font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
 
@@ -207,7 +178,7 @@ function rupiah($angka){
         <td  align="center" valign=middle sdval="65" sdnum="1033;"><font color="#000000"></font></td>
         <td  align="center" valign=middle><font color="#000000"></font></td>
         <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=middle><font color="#000000">Total Keseluruhan</font></td>
-        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{ rupiah($totalPrice-$discountHarga) }}</font></td>
+        <td  style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font color="#000000">{{ rupiah($data->sum('price_after_discount')) }}</font></td>
         <td style="border-left: 1px solid #000000;"></td>
     </tr>
     @if (!empty($pay_of))

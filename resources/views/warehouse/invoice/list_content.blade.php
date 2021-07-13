@@ -9,7 +9,8 @@
                     <th>Jumlah</th>
                     <th>Harga</th>
                     <th>Discount</th>
-                    <th>Total Harga</th>
+                    <th>Total Harga (sebelum Discount)</th>
+                    <th>Total Harga (setelah Discount)</th>
                     <th>Actions</th>
                 </tr>
                 @if (count($crud->entry->details) != 0)
@@ -24,8 +25,9 @@
                         <td>{{$detail->item->serial}}</td>
                         <td align="right">{{number_format($detail->qty*$detail->item->netto)}} KG</td>
                         <td>{{@$detail->price}}</td>
-                        <td>{{@$detail->discount}}</td>
-                        <td>{{@$detail->price_sum}}</td>
+                        <td>{{@$detail->discount}}%</td>
+                        <td>Rp. {{number_format(@$detail->price_sum)}}</td>
+                        <td>Rp. {{number_format(@$detail->price_after_discount)}}</td>
                         <td>
                             <div class="btn-group">
                                 <button id="edit" onclick="edit({{ $detail->id }})" type="button" class="btn btn-warning" style="height: 100%"><i class="las la-pencil-alt"></i></button>

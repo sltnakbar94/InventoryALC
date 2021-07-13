@@ -41,6 +41,16 @@
                                 </span>
                             @endif
                         </div>
+                        <div class="form-group">
+                            <label class="control-label" for="discount">Discount (%)</label>
+                            <input type="double" class="form-control{{ $errors->has('discount') ? ' is-invalid' : '' }}" name="discount" value="{{ old('discount') }}" required>
+                            @if ($errors->has('discount'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('discount') }}</strong>
+                            </span>
+                            @endif
+                            <label class="control-label" for="discount">gunakan tanda (.) untuk menandakan pecahan decimal</label>
+                        </div>
                         <div class="form-group text-right">
                             <label for=""></label>
                             <button type="submit" class="btn btn-primary" id="add-buton-out">SIMPAN</button>

@@ -25,7 +25,7 @@ class UpdateItems1Table extends Migration
      */
     public function down()
     {
-        Schema::table('delivery_notes' ,function(Blueprint $table){
+        Schema::table('items' ,function(Blueprint $table){
             $table->dropColumn([
                 'feed_code',
             ]);

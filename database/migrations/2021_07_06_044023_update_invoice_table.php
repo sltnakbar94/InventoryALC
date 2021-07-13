@@ -25,9 +25,9 @@ class UpdateInvoiceTable extends Migration
      */
     public function down()
     {
-        Schema::table('termin' ,function(Blueprint $table){
+        Schema::table('invoice' ,function(Blueprint $table){
             $table->dropColumn([
-                'feed_code',
+                'termin',
             ]);
         });
     }

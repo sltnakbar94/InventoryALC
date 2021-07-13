@@ -67,6 +67,15 @@ class InvoiceCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'name' => 'invoice_value',
+            'label'    => 'Customer',
+            'type'     => 'closure',
+            'function' => function($entry) {
+                return "Rp.".number_format($entry->invoice_value, 2);
+            }
+        ]);
+
+        $this->crud->addColumn([
             'label'    => 'Customer',
             'type'     => 'closure',
             'function' => function($entry) {
@@ -290,6 +299,8 @@ class InvoiceCrudController extends CrudController
     {
         $invoice = Invoice::findOrFail($request->id);
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $request->id)->get();
+        $invoice->invoice_value = $invoiceDetails->sum('price_after_discount');
+        $invoice->update();
         $pay_of = $request->pay_of;
         $due_date = $request->due_date;
         $pdf = PDF::loadview('warehouse.invoice.output',
