@@ -107,7 +107,7 @@ class InvoiceCrudController extends CrudController
         $year = date("Y");
 
         $count = DB::table('invoice')->count();
-        $number = $count+71;
+        $number = $count+1;
 
         $generate = $month.$day."-0".$number."/Invoice/".$year;
 
@@ -127,7 +127,7 @@ class InvoiceCrudController extends CrudController
         $this->crud->addField([
             'label' => "Invoice Number",
             'name'  => "invoice_no",
-            'type'  => 'hidden' ,
+            'type'  => 'text' ,
             'value' => $this->generateInvoiceNumber(),
             'attributes' => [
                 'readonly'    => 'readonly',
@@ -219,7 +219,7 @@ class InvoiceCrudController extends CrudController
         $this->crud->addField([
             'label' => "Invoice Number",
             'name'  => "invoice_no",
-            'type'  => 'hidden' ,
+            'type'  => 'text' ,
             'attributes' => [
                 'readonly'    => 'readonly',
             ]
