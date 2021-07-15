@@ -177,6 +177,18 @@ class InvoiceCrudController extends CrudController
                     'type'    => 'date',
                     'label'   => 'Tanggal tenggang',
                     'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [   // radio
+                    'name'        => 'pay_status', // the name of the db column
+                    'label'       => 'Status Pembayaran', // the input label
+                    'type'        => 'radio',
+                    'options'     => [
+                        // the key will be stored in the db, the value will be shown as label;
+                        0 => "Belum Lunas",
+                        1 => "Lunas"
+                    ],
+                    // optional
+                    //'inline'      => false, // show the radios all on the same line?
                 ]
             ],
             'new_item_label'  => 'Tambah Termin', // customize the text of the button
@@ -256,6 +268,18 @@ class InvoiceCrudController extends CrudController
                     'type'    => 'date',
                     'label'   => 'Tanggal tenggang',
                     'wrapper' => ['class' => 'form-group col-md-4'],
+                ],
+                [   // radio
+                    'name'        => 'pay_status', // the name of the db column
+                    'label'       => 'Status Pembayaran', // the input label
+                    'type'        => 'radio',
+                    'options'     => [
+                        // the key will be stored in the db, the value will be shown as label;
+                        0 => "Belum Lunas",
+                        1 => "Lunas"
+                    ],
+                    // optional
+                    //'inline'      => false, // show the radios all on the same line?
                 ]
             ],
             'new_item_label'  => 'Tambah Termin', // customize the text of the button
