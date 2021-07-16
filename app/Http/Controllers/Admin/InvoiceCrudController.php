@@ -133,12 +133,18 @@ class InvoiceCrudController extends CrudController
                 'readonly'    => 'readonly',
             ]
         ]);
+dd(DeliveryNote::where('status', '=', 4)->whereNotIn('dn_number',function($query) {
 
+    $query->select('dn_number')->from('invoice');
+
+ })->pluck('dn_number', 'dn_number'), collect(Invoice::get('dn_number')));
         $this->crud->addField([
             'label' => 'Pilih Surat Jalan',
             'type'  => 'select2_from_array',
             'name'  => 'dn_number',
-            'options' => DeliveryNote::where('status', '=', 4)->pluck('dn_number', 'dn_number'),
+            'options' => DeliveryNote::where('status', '=', 4)->whereNotIn('dn_number',function($query) {
+                $query->select('dn_number')->from('invoice');
+             })->pluck('dn_number', 'dn_number'),
             'allows_null' => false
         ]);
 
