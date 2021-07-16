@@ -296,7 +296,7 @@ class DeliveryNoteCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'module',
-            'value' => 'sales_order',
+            'value' => 'delivery_order',
             'type' => 'hidden',
         ]);
 
