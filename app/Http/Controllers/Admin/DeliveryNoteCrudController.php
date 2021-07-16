@@ -359,6 +359,8 @@ class DeliveryNoteCrudController extends CrudController
         $data->module = $request->module ;
         $data->user_id = $request->user_id ;
         $data->company_id = $request->company_id ;
+        $data->update();
+        return redirect(backpack_url('deliverynote/'.$data->id.'/show'));
     }
 
     public function generateDeliveryNote($id)
