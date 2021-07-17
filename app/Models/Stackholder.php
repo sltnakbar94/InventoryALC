@@ -57,6 +57,10 @@ class Stackholder extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getDetailStackholderAttribute($value)
+    {
+        return $this->company . " - " . $this->address;
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -164,13 +164,12 @@ class WarehouseOutCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'type' => 'select2',
             'name' => 'customer_id',
             'label' => 'Customer',
-            'type' => 'select2_from_array',
-            'options' => Stackholder::whereHas('stackholderRole', function ($query) {
-                return $query->where('name', '=', 'customer');
-            })->pluck('company', 'id'),
-            'allows_null' => true,
+            'entity' => 'customer',
+            'attribute' => 'detail_stackholder',
+            'model' => 'App\Models\Stackholder'
         ]);
 
         $this->crud->addField([
