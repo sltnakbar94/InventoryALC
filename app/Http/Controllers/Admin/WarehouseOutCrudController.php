@@ -250,7 +250,100 @@ class WarehouseOutCrudController extends CrudController
     {
         $this->crud->removeSaveActions(['save_and_back','save_and_edit','save_and_new']);
 
-        $this->setupCreateOperation();
+        // $this->setupCreateOperation();
+        $this->crud->addField([
+            'label' => 'Nomor DO',
+            'name'  => 'do_number',
+            'type'  => 'hidden',
+            'value' => $this->generateNomorPengiriman(),
+            'attributes' => [
+                'readonly'    => 'readonly',
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'perusahaan',
+            'label' => 'Nama Perusahaan',
+            'type' => 'select2_from_array',
+            'options' => Company::pluck('name', 'id'),
+            'allows_null' => false,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'do_date',
+            'label' => 'Tanggal DO',
+            'type' => 'date_picker',
+        ]);
+
+        $this->crud->addField([
+            'type' => 'select2',
+            'name' => 'customer_id',
+            'label' => 'Customer',
+            'entity' => 'customer',
+            'attribute' => 'detail_stackholder',
+            'model' => 'App\Models\Stackholder'
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Nomor Referensi',
+            'name'  => 'ref_no',
+            'type'  => 'text',
+            'attributes' => [
+                'placeholder' => 'Contoh : Nomor Bill',
+              ],
+        ]);
+
+        $this->crud->addField([   // Upload
+            'name'      => 'uploadref',
+            'label'     => 'Upload Referensi',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Ekspedisi',
+            'name'  => 'expedition',
+            'type'  => 'text',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'warehouse_id',
+            'label' => 'Pilih Gudang',
+            'type' => 'select2_from_array',
+            'options' => Warehouse::pluck('name', 'id'),
+            'allows_null' => false,
+        ]);
+
+        $this->crud->addField([
+            'name' => 'destination',
+            'label' => 'Tujuan Pengiriman',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Keterangan',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([   // date_range
+            'name'  => ['start_date', 'end_date'], // db columns for start_date & end_date
+            'label' => 'Estimasi Tanggal Mulai dan Akhir DO',
+            'type'  => 'date_range',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Keterangan',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'user_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->id()
+        ]);
     }
 
     protected function setupShowOperation()
