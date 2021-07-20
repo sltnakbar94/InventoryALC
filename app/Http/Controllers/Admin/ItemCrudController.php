@@ -140,6 +140,12 @@ class ItemCrudController extends CrudController
             'type' => 'text'
         ]);
 
+        $this->crud->addField([   // Checkbox
+            'name'  => 'sample',
+            'label' => 'Sample',
+            'type'  => 'checkbox'
+        ]);
+
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
