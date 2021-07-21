@@ -255,7 +255,6 @@ class WarehouseOutCrudController extends CrudController
             'label' => 'Nomor DO',
             'name'  => 'do_number',
             'type'  => 'hidden',
-            'value' => $this->generateNomorPengiriman(),
             'attributes' => [
                 'readonly'    => 'readonly',
             ]
