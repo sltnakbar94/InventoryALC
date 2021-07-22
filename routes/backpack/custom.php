@@ -157,4 +157,6 @@ Route::group([
     Route::crud('invoice', 'InvoiceCrudController');
 
     Route::crud('invoicedetail', 'InvoiceDetailCrudController');
+    Route::crud('reportinvoice', 'ReportInvoiceCrudController');
+    Route::crud('reportpiutang', 'ReportPiutangCrudController');
 }); // this should be the absolute last line of this file

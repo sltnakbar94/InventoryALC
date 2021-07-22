@@ -68,11 +68,19 @@ class InvoiceCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'invoice_value',
-            'label'    => 'Customer',
+            'label'    => 'Nilai Invoice',
             'type'     => 'closure',
             'function' => function($entry) {
                 return "Rp.".number_format($entry->invoice_value, 2);
             }
+        ]);
+
+        $this->crud->addColumn([
+            'name'  => 'lunas',
+            'label' => 'Status',
+            'type'  => 'boolean',
+            // optionally override the Yes/No texts
+            'options' => [0 => 'Belum Lunas', 1 => 'Lunas']
         ]);
 
         $this->crud->addColumn([
@@ -183,7 +191,7 @@ class InvoiceCrudController extends CrudController
                 [   // radio
                     'name'        => 'pay_status', // the name of the db column
                     'label'       => 'Status Pembayaran', // the input label
-                    'type'        => 'radio',
+                    'type'        => 'boolean',
                     'options'     => [
                         // the key will be stored in the db, the value will be shown as label;
                         0 => "Belum Lunas",
@@ -195,6 +203,19 @@ class InvoiceCrudController extends CrudController
             ],
             'new_item_label'  => 'Tambah Termin', // customize the text of the button
             'init_rows' => 0, // number of empty rows to be initialized, by default 1
+        ]);
+
+        $this->crud->addField([   // radio
+            'name'        => 'lunas', // the name of the db column
+            'label'       => 'Pembayaran Lunas', // the input label
+            'type'        => 'boolean',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label;
+                0 => "Belum Lunas",
+                1 => "Lunas"
+            ],
+            // optional
+            //'inline'      => false, // show the radios all on the same line?
         ]);
 
         $this->crud->addField([
@@ -274,7 +295,7 @@ class InvoiceCrudController extends CrudController
                 [   // radio
                     'name'        => 'pay_status', // the name of the db column
                     'label'       => 'Status Pembayaran', // the input label
-                    'type'        => 'radio',
+                    'type'        => 'boolean',
                     'options'     => [
                         // the key will be stored in the db, the value will be shown as label;
                         0 => "Belum Lunas",
@@ -286,6 +307,19 @@ class InvoiceCrudController extends CrudController
             ],
             'new_item_label'  => 'Tambah Termin', // customize the text of the button
             'init_rows' => 0, // number of empty rows to be initialized, by default 1
+        ]);
+
+        $this->crud->addField([   // radio
+            'name'        => 'lunas', // the name of the db column
+            'label'       => 'Pembayaran Lunas', // the input label
+            'type'        => 'boolean',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label;
+                0 => "Belum Lunas",
+                1 => "Lunas"
+            ],
+            // optional
+            //'inline'      => false, // show the radios all on the same line?
         ]);
 
         $this->crud->addField([
