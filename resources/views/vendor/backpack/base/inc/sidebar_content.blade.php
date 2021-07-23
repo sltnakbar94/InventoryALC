@@ -101,6 +101,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportsalesorder') }}'><i class="lar la-file-alt"></i> ReportSalesOrders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverybysales') }}'><i class="lar la-file-alt"></i> ReportDeliveryBySales</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpurchaseorder') }}'><i class="lar la-file-alt"></i> ReportPurchaseOrders</a></li> --}}
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportgoodreceive') }}'><i class='nav-icon la la-question'></i> Report Terima Barang</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='lar la-file-alt'></i> Delivery Orders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='lar la-file-alt'></i></i> Delivery Notes</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportinvoice') }}'><i class='nav-icon la la-question'></i> Report Invoice</a></li>

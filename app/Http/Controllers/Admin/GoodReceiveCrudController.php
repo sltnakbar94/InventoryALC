@@ -36,6 +36,7 @@ class GoodReceiveCrudController extends CrudController
         CRUD::setModel(\App\Models\GoodReceive::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/goodreceive');
         CRUD::setEntityNameStrings('Penerimaan Barang', 'Form Penerimaan Barang');
+        $this->crud->setShowView('warehouse.goodreceive.show');
     }
 
     /**

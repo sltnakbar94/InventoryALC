@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class GoodReceive extends Model
+class ReportGoodReceive extends Model
 {
     use CrudTrait;
 
