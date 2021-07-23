@@ -12,6 +12,7 @@
                 <div class="alert alert-danger" id="form-modal-alert" style="display:none;">Data telah tersimpan</div>
                     <form action="{{ backpack_url('Api/DeliveryOrderDetail_update/'.$crud->entry->id) }}" method="post" id="form-edit-so-detail">
                         @csrf
+                        <input type="hidden" name="item_id" value="{{ old('qty') }}">
                         <input type="hidden" name="warehouse_out_id" value="{{ $crud->entry->id }}">
                         <div class="form-group">
                             <label class="control-label" for="item_id">Nama Barang</label><br>

@@ -63,25 +63,10 @@ class DeliveryOrderController extends Controller
     {
         $sub_total = $this->deliveryOrderServices->SumItemDiscountToSubTotal($request);
         $DO_Detail = $this->deliveryOrderServices->ItemOnDODetail(array('warehouse_out_id' => $request->warehouse_out_id, 'item_id' => $request->item_id));
-        try {
-            DB::beginTransaction();
-
-            // Update Delivery Order Detail by Delivery Order Detail ID
-            BagItemWarehouseOut::find($DO_Detail->id)->update([
-                'qty'   => $request->qty,
-            ]);
-
-            // New Grand Total on Delivery Order
-            // $DO_GT_update = $this->deliveryOrderServices->SumItemPriceByDeliveryOrderID($request->warehouse_out_id);
-            // WarehouseOut::find($request->warehouse_out_id)->update([
-            //     'grand_total' => $DO_GT_update
-            // ]);
-
-            DB::commit();
-            return $this->returnSuccess($DO_Detail, 'Delivery Order dengan ID '.$DO_Detail->warehouse_out_id.' Berhasil di Update');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return $this->returnError($th->getMessage().'-'.$th->getLine());
-        }
+        $update = BagItemWarehouseOut::find($DO_Detail->id);
+        $update->qty = $request->qty;
+        $update->update();
+        \Alert::add('success', 'Berhasil ubah data')->flash();
+        return redirect()->back();
     }
 }

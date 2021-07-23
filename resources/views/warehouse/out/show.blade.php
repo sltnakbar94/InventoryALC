@@ -122,6 +122,7 @@
                     var dsc = 0;
                     $('#editModalDeliveryOrderDetail').modal('show');
                     $('#price').val(response.data.price)
+                    $('input[name=item_id]').val(response.data.item_id)
                     $('input[name=qty]').val(response.data.qty)
                     response.data.discount === null ? dsc = 0 : dsc = response.data.discount
                     $('input[name=discount]').val(dsc)
