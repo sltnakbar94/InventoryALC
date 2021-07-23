@@ -17,7 +17,7 @@
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
         <ul class="nav-dropdown-items">
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportgoodreceive') }}'><i class='nav-icon la la-question'></i> Report Terima Barang</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportgoodreceive') }}'><i class='lar la-file-alt'></i> Terima Barang</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='lar la-file-alt'></i> Surat Jalan</a></li>
         </ul>
     </li>
@@ -42,12 +42,12 @@
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
         <ul class="nav-dropdown-items">
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportgoodreceive') }}'><i class='nav-icon la la-question'></i> Report Terima Barang</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='lar la-file-alt'></i> Report Delivery Orders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='lar la-file-alt'></i></i> Report Delivery Notes</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportinvoice') }}'><i class='nav-icon la la-question'></i> Report Invoice</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpiutang') }}'><i class='nav-icon la la-question'></i> Report Piutang</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportitem') }}'><i class='nav-icon la la-question'></i> Report Item</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportgoodreceive') }}'><i class='lar la-file-alt'></i> Terima Barang</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='lar la-file-alt'></i> Delivery Orders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='lar la-file-alt'></i></i> Delivery Notes</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportinvoice') }}'><i class='lar la-file-alt'></i> Invoice</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpiutang') }}'><i class='lar la-file-alt'></i> Piutang</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportitem') }}'><i class='lar la-file-alt'></i> Item</a></li>
         </ul>
     </li>
 @endif
@@ -59,12 +59,12 @@
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
         <ul class="nav-dropdown-items">
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportgoodreceive') }}'><i class='nav-icon la la-question'></i> Report Terima Barang</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='lar la-file-alt'></i> Report Delivery Orders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='lar la-file-alt'></i></i> Report Delivery Notes</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportinvoice') }}'><i class='nav-icon la la-question'></i> Report Invoice</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpiutang') }}'><i class='nav-icon la la-question'></i> Report Piutang</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportitem') }}'><i class='nav-icon la la-question'></i> Report Item</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportgoodreceive') }}'><i class='lar la-file-alt'></i> Terima Barang</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliveryorder') }}'><i class='lar la-file-alt'></i> Delivery Orders</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='lar la-file-alt'></i></i> Delivery Notes</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportinvoice') }}'><i class='lar la-file-alt'></i> Invoice</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpiutang') }}'><i class='lar la-file-alt'></i> Piutang</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportitem') }}'><i class='lar la-file-alt'></i> Item</a></li>
         </ul>
     </li>
     <li class="nav-item nav-dropdown">
