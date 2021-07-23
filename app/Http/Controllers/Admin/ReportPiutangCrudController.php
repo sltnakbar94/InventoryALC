@@ -83,6 +83,22 @@ class ReportPiutangCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'label'    => 'Terhutang',
+            'type'     => 'closure',
+            'function' => function($entry) {
+                $termin = json_decode($entry->termin);
+                $dibayarkan = $entry->invoice_value;
+                foreach ($termin as $key => $value) {
+                    if ($value->pay_status == '1') {
+                        $nilai_termin = (int)$value->pay_of;
+                        $dibayarkan += $nilai_termin;
+                    }
+                }
+                return "Rp.".number_format($dibayarkan, 2);
+            }
+        ]);
+
+        $this->crud->addColumn([
             'label'    => 'Customer',
             'type'     => 'closure',
             'function' => function($entry) {
