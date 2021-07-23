@@ -91,7 +91,7 @@ class ReportPiutangCrudController extends CrudController
                 foreach ($termin as $key => $value) {
                     if ($value->pay_status == '1') {
                         $nilai_termin = (int)$value->pay_of;
-                        $dibayarkan += $nilai_termin;
+                        $dibayarkan -= $nilai_termin;
                     }
                 }
                 return "Rp.".number_format($dibayarkan, 2);
