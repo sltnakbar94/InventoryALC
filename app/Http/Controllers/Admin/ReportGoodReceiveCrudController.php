@@ -28,7 +28,7 @@ class ReportGoodReceiveCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\ReportGoodReceive::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/reportgoodreceive');
-        CRUD::setEntityNameStrings('reportgoodreceive', 'report_good_receives');
+        CRUD::setEntityNameStrings('Report Terima Barang', 'Report Terima Barang');
         $this->crud->setShowView('warehouse.goodreceive.show');
     }
 
@@ -53,7 +53,7 @@ class ReportGoodReceiveCrudController extends CrudController
         $this->crud->addColumn([
             'label' => 'Tanggal Surat Jalan',
             'name'  => 'dn_date',
-            'type'  => 'text',
+            'type'  => 'date',
         ]);
 
         $this->crud->addColumn([
