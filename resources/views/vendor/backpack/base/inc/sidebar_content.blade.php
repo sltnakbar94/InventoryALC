@@ -105,6 +105,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportdeliverynote') }}'><i class='lar la-file-alt'></i></i> Delivery Notes</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportinvoice') }}'><i class='nav-icon la la-question'></i> Report Invoice</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportpiutang') }}'><i class='nav-icon la la-question'></i> Report Piutang</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('reportitem') }}'><i class='nav-icon la la-question'></i> Report Item</a></li>
         </ul>
     </li>
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('invoice') }}'><i class="lar la-file-alt"></i>Invoice</a></li>
