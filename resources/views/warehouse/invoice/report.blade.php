@@ -61,7 +61,7 @@
             <div class="col-md-7">
                 <div class="card no-padding no-border">
                     <div class="card-body">
-                        @include('warehouse.invoice.list_content')
+                        @include('warehouse.invoice.list_report')
                     </div>
                 </div>
             </div>
