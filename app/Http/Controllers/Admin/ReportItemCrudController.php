@@ -28,7 +28,7 @@ class ReportItemCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\ReportItem::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/reportitem');
-        CRUD::setEntityNameStrings('reportitem', 'report_items');
+        CRUD::setEntityNameStrings('Report Item', 'Report Item');
     }
 
     /**
