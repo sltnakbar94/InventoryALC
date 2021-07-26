@@ -13,23 +13,19 @@
                 $json = json_decode($crud->entry->goods);
             @endphp
             @if (count($json) != 0)
-                @foreach ($json as $key=>$detail)
-                    @php
-                        $item = \App\Models\Item::where('serial', '=', $detail->material_code)->first();
-                    @endphp
-                    <tbody>
+                <tbody>
+                    @foreach ($json as $key=>$detail)
+                        @php
+                            $item = \App\Models\Item::where('serial', '=', $detail->material_code)->first();
+                        @endphp
                         <tr>
                             <td>{{$key+1}}</td>
                             <td>{{@$item->name}}</td>
                             <td>{{@$item->serial}}</td>
                             <td align="right">{{number_format($detail->qty)}}</td>
                         </tr>
-                    </tbody>
-                @endforeach
-            @else
-                <tr style="border-bottom: 1px solid black;">
-                    <td colspan="9" align="center">Belum ada data</td>
-                </tr>
+                    @endforeach
+                </tbody>
             @endif
         </table>
     </div>

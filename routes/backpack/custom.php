@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\Api\SalesDeliveryNoteController;
 use App\Http\Controllers\Admin\Api\DeliverySalesOrderController;
 use App\Http\Controllers\Admin\Api\InvoiceController;
 use App\Http\Controllers\Admin\Api\SubmissionFormController;
+use App\Http\Controllers\Admin\ReturnCustomerDetailCrudController;
 use App\Models\SubmissionForm;
 
 use Illuminate\Support\Facades\Route;
@@ -161,4 +162,8 @@ Route::group([
     Route::crud('reportpiutang', 'ReportPiutangCrudController');
     Route::crud('reportitem', 'ReportItemCrudController');
     Route::crud('reportgoodreceive', 'ReportGoodReceiveCrudController');
+    Route::crud('returncustomer', 'ReturnCustomerCrudController');
+    Route::crud('returncustomerdetail', 'ReturnCustomerDetailCrudController');
+    Route::post('Api/ReturnCustomerDetail', [ReturnCustomerDetailCrudController::class, 'getReturnCustomerDetailById']);
+    Route::post('returncustomerdetailupdate', [ReturnCustomerDetailCrudController::class, 'update']);
 }); // this should be the absolute last line of this file

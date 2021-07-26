@@ -6,7 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BagItemWarehouseOut extends Model
+class ReturnCustomerDetail extends Model
 {
     use CrudTrait, SoftDeletes;
 
@@ -16,7 +16,7 @@ class BagItemWarehouseOut extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'bag_item_warehouse_outs';
+    protected $table = 'return_customer_details';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -35,9 +35,19 @@ class BagItemWarehouseOut extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function Item()
+    public function item()
     {
-        return $this->hasOne(Item::class, 'id', 'item_id');
+        return $this->belongsTo(Item::class);
+    }
+
+    public function itemChange()
+    {
+        return $this->belongsTo(Item::class, 'item_change_id', 'id');
+    }
+
+    public function returnCustomer()
+    {
+        return $this->belongsTo(ReturnCustomer::class);
     }
 
     /*
@@ -57,5 +67,4 @@ class BagItemWarehouseOut extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-
 }
