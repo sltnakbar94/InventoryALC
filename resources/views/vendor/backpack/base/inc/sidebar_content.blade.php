@@ -35,7 +35,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class="las la-list-ol"></i> Companies</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('stackholder') }}'><i class="las la-list-ol"></i> Stackholders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('gudang') }}'><i class='las la-list-ol'></i> Warehouses</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='nav-icon la la-question'></i> Retur Customer</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='las la-list-ol'></i> Retur Customer</a></li>
         </ul>
     </li>
 @endif
@@ -78,7 +78,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class="las la-list-ol"></i> Companies</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('stackholder') }}'><i class="las la-list-ol"></i> Stackholders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('gudang') }}'><i class='las la-list-ol'></i> Warehouses</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='nav-icon la la-question'></i> Retur Customer</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='las la-list-ol'></i> Retur Customer</a></li>
         </ul>
     </li>
     <li class="nav-item nav-dropdown">
