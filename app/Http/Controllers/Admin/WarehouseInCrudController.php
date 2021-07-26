@@ -488,7 +488,7 @@ class WarehouseInCrudController extends CrudController
             'form_number' => $request->nomor
         ];
         
-        \Mail::to('purchasing@anomali.co.id')->send(new \App\Mail\MyTestMail($emailData));
+        \Mail::to('purchasing@anomali.co.id')->send(new \App\Mail\NewPurchaseOrder($emailData));
 
         $cari = WarehouseIn::where('po_number' , '=' , $nomor)->first();
         return redirect(backpack_url('warehousein/'.$cari->id.'/show'));
