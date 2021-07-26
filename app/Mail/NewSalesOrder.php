@@ -29,6 +29,6 @@ class NewSalesOrder extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->subject('New Sales Order')->view('mail.NewSalesOrder');
     }
 }

@@ -467,10 +467,9 @@ class SalesOrderCrudController extends CrudController
         $data->save();
         $emailData = [
             'title' => 'New Sales Order' ,
-            'form_number' => $request->nomor
+            'form_number' => $request->nomor ,
         ];
 
-        \Mail::to('purchasing@anomali.co.id')->send(new \App\Mail\MyTestMail($emailData));
 
         $cari = SalesOrder::where('so_number' , '=' , $nomor)->first();
 
@@ -500,7 +499,6 @@ class SalesOrderCrudController extends CrudController
         $data->user_id = $request->user_id;
         $data->company_id = $request->company_id;
         foreach ($request->purchaseRequisition as $pr) {
-            dd($pr);
             $data->purchaseRequisition->sync();
         }
         if($request->hasFile('uploadref')) {

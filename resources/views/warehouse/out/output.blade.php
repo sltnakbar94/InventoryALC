@@ -28,7 +28,7 @@
                     <tr>
                         <td>
                             <font color="#000000">
-								<strong> PT. ANOMALI LUMBUNG ARTHA </strong><br>
+								<strong> PT. Inovasi Teknologi Informasi</strong><br>
                                 Jln. Siliwangi km 3 kp Ciroyom <br>
                                 Rt 31 Rw 08, Desa Pada Asih,
 								Kec. Cisaat, Kab. Sukabumi, Jawa Barat <br>
@@ -63,14 +63,14 @@
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
     <tr>
-        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">No. PO    :<br></font></td>
+        <td colspan="2" width="0" height="0" align="left" valign=bottom><font color="#000000">No. DO    :  {{$data->do_number}} </td>
         <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">Alamat        : {{$data->destination}} <br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
     </tr>
     <tr>
-        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000">No. DO    :  {{$data->do_number}} <br></font></td>
+        <td colspan="2" width="350" height="5" align="left" valign=bottom><font color="#000000"><font color="#000000"><br></font></td>
         <td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" valign=bottom><font color="#000000"><br></font></td>
 		<td align="center" valign=bottom><font color="#000000"><br></font></td>
@@ -111,7 +111,6 @@
 <p>Dengan ini menyatakan bahwa barang diterima dalam keadaan baik,</p>
 <table cellspacing="0" border="0">
     <tr>
-
         <td height="75" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
@@ -122,11 +121,11 @@
 		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
 	</tr>
     <tr>
-        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Penerima Barang</font></td>
+        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Bag. Pengeluaran Barang</font></td>
 		<td width="18" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Tanda Tangan Pengirim</font></td>
+        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Pengirim</font></td>
 		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Bag. Pengeluaran Barang </font></td>
+        <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Penerima</font></td>
 		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
         <td width="110" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Bag. Penjualan</font></td>
 		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
