@@ -44,7 +44,7 @@
 
 <hr>
 <hr>
-<h3 style="text-align:center">Delivery Note</h3>
+<h3 style="text-align:center">Surat Jalan</h3>
 
 <table cellspacing="0" border="0">
     <tr>
