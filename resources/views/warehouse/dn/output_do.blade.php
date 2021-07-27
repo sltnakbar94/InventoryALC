@@ -129,23 +129,29 @@
 <p>Dengan ini menyatakan bahwa barang diterima dalam keadaan baik,</p>
 <table cellspacing="0" border="0">
     <tr>
+        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=top><font color="#000000">Dikeluarkan Oleh</font></td>
+		<td width="18" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Dikirim Oleh</font></td>
+		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Diterima Oleh</font></td>
+        <td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+    </tr>
+    <tr>
         <td height="75" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000"><br></font></td>
 		<td align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-
 	</tr>
     <tr>
-        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Staff Gudang </font></td>
+        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=top></td>
+		<td width="18" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom></td>
 		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Kepala Gudang</font></td>
-		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom><font color="#000000">Penerima Barang</font></td>
-		<td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
-
-	</tr>
+        <td width="160" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=bottom></td>
+        <td width="17" align="left" style="border-left: 1px solid #000000" valign=bottom><font color="#000000"><br></font></td>
+    </tr>
 </table>
 <!-- ************************************************************************** -->
 </body>
