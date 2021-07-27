@@ -126,6 +126,18 @@ class ReportItemCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'label'    => 'Customer',
+            'type'     => 'closure',
+            'function' => function($entry) {
+                if (!empty($entry->invoice->dn->WarehouseOut->pic_customer)) {
+                    return $entry->invoice->dn->WarehouseOut->pic_customer;
+                } else {
+                    return "-";
+                }
+            }
+        ]);
+
+        $this->crud->addColumn([
             'label'    => 'Sales',
             'type'     => 'closure',
             'function' => function($entry) {
