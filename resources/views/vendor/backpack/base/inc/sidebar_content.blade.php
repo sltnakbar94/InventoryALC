@@ -14,6 +14,7 @@
 @if(backpack_user()->hasRole('operator-gudang'))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('goodreceive') }}'><i class='las la-industry'></i> Terima Barang</a></li>
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('deliverynote') }}'><i class="lar la-file"></i> Surat Jalan</a></li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returnsupplier') }}'><i class='las la-list-ol'></i> Return Supplier</a></li>
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-folder"></i> Report</a>
         <ul class="nav-dropdown-items">
@@ -36,6 +37,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('stackholder') }}'><i class="las la-list-ol"></i> Stackholders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('gudang') }}'><i class='las la-list-ol'></i> Warehouses</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='las la-list-ol'></i> Retur Customer</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returnsupplier') }}'><i class='las la-list-ol'></i> Return Supplier</a></li>
         </ul>
     </li>
 @endif
@@ -79,6 +81,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('stackholder') }}'><i class="las la-list-ol"></i> Stackholders</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('gudang') }}'><i class='las la-list-ol'></i> Warehouses</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='las la-list-ol'></i> Retur Customer</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returnsupplier') }}'><i class='las la-list-ol'></i> Return Supplier</a></li>
         </ul>
     </li>
     <li class="nav-item nav-dropdown">
@@ -90,5 +93,3 @@
         </ul>
     </li>
 @endif
-
-{{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returnsupplier') }}'><i class='nav-icon la la-question'></i> ReturnSuppliers</a></li> --}}

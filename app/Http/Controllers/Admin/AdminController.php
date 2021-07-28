@@ -64,7 +64,6 @@ class AdminController extends Controller
     public function purchaseOrder()
     {
         $count = WarehouseIn::get();
-        // dd($count);
 
         $this->data['purchase_order'] = [
             'Item' => [

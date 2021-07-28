@@ -26,7 +26,12 @@ class ReturnSupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'return_date' => 'required',
+            'item_id' => 'required',
+            'warehouse_id' => 'required',
+            'qty' => 'required',
+            'description' => 'required',
+            'picture' => 'required|mimes:jpg,jpeg,tiff,png,psd,gif',
         ];
     }
 
