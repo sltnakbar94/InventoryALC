@@ -4,14 +4,11 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Stock;
-use App\Models\Unit;
-use App\Models\Category;
-use App\Models\Brand;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Item extends Model
+class ReturnSupplier extends Model
 {
-    use CrudTrait;
+    use CrudTrait, SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -19,7 +16,7 @@ class Item extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'items';
+    protected $table = 'return_suppliers';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -38,25 +35,14 @@ class Item extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
-    public function Brands()
+    public function item()
     {
-        return $this->hasOne(Brand::class, 'id', 'brand');
+        return $this->belongsTo(Item::class);
     }
 
-    public function uoms()
+    public function warehouse()
     {
-        return $this->hasOne(Unit::class, 'id', 'unit');
-    }
-
-    public function Categories()
-    {
-        return $this->hasOne(Category::class, 'id', 'category');
-    }
-
-    public function stock()
-    {
-        return $this->hasMany(Warehouse::class , 'id' , 'item_id');
+        return $this->belongsTo(Warehouse::class);
     }
 
     /*
@@ -70,14 +56,20 @@ class Item extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getDetailItemAttribute($value)
-    {
-        return $this->name . " - SKU:" . $this->serial . " - Exp:" . date('d-m-Y', strtotime($this->expirate_date));
-    }
 
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function setPictureAttribute($value)
+    {
+        $attribute_name = "picture";
+        $disk = "public";
+        $destination_path = "return/supplier";
+
+        $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
+
+    // return $this->attributes[{$attribute_name}]; // uncomment if this is a translatable field
+    }
 }
