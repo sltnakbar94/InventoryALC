@@ -47,6 +47,10 @@ class GoodReceiveCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        if (backpack_user()->hasAnyRole(['sales', 'operator-gudang'])) {
+            $this->crud->addClause('where', 'warehouse_id', '=', backpack_user()->warehouse_id);
+        }
+
         // $this->crud->removeButton('update');
         $this->crud->removeButton('delete');
 
@@ -199,13 +203,21 @@ class GoodReceiveCrudController extends CrudController
             'type'  => 'text',
         ]);
 
-        $this->crud->addField([
-            'name' => 'warehouse_id',
-            'label' => 'Pilih gudang penerima',
-            'type' => 'select2_from_array',
-            'options' => Warehouse::where('active', '=', 1)->pluck('name', 'id'),
-            'allows_null' => false,
-        ]);
+        if (backpack_user()->hasAnyRole(['sales', 'operator-gudang'])) {
+            $this->crud->addField([
+                'name' => 'warehouse_id',
+                'type' => 'hidden',
+                'value' => backpack_user()->warehouse_id
+            ]);
+        } else {
+            $this->crud->addField([
+                'name' => 'warehouse_id',
+                'label' => 'Pilih gudang penerima',
+                'type' => 'select2_from_array',
+                'options' => Warehouse::where('active', '=', 1)->pluck('name', 'id'),
+                'allows_null' => false,
+            ]);
+        }
 
         $this->crud->addField([
             'label' => "Nama Penerima",

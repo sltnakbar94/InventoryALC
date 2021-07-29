@@ -170,7 +170,7 @@ class DeliveryNoteCrudController extends CrudController
             'name' => 'reference',
             'label' => 'Nomor DO',
             'type' => 'select2_from_array',
-            'options' => WarehouseOut::where('status', '=', Flag::PROCESS)->pluck('do_number', 'id'),
+            'options' => WarehouseOut::where('warehouse_id', '=', backpack_user()->warehouse_id)->where('status', '=', Flag::PROCESS)->pluck('do_number', 'id'),
             'allows_null' => true,
         ]);
 
