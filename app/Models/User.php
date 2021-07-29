@@ -34,6 +34,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'warehouse_id',
     ];
 
     /**
@@ -79,6 +80,11 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
     }
 
 }

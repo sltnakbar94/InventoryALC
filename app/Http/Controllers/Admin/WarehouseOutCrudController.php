@@ -196,14 +196,6 @@ class WarehouseOutCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'warehouse_id',
-            'label' => 'Pilih Gudang',
-            'type' => 'select2_from_array',
-            'options' => Warehouse::pluck('name', 'id'),
-            'allows_null' => false,
-        ]);
-
-        $this->crud->addField([
             'name' => 'destination',
             'label' => 'Tujuan Pengiriman',
             'type' => 'textarea',
@@ -225,6 +217,12 @@ class WarehouseOutCrudController extends CrudController
             'name' => 'description',
             'label' => 'Keterangan',
             'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'warehouse_id',
+            'type' => 'hidden',
+            'value' => backpack_user()->warehouse_id
         ]);
 
         $this->crud->addField([
@@ -307,14 +305,6 @@ class WarehouseOutCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'warehouse_id',
-            'label' => 'Pilih Gudang',
-            'type' => 'select2_from_array',
-            'options' => Warehouse::pluck('name', 'id'),
-            'allows_null' => false,
-        ]);
-
-        $this->crud->addField([
             'name' => 'destination',
             'label' => 'Tujuan Pengiriman',
             'type' => 'textarea',
@@ -336,6 +326,12 @@ class WarehouseOutCrudController extends CrudController
             'name' => 'description',
             'label' => 'Keterangan',
             'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'warehouse_id',
+            'type' => 'hidden',
+            'value' => backpack_user()->warehouse_id
         ]);
 
         $this->crud->addField([

@@ -43,6 +43,11 @@ class WarehouseOut extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
+
     public function warehouseOutDetail()
     {
         return $this->hasMany(WOutDetail::class, 'warehouse_out_id', 'id')->orderby('created_at', 'desc');

@@ -47,7 +47,15 @@ class AdminController extends Controller
 
         $this->counter();
 
-        return view('dashboard', $this->data);
+        if (backpack_user()->hasAnyRole(['sales', 'operator-gudang'])) {
+            if (empty(backpack_user()->warehouse->active()->first())) {
+                return view('request-admin');
+            } else {
+                return view('dashboard', $this->data);
+            }
+        } else {
+            return view('dashboard', $this->data);
+        }
     }
 
     /**
@@ -63,36 +71,89 @@ class AdminController extends Controller
 
     public function purchaseOrder()
     {
-        $count = WarehouseIn::get();
+        if (backpack_user()->hasRole('operator-gudang')) {
+            $count = WarehouseIn::where('warehouse_id', '=', backpack_user()->warehouse_id)->get();
 
-        $this->data['purchase_order'] = [
-            'Item' => [
-                'count' => $count,
-            ],
-        ];
+            $this->data['purchase_order'] = [
+                'Item' => [
+                    'count' => $count,
+                ],
+            ];
+        } elseif (backpack_user()->hasRole('sales')) {
+            $count = WarehouseIn::where('user_id', '=', backpack_user()->id)->get();
+
+            $this->data['purchase_order'] = [
+                'Item' => [
+                    'count' => $count,
+                ],
+            ];
+        } else {
+            $count = WarehouseIn::get();
+
+            $this->data['purchase_order'] = [
+                'Item' => [
+                    'count' => $count,
+                ],
+            ];
+        }
+
     }
 
     public function deliveryOrder()
     {
-        $items = BagItemWarehouseOut::get();
+        if (backpack_user()->hasRole('operator-gudang')) {
+            $items = WarehouseOut::where('warehouse_id', '=', backpack_user()->warehouse_id)->get();
 
-        $this->data['delivery_order'] = [
-            'Item' => [
-                'count' => $items,
-            ],
-        ];
+            $this->data['delivery_order'] = [
+                'Item' => [
+                    'count' => $items,
+                ],
+            ];
+        } elseif (backpack_user()->hasRole('sales')) {
+            $items = WarehouseOut::where('user_id', '=', backpack_user()->id)->get();
+
+            $this->data['delivery_order'] = [
+                'Item' => [
+                    'count' => $items,
+                ],
+            ];
+        } else {
+            $items = WarehouseOut::get();
+
+            $this->data['delivery_order'] = [
+                'Item' => [
+                    'count' => $items,
+                ],
+            ];
+        }
     }
 
     public function deliveryNote()
     {
-        $this->data['purchase_order'] = WarehouseIn::get();
+        if (backpack_user()->hasRole('operator-gudang')) {
+            $this->data['delivery_note'] = DeliveryNote::whereHas('WarehouseOut', function($query){$query->where('warehouse_id', '=', backpack_user()->warehouse_id);})->get();
+        } elseif (backpack_user()->hasRole('sales')) {
+            $this->data['delivery_note'] = DeliveryNote::whereHas('WarehouseOut', function($query){$query->where('user_id', '=', backpack_user()->id);})->get();
+        } else {
+            $this->data['delivery_note'] = DeliveryNote::get();
+        }
     }
 
     public function counter()
     {
-        $purchase_order = WarehouseIn::count('id');
-        $delivery_order = WarehouseOut::count('id');
-        $delivery_note = DeliveryNote::where('status', '=', Flag::COMPLETE)->count('id');
+        if (backpack_user()->hasRole('operator-gudang')) {
+            $purchase_order = WarehouseIn::where('warehouse_id', '=', backpack_user()->warehouse_id)->count('id');
+            $delivery_order = WarehouseOut::where('warehouse_id', '=', backpack_user()->warehouse_id)->count('id');
+            $delivery_note = DeliveryNote::whereHas('WarehouseOut', function($query){$query->where('warehouse_id', '=', backpack_user()->warehouse_id);})->where('status', '=', Flag::COMPLETE)->count('id');
+        } elseif (backpack_user()->hasRole('sales')) {
+            $purchase_order = WarehouseIn::where('user_id', '=', backpack_user()->id)->count('id');
+            $delivery_order = WarehouseOut::where('user_id', '=', backpack_user()->id)->count('id');
+            $delivery_note = DeliveryNote::whereHas('WarehouseOut', function($query){$query->where('user_id', '=', backpack_user()->id);})->where('status', '=', Flag::COMPLETE)->count('id');
+        } else {
+            $purchase_order = WarehouseIn::count('id');
+            $delivery_order = WarehouseOut::count('id');
+            $delivery_note = DeliveryNote::where('status', '=', Flag::COMPLETE)->count('id');
+        }
 
         // redis check here
         $this->data['counter'] = [
@@ -110,7 +171,11 @@ class AdminController extends Controller
 
     public function tableItem()
     {
-        $items = Stock::all();
+        if (backpack_user()->hasAnyRole(['sales', 'operator-gudang'])) {
+            $items = Stock::where('warehouse_id', '=', backpack_user()->warehouse_id)->where('stock_on_hand', '>', 0)->get();
+        } else {
+            $items = Stock::where('stock_on_hand', '>', 0)->get();
+        }
 
         $this->data['items'] = $items;
     }

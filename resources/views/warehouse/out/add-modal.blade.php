@@ -18,7 +18,7 @@
                             <label class="control-label" for="item_id">Nama Barang</label><br>
                             <select name="item_id" id="mySelect2" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }} select2" style="width: 100%" required>
                             <option value="">--PILIH BARANG--</option>
-                                @foreach(\App\Models\Stock::join('items', 'stocks.item_id', '=', 'items.id')->where('warehouse_id', '=', $crud->entry->warehouse_id)->orderBy('items.expirate_date', 'asc')->get() as $text)
+                                @foreach(\App\Models\Stock::join('items', 'stocks.item_id', '=', 'items.id')->where('stock_on_hand', '>', 0)->where('warehouse_id', '=', $crud->entry->warehouse_id)->orderBy('items.expirate_date', 'asc')->get() as $text)
                                         <option value="{{ @$text->item_id }}">{{ @$text->item->name }} - Stock on Hand : {{ @$text->stock_on_hand }}, Stock on Location {{ @$text->stock_on_location }} -- Expirate Date : {{ date('d-m-Y', strtotime(@$text->item->expirate_date)) }}</option>
                                 @endforeach
                             </select>
