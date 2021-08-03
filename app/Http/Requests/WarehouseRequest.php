@@ -28,6 +28,7 @@ class WarehouseRequest extends FormRequest
         return [
             'name' => 'required',
             'address' => 'required',
+            'telephone' => 'required',
         ];
     }
 
