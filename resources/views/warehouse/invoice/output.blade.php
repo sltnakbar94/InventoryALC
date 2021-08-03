@@ -29,6 +29,7 @@
     }
 ?>
 
+
 <table width="100%" cellspacing="0" border="0">
 	<tr>
 		<td colspan=5 rowspan=3 height="42" align="center" valign=middle><font face="Trebuchet MS" size=1 color="#000000"><img src="{{ public_path('logo/ALA.jpeg')}}" style="width: 25%"></font></td>
@@ -37,11 +38,11 @@
 		</tr>
 	<tr>
 		<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
-		<td colspan=5 align="left" valign=top><font face="Trebuchet MS" size=1 color="#000000">Jln. Siliwangi km 3 kp Ciroyom, Rt 31 Rw 08 Desa Pada Asih, Kec. Cisaat, Kab. Sukabumi, Jawa Barat </font></td>
+		<td colspan=5 align="left" valign=top><font face="Trebuchet MS" size=1 color="#000000"> {{ $invoice->dn->WarehouseOut->warehouse->address }}  </font></td>
 		</tr>
 	<tr>
 		<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
-		<td colspan=5 align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000">Phone / Fax: +62 266 &ndash; 2485989</font></td>
+		<td colspan=5 align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"> Phone / Fax: {{ $invoice->dn->WarehouseOut->warehouse->telephone }} </font></td>
 		</tr>
 	<tr>
 		<td colspan=11 align="center" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><hr>
