@@ -26,7 +26,10 @@ class GoodTransferRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'date_transfer' => 'required',
+            'warehouse_id' => 'required',
+            'stock_id' => 'required',
+            'qty' => 'required',
         ];
     }
 

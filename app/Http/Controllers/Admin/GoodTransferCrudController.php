@@ -32,7 +32,7 @@ class GoodTransferCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\GoodTransfer::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/goodtransfer');
-        CRUD::setEntityNameStrings('goodtransfer', 'good_transfers');
+        CRUD::setEntityNameStrings('Transfer Barang', 'Transfer Barang');
     }
 
     /**
