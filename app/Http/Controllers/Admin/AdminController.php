@@ -46,9 +46,8 @@ class AdminController extends Controller
         $this->stackholder();
 
         $this->counter();
-
         if (backpack_user()->hasAnyRole(['sales', 'operator-gudang'])) {
-            if (empty(backpack_user()->warehouse->active()->first())) {
+            if (empty(backpack_user()->Warehouse)) {
                 return view('request-admin');
             } else {
                 return view('dashboard', $this->data);
