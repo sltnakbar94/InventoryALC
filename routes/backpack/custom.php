@@ -167,4 +167,5 @@ Route::group([
     Route::post('Api/ReturnCustomerDetail', [ReturnCustomerDetailCrudController::class, 'getReturnCustomerDetailById']);
     Route::post('returncustomerdetailupdate', [ReturnCustomerDetailCrudController::class, 'update']);
     Route::crud('returnsupplier', 'ReturnSupplierCrudController');
+    Route::crud('goodtransfer', 'GoodTransferCrudController');
 }); // this should be the absolute last line of this file

@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Item;
-use App\Models\Warehouse;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Stock extends Model
+class GoodTransfer extends Model
 {
-    use CrudTrait;
+    use CrudTrait, SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -17,7 +16,7 @@ class Stock extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'stocks';
+    protected $table = 'good_transfers';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -36,17 +35,25 @@ class Stock extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
-    public function item()
+    public function warehouse()
     {
-        return $this->belongsTo(Item::class, 'item_id', 'id');
+        return $this->belongsTo(Warehouse::class);
     }
 
-    public function gudang()
+    public function changeWarehouse()
     {
-        return $this->belongsTo(Warehouse::class, 'warehouse_id', 'id');
+        return $this->belongsTo(Warehouse::class, 'change_warehouse_id', 'id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function stock()
+    {
+        return $this->belongsTo(Stock::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -58,10 +65,6 @@ class Stock extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getItemNameAttribute($value)
-    {
-        return $this->gudang->name." - ".$this->item->name." - SKU:".$this->item->serial." - Qty Location: ".$this->stock_on_location." karung";
-    }
 
     /*
     |--------------------------------------------------------------------------

@@ -38,6 +38,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('gudang') }}'><i class='las la-list-ol'></i> Warehouses</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='las la-list-ol'></i> Retur Customer</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returnsupplier') }}'><i class='las la-list-ol'></i> Return Supplier</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('goodtransfer') }}'><i class='las la-list-ol'></i> Transfer Barang</a></li>
         </ul>
     </li>
 @endif
@@ -82,6 +83,7 @@
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('gudang') }}'><i class='las la-list-ol'></i> Warehouses</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='las la-list-ol'></i> Retur Customer</a></li>
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returnsupplier') }}'><i class='las la-list-ol'></i> Return Supplier</a></li>
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('goodtransfer') }}'><i class='las la-list-ol'></i> Transfer Barang</a></li>
         </ul>
     </li>
     <li class="nav-item nav-dropdown">
