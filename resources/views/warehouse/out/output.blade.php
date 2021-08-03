@@ -29,7 +29,7 @@
                         <td>
                             <font color="#000000">
 								<strong> PT. ANOMALI LUMBUNG ARTHA </strong><br>
-                                <p style="width: 200px;"> {{ $data->warehouse->address }} <br> Phone / Fax: {{ $data->warehouse->telephone }} </p><br>
+                                <p style="width: 245px;"> {{ $data->warehouse->address }} <br> Phone / Fax: {{ $data->warehouse->telephone }} </p><br>
                             </font>
                         </td>
                     </tr>
