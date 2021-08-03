@@ -29,11 +29,7 @@
                         <td>
                             <font color="#000000">
 								<strong> PT. ANOMALI LUMBUNG ARTHA </strong><br>
-                                Jln. Siliwangi km 3 kp Ciroyom <br>
-                                Rt 31 Rw 08, Desa Pada Asih, 
-								Kec. Cisaat, Kab. Sukabumi, Jawa Barat <br>
-								Phone / Fax: +62 266 - 2485989
-								<br>
+                                <p style="width: 200px;"> {{ $data->warehouse->address }} <br> Phone / Fax: {{ $data->warehouse->telephone }} </p><br>
                             </font>
                         </td>
                     </tr>
