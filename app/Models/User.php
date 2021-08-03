@@ -82,7 +82,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function warehouse()
+    public function Warehouse()
     {
         return $this->belongsTo(Warehouse::class);
     }
