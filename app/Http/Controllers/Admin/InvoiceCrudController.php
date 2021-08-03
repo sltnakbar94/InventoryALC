@@ -110,14 +110,10 @@ class InvoiceCrudController extends CrudController
 
     public function generateInvoiceNumber()
     {
-        $day = date("d");
-        $month = date("m");
-        $year = date("Y");
-
         $count = DB::table('invoice')->count();
         $number = $count+1;
 
-        $generate = $month.$day."-0".$number."/Invoice/".$year;
+        $generate = $number;
 
         return $generate ;
     }
@@ -147,7 +143,7 @@ class InvoiceCrudController extends CrudController
             'type'  => 'select2_from_array',
             'name'  => 'dn_number',
             'options' => DeliveryNote::where('status', '=', 4)->whereNotIn('dn_number',function($query) {
-                $query->select('dn_number')->from('invoice');
+                $query->select('dn_number')->where('deleted_at', '=', NULL)->from('invoice');
              })->pluck('dn_number', 'dn_number'),
             'allows_null' => false
         ]);
@@ -334,7 +330,7 @@ class InvoiceCrudController extends CrudController
     public function store(Request $request)
     {
         $invoice = new Invoice();
-        $invoice->invoice_no = $request->invoice_no;
+        $invoice->invoice_no = date('m', strtotime($request->invoice_date)).date('d', strtotime($request->invoice_date))."-0".$request->invoice_no."/Invoice/".date('Y', strtotime($request->invoice_date));
         $invoice->dn_number = $request->dn_number;
         $invoice->invoice_date = $request->invoice_date ;
         $invoice->ppn = $request->ppn;
