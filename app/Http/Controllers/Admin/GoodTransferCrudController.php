@@ -45,6 +45,7 @@ class GoodTransferCrudController extends CrudController
     {
         $this->crud->removeButton('show');
         $this->crud->removeButton('update');
+        $this->crud->removeButton('delete');
         CRUD::setFromDb(); // columns
 
         /**
