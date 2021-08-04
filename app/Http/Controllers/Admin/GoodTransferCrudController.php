@@ -139,7 +139,7 @@ class GoodTransferCrudController extends CrudController
         } else {
             $update = new Stock();
             $update->warehouse_id = $request->warehouse_id;
-            $update->item_id = $item->item_id;
+            $update->item_id = $item->id;
             $update->stock_on_location += $request->qty;
             $update->stock_on_hand += $request->qty;
             $update->save();
