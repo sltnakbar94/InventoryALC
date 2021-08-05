@@ -66,6 +66,18 @@ class ReportItemCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'label'    => 'Gudang',
+            'type'     => 'closure',
+            'function' => function($entry) {
+                if (!empty($entry->invoice->dn->WarehouseOut->warehouse->name)) {
+                    return $entry->invoice->dn->WarehouseOut->warehouse->name;
+                } else {
+                    return "-";
+                }
+            }
+        ]);
+
+        $this->crud->addColumn([
             'name' => 'item_id',
             'type' => 'select',
             'entity' => 'item',
