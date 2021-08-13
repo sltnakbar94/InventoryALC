@@ -180,7 +180,7 @@
 		<td align="left" valign=middle><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
 	</tr>
 </table>
-@if ($invoice->dn->WarehouseOut->warehouse->id = 1)
+@if ($invoice->dn->WarehouseOut->warehouse->id == 1)
     <table cellspacing="0" border="0" width="100%">
         <tr>
             <td width="70" style="border-top: 1px solid #000000" colspan=2 align="center" valign=bottom><u><font face="Trebuchet MS" size=1 color="#000000">Agus Saepuloh</font></u></td>
