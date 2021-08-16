@@ -46,7 +46,32 @@ class GoodTransferCrudController extends CrudController
         $this->crud->removeButton('show');
         $this->crud->removeButton('update');
         $this->crud->removeButton('delete');
-        CRUD::setFromDb(); // columns
+
+        $this->crud->addColumns(['date_transfer']);
+
+        $this->crud->addColumn([
+            'type' => 'relationship',
+            'name' => 'stock_id',
+            'label' => 'Pilih gudang dan item',
+            'entity' => 'stock',
+            'attribute' => 'itemName',
+            'model' => 'App\Models\Stock'
+        ]);
+
+        $this->crud->addColumn([
+            'type' => 'number',
+            'name' => 'qty',
+            'label' => 'Quantity',
+        ]);
+
+        $this->crud->addColumn([
+            'type' => 'relationship',
+            'name' => 'warehouse_id',
+            'label' => 'Gudang Tujuan',
+            'entity' => 'warehouse',
+            'attribute' => 'name',
+            'model' => 'App\Models\Warehouse'
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
