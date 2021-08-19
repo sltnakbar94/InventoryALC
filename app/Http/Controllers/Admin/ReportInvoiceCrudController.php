@@ -46,6 +46,14 @@ class ReportInvoiceCrudController extends CrudController
         $this->crud->removeButton('delete');
 
         $this->crud->addColumn([
+            'label'    => 'Gudang',
+            'type'     => 'closure',
+            'function' => function($entry) {
+                return $entry->dn->WarehouseOut->warehouse->name;
+            }
+        ]);
+
+        $this->crud->addColumn([
             'name' => 'invoice_no',
             'type' => 'text',
             'label' => 'Invoice Number'
@@ -73,6 +81,7 @@ class ReportInvoiceCrudController extends CrudController
                 return $entry->dn->WarehouseOut->pic_customer;
             }
         ]);
+        // dd($this->crud->query->first()->dn->WarehouseOut->warehouse_id);
 
         $this->crud->addColumn([
             'label'    => 'Sales',
