@@ -45,6 +45,19 @@ class ReportInvoiceCrudController extends CrudController
         $this->crud->removeButton('update');
         $this->crud->removeButton('delete');
 
+        // daterange filter
+        $this->crud->addFilter([
+            'type'  => 'date_range',
+            'name'  => 'from_to',
+            'label' => 'Date range'
+        ],
+        false,
+        function ($value) { // if the filter is active, apply these constraints
+            $dates = json_decode($value);
+            $this->crud->addClause('where', 'invoice_date', '>=', $dates->from);
+            $this->crud->addClause('where', 'invoice_date', '<=', $dates->to . ' 23:59:59');
+        });
+
         $this->crud->addColumn([
             'label'    => 'Gudang',
             'type'     => 'closure',
