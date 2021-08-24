@@ -13,6 +13,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class InvoiceCrudController
@@ -48,6 +49,12 @@ class InvoiceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        if (backpack_user()->hasRole('admin-gudang')) {
+            $this->crud->addClause('whereHas', 'WarehouseOut', function($query) {
+                $query->where('warehouse_id', '=', backpack_user()->warehouse_id);
+               });
+        }
+
         $this->crud->addColumn([
             'name' => 'invoice_no',
             'type' => 'text',
@@ -138,15 +145,29 @@ class InvoiceCrudController extends CrudController
             ]
         ]);
 
-        $this->crud->addField([
-            'label' => 'Pilih Surat Jalan',
-            'type'  => 'select2_from_array',
-            'name'  => 'dn_number',
-            'options' => DeliveryNote::where('status', '=', 4)->whereNotIn('dn_number',function($query) {
-                $query->select('dn_number')->where('deleted_at', '=', NULL)->from('invoice');
-             })->pluck('dn_number', 'dn_number'),
-            'allows_null' => false
-        ]);
+        if (backpack_user()->hasRole('admin-gudang')) {
+            $this->crud->addField([
+                'label' => 'Pilih Surat Jalan',
+                'type'  => 'select2_from_array',
+                'name'  => 'dn_number',
+                'options' => DeliveryNote::where('status', '=', 4)->whereHas('WarehouseOut', function (Builder $query) {
+                    $query->where('warehouse_id', '=', backpack_user()->warehouse_id);
+                })->whereNotIn('dn_number',function($query) {
+                    $query->select('dn_number')->where('deleted_at', '=', NULL)->from('invoice');
+                 })->pluck('dn_number', 'dn_number'),
+                'allows_null' => false
+            ]);
+        } else {
+            $this->crud->addField([
+                'label' => 'Pilih Surat Jalan',
+                'type'  => 'select2_from_array',
+                'name'  => 'dn_number',
+                'options' => DeliveryNote::where('status', '=', 4)->whereNotIn('dn_number',function($query) {
+                    $query->select('dn_number')->where('deleted_at', '=', NULL)->from('invoice');
+                 })->pluck('dn_number', 'dn_number'),
+                'allows_null' => false
+            ]);
+        }
 
         $this->crud->addField([
             'name' => 'invoice_date',
@@ -246,10 +267,8 @@ class InvoiceCrudController extends CrudController
 
         $this->crud->addField([
             'label' => 'Pilih Surat Jalan',
-            'type'  => 'select2_from_array',
+            'type'  => 'hidden',
             'name'  => 'dn_number',
-            'options' => DeliveryNote::where('status', '>', 0)->pluck('dn_number', 'dn_number'),
-            'allows_null' => false
         ]);
 
         $this->crud->addField([

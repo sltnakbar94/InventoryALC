@@ -49,6 +49,11 @@ class Invoice extends Model
     {
         return $this->belongsTo(User::class, 'user' , 'id');
     }
+
+    public function WarehouseOut()
+    {
+        return $this->hasOneThrough(WarehouseOut::class, DeliveryNote::class, 'dn_number', 'id', 'dn_number', 'reference');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -62,7 +62,10 @@ class WarehouseOutCrudController extends CrudController
             $this->crud->addClause('where', 'status', '!=', 4);
             $this->crud->addClause('where', 'status', '!=', 3);
         }
-        if (backpack_user()->hasRole('purchasing')) {
+        if (backpack_user()->hasAnyRole(['purchasing', 'admin-gudang'])) {
+            if (backpack_user()->hasRole('admin-gudang')) {
+                $this->crud->addClause('where', 'warehouse_id', '=', backpack_user()->warehouse_id);
+            }
             $this->crud->addClause('where', 'status', '=', 1);
             $this->crud->removeButton('create');
             $this->crud->removeButton('update');

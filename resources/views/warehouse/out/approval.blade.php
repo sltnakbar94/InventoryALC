@@ -11,7 +11,7 @@
         </div>
     @endif
 @endif
-@if (@$crud->entry->status == 1 && backpack_user()->hasRole('purchasing'))
+@if (@$crud->entry->status == 1 && backpack_user()->hasAnyRole(['purchasing', 'admin-gudang']))
     <div class="card-footer" align="center">
         <div class="dropdown">
             <button class="btn btn-success dropdown-toggle col-md-8" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

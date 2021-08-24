@@ -23,24 +23,26 @@
         </ul>
     </li>
 @endif
-@if(backpack_user()->hasRole('purchasing'))
+@if(backpack_user()->hasAnyRole(['purchasing', 'admin-gudang']))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('warehouseout') }}'><i class="lar la-file"></i> Delivery Order</a></li>
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('invoice') }}'><i class="lar la-file-alt"></i> Invoice</a></li>
-    <li class="nav-item nav-dropdown">
-        <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-project-diagram"></i> Config</a>
-        <ul class="nav-dropdown-items">
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('item') }}'><i class="las la-list-ol"></i> Items</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class="las la-list-ol"></i> Categories</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('brand') }}'><i class="las la-list-ol"></i> Brands</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('unit') }}'><i class="las la-list-ol"></i> Units</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class="las la-list-ol"></i> Companies</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('stackholder') }}'><i class="las la-list-ol"></i> Stackholders</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('gudang') }}'><i class='las la-list-ol'></i> Warehouses</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='las la-list-ol'></i> Retur Customer</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returnsupplier') }}'><i class='las la-list-ol'></i> Return Supplier</a></li>
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('goodtransfer') }}'><i class='las la-list-ol'></i> Transfer Barang</a></li>
-        </ul>
-    </li>
+    @if (backpack_user()->hasRole('purchasing'))
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-project-diagram"></i> Config</a>
+            <ul class="nav-dropdown-items">
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('item') }}'><i class="las la-list-ol"></i> Items</a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class="las la-list-ol"></i> Categories</a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('brand') }}'><i class="las la-list-ol"></i> Brands</a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('unit') }}'><i class="las la-list-ol"></i> Units</a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class="las la-list-ol"></i> Companies</a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('stackholder') }}'><i class="las la-list-ol"></i> Stackholders</a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('gudang') }}'><i class='las la-list-ol'></i> Warehouses</a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returncustomer') }}'><i class='las la-list-ol'></i> Retur Customer</a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('returnsupplier') }}'><i class='las la-list-ol'></i> Return Supplier</a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('goodtransfer') }}'><i class='las la-list-ol'></i> Transfer Barang</a></li>
+            </ul>
+        </li>
+    @endif
 @endif
 @if (backpack_user()->hasRole('admin'))
     <li class="nav-item nav-dropdown">
