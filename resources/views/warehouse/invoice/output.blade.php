@@ -150,6 +150,7 @@
 		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan=2 align="center" valign=bottom><font face="Trebuchet MS" size=1 color="#000000">Total Keseluruhan</font></td>
 		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan=2 align="right" valign=bottom sdval="194500" sdnum="1033;0;_-&quot;Rp&quot;* #,##0.00_-;&quot;-Rp&quot;* #,##0.00_-;_-&quot;Rp&quot;* -_-;_-@_-"><font face="Trebuchet MS" size=1 color="#000000"> {{ rupiah($data->sum('price_after_discount')) }} </font></td>
 	</tr>
+
 	@if (!empty($pay_of))
 		<tr>
 			<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
@@ -161,6 +162,17 @@
 			<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
 			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan=2 align="center" valign=bottom><font face="Trebuchet MS" size=1 color="#000000">Dibayarkan/ {{date('d-m-Y', strtotime(@$due_date))}}</font></td>
 			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan=2 align="right" valign=bottom sdval="194500" sdnum="1033;0;_-&quot;Rp&quot;* #,##0.00_-;&quot;-Rp&quot;* #,##0.00_-;_-&quot;Rp&quot;* -_-;_-@_-"><font face="Trebuchet MS" size=1 color="#000000"> {{ rupiah(@$pay_of) }} </font></td>
+		</tr>
+		<tr>
+			<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
+			<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
+			<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
+			<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
+			<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
+			<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
+			<td align="left" valign=bottom><font face="Trebuchet MS" size=1 color="#000000"><br></font></td>
+			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan=2 align="center" valign=bottom><font face="Trebuchet MS" size=1 color="#000000">Sisa Pebayaran {{date('d-m-Y', strtotime(@$due_date))}}</font></td>
+			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan=2 align="right" valign=bottom sdval="194500" sdnum="1033;0;_-&quot;Rp&quot;* #,##0.00_-;&quot;-Rp&quot;* #,##0.00_-;_-&quot;Rp&quot;* -_-;_-@_-"><font face="Trebuchet MS" size=1 color="#000000"> {{ rupiah(($data->sum('price_after_discount'))-(@$pay_of)) }} </font></td>
 		</tr>
 	@endif
 	<tr>

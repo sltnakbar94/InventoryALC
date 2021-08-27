@@ -372,17 +372,25 @@ class InvoiceCrudController extends CrudController
 
     public function pdf(Request $request)
     {
+        
         $invoice = Invoice::findOrFail($request->id);
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $request->id)->get();
+        $termins = json_decode($invoice->termin);
         $invoice->invoice_value = $invoiceDetails->sum('price_after_discount');
+        $sum = 0;
+        for ($i=0; $i < $request->count; $i++) {
+            $sum += $termins[$i]->pay_of ;
+        }
+        $total = $invoice->invoice_value - $sum;
         $invoice->update();
         $pay_of = $request->pay_of;
         $due_date = $request->due_date;
         $pdf = PDF::loadview('warehouse.invoice.output',
                              ['data' => $invoiceDetails ,
-                             'pay_of' => $pay_of ,
+                             'pay_of' => $sum ,
                              'due_date' => $due_date ,
-                             'invoice' => $invoice ]);
+                             'invoice' => $invoice ,
+                             'total' => $total]);
     	return $pdf->stream($invoice->invoice_no.'.pdf');
     }
 }

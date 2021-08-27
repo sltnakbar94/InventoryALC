@@ -2,12 +2,15 @@
     @php
         $termins = json_decode($crud->entry->termin);
     @endphp
+    <?php $i=0 ?>
     @if (count($termins) > 0)
-        @foreach ($termins as $termin)
+        @foreach ($termins as $key => $termin)
+        <?php $i++ ?>
             <div class="container">
                 <div class="card-body" >
                 <form action="{{ backpack_url('generate-invoice') }}" id="invoice-pdf" method="post" target="_blank">
                     @csrf
+                    <input type="hidden" name="count" value="{{ $i }}" id="count">
                     <input type="hidden" name="pay_of" value=" {{ $termin->pay_of }} " id="pay_of">
                     <input type="hidden" name="due_date" value=" {{ $termin->due_date }} " id="due_date">
                     <input type="hidden" name="id" value=" {{ $crud->entry->id }} " id="invoice">
