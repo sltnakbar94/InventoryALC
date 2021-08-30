@@ -107,6 +107,8 @@ class InvoiceCrudController extends CrudController
             'label' => 'Operator'
         ]);
 
+        $this->crud->enableExportButtons();
+
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -372,7 +374,7 @@ class InvoiceCrudController extends CrudController
 
     public function pdf(Request $request)
     {
-        
+
         $invoice = Invoice::findOrFail($request->id);
         $invoiceDetails = InvoiceDetail::where('invoice_id' , '=' , $request->id)->get();
         $termins = json_decode($invoice->termin);
